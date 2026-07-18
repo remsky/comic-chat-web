@@ -7,6 +7,7 @@ import {
 	type AvatarRegistry,
 	cloneBody,
 } from "./avatar.js";
+import { checkWord } from "./emotion.js";
 import type { MsvcRand } from "./rand.js";
 import { round } from "./vector2d.js";
 
@@ -184,6 +185,8 @@ export function updateAvatarHysteresis(placed: readonly PlacedAvatar[]): void {
 	}
 }
 
+export const BF_NOZOOM = 1;
+
 export const SM_SAY = 1;
 export const SM_WHISPER = 2;
 export const SM_THINK = 3;
@@ -204,6 +207,7 @@ export interface CloneableBalloonRuntime {
 export interface UnitPanel {
 	seed: number;
 	hasBorder: boolean;
+	backdropMode: number;
 	bodies: AvatarBody[];
 	balloons: PanelBalloon[];
 }
@@ -238,9 +242,11 @@ export interface PanelPageOptions {
 
 export function cloneUnitPanel(panel: UnitPanel): UnitPanel {
 	const bodies = panel.bodies.map(cloneBody);
+	// the CPanel copy ctor (panel.cpp:492) copies seed/border/bodies/balloons but not m_backDrop
 	return {
 		seed: panel.seed,
 		hasBorder: panel.hasBorder,
+		backdropMode: 0,
 		bodies,
 		balloons: panel.balloons.map((balloon) => {
 			const bodyIndex = panel.bodies.indexOf(balloon.speaker);
@@ -314,9 +320,18 @@ export class PanelPage {
 		return {
 			seed: this.rand.rand(),
 			hasBorder: true,
+			backdropMode: 0,
 			bodies: [],
 			balloons: [],
 		};
+	}
+
+	private addSemantics(panel: UnitPanel, words: string): void {
+		if (checkWord(words, "Ohio")) {
+			// semantic.cpp:22 draws randfloat and sets BF_NOZOOM; both backdrop branches are dead (r < 0.0)
+			this.rand.randfloat();
+			panel.backdropMode = BF_NOZOOM;
+		}
 	}
 
 	private layoutAvatars(panel: UnitPanel, establishing: boolean): void {
@@ -363,6 +378,7 @@ export class PanelPage {
 			this.panels.length <= 1 || (replaceLast && this.panels.length <= 2);
 
 		this.hooks.onDecision?.({ cloned: replaceLast, speaker: speakerID, words });
+		this.addSemantics(panel, words);
 		const speaker = fetchSpeaker(panel, avatar);
 		const balloon = this.hooks.makeBalloon?.(words, mode, speaker) ?? {
 			text: words,

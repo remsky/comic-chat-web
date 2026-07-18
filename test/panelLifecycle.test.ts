@@ -127,6 +127,36 @@ describe("panel page lifecycle", () => {
 		expect(page.panels.at(-1)?.bodies[0]?.requested).toBe(true);
 	});
 
+	it("draws the Ohio semantics randfloat and flags the backdrop", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		requestedBody(registry, 1);
+		const rand = new MsvcRand(1515);
+		const reference = new MsvcRand(1515);
+		reference.rand();
+		reference.randfloat();
+		const expected = reference.rand();
+		let committed: UnitPanel | undefined;
+		const page = new PanelPage({
+			registry,
+			rand,
+			unitWidth: 2300,
+			unitHeight: 5400,
+			hooks: {
+				layoutBalloons: () => ({ fits: true }),
+				onCommit: (panel) => {
+					committed = panel;
+				},
+			},
+		});
+		page.addLine(1, "Ohio is round on the ends", 1);
+		expect(committed?.backdropMode).toBe(1);
+		expect(rand.rand()).toBe(expected);
+
+		requestedBody(registry, 2);
+		page.addLine(2, "ohio stays lowercase", 1);
+		expect(committed?.backdropMode).toBe(0);
+	});
+
 	it("forces action and break messages onto the next fresh panel", () => {
 		const registry = new AvatarRegistry(fixture.avatars);
 		const decisions: PanelDecision[] = [];

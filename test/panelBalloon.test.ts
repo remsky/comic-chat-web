@@ -107,6 +107,10 @@ describe.each(traceNames)("%s integrated balloon layout", (name) => {
 					expect(panel.seed, `${name} panel ${expectedPanel.panel} seed`).toBe(
 						expectedPanel.seed,
 					);
+					expect(
+						panel.backdropMode,
+						`${name} panel ${expectedPanel.panel} backdrop`,
+					).toBe(expectedPanel.backdropMode);
 					const balloons = expectedBalloons
 						.filter((balloon) => balloon.panel === expectedPanel.panel)
 						.sort((a, b) => a.i - b.i);

@@ -96,6 +96,7 @@ describe("canvas avatar composition", () => {
 		const panel: UnitPanel = {
 			seed: 4985,
 			hasBorder: true,
+			backdropMode: 0,
 			bodies: [body],
 			balloons: [],
 		};

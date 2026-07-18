@@ -76,6 +76,7 @@ describe("panel accessibility", () => {
 		const panel: UnitPanel = {
 			seed: 1,
 			hasBorder: true,
+			backdropMode: 0,
 			bodies: [speaker],
 			balloons: [{ text: "HELLO", mode: 1, speaker }],
 		};
