@@ -10,6 +10,8 @@
 		"check": "biome check . && tsc && tsc -p tools/avb",
 		"dev": "vite",
 		"build": "tsc && vite build",
+		"deploy": "npm run build && wrangler deploy",
+		"preview:worker": "npm run build && wrangler dev",
 		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"format": "biome format --write ."
@@ -20,6 +22,7 @@
 		"@types/node": "^26.1.1",
 		"typescript": "^7.0.2",
 		"vite": "^8.1.5",
-		"vitest": "^4.1.10"
+		"vitest": "^4.1.10",
+		"wrangler": "^4.112.0"
 	}
 }
