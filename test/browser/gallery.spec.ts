@@ -36,6 +36,22 @@ test("renders responsive, accessible comic panels", async ({
 	);
 	expect(layout.overflows).toBe(false);
 
+	const inkRatio = await page.evaluate(() => {
+		const canvas = document.querySelector("canvas");
+		if (!canvas) throw new Error("missing canvas");
+		const context = canvas.getContext("2d");
+		if (!context) throw new Error("missing context");
+		const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+		let inked = 0;
+		for (let i = 0; i < pixels.length; i += 4) {
+			const alpha = pixels[i + 3] ?? 0;
+			const luminance = (pixels[i] ?? 0) + (pixels[i + 1] ?? 0);
+			if (alpha > 0 && luminance < 400) inked++;
+		}
+		return inked / (pixels.length / 4);
+	});
+	expect(inkRatio).toBeGreaterThan(0.005);
+
 	const details = cards.first().locator("details");
 	await details.locator("summary").click();
 	await expect(details.locator("li").first()).toBeVisible();
