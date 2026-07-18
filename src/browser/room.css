@@ -1,0 +1,85 @@
+.masthead-room {
+	padding-bottom: clamp(1rem, 2vw, 2rem);
+}
+
+.masthead-room .eyebrow a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.join-card {
+	width: min(30rem, calc(100% - 2rem));
+	margin: 0 auto 4rem;
+	padding: clamp(1rem, 3vw, 2rem);
+	border: 1px solid rgb(23 23 20 / 16%);
+	border-radius: 0.5rem;
+	background: #f8f7f2;
+	box-shadow: 0 1rem 2.5rem rgb(42 37 22 / 8%);
+}
+
+.join-card form {
+	display: grid;
+	gap: 1rem;
+}
+
+.join-card label {
+	display: grid;
+	gap: 0.35rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #555148;
+}
+
+.join-card input,
+.join-card select,
+.composer input,
+.composer select {
+	padding: 0.6rem 0.75rem;
+	border: 1px solid rgb(23 23 20 / 24%);
+	border-radius: 0.35rem;
+	background: white;
+	font: inherit;
+}
+
+.join-card button,
+.composer button {
+	padding: 0.65rem 1rem;
+	border: none;
+	border-radius: 0.35rem;
+	background: #171714;
+	color: white;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.roster {
+	width: min(76rem, calc(100% - 2rem));
+	margin: 0 auto 1rem;
+	font-size: 0.85rem;
+	color: #555148;
+}
+
+.room-panels {
+	margin-bottom: 8rem;
+}
+
+.composer {
+	position: fixed;
+	inset: auto 0 0;
+	display: flex;
+	gap: 0.5rem;
+	width: min(46rem, calc(100% - 2rem));
+	margin: 0 auto;
+	padding: 0.75rem;
+	border: 1px solid rgb(23 23 20 / 16%);
+	border-radius: 0.75rem 0.75rem 0 0;
+	border-bottom: none;
+	background: #f8f7f2;
+	box-shadow: 0 -0.5rem 2rem rgb(42 37 22 / 12%);
+}
+
+.composer input {
+	flex: 1;
+	min-width: 0;
+}
