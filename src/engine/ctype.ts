@@ -28,6 +28,15 @@ export function isPrint(c: number): boolean {
 	return c >= 32 && c <= 126;
 }
 
+export function toUpperAscii(s: string): string {
+	let out = "";
+	for (let i = 0; i < s.length; i++) {
+		const c = s.charCodeAt(i);
+		out += isLower(c) ? String.fromCharCode(c - 32) : s.charAt(i);
+	}
+	return out;
+}
+
 export function toLowerAscii(s: string): string {
 	let out = "";
 	for (let i = 0; i < s.length; i++) {

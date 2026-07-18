@@ -9,7 +9,7 @@ export interface Rect {
 	top: number;
 }
 
-function toShort(x: number): number {
+export function toShort(x: number): number {
 	return (x << 16) >> 16;
 }
 
