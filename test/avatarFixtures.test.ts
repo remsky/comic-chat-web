@@ -50,14 +50,21 @@ describe("six-avatar runtime fixture", () => {
 				const avatar = fixture.avatars[body.avatarId - 1];
 				expect(avatar, `${name} avatar ${body.avatarId}`).toBeDefined();
 				if (!avatar) continue;
-				const poseIDs = new Set(avatar.poses.map((pose) => pose.poseID));
-				for (const poseID of [body.poseFace, body.poseTorso]) {
-					if (poseID > 0) {
-						expect(
-							poseIDs.has(poseID),
-							`${name} ${avatar.name} pose ${poseID}`,
-						).toBe(true);
-					}
+				const faceIDs = new Set(
+					[...avatar.faces, ...avatar.bodies].map((rec) => rec.poseID),
+				);
+				const torsoIDs = new Set(avatar.torsos.map((rec) => rec.poseID));
+				if (body.poseFace > 0) {
+					expect(
+						faceIDs.has(body.poseFace),
+						`${name} ${avatar.name} face pose ${body.poseFace}`,
+					).toBe(true);
+				}
+				if (body.poseTorso > 0) {
+					expect(
+						torsoIDs.has(body.poseTorso),
+						`${name} ${avatar.name} torso pose ${body.poseTorso}`,
+					).toBe(true);
 				}
 			}
 		}

@@ -53,6 +53,11 @@ export interface AvatarPoseFixture {
 	localPoseID: number;
 	width: number;
 	height: number;
+	sprite?: {
+		atlasUrl: string;
+		x: number;
+		y: number;
+	};
 }
 
 export interface AvatarFaceFixture {
