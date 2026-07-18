@@ -10,9 +10,7 @@ import {
 	isUpper,
 	toLowerAscii,
 } from "./ctype.js";
-
-// biome-ignore lint/suspicious/noApproximativeNumericConstant: vector2d.h defines PI as 3.14159 and the oracle's EM_SHOUT is 4.712385, so Math.PI would diverge
-const PI = 3.14159;
+import { PI } from "./vector2d.js";
 
 export const EM_HAPPY = Math.fround((0 * 2 * PI) / 8);
 export const EM_COY = Math.fround((1 * 2 * PI) / 8);
