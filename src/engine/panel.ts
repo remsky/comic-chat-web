@@ -4,8 +4,10 @@ import {
 	type Avatar,
 	type AvatarBody,
 	type AvatarData,
+	type AvatarRegistry,
 	cloneBody,
 } from "./avatar.js";
+import type { MsvcRand } from "./rand.js";
 import { round } from "./vector2d.js";
 
 export interface PlacedAvatar {
@@ -179,6 +181,199 @@ export function updateAvatarHysteresis(placed: readonly PlacedAvatar[]): void {
 		if (i > 0) entry.avatar.lastRight = placed[i - 1]?.body.avatarID ?? 0;
 		if (i < placed.length - 1)
 			entry.avatar.lastLeft = placed[i + 1]?.body.avatarID ?? 0;
+	}
+}
+
+export const SM_SAY = 1;
+export const SM_WHISPER = 2;
+export const SM_THINK = 3;
+export const SM_SHOUT = 4;
+export const SM_ACTION = 5;
+
+export interface PanelBalloon {
+	text: string;
+	mode: number;
+	speaker: AvatarBody;
+}
+
+export interface UnitPanel {
+	seed: number;
+	hasBorder: boolean;
+	bodies: AvatarBody[];
+	balloons: PanelBalloon[];
+}
+
+export interface PanelDecision {
+	cloned: boolean;
+	speaker: number;
+	words: string;
+}
+
+export interface BalloonLayoutResult {
+	fits: boolean;
+	leftover?: string;
+}
+
+export interface PanelPageHooks {
+	layoutBalloons(panel: UnitPanel, rand: MsvcRand): BalloonLayoutResult;
+	onDecision?(decision: PanelDecision): void;
+	onRetry?(): void;
+	onCommit?(panel: UnitPanel): void;
+}
+
+export interface PanelPageOptions {
+	registry: AvatarRegistry;
+	rand: MsvcRand;
+	unitWidth: number;
+	unitHeight: number;
+	panelsAtStart?: number;
+	hooks: PanelPageHooks;
+}
+
+export function cloneUnitPanel(panel: UnitPanel): UnitPanel {
+	const bodies = panel.bodies.map(cloneBody);
+	return {
+		seed: panel.seed,
+		hasBorder: panel.hasBorder,
+		bodies,
+		balloons: panel.balloons.map((balloon) => {
+			const bodyIndex = panel.bodies.indexOf(balloon.speaker);
+			const speaker = bodies[bodyIndex];
+			if (!speaker)
+				throw new Error("panel balloon has no matching speaker body");
+			return { ...balloon, speaker };
+		}),
+	};
+}
+
+function fetchSpeaker(panel: UnitPanel, avatar: Avatar): AvatarBody {
+	const existing = panel.bodies.find(
+		(body) => body.avatarID === avatar.avatarID,
+	);
+	if (existing) return existing;
+	if (!avatar.body) throw new Error(`avatar ${avatar.avatarID} has no body`);
+	const body = cloneBody(avatar.body);
+	avatar.recordBody(body);
+	panel.bodies.push(body);
+	return body;
+}
+
+function replaceBody(panel: UnitPanel, avatar: Avatar): boolean {
+	const index = panel.bodies.findIndex(
+		(body) => body.avatarID === avatar.avatarID,
+	);
+	if (index < 0) return false;
+	if (!avatar.body) throw new Error(`avatar ${avatar.avatarID} has no body`);
+	const oldBody = panel.bodies[index];
+	const newBody = cloneBody(avatar.body);
+	newBody.requested = true;
+	panel.bodies[index] = newBody;
+	avatar.recordBody(newBody);
+	for (const balloon of panel.balloons) {
+		if (balloon.speaker === oldBody) balloon.speaker = newBody;
+	}
+	return true;
+}
+
+export class PanelPage {
+	readonly registry: AvatarRegistry;
+	readonly rand: MsvcRand;
+	readonly unitWidth: number;
+	readonly unitHeight: number;
+	readonly hooks: PanelPageHooks;
+	readonly panels: (UnitPanel | null)[];
+	newPanel = true;
+
+	constructor(options: PanelPageOptions) {
+		this.registry = options.registry;
+		this.rand = options.rand;
+		this.unitWidth = options.unitWidth;
+		this.unitHeight = options.unitHeight;
+		this.hooks = options.hooks;
+		this.panels = Array.from(
+			{ length: options.panelsAtStart ?? 1 },
+			() => null,
+		);
+	}
+
+	startNewPanel(): void {
+		this.newPanel = true;
+	}
+
+	private createPanel(): UnitPanel {
+		return {
+			seed: this.rand.rand(),
+			hasBorder: true,
+			bodies: [],
+			balloons: [],
+		};
+	}
+
+	private layoutAvatars(panel: UnitPanel, establishing: boolean): void {
+		const speakerIDs = new Set(
+			panel.balloons.map((balloon) => balloon.speaker.avatarID),
+		);
+		const filtered = filterSpeakerBodies(
+			panel.bodies,
+			this.registry.avatars,
+			speakerIDs,
+		);
+		const placed = orderAvatars(filtered, this.registry.avatars);
+		panel.bodies = placed.map((entry) => entry.body);
+		layoutAvatarGeometry(placed, {
+			unitWidth: this.unitWidth,
+			unitHeight: this.unitHeight,
+			establishing,
+		});
+		updateAvatarHysteresis(placed);
+	}
+
+	addLine(speakerID: number, words: string, mode: number): void {
+		if (mode === SM_ACTION) this.startNewPanel();
+		if (words === "<Brk>") {
+			this.startNewPanel();
+			return;
+		}
+		if (words === "<Chr>")
+			throw new Error("reaction panels are not part of the trace port yet");
+
+		const avatar = this.registry.get(speakerID);
+		if (!avatar) throw new Error(`missing avatar ${speakerID}`);
+		const oldPanel = this.panels.at(-1) ?? null;
+		const replaceLast = !(
+			this.newPanel ||
+			(oldPanel?.balloons.length ?? 0) >= 5 ||
+			this.panels.length < 2 ||
+			oldPanel?.bodies.some((body) => body.avatarID === speakerID)
+		);
+		const panel =
+			replaceLast && oldPanel ? cloneUnitPanel(oldPanel) : this.createPanel();
+		if (!replaceLast) this.newPanel = false;
+		const establishing =
+			this.panels.length <= 1 || (replaceLast && this.panels.length <= 2);
+
+		this.hooks.onDecision?.({ cloned: replaceLast, speaker: speakerID, words });
+		const balloon: PanelBalloon = {
+			text: words,
+			mode,
+			speaker: fetchSpeaker(panel, avatar),
+		};
+		panel.balloons.push(balloon);
+		replaceBody(panel, avatar);
+		this.layoutAvatars(panel, establishing);
+		const result = this.hooks.layoutBalloons(panel, this.rand);
+		if (!result.fits) {
+			this.hooks.onRetry?.();
+			this.startNewPanel();
+			this.addLine(speakerID, words, mode);
+			return;
+		}
+
+		if (replaceLast) this.panels.pop();
+		this.panels.push(panel);
+		this.hooks.onCommit?.(panel);
+		avatar.reset();
+		if (result.leftover) this.addLine(speakerID, result.leftover, mode);
 	}
 }
 
