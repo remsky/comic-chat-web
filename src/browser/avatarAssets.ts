@@ -41,6 +41,10 @@ export class AvatarAtlasCache {
 		if (!image) {
 			image = this.decoder(url);
 			this.images.set(url, image);
+			// drop failed decodes so a transient error does not poison the URL for the session
+			image.catch(() => {
+				if (this.images.get(url) === image) this.images.delete(url);
+			});
 		}
 		return image;
 	}
@@ -52,7 +56,12 @@ export class AvatarAtlasCache {
 				if (pose.sprite) urls.add(pose.sprite.atlasUrl);
 		await Promise.all(
 			[...urls].map(async (url) => {
-				this.ready.set(url, await this.load(url));
+				const image = await this.load(url);
+				if (this.disposed) {
+					image.close?.();
+					return;
+				}
+				this.ready.set(url, image);
 			}),
 		);
 	}
@@ -70,8 +79,10 @@ export class AvatarAtlasCache {
 	}
 
 	private readonly ready = new Map<string, AvatarAtlasImage>();
+	private disposed = false;
 
 	dispose(): void {
+		this.disposed = true;
 		for (const image of this.ready.values()) image.close?.();
 		this.ready.clear();
 		this.images.clear();

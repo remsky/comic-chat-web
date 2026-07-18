@@ -38,6 +38,12 @@ export class CanvasSurface {
 	private frame = 0;
 	private disposed = false;
 	private resolveReady: () => void = () => {};
+	private dprQuery: MediaQueryList | null = null;
+	private readonly onDprChange = (): void => {
+		this.watchDevicePixelRatio();
+		const rect = this.canvas.getBoundingClientRect();
+		this.resize(rect.width, rect.height);
+	};
 
 	constructor(
 		canvas: HTMLCanvasElement,
@@ -46,7 +52,8 @@ export class CanvasSurface {
 		draw: (context: CanvasRenderingContext2D) => void,
 		options: CanvasSurfaceOptions = {},
 	) {
-		const context = canvas.getContext("2d", { alpha: false });
+		// alpha stays on so a freshly sized backing store shows the page background, never opaque black
+		const context = canvas.getContext("2d");
 		if (!context) throw new Error("Canvas 2D rendering is unavailable");
 		this.canvas = canvas;
 		this.context = context;
@@ -79,6 +86,17 @@ export class CanvasSurface {
 			this.resize(entry.contentRect.width, entry.contentRect.height);
 		});
 		this.observer.observe(canvas);
+		this.watchDevicePixelRatio();
+	}
+
+	// monitor moves between screens never fire the ResizeObserver, so track DPR via matchMedia
+	private watchDevicePixelRatio(): void {
+		if (typeof matchMedia !== "function") return;
+		this.dprQuery?.removeEventListener("change", this.onDprChange);
+		this.dprQuery = matchMedia(
+			`(resolution: ${this.options.getDevicePixelRatio()}dppx)`,
+		);
+		this.dprQuery.addEventListener("change", this.onDprChange);
 	}
 
 	resize(cssWidth: number, cssHeight: number): void {
@@ -89,32 +107,42 @@ export class CanvasSurface {
 			this.options.getDevicePixelRatio(),
 			this.options.maxDevicePixelRatio,
 		);
+		const changed =
+			this.canvas.width !== size.width || this.canvas.height !== size.height;
 		if (this.canvas.width !== size.width) this.canvas.width = size.width;
 		if (this.canvas.height !== size.height) this.canvas.height = size.height;
-		this.invalidate();
+		// sizing clears the bitmap, so repaint in the same frame instead of flashing until the next one
+		if (changed) this.drawNow();
+		else this.invalidate();
 	}
 
 	invalidate(): void {
 		if (this.disposed || this.frame !== 0) return;
 		this.frame = this.options.requestFrame(() => {
 			this.frame = 0;
-			this.context.setTransform(
-				this.canvas.width / this.logicalWidth,
-				0,
-				0,
-				this.canvas.height / this.logicalHeight,
-				0,
-				0,
-			);
-			this.draw();
+			this.drawNow();
 		});
+	}
+
+	private drawNow(): void {
+		this.context.setTransform(
+			this.canvas.width / this.logicalWidth,
+			0,
+			0,
+			this.canvas.height / this.logicalHeight,
+			0,
+			0,
+		);
+		this.draw();
 	}
 
 	dispose(): void {
 		if (this.disposed) return;
 		this.disposed = true;
 		this.observer.disconnect();
+		this.dprQuery?.removeEventListener("change", this.onDprChange);
 		if (this.frame !== 0) this.options.cancelFrame(this.frame);
 		this.frame = 0;
+		this.resolveReady();
 	}
 }

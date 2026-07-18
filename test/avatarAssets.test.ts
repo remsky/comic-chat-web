@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
+import { AvatarAtlasCache } from "../src/browser/avatarAssets.js";
 import type { AvatarData } from "../src/engine/avatar.js";
 
 const manifest = JSON.parse(
@@ -44,5 +45,39 @@ describe("avatar web atlases", () => {
 		}
 		expect(atlasUrls.size).toBe(6);
 		expect(poseCount).toBe(manifest.poseCount);
+	});
+
+	it("retries a failed decode instead of caching the rejection", async () => {
+		let attempts = 0;
+		const cache = new AvatarAtlasCache(async () => {
+			attempts++;
+			if (attempts === 1) throw new Error("network blip");
+			return {} as CanvasImageSource;
+		});
+		await expect(cache.load("/a.png")).rejects.toThrow("network blip");
+		await expect(cache.load("/a.png")).resolves.toBeDefined();
+		expect(attempts).toBe(2);
+	});
+
+	it("closes bitmaps that finish decoding after dispose", async () => {
+		let closed = 0;
+		let release: (() => void) | undefined;
+		const gate = new Promise<void>((resolve) => {
+			release = resolve;
+		});
+		const cache = new AvatarAtlasCache(async () => {
+			await gate;
+			return { close: () => closed++ } as unknown as CanvasImageSource & {
+				close(): void;
+			};
+		});
+		const avatar = {
+			poses: [{ sprite: { atlasUrl: "/a.png", x: 0, y: 0 } }],
+		} as unknown as AvatarData;
+		const preloading = cache.preload([avatar]);
+		cache.dispose();
+		release?.();
+		await preloading;
+		expect(closed).toBe(1);
 	});
 });

@@ -50,15 +50,69 @@ describe("DPR-aware canvas surface", () => {
 			},
 		});
 		surface.resize(230, 540);
-		surface.invalidate();
 		expect(canvas.width).toBe(460);
 		expect(canvas.height).toBe(1080);
-		expect(frameCallback).toBeDefined();
-		frameCallback?.(0);
 		expect(draws).toBe(1);
 		expect(transforms).toEqual([[0.2, 0, 0, 0.2, 0, 0]]);
+
+		surface.invalidate();
+		surface.invalidate();
+		expect(draws).toBe(1);
+		expect(frameCallback).toBeDefined();
+		frameCallback?.(0);
+		expect(draws).toBe(2);
+
+		surface.resize(230, 540);
+		expect(draws).toBe(2);
+		frameCallback?.(0);
+		expect(draws).toBe(3);
 		expect(observerCallback).toBeDefined();
 		surface.dispose();
+	});
+
+	it("repaints synchronously when sizing clears the bitmap", () => {
+		const context = { setTransform: () => {} };
+		const canvas = {
+			width: 0,
+			height: 0,
+			style: { aspectRatio: "", width: "", height: "" },
+			getContext: () => context,
+		} as unknown as HTMLCanvasElement;
+		let draws = 0;
+		const surface = new CanvasSurface(canvas, 2300, 5400, () => draws++, {
+			getDevicePixelRatio: () => 1,
+			requestFrame: () => 1,
+			cancelFrame: () => {},
+			createObserver: () =>
+				({
+					observe: () => {},
+					disconnect: () => {},
+				}) as unknown as ResizeObserver,
+		});
+		surface.resize(230, 540);
+		expect(draws).toBe(1);
+		surface.dispose();
+	});
+
+	it("settles ready when disposed before any draw", async () => {
+		const canvas = {
+			width: 0,
+			height: 0,
+			style: { aspectRatio: "", width: "", height: "" },
+			getContext: () => ({ setTransform: () => {} }),
+		} as unknown as HTMLCanvasElement;
+		const surface = new CanvasSurface(canvas, 2300, 5400, () => {}, {
+			getDevicePixelRatio: () => 1,
+			requestFrame: () => 1,
+			cancelFrame: () => {},
+			createObserver: () =>
+				({
+					observe: () => {},
+					disconnect: () => {},
+				}) as unknown as ResizeObserver,
+		});
+		surface.dispose();
+		await surface.ready;
 	});
 });
 
