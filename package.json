@@ -7,7 +7,7 @@
 		"test": "vitest run",
 		"test:browser": "playwright test",
 		"test:watch": "vitest",
-		"check": "biome check . && tsc && tsc -p tools/avb",
+		"check": "biome check . && tsc && tsc -p tools/avb && tsc -p worker",
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"deploy": "npm run build && wrangler deploy",
