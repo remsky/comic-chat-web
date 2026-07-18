@@ -83,7 +83,8 @@ export function bodySpriteLayers(
 			pose,
 			left: client.left + Math.trunc((clientWidth - fullWidth) / 2),
 			right: 0,
-			top: client.top - (clientHeight - fullHeight),
+			// bodycam.cpp:594 adds the slack to top even in y-up space, floating the body above its bbox
+			top: client.top + (clientHeight - fullHeight),
 			bottom: 0,
 		};
 		layer.right = layer.left + fullWidth;
@@ -114,7 +115,8 @@ export function bodySpriteLayers(
 	const fullHeight = round(scale * bitHeight);
 	const fullWidth = round(scale * bitWidth);
 	const fullLeft = client.left + Math.trunc((clientWidth - fullWidth) / 2);
-	const fullTop = client.top - (clientHeight - fullHeight);
+	// bodycam.cpp:559 "centered on bottom" adds the slack upward in y-up space
+	const fullTop = client.top + (clientHeight - fullHeight);
 	const fullRight = fullLeft + fullWidth;
 	const head: SpriteLayer = {
 		pose: headPose,
@@ -243,6 +245,8 @@ export interface CanvasPanelRendererOptions {
 	unitHeight: number;
 	background?: string;
 	foreground?: string;
+	normalFont?: string;
+	whisperFont?: string;
 }
 
 export class CanvasPanelRenderer {
@@ -402,7 +406,9 @@ export class CanvasPanelRenderer {
 
 		this.context.fillStyle = this.options.foreground ?? "#000";
 		this.context.font =
-			balloon.mode === SM_WHISPER ? WHISPER_FONT_CSS : NORMAL_FONT_CSS;
+			balloon.mode === SM_WHISPER
+				? (this.options.whisperFont ?? WHISPER_FONT_CSS)
+				: (this.options.normalFont ?? NORMAL_FONT_CSS);
 		this.context.textBaseline = "top";
 		for (let i = 0; i < fInfo.nLines; i++) {
 			const line = fInfo.lines[i];
@@ -430,13 +436,9 @@ export class CanvasPanelRenderer {
 		}
 		if (panel.hasBorder) {
 			context.strokeStyle = this.options.foreground ?? "#000";
+			// panel.cpp:1252 strokes a 2*60-wide pen on the panel edge path; the outer half clips away
 			context.lineWidth = 120;
-			context.strokeRect(
-				60,
-				60,
-				this.options.unitWidth - 120,
-				this.options.unitHeight - 120,
-			);
+			context.strokeRect(0, 0, this.options.unitWidth, this.options.unitHeight);
 		}
 		context.restore();
 	}
