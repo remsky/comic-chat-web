@@ -5,16 +5,21 @@
 	"type": "module",
 	"scripts": {
 		"test": "vitest run",
+		"test:browser": "playwright test",
 		"test:watch": "vitest",
 		"check": "biome check . && tsc",
+		"dev": "vite",
+		"build": "tsc && vite build",
 		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"format": "biome format --write ."
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.4",
+		"@playwright/test": "^1.61.1",
 		"@types/node": "^26.1.1",
 		"typescript": "^7.0.2",
+		"vite": "^8.1.5",
 		"vitest": "^4.1.10"
 	}
 }
