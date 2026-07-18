@@ -1,0 +1,11 @@
+# smoke test: two speakers, think/whisper balloons, shout/laugh/point emotion rules, one panel break
+@anna
+@bolo
+1>Hello there Bolo!
+2>hey anna
+1>T;I wonder if he knows about the treasure
+2>W;psst, I heard that
+1>WHAT DID YOU SAY?
+2>LOL you shout a lot
+
+1>Are you pointing at me?
