@@ -88,6 +88,7 @@ export interface AvatarFixture {
 	name: TraceAvatarName;
 	type: "simple" | "complex";
 	iconPoseID: number;
+	flags: number;
 	poses: AvatarPoseFixture[];
 	faces: AvatarFaceFixture[];
 	torsos: AvatarTorsoFixture[];
@@ -103,6 +104,19 @@ export interface AvatarFixtureSet {
 export interface AvatarFixtureInput {
 	name: TraceAvatarName;
 	bytes: Uint8Array;
+}
+
+export function formatAvatarFixtureSet(fixtures: AvatarFixtureSet): string {
+	const expandedCast = `\t"castOrder": [\n${fixtures.castOrder
+		.map(
+			(name, index) =>
+				`\t\t"${name}"${index === fixtures.castOrder.length - 1 ? "" : ","}`,
+		)
+		.join("\n")}\n\t]`;
+	const compactCast = `\t"castOrder": [${fixtures.castOrder
+		.map((name) => `"${name}"`)
+		.join(", ")}]`;
+	return `${JSON.stringify(fixtures, null, "\t").replace(expandedCast, compactCast)}\n`;
 }
 
 function globalPoseID(localPoseID: number, poseBase: number): number {
@@ -171,6 +185,7 @@ function buildAvatar(
 			name: input.name,
 			type: parsed.typeName as "simple" | "complex",
 			iconPoseID: globalPoseID(parsed.iconPoseID, poseBase),
+			flags: parsed.flags,
 			poses,
 			faces: parsed.faces.map((rec) => faceFixture(rec, poseBase)),
 			torsos: parsed.torsos.map((rec) => torsoFixture(rec, poseBase)),

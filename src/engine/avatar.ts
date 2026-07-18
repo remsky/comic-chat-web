@@ -16,6 +16,11 @@ export interface PoseData {
 	localPoseID: number;
 	width: number;
 	height: number;
+	sprite?: {
+		atlasUrl: string;
+		x: number;
+		y: number;
+	};
 }
 
 export interface FaceData {
@@ -51,6 +56,7 @@ export interface AvatarData {
 	name: string;
 	type: "simple" | "complex";
 	iconPoseID: number;
+	flags?: number;
 	poses: PoseData[];
 	faces: FaceData[];
 	torsos: TorsoData[];

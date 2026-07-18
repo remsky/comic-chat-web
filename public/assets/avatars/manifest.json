@@ -12,133 +12,243 @@
 					"poseID": 1,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 2,
 					"localPoseID": 2,
 					"width": 189,
-					"height": 135
+					"height": 135,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 3,
 					"localPoseID": 3,
 					"width": 184,
-					"height": 136
+					"height": 136,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 232,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 4,
 					"localPoseID": 4,
 					"width": 189,
-					"height": 138
+					"height": 138,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 417,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 5,
 					"localPoseID": 5,
 					"width": 191,
-					"height": 138
+					"height": 138,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 607,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 6,
 					"localPoseID": 6,
 					"width": 176,
-					"height": 150
+					"height": 150,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 799,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 7,
 					"localPoseID": 7,
 					"width": 185,
-					"height": 136
+					"height": 136,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 1,
+						"y": 152
+					}
 				},
 				{
 					"poseID": 8,
 					"localPoseID": 8,
 					"width": 175,
-					"height": 134
+					"height": 134,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 187,
+						"y": 152
+					}
 				},
 				{
 					"poseID": 9,
 					"localPoseID": 9,
 					"width": 181,
-					"height": 129
+					"height": 129,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 363,
+						"y": 152
+					}
 				},
 				{
 					"poseID": 10,
 					"localPoseID": 10,
 					"width": 175,
-					"height": 133
+					"height": 133,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 545,
+						"y": 152
+					}
 				},
 				{
 					"poseID": 11,
 					"localPoseID": 11,
 					"width": 180,
-					"height": 136
+					"height": 136,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 721,
+						"y": 152
+					}
 				},
 				{
 					"poseID": 12,
 					"localPoseID": 12,
 					"width": 175,
-					"height": 134
+					"height": 134,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 1,
+						"y": 289
+					}
 				},
 				{
 					"poseID": 13,
 					"localPoseID": 13,
 					"width": 198,
-					"height": 372
+					"height": 372,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 177,
+						"y": 289
+					}
 				},
 				{
 					"poseID": 14,
 					"localPoseID": 14,
 					"width": 177,
-					"height": 378
+					"height": 378,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 376,
+						"y": 289
+					}
 				},
 				{
 					"poseID": 15,
 					"localPoseID": 15,
 					"width": 133,
-					"height": 377
+					"height": 377,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 554,
+						"y": 289
+					}
 				},
 				{
 					"poseID": 16,
 					"localPoseID": 16,
 					"width": 250,
-					"height": 381
+					"height": 381,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 688,
+						"y": 289
+					}
 				},
 				{
 					"poseID": 17,
 					"localPoseID": 17,
 					"width": 137,
-					"height": 360
+					"height": 360,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 1,
+						"y": 671
+					}
 				},
 				{
 					"poseID": 18,
 					"localPoseID": 18,
 					"width": 185,
-					"height": 368
+					"height": 368,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 139,
+						"y": 671
+					}
 				},
 				{
 					"poseID": 19,
 					"localPoseID": 19,
 					"width": 153,
-					"height": 365
+					"height": 365,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 325,
+						"y": 671
+					}
 				},
 				{
 					"poseID": 20,
 					"localPoseID": 20,
 					"width": 206,
-					"height": 391
+					"height": 391,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 479,
+						"y": 671
+					}
 				},
 				{
 					"poseID": 21,
 					"localPoseID": 21,
 					"width": 171,
-					"height": 377
+					"height": 377,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 686,
+						"y": 671
+					}
 				},
 				{
 					"poseID": 22,
 					"localPoseID": 22,
 					"width": 191,
-					"height": 369
+					"height": 369,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/anna.png",
+						"x": 1,
+						"y": 1063
+					}
 				}
 			],
 			"faces": [
@@ -468,115 +578,210 @@
 					"poseID": 23,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 24,
 					"localPoseID": 2,
 					"width": 192,
-					"height": 156
+					"height": 156,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 25,
 					"localPoseID": 3,
 					"width": 189,
-					"height": 159
+					"height": 159,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 235,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 26,
 					"localPoseID": 4,
 					"width": 182,
-					"height": 169
+					"height": 169,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 425,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 27,
 					"localPoseID": 5,
 					"width": 199,
-					"height": 161
+					"height": 161,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 608,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 28,
 					"localPoseID": 6,
 					"width": 191,
-					"height": 153
+					"height": 153,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 808,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 29,
 					"localPoseID": 7,
 					"width": 196,
-					"height": 158
+					"height": 158,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 1,
+						"y": 171
+					}
 				},
 				{
 					"poseID": 30,
 					"localPoseID": 8,
 					"width": 196,
-					"height": 161
+					"height": 161,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 198,
+						"y": 171
+					}
 				},
 				{
 					"poseID": 31,
 					"localPoseID": 9,
 					"width": 193,
-					"height": 158
+					"height": 158,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 395,
+						"y": 171
+					}
 				},
 				{
 					"poseID": 32,
 					"localPoseID": 10,
 					"width": 188,
-					"height": 160
+					"height": 160,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 589,
+						"y": 171
+					}
 				},
 				{
 					"poseID": 33,
 					"localPoseID": 11,
 					"width": 211,
-					"height": 363
+					"height": 363,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 778,
+						"y": 171
+					}
 				},
 				{
 					"poseID": 34,
 					"localPoseID": 12,
 					"width": 189,
-					"height": 373
+					"height": 373,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 1,
+						"y": 535
+					}
 				},
 				{
 					"poseID": 35,
 					"localPoseID": 13,
 					"width": 239,
-					"height": 371
+					"height": 371,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 191,
+						"y": 535
+					}
 				},
 				{
 					"poseID": 36,
 					"localPoseID": 14,
 					"width": 188,
-					"height": 366
+					"height": 366,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 431,
+						"y": 535
+					}
 				},
 				{
 					"poseID": 37,
 					"localPoseID": 15,
 					"width": 189,
-					"height": 366
+					"height": 366,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 620,
+						"y": 535
+					}
 				},
 				{
 					"poseID": 38,
 					"localPoseID": 16,
 					"width": 220,
-					"height": 351
+					"height": 351,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 1,
+						"y": 909
+					}
 				},
 				{
 					"poseID": 39,
 					"localPoseID": 17,
 					"width": 222,
-					"height": 361
+					"height": 361,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 222,
+						"y": 909
+					}
 				},
 				{
 					"poseID": 40,
 					"localPoseID": 18,
 					"width": 331,
-					"height": 379
+					"height": 379,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 445,
+						"y": 909
+					}
 				},
 				{
 					"poseID": 41,
 					"localPoseID": 19,
 					"width": 215,
-					"height": 395
+					"height": 395,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/bolo.png",
+						"x": 777,
+						"y": 909
+					}
 				}
 			],
 			"faces": [
@@ -805,79 +1010,144 @@
 					"poseID": 42,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 43,
 					"localPoseID": 2,
 					"width": 187,
-					"height": 416
+					"height": 416,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 44,
 					"localPoseID": 3,
 					"width": 166,
-					"height": 421
+					"height": 421,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 230,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 45,
 					"localPoseID": 4,
 					"width": 192,
-					"height": 423
+					"height": 423,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 397,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 46,
 					"localPoseID": 5,
 					"width": 184,
-					"height": 424
+					"height": 424,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 590,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 47,
 					"localPoseID": 6,
 					"width": 162,
-					"height": 419
+					"height": 419,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 775,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 48,
 					"localPoseID": 7,
 					"width": 161,
-					"height": 408
+					"height": 408,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 1,
+						"y": 426
+					}
 				},
 				{
 					"poseID": 49,
 					"localPoseID": 8,
 					"width": 166,
-					"height": 419
+					"height": 419,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 163,
+						"y": 426
+					}
 				},
 				{
 					"poseID": 50,
 					"localPoseID": 9,
 					"width": 183,
-					"height": 432
+					"height": 432,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 330,
+						"y": 426
+					}
 				},
 				{
 					"poseID": 51,
 					"localPoseID": 10,
 					"width": 195,
-					"height": 431
+					"height": 431,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 514,
+						"y": 426
+					}
 				},
 				{
 					"poseID": 52,
 					"localPoseID": 11,
 					"width": 182,
-					"height": 432
+					"height": 432,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 710,
+						"y": 426
+					}
 				},
 				{
 					"poseID": 53,
 					"localPoseID": 12,
 					"width": 210,
-					"height": 413
+					"height": 413,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 1,
+						"y": 859
+					}
 				},
 				{
 					"poseID": 54,
 					"localPoseID": 13,
 					"width": 168,
-					"height": 422
+					"height": 422,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/connor.png",
+						"x": 212,
+						"y": 859
+					}
 				}
 			],
 			"faces": [],
@@ -1001,127 +1271,232 @@
 					"poseID": 55,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 56,
 					"localPoseID": 2,
 					"width": 149,
-					"height": 143
+					"height": 143,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 57,
 					"localPoseID": 3,
 					"width": 145,
-					"height": 135
+					"height": 135,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 192,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 58,
 					"localPoseID": 4,
 					"width": 149,
-					"height": 134
+					"height": 134,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 338,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 59,
 					"localPoseID": 5,
 					"width": 164,
-					"height": 136
+					"height": 136,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 488,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 60,
 					"localPoseID": 6,
 					"width": 160,
-					"height": 136
+					"height": 136,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 653,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 61,
 					"localPoseID": 7,
 					"width": 146,
-					"height": 130
+					"height": 130,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 814,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 62,
 					"localPoseID": 8,
 					"width": 142,
-					"height": 134
+					"height": 134,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 1,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 63,
 					"localPoseID": 9,
 					"width": 149,
-					"height": 137
+					"height": 137,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 144,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 64,
 					"localPoseID": 10,
 					"width": 149,
-					"height": 141
+					"height": 141,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 294,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 65,
 					"localPoseID": 11,
 					"width": 142,
-					"height": 138
+					"height": 138,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 444,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 66,
 					"localPoseID": 12,
 					"width": 147,
-					"height": 144
+					"height": 144,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 587,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 67,
 					"localPoseID": 13,
 					"width": 143,
-					"height": 135
+					"height": 135,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 735,
+						"y": 145
+					}
 				},
 				{
 					"poseID": 68,
 					"localPoseID": 14,
 					"width": 186,
-					"height": 370
+					"height": 370,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 1,
+						"y": 290
+					}
 				},
 				{
 					"poseID": 69,
 					"localPoseID": 15,
 					"width": 156,
-					"height": 371
+					"height": 371,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 188,
+						"y": 290
+					}
 				},
 				{
 					"poseID": 70,
 					"localPoseID": 16,
 					"width": 172,
-					"height": 366
+					"height": 366,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 345,
+						"y": 290
+					}
 				},
 				{
 					"poseID": 71,
 					"localPoseID": 17,
 					"width": 242,
-					"height": 405
+					"height": 405,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 518,
+						"y": 290
+					}
 				},
 				{
 					"poseID": 72,
 					"localPoseID": 18,
 					"width": 177,
-					"height": 380
+					"height": 380,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 761,
+						"y": 290
+					}
 				},
 				{
 					"poseID": 73,
 					"localPoseID": 19,
 					"width": 288,
-					"height": 376
+					"height": 376,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 1,
+						"y": 696
+					}
 				},
 				{
 					"poseID": 74,
 					"localPoseID": 20,
 					"width": 237,
-					"height": 365
+					"height": 365,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 290,
+						"y": 696
+					}
 				},
 				{
 					"poseID": 75,
 					"localPoseID": 21,
 					"width": 214,
-					"height": 379
+					"height": 379,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/denise.png",
+						"x": 528,
+						"y": 696
+					}
 				}
 			],
 			"faces": [
@@ -1402,121 +1777,221 @@
 					"poseID": 76,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 77,
 					"localPoseID": 2,
 					"width": 175,
-					"height": 154
+					"height": 154,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 78,
 					"localPoseID": 3,
 					"width": 165,
-					"height": 167
+					"height": 167,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 218,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 79,
 					"localPoseID": 4,
 					"width": 183,
-					"height": 177
+					"height": 177,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 384,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 80,
 					"localPoseID": 5,
 					"width": 178,
-					"height": 158
+					"height": 158,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 568,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 81,
 					"localPoseID": 6,
 					"width": 170,
-					"height": 172
+					"height": 172,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 747,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 82,
 					"localPoseID": 7,
 					"width": 174,
-					"height": 163
+					"height": 163,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 1,
+						"y": 179
+					}
 				},
 				{
 					"poseID": 83,
 					"localPoseID": 8,
 					"width": 187,
-					"height": 156
+					"height": 156,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 176,
+						"y": 179
+					}
 				},
 				{
 					"poseID": 84,
 					"localPoseID": 9,
 					"width": 186,
-					"height": 181
+					"height": 181,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 364,
+						"y": 179
+					}
 				},
 				{
 					"poseID": 85,
 					"localPoseID": 10,
 					"width": 186,
-					"height": 196
+					"height": 196,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 551,
+						"y": 179
+					}
 				},
 				{
 					"poseID": 86,
 					"localPoseID": 11,
 					"width": 177,
-					"height": 180
+					"height": 180,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 738,
+						"y": 179
+					}
 				},
 				{
 					"poseID": 87,
 					"localPoseID": 12,
 					"width": 230,
-					"height": 342
+					"height": 342,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 1,
+						"y": 376
+					}
 				},
 				{
 					"poseID": 88,
 					"localPoseID": 13,
 					"width": 296,
-					"height": 350
+					"height": 350,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 232,
+						"y": 376
+					}
 				},
 				{
 					"poseID": 89,
 					"localPoseID": 14,
 					"width": 230,
-					"height": 360
+					"height": 360,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 529,
+						"y": 376
+					}
 				},
 				{
 					"poseID": 90,
 					"localPoseID": 15,
 					"width": 271,
-					"height": 396
+					"height": 396,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 1,
+						"y": 737
+					}
 				},
 				{
 					"poseID": 91,
 					"localPoseID": 16,
 					"width": 231,
-					"height": 358
+					"height": 358,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 273,
+						"y": 737
+					}
 				},
 				{
 					"poseID": 92,
 					"localPoseID": 17,
 					"width": 233,
-					"height": 351
+					"height": 351,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 505,
+						"y": 737
+					}
 				},
 				{
 					"poseID": 93,
 					"localPoseID": 18,
 					"width": 393,
-					"height": 339
+					"height": 339,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 1,
+						"y": 1134
+					}
 				},
 				{
 					"poseID": 94,
 					"localPoseID": 19,
 					"width": 287,
-					"height": 338
+					"height": 338,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 395,
+						"y": 1134
+					}
 				},
 				{
 					"poseID": 95,
 					"localPoseID": 20,
 					"width": 304,
-					"height": 364
+					"height": 364,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/hugh.png",
+						"x": 683,
+						"y": 1134
+					}
 				}
 			],
 			"faces": [
@@ -1774,187 +2249,342 @@
 					"poseID": 96,
 					"localPoseID": 1,
 					"width": 40,
-					"height": 40
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 97,
 					"localPoseID": 2,
 					"width": 179,
-					"height": 155
+					"height": 155,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 42,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 98,
 					"localPoseID": 3,
 					"width": 176,
-					"height": 159
+					"height": 159,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 222,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 99,
 					"localPoseID": 4,
 					"width": 191,
-					"height": 160
+					"height": 160,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 399,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 100,
 					"localPoseID": 5,
 					"width": 190,
-					"height": 166
+					"height": 166,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 591,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 101,
 					"localPoseID": 6,
 					"width": 185,
-					"height": 145
+					"height": 145,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 782,
+						"y": 1
+					}
 				},
 				{
 					"poseID": 102,
 					"localPoseID": 7,
 					"width": 167,
-					"height": 148
+					"height": 148,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 168
+					}
 				},
 				{
 					"poseID": 103,
 					"localPoseID": 8,
 					"width": 177,
-					"height": 163
+					"height": 163,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 169,
+						"y": 168
+					}
 				},
 				{
 					"poseID": 104,
 					"localPoseID": 9,
 					"width": 175,
-					"height": 143
+					"height": 143,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 347,
+						"y": 168
+					}
 				},
 				{
 					"poseID": 105,
 					"localPoseID": 10,
 					"width": 206,
-					"height": 172
+					"height": 172,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 523,
+						"y": 168
+					}
 				},
 				{
 					"poseID": 106,
 					"localPoseID": 11,
 					"width": 203,
-					"height": 186
+					"height": 186,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 730,
+						"y": 168
+					}
 				},
 				{
 					"poseID": 107,
 					"localPoseID": 12,
 					"width": 215,
-					"height": 159
+					"height": 159,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 355
+					}
 				},
 				{
 					"poseID": 108,
 					"localPoseID": 13,
 					"width": 201,
-					"height": 172
+					"height": 172,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 217,
+						"y": 355
+					}
 				},
 				{
 					"poseID": 109,
 					"localPoseID": 14,
 					"width": 214,
-					"height": 177
+					"height": 177,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 419,
+						"y": 355
+					}
 				},
 				{
 					"poseID": 110,
 					"localPoseID": 15,
 					"width": 220,
-					"height": 173
+					"height": 173,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 634,
+						"y": 355
+					}
 				},
 				{
 					"poseID": 111,
 					"localPoseID": 16,
 					"width": 181,
-					"height": 138
+					"height": 138,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 533
+					}
 				},
 				{
 					"poseID": 112,
 					"localPoseID": 17,
 					"width": 163,
-					"height": 142
+					"height": 142,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 183,
+						"y": 533
+					}
 				},
 				{
 					"poseID": 113,
 					"localPoseID": 18,
 					"width": 144,
-					"height": 132
+					"height": 132,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 347,
+						"y": 533
+					}
 				},
 				{
 					"poseID": 114,
 					"localPoseID": 19,
 					"width": 153,
-					"height": 142
+					"height": 142,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 492,
+						"y": 533
+					}
 				},
 				{
 					"poseID": 115,
 					"localPoseID": 20,
 					"width": 169,
-					"height": 141
+					"height": 141,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 646,
+						"y": 533
+					}
 				},
 				{
 					"poseID": 116,
 					"localPoseID": 21,
 					"width": 208,
-					"height": 313
+					"height": 313,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 676
+					}
 				},
 				{
 					"poseID": 117,
 					"localPoseID": 22,
 					"width": 210,
-					"height": 302
+					"height": 302,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 210,
+						"y": 676
+					}
 				},
 				{
 					"poseID": 118,
 					"localPoseID": 23,
 					"width": 233,
-					"height": 301
+					"height": 301,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 421,
+						"y": 676
+					}
 				},
 				{
 					"poseID": 119,
 					"localPoseID": 24,
 					"width": 190,
-					"height": 311
+					"height": 311,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 655,
+						"y": 676
+					}
 				},
 				{
 					"poseID": 120,
 					"localPoseID": 25,
 					"width": 209,
-					"height": 313
+					"height": 313,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 990
+					}
 				},
 				{
 					"poseID": 121,
 					"localPoseID": 26,
 					"width": 180,
-					"height": 321
+					"height": 321,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 211,
+						"y": 990
+					}
 				},
 				{
 					"poseID": 122,
 					"localPoseID": 27,
 					"width": 186,
-					"height": 313
+					"height": 313,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 392,
+						"y": 990
+					}
 				},
 				{
 					"poseID": 123,
 					"localPoseID": 28,
 					"width": 178,
-					"height": 313
+					"height": 313,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 579,
+						"y": 990
+					}
 				},
 				{
 					"poseID": 124,
 					"localPoseID": 29,
 					"width": 284,
-					"height": 302
+					"height": 302,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 1,
+						"y": 1312
+					}
 				},
 				{
 					"poseID": 125,
 					"localPoseID": 30,
 					"width": 241,
-					"height": 389
+					"height": 389,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 286,
+						"y": 1312
+					}
 				},
 				{
 					"poseID": 126,
 					"localPoseID": 31,
 					"width": 196,
-					"height": 311
+					"height": 311,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/susan.png",
+						"x": 528,
+						"y": 1312
+					}
 				}
 			],
 			"faces": [

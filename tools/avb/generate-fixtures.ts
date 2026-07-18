@@ -3,7 +3,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildAvatarFixtures, TRACE_CAST } from "./fixtures.ts";
+import {
+	buildAvatarFixtures,
+	formatAvatarFixtureSet,
+	TRACE_CAST,
+} from "./fixtures.ts";
 
 const defaultAvatarDir = fileURLToPath(
 	new URL(
@@ -25,7 +29,7 @@ const fixtures = buildAvatarFixtures(
 );
 
 mkdirSync(dirname(output), { recursive: true });
-writeFileSync(output, `${JSON.stringify(fixtures, null, 2)}\n`);
+writeFileSync(output, formatAvatarFixtureSet(fixtures));
 process.stdout.write(
 	`${fixtures.avatars.length} avatars, ${fixtures.poseCount} poses -> ${output}\n`,
 );

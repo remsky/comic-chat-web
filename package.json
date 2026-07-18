@@ -8,6 +8,7 @@
 		"test:watch": "vitest",
 		"check": "biome check . && tsc",
 		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
+		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"format": "biome format --write ."
 	},
 	"devDependencies": {
