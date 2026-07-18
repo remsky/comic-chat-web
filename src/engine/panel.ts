@@ -194,6 +194,11 @@ export interface PanelBalloon {
 	text: string;
 	mode: number;
 	speaker: AvatarBody;
+	runtime?: CloneableBalloonRuntime;
+}
+
+export interface CloneableBalloonRuntime {
+	clone(): CloneableBalloonRuntime;
 }
 
 export interface UnitPanel {
@@ -216,6 +221,7 @@ export interface BalloonLayoutResult {
 
 export interface PanelPageHooks {
 	layoutBalloons(panel: UnitPanel, rand: MsvcRand): BalloonLayoutResult;
+	makeBalloon?(text: string, mode: number, speaker: AvatarBody): PanelBalloon;
 	onDecision?(decision: PanelDecision): void;
 	onRetry?(): void;
 	onCommit?(panel: UnitPanel): void;
@@ -241,7 +247,11 @@ export function cloneUnitPanel(panel: UnitPanel): UnitPanel {
 			const speaker = bodies[bodyIndex];
 			if (!speaker)
 				throw new Error("panel balloon has no matching speaker body");
-			return { ...balloon, speaker };
+			return {
+				...balloon,
+				speaker,
+				runtime: balloon.runtime?.clone(),
+			};
 		}),
 	};
 }
@@ -353,10 +363,11 @@ export class PanelPage {
 			this.panels.length <= 1 || (replaceLast && this.panels.length <= 2);
 
 		this.hooks.onDecision?.({ cloned: replaceLast, speaker: speakerID, words });
-		const balloon: PanelBalloon = {
+		const speaker = fetchSpeaker(panel, avatar);
+		const balloon = this.hooks.makeBalloon?.(words, mode, speaker) ?? {
 			text: words,
 			mode,
-			speaker: fetchSpeaker(panel, avatar),
+			speaker,
 		};
 		panel.balloons.push(balloon);
 		replaceBody(panel, avatar);
