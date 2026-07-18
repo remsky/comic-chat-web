@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { createBalloonSpline } from "../src/engine/balloonSpline.js";
 import type { FontMetrics, FormatInfo } from "../src/engine/balloonText.js";
@@ -55,9 +55,13 @@ describe("createBalloonSpline", () => {
 	});
 });
 
-describe("smoke-01 balloonSpline records", () => {
+const traceNames = readdirSync(new URL("../traces/", import.meta.url))
+	.filter((f) => f.endsWith(".jsonl"))
+	.sort();
+
+describe.each(traceNames)("%s balloonSpline records", (name) => {
 	const records = parseTrace(
-		readFileSync(new URL("../traces/smoke-01.jsonl", import.meta.url), "utf8"),
+		readFileSync(new URL(`../traces/${name}`, import.meta.url), "utf8"),
 	);
 	const lineHeights = [
 		...new Set(recordsOfType(records, "textExtent").map((te) => te.cy - 70)),
@@ -66,7 +70,7 @@ describe("smoke-01 balloonSpline records", () => {
 	it("reproduces every spline control point list exactly", () => {
 		const formats = recordsOfType(records, "balloonFormat");
 		const splines = recordsOfType(records, "balloonSpline");
-		expect(splines).toHaveLength(11);
+		expect(splines.length).toBeGreaterThan(0);
 
 		for (const sp of splines) {
 			const fmt = formats.find((f) => f.panel === sp.panel && f.i === sp.i);
@@ -81,6 +85,12 @@ describe("smoke-01 balloonSpline records", () => {
 					baseAdd: 60,
 					leading: -70,
 				});
+				// past 100 points the oracle overflows its POINT pts[100] stack buffer (balloon.cpp:434) and its trailing output is corruption-dependent, so compare the untainted prefix
+				if (sp.nCps > 100)
+					return (
+						JSON.stringify(got.cps.slice(0, 100)) ===
+						JSON.stringify(want.slice(0, 100))
+					);
 				return (
 					got.cps.length === sp.nCps &&
 					JSON.stringify(got.cps) === JSON.stringify(want)

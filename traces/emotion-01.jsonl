@@ -1,0 +1,973 @@
+{"type":"header","srand":1515,"unitWidth":2300,"unitHeight":2300,"panelsPerRow":4,"panelsAtStart":1}
+{"type":"cast","i":1,"name":"anna","avatarId":1}
+{"type":"cast","i":2,"name":"bolo","avatarId":2}
+{"type":"message","seq":0,"speaker":1,"mode":1,"text":"WATCH OUT BEHIND YOU!!!"}
+{"type":"emotion","avatarId":1,"opts":[[4.712385,1.000000,0]],"faceIndex":4,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"WATCH OUT BEHIND YOU!!!"}
+{"type":"textExtent","str":"WATCH OUT BEHIND YOU!!!","cx":4059,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT BEHIND YOU!!!\u0000","cx":2459,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WATCH OUT BEHIND YOU!!!","cx":4059,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH","cx":1097,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT BEHIND","cx":3133,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND YOU!!!","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU!!!","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT BEHIND YOU!!!","cx":4059,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH","cx":1097,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT BEHIND","cx":3133,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND YOU!!!","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU!!!","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND","cx":701,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"BEHIND YOU!!!","cx":1309,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WATCH OUT BEHIND YOU!!!...","cx":4257,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH","cx":1097,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WATCH OUT BEHIND","cx":3133,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BEHIND YOU!!!...","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU!!!...","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":0,"seed":4985,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":0,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1170,"bbox":[882,-2300,1418,-1090],"bodyClass":1,"poseFace":5,"poseTorso":13}
+{"type":"balloon","panel":0,"i":0,"speaker":1,"peType":1,"bbox":[160,-1318,2340,-80],"trueBox":[-100,-1130,1938,108],"routeRgn":[60,2098],"text":"WATCH OUT BEHIND YOU!!!..."}
+{"type":"balloonFormat","panel":0,"i":0,"nLines":3,"maxWidth":1838,"fbox":[71,-1041,1909,0],"shifted":1,"lines":[[9,1838,0],[6,1203,317],[9,1031,403]]}
+{"type":"balloonSpline","panel":0,"i":0,"closed":1,"nCps":20,"cps":[[-100,20],[-100,-427],[217,-427],[217,-754],[303,-754],[303,-1061],[611,-1130],[919,-1061],[1227,-1130],[1534,-1061],[1534,-754],[1620,-754],[1620,-427],[1938,-427],[1938,40],[1599,108],[1260,36],[921,104],[582,32],[243,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"..."}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":1,"seed":19875,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":1,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1232,"bbox":[441,-4626,1859,-1090],"bodyClass":1,"poseFace":9,"poseTorso":15}
+{"type":"balloon","panel":1,"i":0,"speaker":1,"peType":1,"bbox":[939,-527,1337,-80],"trueBox":[-100,-407,298,40],"routeRgn":[839,1237],"text":"..."}
+{"type":"balloonFormat","panel":1,"i":0,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":1,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"message","seq":1,"speaker":2,"mode":1,"text":"LOL that was hilarious"}
+{"type":"emotion","avatarId":2,"opts":[[5.497783,1.000000,0]],"faceIndex":11,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"LOL that was hilarious"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS","cx":4112,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS\u0000","cx":2353,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS","cx":4112,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WAS","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS HILARIOUS","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HILARIOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"LOL that was hilarious"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS","cx":4112,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS\u0000","cx":2353,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS","cx":4112,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS HILARIOUS","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HILARIOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS","cx":4112,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS HILARIOUS","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HILARIOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":410,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WAS HILARIOUS","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LOL THAT WAS HILARIOUS...","cx":4310,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL THAT WAS","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS HILARIOUS...","cx":2737,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HILARIOUS...","cx":1944,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":2,"seed":3421,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":2,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1071,"bbox":[485,-4059,1815,-1090],"bodyClass":1,"poseFace":32,"poseTorso":33}
+{"type":"balloon","panel":2,"i":0,"speaker":2,"peType":1,"bbox":[160,-1317,2340,-80],"trueBox":[-100,-1130,2044,107],"routeRgn":[60,2005],"text":"LOL THAT WAS HILARIOUS..."}
+{"type":"balloonFormat","panel":2,"i":0,"nLines":3,"maxWidth":1944,"fbox":[18,-1041,1962,0],"shifted":1,"lines":[[8,1481,231],[3,701,621],[12,1944,0]]}
+{"type":"balloonSpline","panel":2,"i":0,"closed":1,"nCps":20,"cps":[[131,20],[62,-296],[131,-614],[-100,-614],[-100,-1061],[206,-1130],[512,-1061],[818,-1130],[1124,-1061],[1430,-1130],[1736,-1061],[2044,-1061],[2044,-614],[1812,-614],[1882,-287],[1812,40],[1477,107],[1142,34],[807,101],[472,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"..."}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":3,"seed":13602,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":3,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1092,"bbox":[530,-4110,1770,-1090],"bodyClass":1,"poseFace":24,"poseTorso":36}
+{"type":"balloon","panel":3,"i":0,"speaker":2,"peType":1,"bbox":[1098,-527,1496,-80],"trueBox":[-100,-407,298,40],"routeRgn":[998,1396],"text":"..."}
+{"type":"balloonFormat","panel":3,"i":0,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":3,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"message","seq":2,"speaker":1,"mode":1,"text":"Hi there, welcome!"}
+{"type":"emotion","avatarId":1,"opts":[[1001.000000,1.000000,0]],"faceIndex":13,"torsoIndex":7,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"Hi there, welcome!"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE,","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THERE,","cx":1058,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THERE, WELCOME!","cx":2697,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WELCOME!","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Hi there, welcome!"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE,","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WELCOME!","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":4,"seed":18831,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":4,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1180,"bbox":[406,-4527,1894,-1090],"bodyClass":1,"poseFace":10,"poseTorso":18}
+{"type":"balloon","panel":4,"i":0,"speaker":1,"peType":1,"bbox":[229,-990,2409,-80],"trueBox":[-169,-803,1717,107],"routeRgn":[60,1946],"text":"HI THERE, WELCOME!"}
+{"type":"balloonFormat","panel":4,"i":0,"nLines":2,"maxWidth":1547,"fbox":[216,-714,1763,0],"shifted":1,"lines":[[9,1534,6],[8,1547,0]]}
+{"type":"balloonSpline","panel":4,"i":0,"closed":1,"nCps":14,"cps":[[-100,20],[-169,-356],[-100,-734],[249,-803],[598,-734],[947,-803],[1296,-734],[1647,-734],[1717,-347],[1647,40],[1299,107],[951,34],[603,101],[255,28]]}
+{"type":"message","seq":3,"speaker":2,"mode":1,"text":"Hello and goodbye"}
+{"type":"emotion","avatarId":2,"opts":[[1001.000000,1.000000,0]],"faceIndex":4,"torsoIndex":10,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"Hello and goodbye"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE,","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI THERE, WELCOME!","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WELCOME!","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO","cx":965,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND GOODBYE","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"Hello and goodbye"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO","cx":965,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":5,"seed":29080,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":5,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1178,"bbox":[468,-4088,1831,-1090],"bodyClass":1,"poseFace":25,"poseTorso":41}
+{"type":"balloon","panel":5,"i":0,"speaker":2,"peType":1,"bbox":[160,-991,2340,-80],"trueBox":[-100,-803,1819,108],"routeRgn":[60,1979],"text":"HELLO AND GOODBYE"}
+{"type":"balloonFormat","panel":5,"i":0,"nLines":2,"maxWidth":1719,"fbox":[130,-714,1849,0],"shifted":1,"lines":[[9,1719,0],[7,1441,139]]}
+{"type":"balloonSpline","panel":5,"i":0,"closed":1,"nCps":17,"cps":[[-100,20],[-100,-427],[39,-427],[39,-734],[367,-803],[695,-734],[1023,-803],[1351,-734],[1680,-734],[1680,-427],[1819,-427],[1819,40],[1500,108],[1181,36],[862,104],[543,32],[224,100]]}
+{"type":"message","seq":4,"speaker":1,"mode":1,"text":"I am so excited about this"}
+{"type":"emotion","avatarId":1,"opts":[[1003.000000,1.000000,0]],"faceIndex":16,"torsoIndex":1,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"I am so excited about this"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO","cx":965,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HELLO AND GOODBYE","cx":3252,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS\u0000","cx":2644,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED","cx":2657,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED ABOUT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT","cx":1044,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT THIS","cx":1917,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"I am so excited about this"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS\u0000","cx":2644,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED","cx":2657,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED ABOUT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT","cx":1044,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT THIS","cx":1917,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT THIS","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED","cx":2657,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED ABOUT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT","cx":1044,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT THIS","cx":1917,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED","cx":767,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"EXCITED ABOUT","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"EXCITED ABOUT THIS","cx":1891,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM SO EXCITED ABOUT...","cx":3993,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM SO EXCITED","cx":2657,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EXCITED ABOUT...","cx":2657,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ABOUT...","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":6,"seed":22771,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":6,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1254,"bbox":[438,-4508,1862,-1090],"bodyClass":1,"poseFace":11,"poseTorso":14}
+{"type":"balloon","panel":6,"i":0,"speaker":1,"peType":1,"bbox":[229,-1317,2409,-80],"trueBox":[-169,-1130,1492,107],"routeRgn":[60,2177],"text":"I AM SO EXCITED ABOUT..."}
+{"type":"balloonFormat","panel":6,"i":0,"nLines":3,"maxWidth":1322,"fbox":[329,-1041,1651,0],"shifted":1,"lines":[[7,1243,39],[7,1322,0],[8,1243,39]]}
+{"type":"balloonSpline","panel":6,"i":0,"closed":1,"nCps":16,"cps":[[-100,20],[-169,-339],[-100,-698],[-100,-1061],[204,-1130],[508,-1061],[812,-1130],[1116,-1061],[1422,-1061],[1492,-694],[1422,-327],[1422,40],[1119,107],[816,34],[513,101],[210,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... THIS"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... THIS\u0000","cx":647,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":7,"seed":2125,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":7,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1252,"bbox":[492,-4537,1808,-1090],"bodyClass":1,"poseFace":12,"poseTorso":15}
+{"type":"balloon","panel":7,"i":0,"speaker":1,"peType":1,"bbox":[671,-923,1800,-80],"trueBox":[-100,-803,880,40],"routeRgn":[571,1551],"text":"... THIS"}
+{"type":"balloonFormat","panel":7,"i":0,"nLines":2,"maxWidth":780,"fbox":[74,-714,854,0],"shifted":1,"lines":[[3,198,291],[4,780,0]]}
+{"type":"balloonSpline","panel":7,"i":0,"closed":1,"nCps":10,"cps":[[191,20],[191,-287],[-100,-287],[-100,-734],[227,-803],[554,-734],[880,-734],[880,-287],[589,-287],[589,40]]}
+{"type":"message","seq":5,"speaker":2,"mode":1,"text":"You are going to love it"}
+{"type":"emotion","avatarId":2,"opts":[[1002.000000,1.000000,0]],"faceIndex":0,"torsoIndex":1,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"You are going to love it"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... THIS\u0000","cx":647,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... THIS","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT","cx":4270,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT\u0000","cx":2485,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT","cx":4270,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO","cx":1560,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO LOVE","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO LOVE IT","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":357,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"You are going to love it"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT","cx":4270,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT\u0000","cx":2485,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT","cx":4270,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO","cx":1560,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO LOVE","cx":2419,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOVE","cx":767,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOVE IT","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE IT","cx":4270,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO","cx":1560,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO LOVE","cx":2419,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOVE","cx":767,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOVE IT","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING","cx":582,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOING TO","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOING TO LOVE","cx":1388,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOING TO LOVE IT","cx":1600,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ARE GOING TO LOVE...","cx":4019,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ARE GOING","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO","cx":1560,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOING TO LOVE...","cx":2618,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOVE...","cx":965,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":8,"seed":27515,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":8,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1101,"bbox":[520,-4125,1779,-1090],"bodyClass":1,"poseFace":24,"poseTorso":34}
+{"type":"balloon","panel":8,"i":0,"speaker":2,"peType":1,"bbox":[160,-1317,2340,-80],"trueBox":[-100,-1130,1660,107],"routeRgn":[60,1820],"text":"YOU ARE GOING TO LOVE..."}
+{"type":"balloonFormat","panel":8,"i":0,"nLines":3,"maxWidth":1560,"fbox":[210,-1041,1770,0],"shifted":1,"lines":[[7,1309,125],[8,1560,0],[7,965,297]]}
+{"type":"balloonSpline","panel":8,"i":0,"closed":1,"nCps":18,"cps":[[25,20],[25,-287],[-100,-287],[-100,-754],[197,-754],[197,-1061],[585,-1130],[973,-1061],[1362,-1061],[1362,-754],[1660,-754],[1660,-287],[1534,-287],[1534,40],[1233,107],[932,34],[631,101],[330,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... IT"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT\u0000","cx":396,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":9,"seed":2890,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":9,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1108,"bbox":[543,-4073,1756,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":9,"i":0,"speaker":2,"peType":1,"bbox":[693,-657,1541,-80],"trueBox":[-100,-476,748,101],"routeRgn":[593,1441],"text":"... IT"}
+{"type":"balloonFormat","panel":9,"i":0,"nLines":1,"maxWidth":648,"fbox":[0,-387,648,0],"shifted":1,"lines":[[6,648,0]]}
+{"type":"balloonSpline","panel":9,"i":0,"closed":1,"nCps":6,"cps":[[-100,20],[-100,-407],[324,-476],[748,-407],[748,40],[324,101]]}
+{"type":"message","seq":6,"speaker":1,"mode":1,"text":"I think we should celebrate :)"}
+{"type":"emotion","avatarId":1,"opts":[[0.000000,1.000000,0],[1003.000000,1.000000,0]],"faceIndex":1,"torsoIndex":1,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"I think we should celebrate :)"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT\u0000","cx":396,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)","cx":5196,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)\u0000","cx":3107,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)","cx":5196,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WE","cx":476,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WE SHOULD","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD CELEBRATE","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CELEBRATE","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":":)","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"I think we should celebrate :)"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)","cx":5196,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)\u0000","cx":3107,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)","cx":5196,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD","cx":3147,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD CELEBRATE","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CELEBRATE","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CELEBRATE :)","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD CELEBRATE :)","cx":5196,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD","cx":3147,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD CELEBRATE","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CELEBRATE","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CELEBRATE :)","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":754,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHOULD CELEBRATE","cx":1864,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I THINK WE SHOULD...","cx":3345,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I THINK WE SHOULD...","cx":3345,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD...","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":10,"seed":30110,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":10,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1235,"bbox":[442,-4508,1857,-1090],"bodyClass":1,"poseFace":3,"poseTorso":14}
+{"type":"balloon","panel":10,"i":0,"speaker":1,"peType":1,"bbox":[160,-991,2340,-80],"trueBox":[-100,-803,1911,108],"routeRgn":[60,2217],"text":"I THINK WE SHOULD..."}
+{"type":"balloonFormat","panel":10,"i":0,"nLines":2,"maxWidth":1811,"fbox":[84,-714,1895,0],"shifted":1,"lines":[[10,1811,0],[9,1441,185]]}
+{"type":"balloonSpline","panel":10,"i":0,"closed":1,"nCps":17,"cps":[[-100,20],[-100,-427],[85,-427],[85,-734],[413,-803],[741,-734],[1069,-803],[1397,-734],[1726,-734],[1726,-427],[1911,-427],[1911,40],[1577,108],[1243,36],[909,104],[575,32],[241,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... CELEBRATE :)"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE :)\u0000","cx":1454,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":":)","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":11,"seed":6920,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":11,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1212,"bbox":[459,-4451,1840,-1090],"bodyClass":1,"poseFace":4,"poseTorso":15}
+{"type":"balloon","panel":11,"i":0,"speaker":1,"peType":1,"bbox":[160,-922,2340,-80],"trueBox":[-100,-734,2057,108],"routeRgn":[60,2217],"text":"... CELEBRATE :)"}
+{"type":"balloonFormat","panel":11,"i":0,"nLines":2,"maxWidth":1957,"fbox":[11,-714,1968,0],"shifted":1,"lines":[[13,1957,0],[2,198,879]]}
+{"type":"balloonSpline","panel":11,"i":0,"closed":1,"nCps":16,"cps":[[-100,20],[-100,-427],[340,-496],[779,-427],[779,-734],[1177,-734],[1177,-427],[1617,-496],[2057,-427],[2057,40],[1750,108],[1443,36],[1136,104],[829,32],[522,100],[215,28]]}
+{"type":"message","seq":7,"speaker":2,"mode":1,"text":"You always know what to say ;)"}
+{"type":"emotion","avatarId":2,"opts":[[1002.000000,1.000000,0]],"faceIndex":0,"torsoIndex":1,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"You always know what to say ;)"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE :)\u0000","cx":1454,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... CELEBRATE :)","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":":)","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)","cx":5540,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)\u0000","cx":3292,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)","cx":5540,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS","cx":1256,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS KNOW","cx":2287,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW WHAT","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WHAT","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WHAT TO","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY ;)","cx":1415,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"You always know what to say ;)"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)","cx":5540,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)\u0000","cx":3292,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)","cx":5540,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS","cx":1256,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS KNOW","cx":2287,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW WHAT","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW WHAT TO","cx":2486,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY ;)","cx":1415,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW WHAT TO SAY ;)","cx":5540,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS","cx":1256,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS KNOW","cx":2287,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW WHAT","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW WHAT TO","cx":2486,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO SAY ;)","cx":1415,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS","cx":754,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ALWAYS KNOW","cx":1375,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ALWAYS KNOW WHAT","cx":1957,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU ALWAYS KNOW...","cx":3213,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU ALWAYS","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS","cx":1256,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALWAYS KNOW...","cx":2486,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"KNOW...","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":12,"seed":26534,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":12,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1101,"bbox":[520,-4125,1779,-1090],"bodyClass":1,"poseFace":24,"poseTorso":34}
+{"type":"balloon","panel":12,"i":0,"speaker":2,"peType":1,"bbox":[229,-1311,2409,-80],"trueBox":[-169,-1130,1426,101],"routeRgn":[60,2217],"text":"YOU ALWAYS KNOW..."}
+{"type":"balloonFormat","panel":12,"i":0,"nLines":3,"maxWidth":1256,"fbox":[362,-1041,1618,0],"shifted":1,"lines":[[3,635,310],[6,1256,0],[7,1137,59]]}
+{"type":"balloonSpline","panel":12,"i":0,"closed":1,"nCps":14,"cps":[[210,20],[210,-287],[-100,-287],[-169,-673],[-100,-1061],[264,-1130],[628,-1061],[992,-1130],[1356,-1061],[1426,-674],[1356,-287],[1045,-287],[1045,40],[627,101]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... WHAT TO SAY ;)"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)\u0000","cx":1626,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO SAY","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAY","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAY ;)","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":13,"seed":25209,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":13,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1108,"bbox":[543,-4073,1756,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":13,"i":0,"speaker":2,"peType":1,"bbox":[160,-991,2340,-80],"trueBox":[-100,-803,1845,108],"routeRgn":[60,2005],"text":"... WHAT TO SAY ;)"}
+{"type":"balloonFormat","panel":13,"i":0,"nLines":2,"maxWidth":1745,"fbox":[117,-714,1862,0],"shifted":1,"lines":[[11,1745,0],[6,886,429]]}
+{"type":"balloonSpline","panel":13,"i":0,"closed":1,"nCps":15,"cps":[[-100,20],[-100,-427],[329,-427],[329,-734],[691,-803],[1053,-734],[1415,-734],[1415,-427],[1845,-427],[1845,40],[1522,108],[1199,36],[876,104],[553,32],[230,100]]}
+{"type":"message","seq":8,"speaker":1,"mode":1,"text":"HAHAHA that is too funny"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":11,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"HAHAHA that is too funny"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)\u0000","cx":1626,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... WHAT TO SAY ;)","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WHAT TO SAY","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAY","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAY ;)","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY","cx":4588,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY\u0000","cx":2578,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY","cx":4588,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS TOO","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO FUNNY","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FUNNY","cx":1044,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"HAHAHA that is too funny"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY","cx":4588,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY\u0000","cx":2578,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY","cx":4588,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS TOO","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO FUNNY","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO FUNNY","cx":4588,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS TOO","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO FUNNY","cx":1811,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":450,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT IS","cx":674,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT IS TOO","cx":1097,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT IS TOO FUNNY","cx":1785,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HAHAHA THAT IS TOO...","cx":3649,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHAHA THAT","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT IS TOO...","cx":2248,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO...","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":14,"seed":23880,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":14,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1232,"bbox":[444,-4657,1856,-1090],"bodyClass":1,"poseFace":9,"poseTorso":17}
+{"type":"balloon","panel":14,"i":0,"speaker":1,"peType":1,"bbox":[229,-1317,2409,-80],"trueBox":[-169,-1130,1479,107],"routeRgn":[60,2071],"text":"HAHAHA THAT IS TOO..."}
+{"type":"balloonFormat","panel":14,"i":0,"nLines":3,"maxWidth":1309,"fbox":[335,-1041,1644,0],"shifted":1,"lines":[[6,1309,0],[7,1282,13],[6,873,218]]}
+{"type":"balloonSpline","panel":14,"i":0,"closed":1,"nCps":16,"cps":[[-100,20],[-169,-366],[-100,-754],[118,-754],[118,-1061],[476,-1130],[834,-1061],[1191,-1061],[1191,-754],[1409,-754],[1479,-357],[1409,40],[1108,107],[807,34],[506,101],[205,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... FUNNY"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FUNNY\u0000","cx":872,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":15,"seed":26504,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":15,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1123,"bbox":[350,-4616,1950,-1090],"bodyClass":1,"poseFace":10,"poseTorso":20}
+{"type":"balloon","panel":15,"i":0,"speaker":1,"peType":1,"bbox":[484,-663,2019,-80],"trueBox":[-100,-476,1435,107],"routeRgn":[384,1919],"text":"... FUNNY"}
+{"type":"balloonFormat","panel":15,"i":0,"nLines":1,"maxWidth":1335,"fbox":[0,-387,1335,0],"shifted":1,"lines":[[9,1335,0]]}
+{"type":"balloonSpline","panel":15,"i":0,"closed":1,"nCps":12,"cps":[[-100,20],[-100,-407],[207,-476],[514,-407],[821,-476],[1128,-407],[1435,-407],[1435,40],[1129,107],[823,34],[517,101],[211,28]]}
+{"type":"message","seq":9,"speaker":2,"mode":1,"text":"WOW I CANNOT BELIEVE IT"}
+{"type":"emotion","avatarId":2,"opts":[[4.712385,1.000000,0]],"faceIndex":9,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"WOW I CANNOT BELIEVE IT"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FUNNY\u0000","cx":872,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FUNNY","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT","cx":4244,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT\u0000","cx":2432,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT","cx":4244,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":357,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"WOW I CANNOT BELIEVE IT"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT","cx":4244,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT\u0000","cx":2432,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT","cx":4244,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BELIEVE","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE IT","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE IT","cx":4244,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BELIEVE","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE IT","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":727,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"CANNOT BELIEVE","cx":1534,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"CANNOT BELIEVE IT","cx":1745,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WOW I CANNOT BELIEVE...","cx":3993,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WOW I CANNOT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BELIEVE...","cx":2829,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BELIEVE...","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":16,"seed":29358,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":16,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1074,"bbox":[461,-3934,1838,-1090],"bodyClass":1,"poseFace":30,"poseTorso":38}
+{"type":"balloon","panel":16,"i":0,"speaker":2,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,1541,106],"routeRgn":[60,1952],"text":"WOW I CANNOT BELIEVE..."}
+{"type":"balloonFormat","panel":16,"i":0,"nLines":3,"maxWidth":1441,"fbox":[269,-1041,1710,0],"shifted":1,"lines":[[5,1071,185],[6,1296,72],[10,1441,0]]}
+{"type":"balloonSpline","panel":16,"i":0,"closed":1,"nCps":19,"cps":[[85,20],[85,-287],[-28,-287],[-28,-614],[-100,-614],[-100,-1061],[228,-1130],[556,-1061],[884,-1130],[1212,-1061],[1541,-1061],[1541,-614],[1468,-614],[1468,-287],[1356,-287],[1356,40],[1039,106],[722,32],[405,98]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... IT"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT\u0000","cx":396,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... IT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":17,"seed":22170,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":17,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1075,"bbox":[467,-4125,1832,-1090],"bodyClass":1,"poseFace":24,"poseTorso":33}
+{"type":"balloon","panel":17,"i":0,"speaker":2,"peType":1,"bbox":[812,-657,1660,-80],"trueBox":[-100,-476,748,101],"routeRgn":[712,1560],"text":"... IT"}
+{"type":"balloonFormat","panel":17,"i":0,"nLines":1,"maxWidth":648,"fbox":[0,-387,648,0],"shifted":1,"lines":[[6,648,0]]}
+{"type":"balloonSpline","panel":17,"i":0,"closed":1,"nCps":6,"cps":[[-100,20],[-100,-407],[324,-476],[748,-407],[748,40],[324,101]]}
+{"type":"message","seq":10,"speaker":1,"mode":1,"text":"<Brk>"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":16,"torsoIndex":14,"requested":0}
+{"type":"message","seq":11,"speaker":1,"mode":1,"text":"Wave hello to everyone please"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":16,"torsoIndex":14,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Wave hello to everyone please"}
+{"type":"textExtent","str":"WAVE HELLO TO EVERYONE PLEASE","cx":5315,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO TO EVERYONE PLEASE\u0000","cx":3265,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WAVE HELLO TO EVERYONE PLEASE","cx":5315,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO","cx":1930,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO TO","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO EVERYONE","cx":2115,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EVERYONE","cx":1587,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EVERYONE PLEASE","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"PLEASE","cx":1084,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO TO EVERYONE PLEASE","cx":5315,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO","cx":1930,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO TO","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO EVERYONE","cx":2115,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EVERYONE","cx":1587,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EVERYONE PLEASE","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"PLEASE","cx":1084,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":238,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"TO EVERYONE","cx":1282,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"TO EVERYONE PLEASE","cx":2023,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WAVE HELLO TO EVERYONE...","cx":4337,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO","cx":1930,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAVE HELLO TO","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO EVERYONE...","cx":2314,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EVERYONE...","cx":1785,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":18,"seed":18174,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":18,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1239,"bbox":[422,-4451,1878,-1090],"bodyClass":1,"poseFace":11,"poseTorso":21}
+{"type":"balloon","panel":18,"i":0,"speaker":1,"peType":1,"bbox":[160,-1318,2340,-80],"trueBox":[-100,-1130,2030,108],"routeRgn":[60,2190],"text":"WAVE HELLO TO EVERYONE..."}
+{"type":"balloonFormat","panel":18,"i":0,"nLines":3,"maxWidth":1930,"fbox":[25,-1041,1955,0],"shifted":1,"lines":[[10,1930,0],[2,436,747],[11,1785,72]]}
+{"type":"balloonSpline","panel":18,"i":0,"closed":1,"nCps":21,"cps":[[-100,20],[-100,-427],[-28,-427],[-97,-743],[-28,-1061],[303,-1130],[634,-1061],[965,-1130],[1296,-1061],[1627,-1130],[1957,-1061],[2027,-744],[1957,-427],[2030,-427],[2030,40],[1727,108],[1424,36],[1121,104],[818,32],[515,100],[212,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... PLEASE"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... PLEASE\u0000","cx":925,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":19,"seed":4488,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":19,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1157,"bbox":[396,-4517,1903,-1090],"bodyClass":1,"poseFace":12,"poseTorso":13}
+{"type":"balloon","panel":19,"i":0,"speaker":1,"peType":1,"bbox":[283,-663,1858,-80],"trueBox":[-100,-476,1475,107],"routeRgn":[183,1758],"text":"... PLEASE"}
+{"type":"balloonFormat","panel":19,"i":0,"nLines":1,"maxWidth":1375,"fbox":[0,-387,1375,0],"shifted":1,"lines":[[10,1375,0]]}
+{"type":"balloonSpline","panel":19,"i":0,"closed":1,"nCps":12,"cps":[[-100,20],[-100,-407],[215,-476],[530,-407],[845,-476],[1160,-407],[1475,-407],[1475,40],[1161,107],[847,34],[533,101],[219,28]]}
+{"type":"message","seq":12,"speaker":2,"mode":1,"text":"I wave back at you"}
+{"type":"emotion","avatarId":2,"opts":[[1003.000000,1.000000,0]],"faceIndex":4,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"I wave back at you"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... PLEASE\u0000","cx":925,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... PLEASE","cx":1375,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU\u0000","cx":1890,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BACK","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BACK AT","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BACK AT YOU","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"I wave back at you"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU\u0000","cx":1890,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT","cx":410,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT YOU","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":20,"seed":24251,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":20,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1096,"bbox":[392,-4080,1907,-1090],"bodyClass":1,"poseFace":25,"poseTorso":35}
+{"type":"balloon","panel":20,"i":0,"speaker":2,"peType":1,"bbox":[160,-991,2340,-80],"trueBox":[-100,-803,2057,108],"routeRgn":[60,2217],"text":"I WAVE BACK AT YOU"}
+{"type":"balloonFormat","panel":20,"i":0,"nLines":2,"maxWidth":1957,"fbox":[11,-714,1968,0],"shifted":1,"lines":[[11,1957,0],[6,1137,410]]}
+{"type":"balloonSpline","panel":20,"i":0,"closed":1,"nCps":17,"cps":[[-100,20],[-100,-427],[310,-427],[310,-734],[644,-803],[978,-734],[1312,-803],[1647,-734],[1647,-427],[2057,-427],[2057,40],[1750,108],[1443,36],[1136,104],[829,32],[522,100],[215,28]]}
+{"type":"message","seq":13,"speaker":1,"mode":1,"text":"You make me laugh so much LOL"}
+{"type":"emotion","avatarId":1,"opts":[[5.497783,1.000000,0],[1002.000000,1.000000,0]],"faceIndex":6,"torsoIndex":15,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"You make me laugh so much LOL"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU\u0000","cx":1890,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I WAVE BACK AT YOU","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK","cx":1957,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I WAVE BACK AT","cx":2459,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT","cx":410,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT YOU","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL","cx":5302,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL\u0000","cx":3265,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL","cx":5302,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MAKE","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MAKE ME","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MAKE ME LAUGH","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGH","cx":1005,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGH SO","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH LOL","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"You make me laugh so much LOL"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL","cx":5302,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL\u0000","cx":3265,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL","cx":5302,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME","cx":2076,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH SO","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH LOL","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO MUCH LOL","cx":5302,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME","cx":2076,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH SO","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO MUCH LOL","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME","cx":278,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ME LAUGH","cx":939,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ME LAUGH SO","cx":1243,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ME LAUGH SO MUCH","cx":1838,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"YOU MAKE ME LAUGH SO...","cx":3900,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"YOU MAKE ME","cx":2076,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ME LAUGH SO...","cx":2261,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SO...","cx":635,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":21,"seed":12392,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":21,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1096,"bbox":[390,-4171,1910,-1090],"bodyClass":1,"poseFace":6,"poseTorso":22}
+{"type":"balloon","panel":21,"i":0,"speaker":1,"peType":1,"bbox":[229,-1317,2409,-80],"trueBox":[-169,-1130,1717,107],"routeRgn":[60,1946],"text":"YOU MAKE ME LAUGH SO..."}
+{"type":"balloonFormat","panel":21,"i":0,"nLines":3,"maxWidth":1547,"fbox":[216,-1041,1763,0],"shifted":1,"lines":[[8,1547,0],[8,1534,6],[5,635,456]]}
+{"type":"balloonSpline","panel":21,"i":0,"closed":1,"nCps":15,"cps":[[-100,20],[-169,-366],[-100,-754],[356,-754],[356,-1061],[774,-1130],[1191,-1061],[1191,-754],[1647,-754],[1717,-357],[1647,40],[1299,107],[951,34],[603,101],[255,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... MUCH LOL"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH LOL\u0000","cx":1176,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH","cx":1150,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LOL","cx":555,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":22,"seed":8427,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":22,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1150,"bbox":[362,-4596,1938,-1090],"bodyClass":1,"poseFace":9,"poseTorso":13}
+{"type":"balloon","panel":22,"i":0,"speaker":1,"peType":1,"bbox":[711,-989,2340,-80],"trueBox":[-100,-803,1250,106],"routeRgn":[611,1961],"text":"... MUCH LOL"}
+{"type":"balloonFormat","panel":22,"i":0,"nLines":2,"maxWidth":1150,"fbox":[139,-714,1289,0],"shifted":1,"lines":[[8,1150,0],[3,555,297]]}
+{"type":"balloonSpline","panel":22,"i":0,"closed":1,"nCps":12,"cps":[[-100,20],[-100,-427],[197,-427],[197,-734],[575,-803],[952,-734],[952,-427],[1250,-427],[1250,40],[913,106],[576,32],[239,98]]}
+{"type":"message","seq":14,"speaker":2,"mode":1,"text":"I am laughing too haha"}
+{"type":"emotion","avatarId":2,"opts":[[1003.000000,1.000000,0]],"faceIndex":0,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"I am laughing too haha"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH LOL\u0000","cx":1176,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH","cx":1150,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MUCH LOL","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA","cx":4138,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA\u0000","cx":2326,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA","cx":4138,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING","cx":2406,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING","cx":1600,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO HAHA","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HAHA","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"I am laughing too haha"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA","cx":4138,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA\u0000","cx":2326,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA","cx":4138,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING","cx":2406,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING","cx":1600,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING TOO","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO HAHA","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING TOO HAHA","cx":4138,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING","cx":2406,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING","cx":1600,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING TOO","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO HAHA","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING","cx":925,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LAUGHING TOO","cx":1349,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LAUGHING TOO HAHA","cx":1877,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM LAUGHING TOO...","cx":3371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM LAUGHING","cx":2406,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING","cx":1600,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAUGHING TOO...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOO...","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":23,"seed":8080,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":23,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1082,"bbox":[376,-4125,1924,-1090],"bodyClass":1,"poseFace":24,"poseTorso":35}
+{"type":"balloon","panel":23,"i":0,"speaker":2,"peType":1,"bbox":[160,-1314,2340,-80],"trueBox":[-100,-1130,1700,104],"routeRgn":[60,2038],"text":"I AM LAUGHING TOO..."}
+{"type":"balloonFormat","panel":23,"i":0,"nLines":3,"maxWidth":1600,"fbox":[190,-1041,1790,0],"shifted":1,"lines":[[4,714,443],[8,1600,0],[6,873,363]]}
+{"type":"balloonSpline","panel":23,"i":0,"closed":1,"nCps":16,"cps":[[343,20],[343,-287],[-100,-287],[-100,-754],[263,-754],[263,-1061],[621,-1130],[979,-1061],[1336,-1061],[1336,-754],[1700,-754],[1700,-287],[1257,-287],[1257,40],[952,104],[649,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... HAHA"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HAHA\u0000","cx":713,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":24,"seed":22182,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":24,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1108,"bbox":[543,-4073,1756,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":24,"i":0,"speaker":2,"peType":1,"bbox":[956,-662,2319,-80],"trueBox":[-100,-476,1263,106],"routeRgn":[856,2219],"text":"... HAHA"}
+{"type":"balloonFormat","panel":24,"i":0,"nLines":1,"maxWidth":1163,"fbox":[0,-387,1163,0],"shifted":1,"lines":[[8,1163,0]]}
+{"type":"balloonSpline","panel":24,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[241,-476],[582,-407],[923,-476],[1263,-407],[1263,40],[923,106],[583,32],[243,98]]}
+{"type":"message","seq":15,"speaker":1,"mode":1,"text":"STOP SHOUTING AT ME"}
+{"type":"emotion","avatarId":1,"opts":[[4.712385,1.000000,0]],"faceIndex":4,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"STOP SHOUTING AT ME"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HAHA\u0000","cx":713,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HAHA","cx":1163,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME","cx":3570,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME\u0000","cx":2088,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME","cx":3570,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT","cx":410,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT ME","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"STOP SHOUTING AT ME"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME","cx":3570,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME\u0000","cx":2088,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME","cx":3570,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING AT","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT","cx":410,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT ME","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING AT ME","cx":3570,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING AT","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT","cx":410,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT ME","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING","cx":939,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHOUTING AT","cx":1203,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHOUTING AT ME","cx":1534,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"STOP SHOUTING AT...","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STOP SHOUTING","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING AT...","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AT...","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":25,"seed":22528,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":25,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1241,"bbox":[451,-4433,1849,-1090],"bodyClass":1,"poseFace":5,"poseTorso":15}
+{"type":"balloon","panel":25,"i":0,"speaker":1,"peType":1,"bbox":[160,-1314,2340,-80],"trueBox":[-100,-1130,1766,104],"routeRgn":[60,1926],"text":"STOP SHOUTING AT..."}
+{"type":"balloonFormat","panel":25,"i":0,"nLines":3,"maxWidth":1666,"fbox":[157,-1041,1823,0],"shifted":1,"lines":[[4,780,443],[8,1666,0],[5,608,529]]}
+{"type":"balloonSpline","panel":25,"i":0,"closed":1,"nCps":15,"cps":[[343,20],[343,-287],[-100,-287],[-100,-754],[429,-754],[429,-1061],[833,-1130],[1237,-1061],[1237,-754],[1766,-754],[1766,-287],[1323,-287],[1323,40],[997,104],[671,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... ME"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ME\u0000","cx":515,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":26,"seed":13034,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":26,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1232,"bbox":[444,-4657,1856,-1090],"bodyClass":1,"poseFace":9,"poseTorso":17}
+{"type":"balloon","panel":26,"i":0,"speaker":1,"peType":1,"bbox":[1253,-660,2180,-80],"trueBox":[-100,-476,827,104],"routeRgn":[1153,2080],"text":"... ME"}
+{"type":"balloonFormat","panel":26,"i":0,"nLines":1,"maxWidth":727,"fbox":[0,-387,727,0],"shifted":1,"lines":[[6,727,0]]}
+{"type":"balloonSpline","panel":26,"i":0,"closed":1,"nCps":8,"cps":[[-100,20],[-100,-407],[209,-476],[518,-407],[827,-407],[827,40],[518,104],[211,28]]}
+{"type":"message","seq":16,"speaker":2,"mode":1,"text":"I AM NOT SHOUTING!!!"}
+{"type":"emotion","avatarId":2,"opts":[[4.712385,1.000000,0],[1003.000000,1.000000,0]],"faceIndex":9,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"I AM NOT SHOUTING!!!"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ME\u0000","cx":515,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ME","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"NOT","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"NOT SHOUTING!!!","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING!!!","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"I AM NOT SHOUTING!!!"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING!!!","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":27,"seed":28081,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":27,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1090,"bbox":[401,-4016,1898,-1090],"bodyClass":1,"poseFace":30,"poseTorso":35}
+{"type":"balloon","panel":27,"i":0,"speaker":2,"peType":1,"bbox":[160,-990,2340,-80],"trueBox":[-100,-803,1964,107],"routeRgn":[60,2124],"text":"I AM NOT SHOUTING!!!"}
+{"type":"balloonFormat","panel":27,"i":0,"nLines":2,"maxWidth":1864,"fbox":[58,-714,1922,0],"shifted":1,"lines":[[8,1481,191],[11,1864,0]]}
+{"type":"balloonSpline","panel":27,"i":0,"closed":1,"nCps":17,"cps":[[91,20],[91,-287],[-100,-287],[-100,-734],[244,-803],[588,-734],[932,-803],[1276,-734],[1620,-803],[1964,-734],[1964,-287],[1772,-287],[1772,40],[1437,107],[1102,34],[767,101],[432,28]]}
+{"type":"message","seq":17,"speaker":1,"mode":1,"text":"Goodbye for now!!!"}
+{"type":"emotion","avatarId":1,"opts":[[4.712385,1.000000,0]],"faceIndex":4,"torsoIndex":13,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"Goodbye for now!!!"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!\u0000","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM","cx":714,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"I AM NOT SHOUTING!!!","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOUTING!!!","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!\u0000","cx":2022,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR NOW!!!","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"NOW!!!","cx":965,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Goodbye for now!!!"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!\u0000","cx":2022,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR NOW!!!","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":28,"seed":25721,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":28,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1139,"bbox":[348,-4498,1951,-1090],"bodyClass":1,"poseFace":5,"poseTorso":20}
+{"type":"balloon","panel":28,"i":0,"speaker":1,"peType":1,"bbox":[160,-990,2340,-80],"trueBox":[-100,-803,1753,107],"routeRgn":[60,1913],"text":"GOODBYE FOR NOW!!!"}
+{"type":"balloonFormat","panel":28,"i":0,"nLines":2,"maxWidth":1653,"fbox":[163,-714,1816,0],"shifted":1,"lines":[[7,1441,106],[10,1653,0]]}
+{"type":"balloonSpline","panel":28,"i":0,"closed":1,"nCps":17,"cps":[[6,20],[6,-287],[-100,-287],[-100,-734],[209,-803],[518,-734],[827,-803],[1136,-734],[1445,-803],[1753,-734],[1753,-287],[1647,-287],[1647,40],[1320,107],[993,34],[666,101],[339,28]]}
+{"type":"message","seq":18,"speaker":2,"mode":1,"text":"See you later :)"}
+{"type":"emotion","avatarId":2,"opts":[[0.000000,1.000000,0]],"faceIndex":5,"torsoIndex":4,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"See you later :)"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!\u0000","cx":2022,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GOODBYE FOR NOW!!!","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GOODBYE FOR","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR NOW!!!","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU LATER :)","cx":2618,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU LATER :)\u0000","cx":1613,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SEE YOU LATER :)","cx":2618,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE","cx":569,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU LATER","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LATER","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LATER :)","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"See you later :)"}
+{"type":"textExtent","str":"SEE YOU LATER :)","cx":2618,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU LATER :)\u0000","cx":1613,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SEE YOU LATER :)","cx":2618,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE","cx":569,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEE YOU LATER","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LATER","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LATER :)","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":29,"seed":6080,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":29,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1078,"bbox":[583,-3908,1717,-1090],"bodyClass":1,"poseFace":26,"poseTorso":36}
+{"type":"balloon","panel":29,"i":0,"speaker":2,"peType":1,"bbox":[229,-989,2409,-80],"trueBox":[-169,-803,1466,106],"routeRgn":[60,1695],"text":"SEE YOU LATER :)"}
+{"type":"balloonFormat","panel":29,"i":0,"nLines":2,"maxWidth":1296,"fbox":[342,-714,1638,0],"shifted":1,"lines":[[7,1296,0],[8,1230,33]]}
+{"type":"balloonSpline","panel":29,"i":0,"closed":1,"nCps":12,"cps":[[-100,20],[-169,-356],[-100,-734],[274,-803],[648,-734],[1022,-803],[1396,-734],[1466,-347],[1396,40],[1023,106],[650,32],[277,98]]}
+{"type":"end","messages":19}

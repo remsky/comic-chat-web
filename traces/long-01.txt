@@ -1,0 +1,42 @@
+# long conversation: 34 messages across three speakers to force many panels and overflow/retry paths
+@anna
+@bolo
+@connor
+1>Okay everyone, let's get started with today's discussion
+2>Sounds good, I have been looking forward to this
+3>Same here, I brought my notes along
+1>First item on the list is the schedule for next week
+2>I think Tuesday works best for most people
+3>Tuesday is fine with me as well
+1>Great, Tuesday it is then
+2>What time should we meet
+3>How about mid morning, say ten o'clock
+1>Ten o'clock works for me
+2>Works for me too
+3>Perfect, Tuesday at ten it is
+
+1>Next item is the budget review
+2>I already sent the spreadsheet over
+3>I saw it, looks mostly correct
+1>There was one line that seemed off to me
+2>Which line specifically
+3>The travel expenses looked doubled
+1>Good catch, let's fix that before Tuesday
+2>I will update the spreadsheet tonight
+3>Thanks, that helps a lot
+
+1>Moving on to the last item, the presentation
+2>I finished my slides already
+3>Mine are almost done, just need a few more charts
+1>No rush, we have until Tuesday
+2>I can help with the charts if needed
+3>That would be great, thank you
+1>Anything else before we wrap up
+2>Nothing from me
+3>All good on my end too
+1>Great, thanks everyone for joining today
+2>Thanks, see you all Tuesday
+3>Looking forward to it, goodbye for now
+1>Goodbye everyone
+2>Bye
+3>See you later

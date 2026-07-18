@@ -1,0 +1,15 @@
+# wrap stress: very long messages, an unbreakable over-wide word, and messages sized near the wrap boundary
+@anna
+@bolo
+1>This is a very long message that should wrap across several lines because it contains many many words strung together to force the balloon layout engine to break lines repeatedly and test the word wrap logic thoroughly and completely
+
+2>Check this out AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA that word cannot break at all
+
+1>http://www.longurl-example.com/path/no/breaks/here/at/all/forever/going/on
+2>one two three four five six
+1>a bb ccc dddd eeeee ffffff ggggggg hhhhhhhh iiiiiiiii jjjjjjjjjj
+2>Short.
+1>Medium length line here for balance
+
+2>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+1>That last one was a truly enormous single word with zero break points anywhere in it at all

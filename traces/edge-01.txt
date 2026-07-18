@@ -1,0 +1,25 @@
+# edge cases: single-character messages, punctuation-only messages, and repeated identical messages
+@anna
+@bolo
+1>k
+2>?
+1>!
+2>...
+1>Hi
+2>Hi
+1>Hi
+2>???
+1>!!!
+2>.
+
+1>Same message here
+2>Same message here
+1>Same message here
+2>a
+1>b
+2>c
+1>Same message here
+2>Same message here
+1>x
+2>!?!
+1>.,;:

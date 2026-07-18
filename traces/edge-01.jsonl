@@ -1,0 +1,491 @@
+{"type":"header","srand":1515,"unitWidth":2300,"unitHeight":2300,"panelsPerRow":4,"panelsAtStart":1}
+{"type":"cast","i":1,"name":"anna","avatarId":1}
+{"type":"cast","i":2,"name":"bolo","avatarId":2}
+{"type":"message","seq":0,"speaker":1,"mode":1,"text":"k"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"k"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":0,"seed":4985,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":0,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1165,"bbox":[882,-2300,1418,-1090],"bodyClass":1,"poseFace":2,"poseTorso":13}
+{"type":"balloon","panel":0,"i":0,"speaker":1,"peType":1,"bbox":[959,-527,1331,-80],"trueBox":[-100,-407,272,40],"routeRgn":[859,1231],"text":"K"}
+{"type":"balloonFormat","panel":0,"i":0,"nLines":1,"maxWidth":172,"fbox":[0,-387,172,0],"shifted":1,"lines":[[1,172,0]]}
+{"type":"balloonSpline","panel":0,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[272,-407],[272,40]]}
+{"type":"message","seq":1,"speaker":2,"mode":1,"text":"?"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"?"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"K","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"?","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"?","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"?","cx":159,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":1,"seed":4985,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":1,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":689,"bbox":[406,-2300,942,-1090],"bodyClass":1,"poseFace":2,"poseTorso":13}
+{"type":"body","panel":1,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1590,"bbox":[1348,-2300,1892,-1090],"bodyClass":1,"poseFace":24,"poseTorso":33}
+{"type":"balloon","panel":1,"i":0,"speaker":1,"peType":1,"bbox":[647,-527,1019,-80],"trueBox":[-100,-407,272,40],"routeRgn":[547,919],"text":"K"}
+{"type":"balloonFormat","panel":1,"i":0,"nLines":1,"maxWidth":172,"fbox":[0,-387,172,0],"shifted":1,"lines":[[1,172,0]]}
+{"type":"balloonSpline","panel":1,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[272,-407],[272,40]]}
+{"type":"balloon","panel":1,"i":1,"speaker":2,"peType":1,"bbox":[1657,-527,2016,-80],"trueBox":[-100,-407,259,40],"routeRgn":[1557,1916],"text":"?"}
+{"type":"balloonFormat","panel":1,"i":1,"nLines":1,"maxWidth":159,"fbox":[0,-387,159,0],"shifted":1,"lines":[[1,159,0]]}
+{"type":"balloonSpline","panel":1,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[259,-407],[259,40]]}
+{"type":"message","seq":2,"speaker":1,"mode":1,"text":"!"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":2,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"!"}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":2,"seed":21144,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":2,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1212,"bbox":[459,-4451,1840,-1090],"bodyClass":1,"poseFace":4,"poseTorso":15}
+{"type":"balloon","panel":2,"i":0,"speaker":1,"peType":1,"bbox":[1236,-527,1502,-80],"trueBox":[-100,-407,166,40],"routeRgn":[1136,1402],"text":"!"}
+{"type":"balloonFormat","panel":2,"i":0,"nLines":1,"maxWidth":66,"fbox":[0,-387,66,0],"shifted":1,"lines":[[1,66,0]]}
+{"type":"balloonSpline","panel":2,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[166,-407],[166,40]]}
+{"type":"message","seq":3,"speaker":2,"mode":1,"text":"..."}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":4,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"..."}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":3,"seed":21144,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":3,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":630,"bbox":[0,-3904,1156,-1090],"bodyClass":1,"poseFace":4,"poseTorso":15}
+{"type":"body","panel":3,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1689,"bbox":[1156,-3904,2300,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":3,"i":0,"speaker":1,"peType":1,"bbox":[554,-527,820,-80],"trueBox":[-100,-407,166,40],"routeRgn":[454,720],"text":"!"}
+{"type":"balloonFormat","panel":3,"i":0,"nLines":1,"maxWidth":66,"fbox":[0,-387,66,0],"shifted":1,"lines":[[1,66,0]]}
+{"type":"balloonSpline","panel":3,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[166,-407],[166,40]]}
+{"type":"balloon","panel":3,"i":1,"speaker":2,"peType":1,"bbox":[1632,-527,2030,-80],"trueBox":[-100,-407,298,40],"routeRgn":[1532,1930],"text":"..."}
+{"type":"balloonFormat","panel":3,"i":1,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":3,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"message","seq":4,"speaker":1,"mode":1,"text":"Hi"}
+{"type":"emotion","avatarId":1,"opts":[[1001.000000,1.000000,0]],"faceIndex":11,"torsoIndex":7,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Hi"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":4,"seed":21695,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":4,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1138,"bbox":[350,-4596,1949,-1090],"bodyClass":1,"poseFace":9,"poseTorso":18}
+{"type":"balloon","panel":4,"i":0,"speaker":1,"peType":1,"bbox":[711,-527,1294,-80],"trueBox":[-100,-407,483,40],"routeRgn":[611,1194],"text":"HI"}
+{"type":"balloonFormat","panel":4,"i":0,"nLines":1,"maxWidth":383,"fbox":[0,-387,383,0],"shifted":1,"lines":[[2,383,0]]}
+{"type":"balloonSpline","panel":4,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[483,-407],[483,40]]}
+{"type":"message","seq":5,"speaker":2,"mode":1,"text":"Hi"}
+{"type":"emotion","avatarId":2,"opts":[[1001.000000,1.000000,0]],"faceIndex":0,"torsoIndex":10,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"Hi"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":5,"seed":21695,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":5,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":566,"bbox":[0,-3606,1148,-1090],"bodyClass":1,"poseFace":9,"poseTorso":18}
+{"type":"body","panel":5,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1737,"bbox":[1148,-3606,2300,-1090],"bodyClass":1,"poseFace":24,"poseTorso":41}
+{"type":"balloon","panel":5,"i":0,"speaker":1,"peType":1,"bbox":[477,-527,1060,-80],"trueBox":[-100,-407,483,40],"routeRgn":[377,960],"text":"HI"}
+{"type":"balloonFormat","panel":5,"i":0,"nLines":1,"maxWidth":383,"fbox":[0,-387,383,0],"shifted":1,"lines":[[2,383,0]]}
+{"type":"balloonSpline","panel":5,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[483,-407],[483,40]]}
+{"type":"balloon","panel":5,"i":1,"speaker":2,"peType":1,"bbox":[1306,-527,1889,-80],"trueBox":[-100,-407,483,40],"routeRgn":[1206,1789],"text":"HI"}
+{"type":"balloonFormat","panel":5,"i":1,"nLines":1,"maxWidth":383,"fbox":[0,-387,383,0],"shifted":1,"lines":[[2,383,0]]}
+{"type":"balloonSpline","panel":5,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[483,-407],[483,40]]}
+{"type":"message","seq":6,"speaker":1,"mode":1,"text":"Hi"}
+{"type":"emotion","avatarId":1,"opts":[[1001.000000,1.000000,0]],"faceIndex":13,"torsoIndex":7,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Hi"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":6,"seed":23624,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":6,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1180,"bbox":[406,-4527,1894,-1090],"bodyClass":1,"poseFace":10,"poseTorso":18}
+{"type":"balloon","panel":6,"i":0,"speaker":1,"peType":1,"bbox":[1197,-527,1780,-80],"trueBox":[-100,-407,483,40],"routeRgn":[1097,1680],"text":"HI"}
+{"type":"balloonFormat","panel":6,"i":0,"nLines":1,"maxWidth":383,"fbox":[0,-387,383,0],"shifted":1,"lines":[[2,383,0]]}
+{"type":"balloonSpline","panel":6,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[483,-407],[483,40]]}
+{"type":"message","seq":7,"speaker":2,"mode":1,"text":"???"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"???"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HI","cx":383,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"???","cx":476,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"???","cx":476,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"???","cx":476,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":7,"seed":23624,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":7,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":589,"bbox":[0,-3703,1132,-1090],"bodyClass":1,"poseFace":10,"poseTorso":18}
+{"type":"body","panel":7,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1663,"bbox":[1132,-3703,2300,-1090],"bodyClass":1,"poseFace":25,"poseTorso":33}
+{"type":"balloon","panel":7,"i":0,"speaker":1,"peType":1,"bbox":[525,-527,1108,-80],"trueBox":[-100,-407,483,40],"routeRgn":[425,1008],"text":"HI"}
+{"type":"balloonFormat","panel":7,"i":0,"nLines":1,"maxWidth":383,"fbox":[0,-387,383,0],"shifted":1,"lines":[[2,383,0]]}
+{"type":"balloonSpline","panel":7,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[483,-407],[483,40]]}
+{"type":"balloon","panel":7,"i":1,"speaker":2,"peType":1,"bbox":[1129,-657,1805,-80],"trueBox":[-100,-476,576,101],"routeRgn":[1029,1705],"text":"???"}
+{"type":"balloonFormat","panel":7,"i":1,"nLines":1,"maxWidth":476,"fbox":[0,-387,476,0],"shifted":1,"lines":[[3,476,0]]}
+{"type":"balloonSpline","panel":7,"i":1,"closed":1,"nCps":6,"cps":[[-100,20],[-100,-407],[238,-476],[576,-407],[576,40],[238,101]]}
+{"type":"message","seq":8,"speaker":1,"mode":1,"text":"!!!"}
+{"type":"emotion","avatarId":1,"opts":[[4.712385,1.000000,0]],"faceIndex":4,"torsoIndex":13,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"!!!"}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":8,"seed":10247,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":8,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1139,"bbox":[348,-4498,1951,-1090],"bodyClass":1,"poseFace":5,"poseTorso":20}
+{"type":"balloon","panel":8,"i":0,"speaker":1,"peType":1,"bbox":[1028,-527,1426,-80],"trueBox":[-100,-407,298,40],"routeRgn":[928,1326],"text":"!!!"}
+{"type":"balloonFormat","panel":8,"i":0,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":8,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"message","seq":9,"speaker":2,"mode":1,"text":"."}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":4,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"."}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!!!","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".","cx":66,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":9,"seed":10247,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":9,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":606,"bbox":[0,-3701,1228,-1090],"bodyClass":1,"poseFace":5,"poseTorso":20}
+{"type":"body","panel":9,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1714,"bbox":[1228,-3701,2300,-1090],"bodyClass":1,"poseFace":24,"poseTorso":36}
+{"type":"balloon","panel":9,"i":0,"speaker":1,"peType":1,"bbox":[410,-527,808,-80],"trueBox":[-100,-407,298,40],"routeRgn":[310,708],"text":"!!!"}
+{"type":"balloonFormat","panel":9,"i":0,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":9,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"balloon","panel":9,"i":1,"speaker":2,"peType":1,"bbox":[1725,-527,1991,-80],"trueBox":[-100,-407,166,40],"routeRgn":[1625,1891],"text":"."}
+{"type":"balloonFormat","panel":9,"i":1,"nLines":1,"maxWidth":66,"fbox":[0,-387,66,0],"shifted":1,"lines":[[1,66,0]]}
+{"type":"balloonSpline","panel":9,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[166,-407],[166,40]]}
+{"type":"message","seq":10,"speaker":1,"mode":1,"text":"<Brk>"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":11,"torsoIndex":14,"requested":0}
+{"type":"message","seq":11,"speaker":1,"mode":1,"text":"Same message here"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":11,"torsoIndex":14,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Same message here"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":10,"seed":13602,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":10,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1177,"bbox":[386,-4596,1913,-1090],"bodyClass":1,"poseFace":9,"poseTorso":21}
+{"type":"balloon","panel":10,"i":0,"speaker":1,"peType":1,"bbox":[160,-987,2340,-80],"trueBox":[-100,-803,1726,104],"routeRgn":[60,1688],"text":"SAME MESSAGE..."}
+{"type":"balloonFormat","panel":10,"i":0,"nLines":2,"maxWidth":1626,"fbox":[177,-714,1803,0],"shifted":1,"lines":[[4,846,390],[10,1626,0]]}
+{"type":"balloonSpline","panel":10,"i":0,"closed":1,"nCps":15,"cps":[[290,20],[290,-287],[-100,-287],[-100,-734],[204,-803],[508,-734],[812,-803],[1116,-734],[1420,-803],[1726,-734],[1726,-287],[1336,-287],[1336,40],[988,104],[640,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... HERE"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":11,"seed":26784,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":11,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1210,"bbox":[398,-4527,1901,-1090],"bodyClass":1,"poseFace":10,"poseTorso":13}
+{"type":"balloon","panel":11,"i":0,"speaker":1,"peType":1,"bbox":[278,-923,1416,-80],"trueBox":[-100,-803,880,40],"routeRgn":[178,1158],"text":"... HERE"}
+{"type":"balloonFormat","panel":11,"i":0,"nLines":2,"maxWidth":780,"fbox":[79,-714,859,0],"shifted":1,"lines":[[3,198,291],[4,780,0]]}
+{"type":"balloonSpline","panel":11,"i":0,"closed":1,"nCps":10,"cps":[[191,20],[191,-287],[-100,-287],[-100,-734],[227,-803],[554,-734],[880,-734],[880,-287],[589,-287],[589,40]]}
+{"type":"message","seq":12,"speaker":2,"mode":1,"text":"Same message here"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"Same message here"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"Same message here"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":12,"seed":29080,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":12,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1080,"bbox":[452,-4002,1848,-1090],"bodyClass":1,"poseFace":25,"poseTorso":38}
+{"type":"balloon","panel":12,"i":0,"speaker":2,"peType":1,"bbox":[160,-987,2340,-80],"trueBox":[-100,-803,1726,104],"routeRgn":[60,1688],"text":"SAME MESSAGE..."}
+{"type":"balloonFormat","panel":12,"i":0,"nLines":2,"maxWidth":1626,"fbox":[177,-714,1803,0],"shifted":1,"lines":[[4,846,390],[10,1626,0]]}
+{"type":"balloonSpline","panel":12,"i":0,"closed":1,"nCps":15,"cps":[[290,20],[290,-287],[-100,-287],[-100,-734],[204,-803],[508,-734],[812,-803],[1116,-734],[1420,-803],[1726,-734],[1726,-287],[1336,-287],[1336,40],[988,104],[640,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... HERE"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":13,"seed":19719,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":13,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1075,"bbox":[467,-4125,1832,-1090],"bodyClass":1,"poseFace":24,"poseTorso":33}
+{"type":"balloon","panel":13,"i":0,"speaker":2,"peType":1,"bbox":[339,-923,1514,-80],"trueBox":[-100,-803,880,40],"routeRgn":[239,1219],"text":"... HERE"}
+{"type":"balloonFormat","panel":13,"i":0,"nLines":2,"maxWidth":780,"fbox":[97,-714,877,0],"shifted":1,"lines":[[3,198,291],[4,780,0]]}
+{"type":"balloonSpline","panel":13,"i":0,"closed":1,"nCps":10,"cps":[[191,20],[191,-287],[-100,-287],[-100,-734],[227,-803],[554,-734],[880,-734],[880,-287],[589,-287],[589,40]]}
+{"type":"message","seq":13,"speaker":1,"mode":1,"text":"Same message here"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":16,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"Same message here"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Same message here"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":14,"seed":3106,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":14,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1298,"bbox":[482,-4479,1818,-1090],"bodyClass":1,"poseFace":11,"poseTorso":15}
+{"type":"balloon","panel":14,"i":0,"speaker":1,"peType":1,"bbox":[160,-987,2340,-80],"trueBox":[-100,-803,1726,104],"routeRgn":[60,1688],"text":"SAME MESSAGE..."}
+{"type":"balloonFormat","panel":14,"i":0,"nLines":2,"maxWidth":1626,"fbox":[177,-714,1803,0],"shifted":1,"lines":[[4,846,390],[10,1626,0]]}
+{"type":"balloonSpline","panel":14,"i":0,"closed":1,"nCps":15,"cps":[[290,20],[290,-287],[-100,-287],[-100,-734],[204,-803],[508,-734],[812,-803],[1116,-734],[1420,-803],[1726,-734],[1726,-287],[1336,-287],[1336,40],[988,104],[640,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... HERE"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":15,"seed":24289,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":15,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1251,"bbox":[491,-4576,1808,-1090],"bodyClass":1,"poseFace":12,"poseTorso":17}
+{"type":"balloon","panel":15,"i":0,"speaker":1,"peType":1,"bbox":[1069,-662,2340,-80],"trueBox":[-100,-476,1171,106],"routeRgn":[969,2240],"text":"... HERE"}
+{"type":"balloonFormat","panel":15,"i":0,"nLines":1,"maxWidth":1071,"fbox":[0,-387,1071,0],"shifted":1,"lines":[[8,1071,0]]}
+{"type":"balloonSpline","panel":15,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[218,-476],[536,-407],[854,-476],[1171,-407],[1171,40],[854,106],[537,32],[220,98]]}
+{"type":"message","seq":14,"speaker":2,"mode":1,"text":"a"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":4,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"a"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":16,"seed":24289,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":16,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":639,"bbox":[0,-4023,1108,-1090],"bodyClass":1,"poseFace":12,"poseTorso":17}
+{"type":"body","panel":16,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1663,"bbox":[1108,-4023,2300,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":16,"i":0,"speaker":1,"peType":1,"bbox":[535,-662,1806,-80],"trueBox":[-100,-476,1171,106],"routeRgn":[435,1522],"text":"... HERE"}
+{"type":"balloonFormat","panel":16,"i":0,"nLines":1,"maxWidth":1071,"fbox":[0,-387,1071,0],"shifted":1,"lines":[[8,1071,0]]}
+{"type":"balloonSpline","panel":16,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[218,-476],[536,-407],[854,-476],[1171,-407],[1171,40],[854,106],[537,32],[220,98]]}
+{"type":"balloon","panel":16,"i":1,"speaker":2,"peType":1,"bbox":[1622,-953,2034,-506],"trueBox":[-100,-407,312,40],"routeRgn":[1522,1934],"text":"A"}
+{"type":"balloonFormat","panel":16,"i":1,"nLines":1,"maxWidth":212,"fbox":[0,-387,212,0],"shifted":1,"lines":[[1,212,0]]}
+{"type":"balloonSpline","panel":16,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[312,-407],[312,40]]}
+{"type":"message","seq":15,"speaker":1,"mode":1,"text":"b"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":13,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"b"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":17,"seed":855,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":17,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1123,"bbox":[332,-4566,1967,-1090],"bodyClass":1,"poseFace":2,"poseTorso":20}
+{"type":"balloon","panel":17,"i":0,"speaker":1,"peType":1,"bbox":[1000,-527,1385,-80],"trueBox":[-100,-407,285,40],"routeRgn":[900,1285],"text":"B"}
+{"type":"balloonFormat","panel":17,"i":0,"nLines":1,"maxWidth":185,"fbox":[0,-387,185,0],"shifted":1,"lines":[[1,185,0]]}
+{"type":"balloonSpline","panel":17,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[285,-407],[285,40]]}
+{"type":"message","seq":16,"speaker":2,"mode":1,"text":"c"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"c"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"B","cx":185,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"C","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"C","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"C","cx":172,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":18,"seed":855,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":18,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":549,"bbox":[0,-3504,1135,-1090],"bodyClass":1,"poseFace":2,"poseTorso":20}
+{"type":"body","panel":18,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1649,"bbox":[1135,-3504,2300,-1090],"bodyClass":1,"poseFace":24,"poseTorso":38}
+{"type":"balloon","panel":18,"i":0,"speaker":1,"peType":1,"bbox":[579,-527,964,-80],"trueBox":[-100,-407,285,40],"routeRgn":[479,864],"text":"B"}
+{"type":"balloonFormat","panel":18,"i":0,"nLines":1,"maxWidth":185,"fbox":[0,-387,185,0],"shifted":1,"lines":[[1,185,0]]}
+{"type":"balloonSpline","panel":18,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[285,-407],[285,40]]}
+{"type":"balloon","panel":18,"i":1,"speaker":2,"peType":1,"bbox":[1653,-527,2025,-80],"trueBox":[-100,-407,272,40],"routeRgn":[1553,1925],"text":"C"}
+{"type":"balloonFormat","panel":18,"i":1,"nLines":1,"maxWidth":172,"fbox":[0,-387,172,0],"shifted":1,"lines":[[1,172,0]]}
+{"type":"balloonSpline","panel":18,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[272,-407],[272,40]]}
+{"type":"message","seq":17,"speaker":1,"mode":1,"text":"Same message here"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":2,"torsoIndex":14,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Same message here"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":19,"seed":21844,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":19,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1193,"bbox":[440,-4424,1859,-1090],"bodyClass":1,"poseFace":4,"poseTorso":21}
+{"type":"balloon","panel":19,"i":0,"speaker":1,"peType":1,"bbox":[160,-987,2340,-80],"trueBox":[-100,-803,1726,104],"routeRgn":[60,1688],"text":"SAME MESSAGE..."}
+{"type":"balloonFormat","panel":19,"i":0,"nLines":2,"maxWidth":1626,"fbox":[177,-714,1803,0],"shifted":1,"lines":[[4,846,390],[10,1626,0]]}
+{"type":"balloonSpline","panel":19,"i":0,"closed":1,"nCps":15,"cps":[[290,20],[290,-287],[-100,-287],[-100,-734],[204,-803],[508,-734],[812,-803],[1116,-734],[1420,-803],[1726,-734],[1726,-287],[1336,-287],[1336,40],[988,104],[640,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... HERE"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":20,"seed":11160,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":20,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1150,"bbox":[362,-4596,1938,-1090],"bodyClass":1,"poseFace":9,"poseTorso":13}
+{"type":"balloon","panel":20,"i":0,"speaker":1,"peType":1,"bbox":[683,-662,1954,-80],"trueBox":[-100,-476,1171,106],"routeRgn":[583,1854],"text":"... HERE"}
+{"type":"balloonFormat","panel":20,"i":0,"nLines":1,"maxWidth":1071,"fbox":[0,-387,1071,0],"shifted":1,"lines":[[8,1071,0]]}
+{"type":"balloonSpline","panel":20,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[218,-476],[536,-407],[854,-476],[1171,-407],[1171,40],[854,106],[537,32],[220,98]]}
+{"type":"message","seq":18,"speaker":2,"mode":1,"text":"Same message here"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"Same message here"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"Same message here"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE\u0000","cx":2009,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE HERE","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MESSAGE HERE","cx":1428,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SAME MESSAGE...","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":21,"seed":20342,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":21,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1089,"bbox":[481,-4080,1818,-1090],"bodyClass":1,"poseFace":25,"poseTorso":33}
+{"type":"balloon","panel":21,"i":0,"speaker":2,"peType":1,"bbox":[160,-987,2340,-80],"trueBox":[-100,-803,1726,104],"routeRgn":[60,1688],"text":"SAME MESSAGE..."}
+{"type":"balloonFormat","panel":21,"i":0,"nLines":2,"maxWidth":1626,"fbox":[177,-714,1803,0],"shifted":1,"lines":[[4,846,390],[10,1626,0]]}
+{"type":"balloonSpline","panel":21,"i":0,"closed":1,"nCps":15,"cps":[[290,20],[290,-287],[-100,-287],[-100,-734],[204,-803],[508,-734],[812,-803],[1116,-734],[1420,-803],[1726,-734],[1726,-287],[1336,-287],[1336,40],[988,104],[640,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... HERE"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":22,"seed":29436,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":22,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1092,"bbox":[530,-4110,1770,-1090],"bodyClass":1,"poseFace":24,"poseTorso":36}
+{"type":"balloon","panel":22,"i":0,"speaker":2,"peType":1,"bbox":[160,-662,1431,-80],"trueBox":[-100,-476,1171,106],"routeRgn":[60,1331],"text":"... HERE"}
+{"type":"balloonFormat","panel":22,"i":0,"nLines":1,"maxWidth":1071,"fbox":[0,-387,1071,0],"shifted":1,"lines":[[8,1071,0]]}
+{"type":"balloonSpline","panel":22,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[218,-476],[536,-407],[854,-476],[1171,-407],[1171,40],[854,106],[537,32],[220,98]]}
+{"type":"message","seq":19,"speaker":1,"mode":1,"text":"x"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":13,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"x"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE\u0000","cx":740,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"X","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"X","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"X","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":23,"seed":29436,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":23,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":648,"bbox":[0,-3986,1111,-1090],"bodyClass":1,"poseFace":10,"poseTorso":15}
+{"type":"body","panel":23,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1650,"bbox":[1111,-3986,2300,-1090],"bodyClass":1,"poseFace":24,"poseTorso":36}
+{"type":"balloon","panel":23,"i":0,"speaker":2,"peType":1,"bbox":[948,-662,2219,-80],"trueBox":[-100,-476,1171,106],"routeRgn":[848,2119],"text":"... HERE"}
+{"type":"balloonFormat","panel":23,"i":0,"nLines":1,"maxWidth":1071,"fbox":[0,-387,1071,0],"shifted":1,"lines":[[8,1071,0]]}
+{"type":"balloonSpline","panel":23,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[218,-476],[536,-407],[854,-476],[1171,-407],[1171,40],[854,106],[537,32],[220,98]]}
+{"type":"balloon","panel":23,"i":1,"speaker":1,"peType":1,"bbox":[530,-953,942,-506],"trueBox":[-100,-407,312,40],"routeRgn":[430,842],"text":"X"}
+{"type":"balloonFormat","panel":23,"i":1,"nLines":1,"maxWidth":212,"fbox":[0,-387,212,0],"shifted":1,"lines":[[1,212,0]]}
+{"type":"balloonSpline","panel":23,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[312,-407],[312,40]]}
+{"type":"message","seq":20,"speaker":2,"mode":1,"text":"!?!"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":4,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"!?!"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":24,"seed":15995,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":24,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1080,"bbox":[452,-4002,1848,-1090],"bodyClass":1,"poseFace":25,"poseTorso":38}
+{"type":"balloon","panel":24,"i":0,"speaker":2,"peType":1,"bbox":[1075,-527,1566,-80],"trueBox":[-100,-407,391,40],"routeRgn":[975,1466],"text":"!?!"}
+{"type":"balloonFormat","panel":24,"i":0,"nLines":1,"maxWidth":291,"fbox":[0,-387,291,0],"shifted":1,"lines":[[3,291,0]]}
+{"type":"balloonSpline","panel":24,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[391,-407],[391,40]]}
+{"type":"message","seq":21,"speaker":1,"mode":1,"text":".,;:"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":16,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":".,;:"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"!?!","cx":291,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".,;:","cx":331,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".,;:","cx":331,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":".,;:","cx":331,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":25,"seed":15995,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":2,"nElements":2}
+{"type":"body","panel":25,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":630,"bbox":[0,-3738,1031,-1090],"bodyClass":1,"poseFace":11,"poseTorso":17}
+{"type":"body","panel":25,"i":1,"avatarId":2,"flip":1,"requested":1,"arrowX":1602,"bbox":[1031,-3738,2300,-1090],"bodyClass":1,"poseFace":25,"poseTorso":38}
+{"type":"balloon","panel":25,"i":0,"speaker":2,"peType":1,"bbox":[1585,-527,2076,-80],"trueBox":[-100,-407,391,40],"routeRgn":[1485,1976],"text":"!?!"}
+{"type":"balloonFormat","panel":25,"i":0,"nLines":1,"maxWidth":291,"fbox":[0,-387,291,0],"shifted":1,"lines":[[3,291,0]]}
+{"type":"balloonSpline","panel":25,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[391,-407],[391,40]]}
+{"type":"balloon","panel":25,"i":1,"speaker":1,"peType":1,"bbox":[452,-884,983,-437],"trueBox":[-100,-407,431,40],"routeRgn":[352,883],"text":".,;:"}
+{"type":"balloonFormat","panel":25,"i":1,"nLines":1,"maxWidth":331,"fbox":[0,-387,331,0],"shifted":1,"lines":[[4,331,0]]}
+{"type":"balloonSpline","panel":25,"i":1,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[431,-407],[431,40]]}
+{"type":"end","messages":22}

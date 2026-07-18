@@ -1,0 +1,1671 @@
+{"type":"header","srand":1515,"unitWidth":2300,"unitHeight":2300,"panelsPerRow":4,"panelsAtStart":1}
+{"type":"cast","i":1,"name":"anna","avatarId":1}
+{"type":"cast","i":2,"name":"bolo","avatarId":2}
+{"type":"message","seq":0,"speaker":1,"mode":1,"text":"This is a very long message that should wrap across several lines because it contains many many words strung together to force the balloon layout engine to break lines repeatedly and test the word wrap logic thoroughly and completely"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"This is a very long message that should wrap across several lines because it contains many many words strung together to force the balloon layout engine to break lines repeatedly and test the word wrap logic thoroughly and completely"}
+{"type":"textExtent","str":"THIS IS A VERY LONG MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":42651,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A VERY LONG MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":25503,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THIS IS A VERY LONG MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":42651,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A VERY","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY LONG","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY LONG MESSAGE","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE THAT","cx":2353,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT SHOULD","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD WRAP","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP ACROSS","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS SEVERAL","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A VERY LONG MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":42651,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A VERY","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY LONG","cx":1666,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY LONG MESSAGE","cx":3186,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MESSAGE THAT","cx":2353,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT SHOULD","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD WRAP","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP ACROSS","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS SEVERAL","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY","cx":489,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"VERY LONG","cx":1044,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"VERY LONG MESSAGE","cx":1970,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THIS IS A VERY LONG...","cx":3490,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THIS IS A VERY","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"VERY LONG...","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":0,"seed":4985,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":0,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1165,"bbox":[882,-2300,1418,-1090],"bodyClass":1,"poseFace":2,"poseTorso":13}
+{"type":"balloon","panel":0,"i":0,"speaker":1,"peType":1,"bbox":[160,-990,2340,-80],"trueBox":[-100,-803,1964,107],"routeRgn":[60,2369],"text":"THIS IS A VERY LONG..."}
+{"type":"balloonFormat","panel":0,"i":0,"nLines":2,"maxWidth":1864,"fbox":[58,-714,1922,0],"shifted":1,"lines":[[9,1534,165],[12,1864,0]]}
+{"type":"balloonSpline","panel":0,"i":0,"closed":1,"nCps":17,"cps":[[65,20],[65,-287],[-100,-287],[-100,-734],[244,-803],[588,-734],[932,-803],[1276,-734],[1620,-803],[1964,-734],[1964,-287],[1799,-287],[1799,40],[1453,107],[1107,34],[761,101],[415,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":39558,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":23771,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":39558,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE THAT","cx":2644,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT SHOULD","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD WRAP","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP ACROSS","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS SEVERAL","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE THAT SHOULD WRAP ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":39558,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE THAT","cx":2644,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT SHOULD","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD WRAP","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP ACROSS","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ACROSS SEVERAL","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":450,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT SHOULD","cx":1256,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT SHOULD WRAP","cx":1851,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT SHOULD WRAP ACROSS","cx":2631,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MESSAGE THAT SHOULD WRAP...","cx":5103,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MESSAGE THAT","cx":2644,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT SHOULD","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD","cx":1243,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHOULD WRAP...","cx":2367,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP...","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":1,"seed":5698,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":1,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1212,"bbox":[459,-4451,1840,-1090],"bodyClass":1,"poseFace":4,"poseTorso":15}
+{"type":"balloon","panel":1,"i":0,"speaker":1,"peType":1,"bbox":[160,-1645,2340,-80],"trueBox":[-100,-1457,1819,108],"routeRgn":[60,2369],"text":"... MESSAGE THAT SHOULD WRAP..."}
+{"type":"balloonFormat","panel":1,"i":0,"nLines":4,"maxWidth":1719,"fbox":[130,-1368,1849,0],"shifted":1,"lines":[[11,1719,0],[4,833,443],[6,1243,238],[7,1031,344]]}
+{"type":"balloonSpline","panel":1,"i":0,"closed":1,"nCps":22,"cps":[[-100,20],[-100,-427],[138,-427],[69,-753],[138,-1081],[244,-1081],[244,-1388],[552,-1457],[860,-1388],[1168,-1457],[1475,-1388],[1475,-1081],[1581,-1081],[1651,-754],[1581,-427],[1819,-427],[1819,40],[1500,108],[1181,36],[862,104],[543,32],[224,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":34851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":20942,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":34851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS","cx":1494,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS SEVERAL","cx":2895,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS SEVERAL LINES BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":34851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS","cx":1494,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS SEVERAL","cx":2895,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":2340,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES BECAUSE","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BECAUSE IT CONTAINS","cx":3543,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":806,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SEVERAL LINES","cx":1388,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SEVERAL LINES BECAUSE","cx":2287,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ACROSS SEVERAL LINES...","cx":4125,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS","cx":1494,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ACROSS SEVERAL","cx":2895,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL","cx":1309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SEVERAL LINES...","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES...","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":2,"seed":9579,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":2,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1232,"bbox":[444,-4657,1856,-1090],"bodyClass":1,"poseFace":9,"poseTorso":17}
+{"type":"balloon","panel":2,"i":0,"speaker":1,"peType":1,"bbox":[160,-1317,2340,-80],"trueBox":[-100,-1130,1594,107],"routeRgn":[60,2369],"text":"... ACROSS SEVERAL LINES..."}
+{"type":"balloonFormat","panel":2,"i":0,"nLines":3,"maxWidth":1494,"fbox":[243,-1041,1737,0],"shifted":1,"lines":[[10,1494,0],[7,1309,92],[8,1137,178]]}
+{"type":"balloonSpline","panel":2,"i":0,"closed":1,"nCps":19,"cps":[[-100,20],[-100,-427],[-8,-427],[-8,-754],[78,-754],[78,-1061],[412,-1130],[746,-1061],[1080,-1130],[1415,-1061],[1415,-754],[1501,-754],[1501,-427],[1594,-427],[1594,40],[1256,107],[918,34],[580,101],[242,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":31122,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":18721,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":31122,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE IT","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":357,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT CONTAINS","cx":2102,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE IT CONTAINS MANY MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":31122,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE IT","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":357,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT CONTAINS","cx":2102,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY","cx":886,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY MANY WORDS","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":159,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"IT CONTAINS","cx":1111,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"IT CONTAINS MANY","cx":1692,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"IT CONTAINS MANY MANY","cx":2274,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BECAUSE IT CONTAINS MANY...","cx":5011,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE","cx":1639,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BECAUSE IT","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT","cx":357,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IT CONTAINS","cx":2102,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS","cx":1653,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CONTAINS MANY...","cx":2829,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MANY...","cx":1084,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":3,"seed":7788,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":3,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1123,"bbox":[350,-4616,1950,-1090],"bodyClass":1,"poseFace":10,"poseTorso":20}
+{"type":"balloon","panel":3,"i":0,"speaker":1,"peType":1,"bbox":[229,-1645,2409,-80],"trueBox":[-169,-1457,1823,108],"routeRgn":[60,2369],"text":"... BECAUSE IT CONTAINS MANY..."}
+{"type":"balloonFormat","panel":3,"i":0,"nLines":4,"maxWidth":1653,"fbox":[163,-1368,1816,0],"shifted":1,"lines":[[11,1639,7],[2,357,648],[8,1653,0],[7,1084,284]]}
+{"type":"balloonSpline","panel":3,"i":0,"closed":1,"nCps":20,"cps":[[-100,20],[-169,-346],[-100,-712],[-100,-1081],[184,-1081],[184,-1388],[505,-1457],[826,-1388],[1147,-1457],[1468,-1388],[1468,-1081],[1753,-1081],[1823,-707],[1753,-333],[1753,40],[1445,108],[1137,36],[829,104],[521,32],[213,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":26508,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":16076,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":26508,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY WORDS","cx":2393,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY WORDS STRUNG TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":26508,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY WORDS","cx":2393,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG TOGETHER","cx":2935,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TOGETHER TO","cx":2142,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":701,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WORDS STRUNG","cx":1507,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WORDS STRUNG TOGETHER","cx":2538,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... MANY WORDS STRUNG...","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... MANY WORDS","cx":2393,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORDS STRUNG...","cx":2644,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"STRUNG...","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":4,"seed":2602,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":4,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1239,"bbox":[422,-4451,1878,-1090],"bodyClass":1,"poseFace":11,"poseTorso":21}
+{"type":"balloon","panel":4,"i":0,"speaker":1,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,1528,106],"routeRgn":[60,2369],"text":"... MANY WORDS STRUNG..."}
+{"type":"balloonFormat","panel":4,"i":0,"nLines":3,"maxWidth":1428,"fbox":[276,-1041,1704,0],"shifted":1,"lines":[[8,1177,125],[5,1124,152],[9,1428,0]]}
+{"type":"balloonSpline","panel":4,"i":0,"closed":1,"nCps":17,"cps":[[25,20],[-44,-296],[25,-614],[-100,-614],[-100,-1061],[226,-1130],[552,-1061],[878,-1130],[1204,-1061],[1528,-1061],[1528,-614],[1402,-614],[1472,-287],[1402,40],[1059,106],[716,32],[373,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":22991,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":13935,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":22991,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER","cx":1904,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER TO","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER TO FORCE THE BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":22991,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER","cx":1904,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER TO","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE BALLOON","cx":2129,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALLOON LAYOUT","cx":2724,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":238,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"TO FORCE","cx":899,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"TO FORCE THE","cx":1309,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"TO FORCE THE BALLOON","cx":2208,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... TOGETHER TO FORCE THE...","cx":4376,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER","cx":1904,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... TOGETHER TO","cx":2433,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO","cx":436,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TO FORCE THE...","cx":2380,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE...","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":5,"seed":24632,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":5,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1157,"bbox":[396,-4517,1903,-1090],"bodyClass":1,"poseFace":12,"poseTorso":13}
+{"type":"balloon","panel":5,"i":0,"speaker":1,"peType":1,"bbox":[160,-1318,2340,-80],"trueBox":[-100,-1130,2004,108],"routeRgn":[60,2369],"text":"... TOGETHER TO FORCE THE..."}
+{"type":"balloonFormat","panel":5,"i":0,"nLines":3,"maxWidth":1904,"fbox":[38,-1041,1942,0],"shifted":1,"lines":[[12,1904,0],[8,1481,211],[6,806,549]]}
+{"type":"balloonSpline","panel":5,"i":0,"closed":1,"nCps":20,"cps":[[-100,20],[-100,-427],[111,-427],[111,-754],[449,-754],[449,-1061],[784,-1130],[1119,-1061],[1455,-1061],[1455,-754],[1792,-754],[1792,-427],[2004,-427],[2004,40],[1704,108],[1404,36],[1104,104],[804,32],[504,100],[204,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":19012,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":11542,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":19012,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON LAYOUT","cx":3014,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON LAYOUT ENGINE TO BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":19012,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON LAYOUT","cx":3014,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO","cx":1732,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO BREAK","cx":2763,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK LINES REPEATEDLY","cx":3913,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":714,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":1454,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LAYOUT ENGINE TO","cx":1745,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LAYOUT ENGINE TO BREAK","cx":2406,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BALLOON LAYOUT ENGINE TO...","cx":5037,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON","cx":1719,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BALLOON LAYOUT","cx":3014,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAYOUT ENGINE","cx":2499,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENGINE TO...","cx":1930,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":6,"seed":4750,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":6,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1236,"bbox":[444,-4508,1856,-1090],"bodyClass":1,"poseFace":2,"poseTorso":15}
+{"type":"balloon","panel":6,"i":0,"speaker":1,"peType":1,"bbox":[160,-1318,2340,-80],"trueBox":[-100,-1130,2030,108],"routeRgn":[60,2369],"text":"... BALLOON LAYOUT ENGINE TO..."}
+{"type":"balloonFormat","panel":6,"i":0,"nLines":3,"maxWidth":1930,"fbox":[25,-1041,1955,0],"shifted":1,"lines":[[11,1719,105],[6,1203,363],[12,1930,0]]}
+{"type":"balloonSpline","panel":6,"i":0,"closed":1,"nCps":21,"cps":[[5,20],[-64,-296],[5,-614],[-100,-614],[-100,-1061],[204,-1130],[508,-1061],[812,-1130],[1116,-1061],[1420,-1130],[1724,-1061],[2030,-1061],[2030,-614],[1924,-614],[1994,-287],[1924,40],[1605,108],[1286,36],[967,104],[648,32],[329,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":14371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":8844,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":14371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK LINES","cx":2261,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES REPEATEDLY","cx":2882,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK LINES REPEATEDLY AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":14371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK LINES","cx":2261,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES REPEATEDLY","cx":2882,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY AND","cx":2605,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST","cx":1534,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND TEST THE","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":529,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LINES REPEATEDLY","cx":1772,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LINES REPEATEDLY AND","cx":2195,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... BREAK LINES REPEATEDLY...","cx":4403,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK","cx":1230,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... BREAK LINES","cx":2261,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINES REPEATEDLY...","cx":3081,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"REPEATEDLY...","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":7,"seed":384,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":7,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1212,"bbox":[459,-4489,1841,-1090],"bodyClass":1,"poseFace":4,"poseTorso":17}
+{"type":"balloon","panel":7,"i":0,"speaker":1,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,2149,106],"routeRgn":[60,2322],"text":"... BREAK LINES REPEATEDLY..."}
+{"type":"balloonFormat","panel":7,"i":0,"nLines":3,"maxWidth":2049,"fbox":[-34,-1041,2015,0],"shifted":1,"lines":[[9,1230,409],[5,939,555],[13,2049,0]]}
+{"type":"balloonSpline","panel":7,"i":0,"closed":1,"nCps":19,"cps":[[309,20],[240,-296],[309,-614],[-100,-614],[-100,-1061],[221,-1130],[542,-1061],[863,-1130],[1184,-1061],[1505,-1130],[1826,-1061],[2149,-1061],[2149,-614],[1739,-614],[1809,-287],[1739,40],[1382,106],[1025,32],[668,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":10365,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":6359,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":10365,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND","cx":952,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST","cx":1825,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST THE","cx":2525,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST THE WORD WRAP LOGIC THOROUGHLY AND COMPLETELY","cx":10365,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND","cx":952,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST","cx":1825,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST THE","cx":2525,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP LOGIC THOROUGHLY","cx":4006,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":357,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THE WORD","cx":992,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THE WORD WRAP","cx":1587,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THE WORD WRAP LOGIC","cx":2181,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... AND TEST THE WORD WRAP...","cx":4667,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND","cx":952,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST","cx":1825,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... AND TEST THE","cx":2525,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE","cx":608,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THE WORD WRAP...","cx":2750,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WRAP...","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":8,"seed":27785,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":8,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1080,"bbox":[292,-4689,2008,-1090],"bodyClass":1,"poseFace":9,"poseTorso":20}
+{"type":"balloon","panel":8,"i":0,"speaker":1,"peType":1,"bbox":[160,-1318,2340,-80],"trueBox":[-100,-1130,1925,108],"routeRgn":[60,2322],"text":"... AND TEST THE WORD WRAP..."}
+{"type":"balloonFormat","panel":8,"i":0,"nLines":3,"maxWidth":1825,"fbox":[77,-1041,1902,0],"shifted":1,"lines":[[12,1825,0],[8,1626,99],[7,1031,397]]}
+{"type":"balloonSpline","panel":8,"i":0,"closed":1,"nCps":20,"cps":[[-100,20],[-100,-427],[-1,-427],[-1,-754],[297,-754],[297,-1061],[605,-1130],[913,-1061],[1221,-1130],[1528,-1061],[1528,-754],[1825,-754],[1825,-427],[1925,-427],[1925,40],[1588,108],[1251,36],[914,104],[577,32],[240,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... LOGIC THOROUGHLY AND COMPLETELY"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY AND COMPLETELY","cx":6095,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY AND COMPLETELY\u0000","cx":3794,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY AND COMPLETELY","cx":6095,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY","cx":3371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY AND COMPLETELY","cx":6095,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY","cx":3371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND COMPLETELY","cx":2631,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":1269,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THOROUGHLY AND","cx":1692,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THOROUGHLY AND COMPLETELY","cx":2962,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY AND...","cx":4323,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... LOGIC THOROUGHLY","cx":3371,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THOROUGHLY","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AND...","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":9,"seed":1387,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":9,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1218,"bbox":[444,-4517,1855,-1090],"bodyClass":1,"poseFace":10,"poseTorso":21}
+{"type":"balloon","panel":9,"i":0,"speaker":1,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,2162,106],"routeRgn":[60,2322],"text":"... LOGIC THOROUGHLY AND..."}
+{"type":"balloonFormat","panel":9,"i":0,"nLines":3,"maxWidth":2062,"fbox":[-41,-1041,2021,0],"shifted":1,"lines":[[9,1216,423],[10,2062,0],[6,859,601]]}
+{"type":"balloonSpline","panel":9,"i":0,"closed":1,"nCps":19,"cps":[[323,20],[323,-287],[-100,-287],[-100,-754],[201,-823],[501,-754],[501,-1061],[854,-1130],[1207,-1061],[1560,-1061],[1560,-754],[1861,-823],[2162,-754],[2162,-287],[1739,-287],[1739,40],[1386,106],[1033,32],[680,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... COMPLETELY"}
+{"type":"textExtent","str":"... COMPLETELY","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... COMPLETELY\u0000","cx":1454,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... COMPLETELY","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... COMPLETELY","cx":2168,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"COMPLETELY","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":10,"seed":17994,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":10,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1213,"bbox":[396,-4460,1903,-1090],"bodyClass":1,"poseFace":11,"poseTorso":13}
+{"type":"balloon","panel":10,"i":0,"speaker":1,"peType":1,"bbox":[160,-923,2340,-80],"trueBox":[-100,-803,1977,40],"routeRgn":[60,2137],"text":"... COMPLETELY"}
+{"type":"balloonFormat","panel":10,"i":0,"nLines":2,"maxWidth":1877,"fbox":[51,-714,1928,0],"shifted":1,"lines":[[3,198,839],[10,1877,0]]}
+{"type":"balloonSpline","panel":10,"i":0,"closed":1,"nCps":15,"cps":[[739,20],[739,-287],[320,-217],[-100,-287],[-100,-734],[246,-803],[592,-734],[938,-803],[1284,-734],[1630,-803],[1977,-734],[1977,-287],[1558,-217],[1137,-287],[1137,40]]}
+{"type":"message","seq":1,"speaker":1,"mode":1,"text":"<Brk>"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":17,"torsoIndex":2,"requested":0}
+{"type":"message","seq":2,"speaker":2,"mode":1,"text":"Check this out AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA that word cannot break at all"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":0,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"Check this out AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA that word cannot break at all"}
+{"type":"textExtent","str":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL","cx":25464,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL\u0000","cx":13459,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL","cx":25464,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS OUT","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":18086,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":17346,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD CANNOT","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BREAK","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT ALL","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALL","cx":529,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL","cx":25464,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS OUT","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":18086,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":17346,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD CANNOT","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BREAK","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT ALL","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALL","cx":529,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT","cx":370,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":9096,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT","cx":9599,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD","cx":10233,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT","cx":11013,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK","cx":11674,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT","cx":11939,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL","cx":12309,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL...","cx":25662,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CHECK THIS OUT","cx":2538,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT","cx":648,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":18086,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":17346,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD","cx":1851,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT WORD CANNOT","cx":3239,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT","cx":1296,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CANNOT BREAK","cx":2327,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT","cx":1441,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK AT ALL...","cx":2261,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALL...","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":11,"seed":594,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":11,"i":0,"avatarId":2,"flip":0,"requested":1,"arrowX":1224,"bbox":[467,-4125,1832,-1090],"bodyClass":1,"poseFace":24,"poseTorso":33}
+{"type":"balloon","panel":11,"i":0,"speaker":2,"peType":1,"bbox":[160,-2538,2340,-80],"trueBox":[-100,-2438,17446,20],"routeRgn":[60,17606],"text":"CHECK THIS OUT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA THAT WORD CANNOT BREAK AT ALL..."}
+{"type":"balloonFormat","panel":11,"i":0,"nLines":7,"maxWidth":17346,"fbox":[-7683,-2349,9663,0],"shifted":1,"lines":[[10,1798,7774],[3,648,8349],[82,17346,0],[9,1851,7747],[6,1296,8025],[8,1441,7952],[6,727,8309]]}
+{"type":"balloonSpline","panel":11,"i":0,"closed":1,"nCps":126,"cps":[[7674,20],[7605,-296],[7674,-614],[7364,-544],[7054,-614],[6744,-544],[6434,-614],[6124,-544],[5814,-614],[5504,-544],[5194,-614],[4884,-544],[4574,-614],[4264,-544],[3954,-614],[3644,-544],[3334,-614],[3024,-544],[2714,-614],[2404,-544],[2094,-614],[1784,-544],[1474,-614],[1164,-544],[854,-614],[544,-544],[234,-614],[-100,-614],[-100,-1081],[210,-1150],[520,-1081],[830,-1150],[1140,-1081],[1450,-1150],[1760,-1081],[2070,-1150],[2380,-1081],[2690,-1150],[3000,-1081],[3310,-1150],[3620,-1081],[3930,-1150],[4240,-1081],[4550,-1150],[4860,-1081],[5170,-1150],[5480,-1081],[5790,-1150],[6100,-1081],[6410,-1150],[6720,-1081],[7030,-1150],[7340,-1081],[7647,-1081],[7647,-1408],[7852,-1408],[7783,-1734],[7852,-2062],[8209,-2062],[8209,-2369],[8518,-2438],[8827,-2369],[9136,-2369],[9136,-2062],[9493,-2062],[9563,-1735],[9493,-1408],[9698,-1408],[9698,-1081],[10008,-1150],[10318,-1081],[10628,-1150],[10938,-1081],[11248,-1150],[11558,-1081],[11868,-1150],[12178,-1081],[12488,-1150],[12798,-1081],[13108,-1150],[13418,-1081],[13728,-1150],[14038,-1081],[14348,-1150],[14658,-1081],[14968,-1150],[15278,-1081],[15588,-1150],[15898,-1081],[16208,-1150],[16518,-1081],[16828,-1150],[17138,-1081],[17446,-1081],[17446,-614],[17136,-544],[16826,-614],[16516,-544],[16206,-614],[15896,-544],[15586,-614],[15276,-544],[14966,-614],[14656,-544],[14346,-614],[14036,-544],[13726,-614],[13416,-544],[13106,-614],[12796,-544],[12486,-614],[12176,-544],[11866,-614],[11556,-544],[11246,-614],[10936,-544],[10626,-614],[10316,-544],[10006,-614],[9672,-614],[9672,-544],[9359,-383],[9008,-356],[8695,-195],[8344,-168],[8031,-7]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"..."}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":12,"seed":15357,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":12,"i":0,"avatarId":2,"flip":0,"requested":1,"arrowX":1191,"bbox":[543,-4073,1756,-1090],"bodyClass":1,"poseFace":25,"poseTorso":36}
+{"type":"balloon","panel":12,"i":0,"speaker":2,"peType":1,"bbox":[1075,-527,1473,-80],"trueBox":[-100,-407,298,40],"routeRgn":[975,1373],"text":"..."}
+{"type":"balloonFormat","panel":12,"i":0,"nLines":1,"maxWidth":198,"fbox":[0,-387,198,0],"shifted":1,"lines":[[3,198,0]]}
+{"type":"balloonSpline","panel":12,"i":0,"closed":1,"nCps":4,"cps":[[-100,20],[-100,-407],[298,-407],[298,40]]}
+{"type":"message","seq":3,"speaker":1,"mode":1,"text":"<Brk>"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":17,"torsoIndex":2,"requested":0}
+{"type":"message","seq":4,"speaker":1,"mode":1,"text":"http://www.longurl-example.com/path/no/breaks/here/at/all/forever/going/on"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":17,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"http://www.longurl-example.com/path/no/breaks/here/at/all/forever/going/on"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON\u0000","cx":8144,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":13,"seed":21643,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":13,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1252,"bbox":[492,-4537,1808,-1090],"bodyClass":1,"poseFace":12,"poseTorso":15}
+{"type":"balloon","panel":13,"i":0,"speaker":1,"peType":1,"bbox":[160,-666,2340,-80],"trueBox":[-100,-476,14180,110],"routeRgn":[60,14340],"text":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON"}
+{"type":"balloonFormat","panel":13,"i":0,"nLines":1,"maxWidth":14080,"fbox":[-6050,-387,8030,0],"shifted":1,"lines":[[74,14080,0]]}
+{"type":"balloonSpline","panel":13,"i":0,"closed":1,"nCps":96,"cps":[[-100,20],[-100,-407],[204,-476],[508,-407],[812,-476],[1116,-407],[1420,-476],[1724,-407],[2028,-476],[2332,-407],[2636,-476],[2940,-407],[3244,-476],[3548,-407],[3852,-476],[4156,-407],[4460,-476],[4764,-407],[5068,-476],[5372,-407],[5676,-476],[5980,-407],[6284,-476],[6588,-407],[6892,-476],[7196,-407],[7500,-476],[7804,-407],[8108,-476],[8412,-407],[8716,-476],[9020,-407],[9324,-476],[9628,-407],[9932,-476],[10236,-407],[10540,-476],[10844,-407],[11148,-476],[11452,-407],[11756,-476],[12060,-407],[12364,-476],[12668,-407],[12972,-476],[13276,-407],[13580,-476],[13884,-407],[14180,-407],[14180,40],[13877,110],[13574,40],[13271,110],[12968,40],[12665,110],[12362,40],[12059,110],[11756,40],[11453,110],[11150,40],[10847,110],[10544,40],[10241,110],[9938,40],[9635,110],[9332,40],[9029,110],[8726,40],[8423,110],[8120,40],[7817,110],[7514,40],[7211,110],[6908,40],[6605,110],[6302,40],[5999,110],[5696,40],[5393,110],[5090,40],[4787,110],[4484,40],[4181,110],[3878,40],[3575,110],[3272,40],[2969,110],[2666,40],[2363,110],[2060,40],[1757,110],[1454,40],[1151,110],[848,40],[545,110],[242,40]]}
+{"type":"message","seq":5,"speaker":2,"mode":1,"text":"one two three four five six"}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"one two three four five six"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON\u0000","cx":8144,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HTTP://WWW.LONGURL-EXAMPLE.COM/PATH/NO/BREAKS/HERE/AT/ALL/FOREVER/GOING/ON","cx":14080,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX\u0000","cx":2882,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TWO","cx":727,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TWO THREE","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE","cx":978,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOUR","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOUR FIVE","cx":1600,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE SIX","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"one two three four five six"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX\u0000","cx":2882,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE","cx":978,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR FIVE","cx":2671,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE SIX","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE SIX","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE","cx":978,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR FIVE","cx":2671,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE SIX","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE","cx":608,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THREE FOUR","cx":1163,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THREE FOUR FIVE","cx":1600,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THREE FOUR FIVE SIX","cx":1944,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE TWO THREE FOUR FIVE...","cx":4442,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO","cx":1481,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE TWO THREE","cx":2552,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE","cx":978,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR","cx":1877,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THREE FOUR FIVE...","cx":2869,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FIVE...","cx":899,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":14,"seed":134,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":14,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1066,"bbox":[439,-4037,1861,-1090],"bodyClass":1,"poseFace":24,"poseTorso":38}
+{"type":"balloon","panel":14,"i":0,"speaker":2,"peType":1,"bbox":[160,-1317,2340,-80],"trueBox":[-100,-1130,1977,107],"routeRgn":[60,2137],"text":"ONE TWO THREE FOUR FIVE..."}
+{"type":"balloonFormat","panel":14,"i":0,"nLines":3,"maxWidth":1877,"fbox":[51,-1041,1928,0],"shifted":1,"lines":[[7,1481,198],[10,1877,0],[7,899,489]]}
+{"type":"balloonSpline","panel":14,"i":0,"closed":1,"nCps":18,"cps":[[98,20],[98,-287],[-100,-287],[-100,-754],[389,-754],[389,-1061],[755,-1130],[1121,-1061],[1488,-1061],[1488,-754],[1977,-754],[1977,-287],[1779,-287],[1779,40],[1444,107],[1109,34],[774,101],[439,28]]}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"... SIX"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... SIX\u0000","cx":528,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":15,"seed":27056,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":15,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1089,"bbox":[481,-4080,1818,-1090],"bodyClass":1,"poseFace":25,"poseTorso":33}
+{"type":"balloon","panel":15,"i":0,"speaker":2,"peType":1,"bbox":[492,-660,1551,-80],"trueBox":[-100,-476,959,104],"routeRgn":[392,1451],"text":"... SIX"}
+{"type":"balloonFormat","panel":15,"i":0,"nLines":1,"maxWidth":859,"fbox":[0,-387,859,0],"shifted":1,"lines":[[7,859,0]]}
+{"type":"balloonSpline","panel":15,"i":0,"closed":1,"nCps":8,"cps":[[-100,20],[-100,-407],[253,-476],[606,-407],[959,-407],[959,40],[607,104],[255,28]]}
+{"type":"message","seq":6,"speaker":1,"mode":1,"text":"a bb ccc dddd eeeee ffffff ggggggg hhhhhhhh iiiiiiiii jjjjjjjjjj"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"a bb ccc dddd eeeee ffffff ggggggg hhhhhhhh iiiiiiiii jjjjjjjjjj"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... SIX\u0000","cx":528,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... SIX","cx":859,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":11330,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ\u0000","cx":6372,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":11330,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CCC","cx":516,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"CCC DDDD","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EEEEE","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EEEEE FFFFFF","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF GGGGGGG","cx":2512,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"a bb ccc dddd eeeee ffffff ggggggg hhhhhhhh iiiiiiiii jjjjjjjjjj"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":11330,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ\u0000","cx":6372,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":11330,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD","cx":2221,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE FFFFFF","cx":2988,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF GGGGGGG","cx":2512,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG HHHHHHHH","cx":3279,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":11330,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD","cx":2221,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE","cx":1864,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE FFFFFF","cx":2988,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF","cx":1031,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FFFFFF GGGGGGG","cx":2512,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG HHHHHHHH","cx":3279,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD","cx":529,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"DDDD EEEEE","cx":1177,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"DDDD EEEEE FFFFFF","cx":1864,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"A BB CCC DDDD EEEEE...","cx":3437,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A","cx":212,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB","cx":674,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC","cx":1282,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"A BB CCC DDDD","cx":2221,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"DDDD EEEEE...","cx":2062,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"EEEEE...","cx":1124,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":16,"seed":1723,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":16,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1236,"bbox":[445,-4537,1855,-1090],"bodyClass":1,"poseFace":2,"poseTorso":17}
+{"type":"balloon","panel":16,"i":0,"speaker":1,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,1382,106],"routeRgn":[60,2243],"text":"A BB CCC DDDD EEEEE..."}
+{"type":"balloonFormat","panel":16,"i":0,"nLines":3,"maxWidth":1282,"fbox":[349,-1041,1631,0],"shifted":1,"lines":[[8,1282,0],[4,846,218],[8,1124,79]]}
+{"type":"balloonSpline","panel":16,"i":0,"closed":1,"nCps":16,"cps":[[-100,20],[-100,-427],[-21,-427],[-90,-743],[-21,-1061],[310,-1130],[641,-1061],[972,-1130],[1303,-1061],[1373,-744],[1303,-427],[1382,-427],[1382,40],[1012,106],[642,32],[272,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":8290,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ\u0000","cx":4468,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":8290,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG","cx":2803,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG HHHHHHHH","cx":3279,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":8290,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG","cx":2803,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":1388,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG HHHHHHHH","cx":3279,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG","cx":925,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"GGGGGGG HHHHHHHH","cx":2036,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG...","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF","cx":1322,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... FFFFFF GGGGGGG...","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"GGGGGGG...","cx":1587,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":17,"seed":7218,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":17,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1103,"bbox":[350,-4517,1950,-1090],"bodyClass":1,"poseFace":4,"poseTorso":20}
+{"type":"balloon","panel":17,"i":0,"speaker":1,"peType":1,"bbox":[160,-990,2340,-80],"trueBox":[-100,-803,1687,107],"routeRgn":[60,2243],"text":"... FFFFFF GGGGGGG..."}
+{"type":"balloonFormat","panel":17,"i":0,"nLines":2,"maxWidth":1587,"fbox":[196,-714,1783,0],"shifted":1,"lines":[[10,1322,132],[10,1587,0]]}
+{"type":"balloonSpline","panel":17,"i":0,"closed":1,"nCps":16,"cps":[[32,20],[32,-287],[-100,-287],[-100,-734],[257,-803],[614,-734],[971,-803],[1328,-734],[1687,-734],[1687,-287],[1554,-287],[1554,40],[1251,107],[948,34],[645,101],[342,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... HHHHHHHH IIIIIIIII JJJJJJJJJJ"}
+{"type":"textExtent","str":"... HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":5685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HHHHHHHH IIIIIIIII JJJJJJJJJJ\u0000","cx":2802,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":5685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HHHHHHHH","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":5685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HHHHHHHH","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":3318,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII","cx":1428,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII JJJJJJJJJJ","cx":3504,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1058,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII","cx":1587,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII JJJJJJJJJJ","cx":2565,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HHHHHHHH IIIIIIIII...","cx":3808,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HHHHHHHH","cx":2089,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH","cx":1798,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HHHHHHHH IIIIIIIII...","cx":3517,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IIIIIIIII...","cx":1626,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":18,"seed":19359,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":18,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1177,"bbox":[386,-4596,1913,-1090],"bodyClass":1,"poseFace":9,"poseTorso":21}
+{"type":"balloon","panel":18,"i":0,"speaker":1,"peType":1,"bbox":[160,-1250,2340,-80],"trueBox":[-100,-1130,1898,40],"routeRgn":[60,2243],"text":"... HHHHHHHH IIIIIIIII..."}
+{"type":"balloonFormat","panel":18,"i":0,"nLines":3,"maxWidth":1798,"fbox":[91,-1041,1889,0],"shifted":1,"lines":[[3,198,800],[8,1798,0],[12,1626,86]]}
+{"type":"balloonSpline","panel":18,"i":0,"closed":1,"nCps":19,"cps":[[700,20],[700,-287],[301,-217],[-100,-287],[-100,-754],[-14,-754],[-14,-1061],[290,-1130],[594,-1061],[898,-1130],[1202,-1061],[1506,-1130],[1812,-1061],[1812,-754],[1898,-754],[1898,-287],[1499,-217],[1098,-287],[1098,40]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... JJJJJJJJJJ"}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... JJJJJJJJJJ\u0000","cx":1163,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":19,"seed":6587,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":19,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1210,"bbox":[398,-4527,1901,-1090],"bodyClass":1,"poseFace":10,"poseTorso":13}
+{"type":"balloon","panel":19,"i":0,"speaker":1,"peType":1,"bbox":[160,-923,2340,-80],"trueBox":[-100,-803,2083,40],"routeRgn":[60,2243],"text":"... JJJJJJJJJJ"}
+{"type":"balloonFormat","panel":19,"i":0,"nLines":2,"maxWidth":1983,"fbox":[-1,-714,1982,0],"shifted":1,"lines":[[3,198,892],[10,1983,0]]}
+{"type":"balloonSpline","panel":19,"i":0,"closed":1,"nCps":16,"cps":[[792,20],[792,-287],[347,-217],[-100,-287],[-100,-734],[212,-803],[524,-734],[836,-803],[1148,-734],[1460,-803],[1772,-734],[2083,-734],[2083,-287],[1637,-217],[1190,-287],[1190,40]]}
+{"type":"message","seq":7,"speaker":2,"mode":1,"text":"Short."}
+{"type":"emotion","avatarId":2,"opts":[],"faceIndex":0,"torsoIndex":4,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":2,"words":"Short."}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... JJJJJJJJJJ\u0000","cx":1163,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... JJJJJJJJJJ","cx":2274,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"JJJJJJJJJJ","cx":1983,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.\u0000","cx":700,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"Short."}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.\u0000","cx":700,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":20,"seed":15436,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":20,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1092,"bbox":[530,-4110,1770,-1090],"bodyClass":1,"poseFace":24,"poseTorso":36}
+{"type":"balloon","panel":20,"i":0,"speaker":2,"peType":1,"bbox":[841,-662,2152,-80],"trueBox":[-100,-476,1211,106],"routeRgn":[741,2052],"text":"SHORT."}
+{"type":"balloonFormat","panel":20,"i":0,"nLines":1,"maxWidth":1111,"fbox":[0,-387,1111,0],"shifted":1,"lines":[[6,1111,0]]}
+{"type":"balloonSpline","panel":20,"i":0,"closed":1,"nCps":10,"cps":[[-100,20],[-100,-407],[228,-476],[556,-407],[884,-476],[1211,-407],[1211,40],[884,106],[557,32],[230,98]]}
+{"type":"message","seq":8,"speaker":1,"mode":1,"text":"Medium length line here for balance"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":16,"torsoIndex":2,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"Medium length line here for balance"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.\u0000","cx":700,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SHORT.","cx":1111,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE","cx":6412,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE\u0000","cx":3873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE","cx":6412,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM","cx":1269,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH LINE","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE HERE","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE","cx":780,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"HERE FOR","cx":1468,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR BALANCE","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALANCE","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"Medium length line here for balance"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE","cx":6412,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE\u0000","cx":3873,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE","cx":6412,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM","cx":1269,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH LINE","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE HERE","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE HERE FOR","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR BALANCE","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALANCE","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE HERE FOR BALANCE","cx":6412,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM","cx":1269,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH LINE","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE","cx":740,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE HERE","cx":1613,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE HERE FOR","cx":2300,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR","cx":595,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"FOR BALANCE","cx":2049,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALANCE","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH","cx":727,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LENGTH LINE","cx":1190,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"LENGTH LINE HERE","cx":1745,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"MEDIUM LENGTH LINE...","cx":3596,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM","cx":1269,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"MEDIUM LENGTH","cx":2565,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH","cx":1203,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LENGTH LINE...","cx":2234,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LINE...","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":21,"seed":30056,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":21,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1298,"bbox":[482,-4479,1818,-1090],"bodyClass":1,"poseFace":11,"poseTorso":15}
+{"type":"balloon","panel":21,"i":0,"speaker":1,"peType":1,"bbox":[229,-1316,2409,-80],"trueBox":[-169,-1130,1439,106],"routeRgn":[60,1873],"text":"MEDIUM LENGTH LINE..."}
+{"type":"balloonFormat","panel":21,"i":0,"nLines":3,"maxWidth":1269,"fbox":[355,-1041,1624,0],"shifted":1,"lines":[[6,1269,0],[6,1203,33],[7,939,165]]}
+{"type":"balloonSpline","panel":21,"i":0,"closed":1,"nCps":15,"cps":[[-100,20],[-169,-366],[-100,-754],[65,-754],[65,-1061],[445,-1130],[825,-1061],[1204,-1061],[1204,-754],[1369,-754],[1439,-357],[1369,40],[1003,106],[637,32],[271,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... HERE FOR BALANCE"}
+{"type":"textExtent","str":"... HERE FOR BALANCE","cx":3213,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE FOR BALANCE\u0000","cx":2036,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... HERE FOR BALANCE","cx":3213,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE","cx":1071,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE FOR","cx":1758,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... HERE FOR BALANCE","cx":3213,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BALANCE","cx":1362,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":22,"seed":3869,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":22,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1251,"bbox":[491,-4576,1808,-1090],"bodyClass":1,"poseFace":12,"poseTorso":17}
+{"type":"balloon","panel":22,"i":0,"speaker":1,"peType":1,"bbox":[160,-991,2340,-80],"trueBox":[-100,-803,1858,108],"routeRgn":[60,2018],"text":"... HERE FOR BALANCE"}
+{"type":"balloonFormat","panel":22,"i":0,"nLines":2,"maxWidth":1758,"fbox":[111,-714,1869,0],"shifted":1,"lines":[[12,1758,0],[7,1362,198]]}
+{"type":"balloonSpline","panel":22,"i":0,"closed":1,"nCps":17,"cps":[[-100,20],[-100,-427],[98,-427],[98,-734],[410,-803],[722,-734],[1034,-803],[1346,-734],[1660,-734],[1660,-427],[1858,-427],[1858,40],[1533,108],[1208,36],[883,104],[558,32],[233,100]]}
+{"type":"message","seq":9,"speaker":1,"mode":1,"text":"<Brk>"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":13,"requested":0}
+{"type":"message","seq":10,"speaker":2,"mode":1,"text":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
+{"type":"emotion","avatarId":2,"opts":[[4.712385,1.000000,0]],"faceIndex":9,"torsoIndex":6,"requested":0}
+{"type":"panelDecision","cloned":0,"speaker":2,"words":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\u0000","cx":10180,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":23,"seed":3245,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":23,"i":0,"avatarId":2,"flip":1,"requested":1,"arrowX":1074,"bbox":[461,-3934,1838,-1090],"bodyClass":1,"poseFace":30,"poseTorso":38}
+{"type":"balloon","panel":23,"i":0,"speaker":2,"peType":1,"bbox":[160,-666,2340,-80],"trueBox":[-100,-476,20408,110],"routeRgn":[60,20568],"text":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
+{"type":"balloonFormat","panel":23,"i":0,"nLines":1,"maxWidth":20308,"fbox":[-9164,-387,11144,0],"shifted":1,"lines":[[96,20308,0]]}
+{"type":"balloonSpline","panel":23,"i":0,"closed":1,"nCps":138,"cps":[[-100,20],[-100,-407],[202,-476],[504,-407],[806,-476],[1108,-407],[1410,-476],[1712,-407],[2014,-476],[2316,-407],[2618,-476],[2920,-407],[3222,-476],[3524,-407],[3826,-476],[4128,-407],[4430,-476],[4732,-407],[5034,-476],[5336,-407],[5638,-476],[5940,-407],[6242,-476],[6544,-407],[6846,-476],[7148,-407],[7450,-476],[7752,-407],[8054,-476],[8356,-407],[8658,-476],[8960,-407],[9262,-476],[9564,-407],[9866,-476],[10168,-407],[10470,-476],[10772,-407],[11074,-476],[11376,-407],[11678,-476],[11980,-407],[12282,-476],[12584,-407],[12886,-476],[13188,-407],[13490,-476],[13792,-407],[14094,-476],[14396,-407],[14698,-476],[15000,-407],[15302,-476],[15604,-407],[15906,-476],[16208,-407],[16510,-476],[16812,-407],[17114,-476],[17416,-407],[17718,-476],[18020,-407],[18322,-476],[18624,-407],[18926,-476],[19228,-407],[19530,-476],[19832,-407],[20134,-476],[20408,-407],[20408,40],[20107,110],[19806,40],[19505,110],[19204,40],[18903,110],[18602,40],[18301,110],[18000,40],[17699,110],[17398,40],[17097,110],[16796,40],[16495,110],[16194,40],[15893,110],[15592,40],[15291,110],[14990,40],[14689,110],[14388,40],[14087,110],[13786,40],[13485,110],[13184,40],[12883,110],[12582,40],[12281,110],[11980,40],[11679,110],[11378,40],[11077,110],[10776,40],[10475,110],[10174,40],[9873,110],[9572,40],[9271,110],[8970,40],[8669,110],[8368,40],[8067,110],[7766,40],[7465,110],[7164,40],[6863,110],[6562,40],[6261,110],[5960,40],[5659,110],[5358,40],[5057,110],[4756,40],[4455,110],[4154,40],[3853,110],[3552,40],[3251,110],[2950,40],[2649,110],[2348,40],[2047,110],[1746,40],[1445,110],[1144,40],[843,110],[542,40],[241,110]]}
+{"type":"message","seq":11,"speaker":1,"mode":1,"text":"That last one was a truly enormous single word with zero break points anywhere in it at all"}
+{"type":"emotion","avatarId":1,"opts":[],"faceIndex":0,"torsoIndex":13,"requested":0}
+{"type":"panelDecision","cloned":1,"speaker":1,"words":"That last one was a truly enormous single word with zero break points anywhere in it at all"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\u0000","cx":10180,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","cx":20308,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":16685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL\u0000","cx":9796,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":16685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAST","cx":767,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"LAST ONE","cx":1520,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS","cx":701,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS A","cx":1005,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WAS A TRULY","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY ENORMOUS","cx":2776,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE WORD","cx":2155,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH","cx":1891,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO","cx":1772,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK POINTS","cx":2208,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ALL","cx":529,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panelRetry"}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"That last one was a truly enormous single word with zero break points anywhere in it at all"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":16685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL\u0000","cx":9796,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":16685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A","cx":1758,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A TRULY","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY ENORMOUS","cx":2776,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS SINGLE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE WORD","cx":2155,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH","cx":1891,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH ZERO","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK POINTS","cx":3107,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":16685,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A","cx":1758,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A TRULY","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY ENORMOUS","cx":2776,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS SINGLE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE WORD","cx":2155,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH","cx":1891,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH ZERO","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK POINTS","cx":3107,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":383,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE WAS","cx":846,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE WAS A","cx":1005,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE WAS A TRULY","cx":1666,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ONE WAS A TRULY ENORMOUS","cx":2776,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"THAT LAST ONE WAS A TRULY...","cx":4773,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT","cx":833,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST","cx":1692,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"THAT LAST ONE","cx":2446,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE","cx":661,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS","cx":1454,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A","cx":1758,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ONE WAS A TRULY...","cx":2988,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"TRULY...","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":24,"seed":26654,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":24,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1123,"bbox":[332,-4566,1967,-1090],"bodyClass":1,"poseFace":2,"poseTorso":20}
+{"type":"balloon","panel":24,"i":0,"speaker":1,"peType":1,"bbox":[229,-1318,2409,-80],"trueBox":[-169,-1130,1928,108],"routeRgn":[60,2290],"text":"THAT LAST ONE WAS A TRULY..."}
+{"type":"balloonFormat","panel":24,"i":0,"nLines":3,"maxWidth":1758,"fbox":[111,-1041,1869,0],"shifted":1,"lines":[[9,1692,33],[9,1758,0],[8,1137,310]]}
+{"type":"balloonSpline","panel":24,"i":0,"closed":1,"nCps":18,"cps":[[-100,20],[-169,-366],[-100,-754],[210,-754],[210,-1061],[544,-1130],[878,-1061],[1212,-1130],[1547,-1061],[1547,-754],[1858,-754],[1928,-357],[1858,40],[1533,108],[1208,36],[883,104],[558,32],[233,100]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL"}
+{"type":"textExtent","str":"... ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":12309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL\u0000","cx":7298,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":12309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ENORMOUS","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS SINGLE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE WORD","cx":2155,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH","cx":1891,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH ZERO","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK POINTS","cx":3107,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ENORMOUS SINGLE WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":12309,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ENORMOUS","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS SINGLE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE WORD","cx":2155,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD","cx":925,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH","cx":1891,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WORD WITH ZERO","cx":2790,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO","cx":806,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK","cx":1838,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ZERO BREAK POINTS","cx":3107,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1058,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ENORMOUS SINGLE","cx":1772,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ENORMOUS SINGLE WORD","cx":2406,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ENORMOUS SINGLE...","cx":3464,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ENORMOUS","cx":2036,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS","cx":1745,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ENORMOUS SINGLE...","cx":3173,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"SINGLE...","cx":1335,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":25,"seed":17423,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":25,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1193,"bbox":[440,-4424,1859,-1090],"bodyClass":1,"poseFace":4,"poseTorso":21}
+{"type":"balloon","panel":25,"i":0,"speaker":1,"peType":1,"bbox":[160,-1250,2340,-80],"trueBox":[-100,-1130,1845,40],"routeRgn":[60,2290],"text":"... ENORMOUS SINGLE..."}
+{"type":"balloonFormat","panel":25,"i":0,"nLines":3,"maxWidth":1745,"fbox":[117,-1041,1862,0],"shifted":1,"lines":[[3,198,773],[8,1745,0],[9,1335,205]]}
+{"type":"balloonSpline","panel":25,"i":0,"closed":1,"nCps":18,"cps":[[673,20],[673,-287],[287,-217],[-100,-287],[-100,-754],[105,-754],[105,-1061],[412,-1130],[719,-1061],[1026,-1130],[1333,-1061],[1640,-1061],[1640,-754],[1845,-754],[1845,-287],[1459,-217],[1071,-287],[1071,40]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL"}
+{"type":"textExtent","str":"... WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":9242,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL\u0000","cx":5473,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":9242,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD WITH","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO","cx":1772,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO BREAK","cx":2803,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK POINTS","cx":2208,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD WITH ZERO BREAK POINTS ANYWHERE IN IT AT ALL","cx":9242,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD WITH","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO","cx":1772,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO BREAK","cx":2803,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK","cx":939,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK POINTS","cx":2208,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS","cx":1177,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"POINTS ANYWHERE","cx":2975,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH","cx":476,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WITH ZERO","cx":1031,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WITH ZERO BREAK","cx":1692,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"WITH ZERO BREAK POINTS","cx":2406,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... WORD WITH ZERO BREAK...","cx":4310,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD","cx":1216,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... WORD WITH","cx":2181,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH","cx":873,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO","cx":1772,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"WITH ZERO BREAK...","cx":3001,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"BREAK...","cx":1137,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":26,"seed":11651,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":26,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1150,"bbox":[362,-4596,1938,-1090],"bodyClass":1,"poseFace":9,"poseTorso":13}
+{"type":"balloon","panel":26,"i":0,"speaker":1,"peType":1,"bbox":[160,-1316,2340,-80],"trueBox":[-100,-1130,1872,106],"routeRgn":[60,2230],"text":"... WORD WITH ZERO BREAK..."}
+{"type":"balloonFormat","panel":26,"i":0,"nLines":3,"maxWidth":1772,"fbox":[104,-1041,1876,0],"shifted":1,"lines":[[8,1216,278],[9,1772,0],[8,1137,317]]}
+{"type":"balloonSpline","panel":26,"i":0,"closed":1,"nCps":18,"cps":[[178,20],[178,-287],[-100,-287],[-100,-754],[217,-754],[217,-1061],[551,-1130],[885,-1061],[1219,-1130],[1554,-1061],[1554,-754],[1872,-754],[1872,-287],[1594,-287],[1594,40],[1241,106],[888,32],[535,98]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... POINTS ANYWHERE IN IT AT ALL"}
+{"type":"textExtent","str":"... POINTS ANYWHERE IN IT AT ALL","cx":5328,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS ANYWHERE IN IT AT ALL\u0000","cx":3093,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... POINTS ANYWHERE IN IT AT ALL","cx":5328,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS","cx":1468,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS ANYWHERE","cx":3266,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS ANYWHERE IN IT AT ALL","cx":5328,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS","cx":1468,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS ANYWHERE","cx":3266,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT","cx":1349,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT ALL","cx":1970,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1058,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":1296,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ANYWHERE IN IT","cx":1507,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ANYWHERE IN IT AT","cx":1772,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"ANYWHERE IN IT AT ALL","cx":2142,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... POINTS ANYWHERE IN IT AT...","cx":4905,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS","cx":1468,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... POINTS ANYWHERE","cx":3266,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE","cx":1706,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"ANYWHERE IN","cx":2195,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN","cx":397,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT","cx":846,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"IN IT AT...","cx":1547,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":27,"seed":28722,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":27,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1259,"bbox":[487,-4546,1812,-1090],"bodyClass":1,"poseFace":10,"poseTorso":15}
+{"type":"balloon","panel":27,"i":0,"speaker":1,"peType":1,"bbox":[160,-1317,2340,-80],"trueBox":[-100,-1130,1806,107],"routeRgn":[60,2230],"text":"... POINTS ANYWHERE IN IT AT..."}
+{"type":"balloonFormat","panel":27,"i":0,"nLines":3,"maxWidth":1706,"fbox":[137,-1041,1843,0],"shifted":1,"lines":[[10,1468,119],[8,1706,0],[11,1547,79]]}
+{"type":"balloonSpline","panel":27,"i":0,"closed":1,"nCps":20,"cps":[[19,20],[19,-287],[-100,-287],[-100,-754],[-21,-754],[-21,-1061],[328,-1130],[677,-1061],[1026,-1130],[1375,-1061],[1726,-1061],[1726,-754],[1806,-754],[1806,-287],[1687,-287],[1687,40],[1354,107],[1021,34],[688,101],[355,28]]}
+{"type":"panelDecision","cloned":0,"speaker":1,"words":"... ALL"}
+{"type":"textExtent","str":"... ALL","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ALL\u0000","cx":555,"cy":212,"fontHeight":16,"fontFace":"System"}
+{"type":"textExtent","str":"... ALL","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"...","cx":198,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"textExtent","str":"... ALL","cx":820,"cy":397,"fontHeight":400,"fontFace":"Comic Sans MS"}
+{"type":"panel","panel":28,"seed":18140,"hasBorder":1,"backdropId":0,"backdropMode":0,"nBodies":1,"nElements":1}
+{"type":"body","panel":28,"i":0,"avatarId":1,"flip":0,"requested":1,"arrowX":1298,"bbox":[483,-4517,1817,-1090],"bodyClass":1,"poseFace":11,"poseTorso":17}
+{"type":"balloon","panel":28,"i":0,"speaker":1,"peType":1,"bbox":[1116,-660,2136,-80],"trueBox":[-100,-476,920,104],"routeRgn":[1016,2036],"text":"... ALL"}
+{"type":"balloonFormat","panel":28,"i":0,"nLines":1,"maxWidth":820,"fbox":[0,-387,820,0],"shifted":1,"lines":[[7,820,0]]}
+{"type":"balloonSpline","panel":28,"i":0,"closed":1,"nCps":8,"cps":[[-100,20],[-100,-407],[240,-476],[580,-407],[920,-407],[920,40],[581,104],[242,28]]}
+{"type":"end","messages":12}

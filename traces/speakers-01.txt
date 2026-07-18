@@ -1,0 +1,33 @@
+# many speakers: six cast members alternating rapidly to stress panel composition and avatar placement
+@anna
+@bolo
+@connor
+@denise
+@hugh
+@susan
+1>Hi everyone
+2>Hey there
+3>What's up
+4>Good morning all
+5>Ready to start?
+6>Yes let's go
+1>Great, first topic
+2>Sounds fine to me
+3>I agree completely
+4>Me too
+5>Same here
+6>Let's begin then
+
+1>Second round now
+3>I have a question
+5>Go ahead
+2>Wait for me
+6>Here I am
+4>Finally made it
+
+1>One more thing before we stop
+6>What is it
+2>Just wanted to say thanks
+5>Thanks to you too
+3>Agreed, good session
+4>See everyone next time

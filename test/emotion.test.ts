@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
 	EM_HAPPY,
@@ -70,14 +70,18 @@ describe("EmotionEngine rules", () => {
 	});
 });
 
-describe("smoke-01 emotion records", () => {
+const traceNames = readdirSync(new URL("../traces/", import.meta.url))
+	.filter((f) => f.endsWith(".jsonl"))
+	.sort();
+
+describe.each(traceNames)("%s emotion records", (name) => {
 	const records = parseTrace(
-		readFileSync(new URL("../traces/smoke-01.jsonl", import.meta.url), "utf8"),
+		readFileSync(new URL(`../traces/${name}`, import.meta.url), "utf8"),
 	);
 
 	// Trace priorities are all 0 because GetBodyFromEmotion consumes them before the hook; compare emotion and intensity.
 	it("reproduces every opts list from the oracle, in order", () => {
-		expect(recordsOfType(records, "emotion")).toHaveLength(8);
+		expect(recordsOfType(records, "emotion").length).toBeGreaterThan(0);
 		let lastMessage = "";
 		for (const rec of records) {
 			if (rec.type === "message") lastMessage = rec.text;

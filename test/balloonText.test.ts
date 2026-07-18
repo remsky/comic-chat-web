@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
 	breakIntoLines,
@@ -75,9 +75,13 @@ describe("widestWord", () => {
 	});
 });
 
-describe("smoke-01 balloonFormat records", () => {
+const traceNames = readdirSync(new URL("../traces/", import.meta.url))
+	.filter((f) => f.endsWith(".jsonl"))
+	.sort();
+
+describe.each(traceNames)("%s balloonFormat records", (name) => {
 	const records = parseTrace(
-		readFileSync(new URL("../traces/smoke-01.jsonl", import.meta.url), "utf8"),
+		readFileSync(new URL(`../traces/${name}`, import.meta.url), "utf8"),
 	);
 
 	// metrics maps per font, keyed exactly as the oracle measured

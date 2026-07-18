@@ -1,0 +1,22 @@
+# balloon-type mix: whisper and think balloons heavily interleaved with normal speech
+@anna
+@bolo
+1>Let's talk about the plan
+2>T;I hope this works
+1>W;Keep your voice down
+2>Okay okay
+1>T;He never listens to me
+2>W;I heard that
+1>Did you say something?
+2>T;Nothing, nothing at all
+1>W;I don't believe you
+2>S;Fine, I whispered a little
+
+1>T;This is getting complicated
+2>W;Just trust me on this one
+1>Alright, I trust you
+2>T;I'm not sure I trust myself
+1>W;Neither am I honestly
+2>T;Let's just keep going
+1>W;Agreed, quietly
+2>Loudly agreed too

@@ -1,0 +1,22 @@
+# emotion triggers: shouting, exclamations, laughter, greetings, waves, smileys, and I/You sentence starts
+@anna
+@bolo
+1>WATCH OUT BEHIND YOU!!!
+2>LOL that was hilarious
+1>Hi there, welcome!
+2>Hello and goodbye
+1>I am so excited about this
+2>You are going to love it
+1>I think we should celebrate :)
+2>You always know what to say ;)
+1>HAHAHA that is too funny
+2>WOW I CANNOT BELIEVE IT
+
+1>Wave hello to everyone please
+2>I wave back at you
+1>You make me laugh so much LOL
+2>I am laughing too haha
+1>STOP SHOUTING AT ME
+2>I AM NOT SHOUTING!!!
+1>Goodbye for now!!!
+2>See you later :)
