@@ -1,0 +1,199 @@
+// Builds compact runtime fixtures from AVB files using the v1 oracle's global pose table.
+
+import { decodePose } from "./convert.ts";
+import {
+	type AvbParseResult,
+	type BodyRecord,
+	type FaceRecord,
+	parseAvb,
+	type TorsoRecord,
+} from "./parser.ts";
+
+export const TRACE_CAST = [
+	"anna",
+	"bolo",
+	"connor",
+	"denise",
+	"hugh",
+	"susan",
+] as const;
+
+export type TraceAvatarName = (typeof TRACE_CAST)[number];
+
+// biome-ignore lint/suspicious/noApproximativeNumericConstant: vector2d.h defines PI as 3.14159; fixture floats must match the oracle
+const ORACLE_PI = 3.14159;
+
+const ORACLE_EMOTIONS = [
+	0,
+	0,
+	Math.fround((1 * 2 * ORACLE_PI) / 8),
+	Math.fround((2 * 2 * ORACLE_PI) / 8),
+	Math.fround((3 * 2 * ORACLE_PI) / 8),
+	Math.fround((4 * 2 * ORACLE_PI) / 8),
+	Math.fround((5 * 2 * ORACLE_PI) / 8),
+	Math.fround((6 * 2 * ORACLE_PI) / 8),
+	Math.fround((7 * 2 * ORACLE_PI) / 8),
+	0,
+	1001,
+	1002,
+	1003,
+	1004,
+	1005,
+	1006,
+	1007,
+	1008,
+] as const;
+
+export function oracleEmotion(index: number): number {
+	return ORACLE_EMOTIONS[index] ?? 0;
+}
+
+export interface AvatarPoseFixture {
+	poseID: number;
+	localPoseID: number;
+	width: number;
+	height: number;
+}
+
+export interface AvatarFaceFixture {
+	poseID: number;
+	emotion: number;
+	intensity: number;
+	xCX: number;
+	yCX: number;
+	deltaXCX: number;
+	deltaYCX: number;
+	faceX: number;
+	faceY: number;
+}
+
+export interface AvatarTorsoFixture {
+	poseID: number;
+	emotion: number;
+	intensity: number;
+	xCX: number;
+	yCX: number;
+}
+
+export interface AvatarBodyFixture {
+	poseID: number;
+	emotion: number;
+	intensity: number;
+	faceX: number;
+	faceY: number;
+}
+
+export interface AvatarFixture {
+	avatarID: number;
+	name: TraceAvatarName;
+	type: "simple" | "complex";
+	iconPoseID: number;
+	poses: AvatarPoseFixture[];
+	faces: AvatarFaceFixture[];
+	torsos: AvatarTorsoFixture[];
+	bodies: AvatarBodyFixture[];
+}
+
+export interface AvatarFixtureSet {
+	castOrder: TraceAvatarName[];
+	avatars: AvatarFixture[];
+	poseCount: number;
+}
+
+export interface AvatarFixtureInput {
+	name: TraceAvatarName;
+	bytes: Uint8Array;
+}
+
+function globalPoseID(localPoseID: number, poseBase: number): number {
+	return localPoseID === 0 ? 0 : poseBase + localPoseID;
+}
+
+function faceFixture(rec: FaceRecord, poseBase: number): AvatarFaceFixture {
+	return {
+		poseID: globalPoseID(rec.poseID, poseBase),
+		emotion: oracleEmotion(rec.emotion.index),
+		intensity: Math.fround(rec.intensityByte / 255),
+		xCX: rec.cx,
+		yCX: rec.cy,
+		deltaXCX: rec.cxDelta,
+		deltaYCX: rec.cyDelta,
+		faceX: rec.faceX,
+		faceY: rec.faceY,
+	};
+}
+
+function torsoFixture(rec: TorsoRecord, poseBase: number): AvatarTorsoFixture {
+	return {
+		poseID: globalPoseID(rec.poseID, poseBase),
+		emotion: oracleEmotion(rec.emotion.index),
+		intensity: Math.fround(rec.intensityByte / 255),
+		xCX: rec.cx,
+		yCX: rec.cy,
+	};
+}
+
+function bodyFixture(rec: BodyRecord, poseBase: number): AvatarBodyFixture {
+	return {
+		poseID: globalPoseID(rec.poseID, poseBase),
+		emotion: oracleEmotion(rec.emotion.index),
+		intensity: Math.fround(rec.intensityByte / 255),
+		faceX: rec.faceX,
+		faceY: rec.faceY,
+	};
+}
+
+function buildAvatar(
+	input: AvatarFixtureInput,
+	avatarID: number,
+	poseBase: number,
+): { fixture: AvatarFixture; parsed: AvbParseResult } {
+	const parsed = parseAvb(input.bytes);
+	const poses = parsed.poses.map((pose) => {
+		const decoded = decodePose(input.bytes, pose, parsed.globalPalette);
+		if (!decoded.image) {
+			throw new Error(
+				`${input.name} pose ${pose.poseID}: ${decoded.imageError ?? "missing image"}`,
+			);
+		}
+		return {
+			poseID: globalPoseID(pose.poseID, poseBase),
+			localPoseID: pose.poseID,
+			width: decoded.image.width,
+			height: decoded.image.height,
+		};
+	});
+
+	return {
+		parsed,
+		fixture: {
+			avatarID,
+			name: input.name,
+			type: parsed.typeName as "simple" | "complex",
+			iconPoseID: globalPoseID(parsed.iconPoseID, poseBase),
+			poses,
+			faces: parsed.faces.map((rec) => faceFixture(rec, poseBase)),
+			torsos: parsed.torsos.map((rec) => torsoFixture(rec, poseBase)),
+			bodies: parsed.bodies.map((rec) => bodyFixture(rec, poseBase)),
+		},
+	};
+}
+
+export function buildAvatarFixtures(
+	inputs: readonly AvatarFixtureInput[],
+): AvatarFixtureSet {
+	let poseBase = 0;
+	const avatars: AvatarFixture[] = [];
+	for (let i = 0; i < inputs.length; i++) {
+		const input = inputs[i];
+		if (!input) continue;
+		const { fixture, parsed } = buildAvatar(input, i + 1, poseBase);
+		avatars.push(fixture);
+		poseBase += parsed.poses.length;
+	}
+	return {
+		castOrder: inputs.map((input) => input.name),
+		avatars,
+		poseCount: poseBase,
+	};
+}

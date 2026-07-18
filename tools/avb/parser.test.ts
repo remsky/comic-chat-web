@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
 import { convert } from "./convert.ts";
@@ -6,10 +7,12 @@ import { numDibColorEntries, storageWidth } from "./dib.ts";
 import { AF_MAGICNUM, AT_COMPLEX, parseAvb } from "./parser.ts";
 import { encodePng } from "./png.ts";
 
-const BOLO =
-	"C:/Users/jerem/Desktop/Development/comic-chat-exp/comic-chat/v1.0-pre-modern/comicart/avatars/bolo.avb";
-const ANNA =
-	"C:/Users/jerem/Desktop/Development/comic-chat-exp/comic-chat/v1.0-pre-modern/comicart/avatars/anna.avb";
+const AVATAR_DIR = new URL(
+	"../../../comic-chat/v1.0-pre-modern/comicart/avatars/",
+	import.meta.url,
+);
+const BOLO = fileURLToPath(new URL("bolo.avb", AVATAR_DIR));
+const ANNA = fileURLToPath(new URL("anna.avb", AVATAR_DIR));
 
 function load(path: string): Uint8Array {
 	return new Uint8Array(readFileSync(path));

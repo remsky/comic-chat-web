@@ -7,6 +7,7 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"check": "biome check . && tsc",
+		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
 		"format": "biome format --write ."
 	},
 	"devDependencies": {
