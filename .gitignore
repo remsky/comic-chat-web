@@ -3,3 +3,4 @@ dist/
 playwright-report/
 test-results/
 .wrangler/
+IRC_STYLE_ANNOTATIONS.md

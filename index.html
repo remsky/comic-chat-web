@@ -12,7 +12,9 @@
 	</head>
 	<body class="app">
 		<header class="titlebar">
-			<span class="titlebar-text">Comic Chat Web</span>
+			<button id="title-home" class="titlebar-text" type="button">
+				Comic Chat Web
+			</button>
 			<span id="title-room" class="titlebar-room"></span>
 		</header>
 		<main id="room" class="workspace">
@@ -38,9 +40,18 @@
 						role="status"
 					></figcaption>
 				</figure>
-				<button id="save-strip" class="save-strip" type="button">
-					Save Strip…
-				</button>
+				<div class="strip-actions">
+					<button id="save-strip" class="strip-button" type="button">
+						Save Strip…
+					</button>
+					<button
+						id="leave-room"
+						class="strip-button strip-button--leave"
+						type="button"
+					>
+						Leave Room
+					</button>
+				</div>
 				<label id="background-picker" class="background-picker" hidden>
 					Background
 					<select id="background-select"></select>

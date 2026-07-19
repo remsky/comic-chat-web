@@ -42,7 +42,21 @@
 }
 
 .titlebar-text {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
 	font-weight: 700;
+	text-align: inherit;
+}
+
+.app.joined .titlebar-text {
+	cursor: pointer;
+}
+
+.app.joined .titlebar-text:hover {
+	text-decoration: underline;
 }
 
 .titlebar-room {
@@ -306,7 +320,13 @@
 	display: none;
 }
 
-.save-strip {
+.strip-actions {
+	display: flex;
+	gap: 0.4rem;
+}
+
+.strip-button {
+	flex: 1;
 	padding: 0.25rem 0.6rem;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
@@ -318,11 +338,15 @@
 	cursor: pointer;
 }
 
-.save-strip:active {
+.strip-button:active {
 	border-color: #000 #dfdfdf #dfdfdf #000;
 	box-shadow:
 		inset -1px -1px 0 #fff,
 		inset 1px 1px 0 #808080;
+}
+
+.strip-button--leave {
+	color: #7f1010;
 }
 
 .background-picker {

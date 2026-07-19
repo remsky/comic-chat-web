@@ -46,8 +46,8 @@ import {
 
 // square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
 const CLASSIC_UNIT = 3000;
-// larger unit shrinks text relative to the panel (~25 chars/line, 4-line balloons) so messages split less
-const MODERN_UNIT = 4000;
+// larger unit shrinks text relative to the panel (~32 chars/line, 5-line balloons) so messages split less
+const MODERN_UNIT = 5200;
 const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
 const TEXT_VIEW_KEY = "comic-chat.text-view";
 
@@ -628,6 +628,25 @@ async function main(): Promise<void> {
 				JSON.stringify({ type: "background", name: backgroundSelect.value }),
 			);
 		});
+
+		// Leave: drop the socket and return to the connect screen. A reload is the
+		// clean teardown here — closing the tab's socket broadcasts our "left" to the
+		// room, and the connect screen re-renders with the room prefilled from the URL.
+		const leaveRoom = (): void => {
+			reconnectAllowed = false;
+			if (reconnectTimer !== undefined) window.clearTimeout(reconnectTimer);
+			socket?.close();
+			location.reload();
+		};
+		element<HTMLButtonElement>("leave-room").addEventListener(
+			"click",
+			leaveRoom,
+		);
+		// the titlebar name doubles as a "home" link back to the connect screen
+		element<HTMLButtonElement>("title-home").addEventListener(
+			"click",
+			leaveRoom,
+		);
 
 		element<HTMLButtonElement>("save-strip").addEventListener(
 			"click",

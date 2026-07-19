@@ -20,8 +20,8 @@ A TypeScript port of the Microsoft Comic Chat composition engine, self-hosted ne
 
 <table>
   <tr>
-    <td width="30%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
-    <td width="42%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="40%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="41%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
   </tr>
 </table>
 
@@ -33,9 +33,11 @@ A TypeScript port of the Microsoft Comic Chat composition engine, self-hosted ne
 
 The production build runs on the Free Tier as a static site served by a Cloudflare Worker via the assets binding in `wrangler.jsonc`:
 
+Spin up locally to test via:
+
 ```sh
-npm run build
-npx wrangler deploy
+npm install
+npm run preview:worker
 ```
 
 - For Cloudflare Workers Builds, use `npm run build` as the build command and `npx wrangler deploy` as the deploy command.
