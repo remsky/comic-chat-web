@@ -1,4 +1,9 @@
-# Comic Chat Web [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web)
+# Comic Chat Web
+
+<p>
+  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="20"></a>
+  <img src="https://img.shields.io/badge/tests-174%20passing-brightgreen" alt="174 tests passing" height="20">
+</p>
 
 
 > [!IMPORTANT]
@@ -9,9 +14,12 @@ A TypeScript port of the Microsoft Comic Chat composition engine.
  Validated bit-exact against sampled traces from an instrumented C++ client in the companion [`trace-harness` branch](https://github.com/remsky/comic-chat/tree/trace-harness).
 
 
-<p align="center">
-  <img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" border="1">
-</p>
+<table>
+  <tr>
+    <td width="60%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="40%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
+  </tr>
+</table>
 
 
 ## What works
