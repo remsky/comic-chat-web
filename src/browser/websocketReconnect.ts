@@ -32,3 +32,13 @@ export function describeWebSocketClose(code: number, reason: string): string {
 	if (detail) return detail;
 	return CLOSE_LABELS[code] ?? `connection closed (${code})`;
 }
+
+// a re-welcome whose oldest entry skips past our newest means the outage outran the welcome chunk
+export function historyHasGap(
+	previousNewestSeq: number,
+	firstHistorySeq: number | undefined,
+): boolean {
+	return (
+		firstHistorySeq !== undefined && firstHistorySeq > previousNewestSeq + 1
+	);
+}

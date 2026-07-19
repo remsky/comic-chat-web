@@ -20,6 +20,7 @@ import {
 	type PoseIndices,
 	parseRoomListings,
 	parseServerMessage,
+	RATE_LIMIT_REASON,
 	type RosterEntry,
 } from "../protocol/room.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
@@ -36,6 +37,7 @@ import { syncPanelAccessibility } from "./panelAccessibility.js";
 import { transcriptHeader, transcriptLine } from "./textView.js";
 import {
 	describeWebSocketClose,
+	historyHasGap,
 	reconnectDelay,
 	shouldReconnect,
 } from "./websocketReconnect.js";
@@ -165,6 +167,16 @@ class RoomView {
 		this.feed(entry);
 		this.reconcile();
 		this.onComposed?.();
+	}
+
+	// discard local history and recompose from scratch, matching what a fresh join would show
+	reset(entries: ChatEntry[]): void {
+		this.entries.length = 0;
+		this.entries.push(...entries);
+		this.composition = this.createComposition();
+		for (const entry of this.entries) this.feed(entry);
+		this.reconcile();
+		this.onRebuilt?.();
 	}
 
 	prepend(entries: ChatEntry[]): void {
@@ -538,6 +550,8 @@ async function main(): Promise<void> {
 		let reconnectAttempt = 0;
 		let reconnectAllowed = true;
 		let hasWelcomed = false;
+		let statusRestoreTimer: number | undefined;
+		let lastComposerSend: string | null = null;
 		status.textContent = "Connecting…";
 		delete status.dataset.ready;
 		const scroller = element("strip");
@@ -636,6 +650,23 @@ async function main(): Promise<void> {
 			};
 		};
 
+		// the server dropped the message: put the text back for a resend and toast the status briefly
+		const notifyRateLimited = (): void => {
+			const input = element<HTMLInputElement>("composer-text");
+			if (lastComposerSend !== null && !input.value)
+				input.value = lastComposerSend;
+			lastComposerSend = null;
+			status.textContent = "Sending too fast; the last message was dropped.";
+			delete status.dataset.ready;
+			if (statusRestoreTimer !== undefined)
+				window.clearTimeout(statusRestoreTimer);
+			statusRestoreTimer = window.setTimeout(() => {
+				statusRestoreTimer = undefined;
+				if (socket?.readyState === WebSocket.OPEN)
+					status.dataset.ready = "true";
+			}, 4000);
+		};
+
 		const handleMessage = (message: MessageEvent): void => {
 			const parsed = parseServerMessage(message.data);
 			if (!parsed) return;
@@ -650,14 +681,26 @@ async function main(): Promise<void> {
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
 				view.setLocalAvatarID(parsed.avatar);
-				view.setBackground(parsed.background ?? "");
 				backgroundSelect.value = parsed.background ?? "";
-				for (const entry of parsed.history) {
-					if (!hasWelcomed || entry.seq > previousNewestSeq)
-						view.compose(entry);
-				}
-				if (!hasWelcomed || oldestSeq === null) {
-					oldestSeq = parsed.history[0]?.seq ?? null;
+				const firstSeq = parsed.history[0]?.seq;
+				if (hasWelcomed && historyHasGap(previousNewestSeq, firstSeq)) {
+					// the outage outran the welcome chunk; recompose wholesale so the strip matches a fresh join
+					view.setBackground(parsed.background ?? "");
+					view.reset(parsed.history);
+					oldestSeq = firstSeq ?? null;
+					historyDone = parsed.history.length < HISTORY_CHUNK;
+				} else if (hasWelcomed) {
+					// missed entries resume the stream; any mode-6 among them brings the backdrop forward
+					for (const entry of parsed.history)
+						if (entry.seq > previousNewestSeq) view.compose(entry);
+					if (oldestSeq === null) {
+						oldestSeq = firstSeq ?? null;
+						historyDone = parsed.history.length < HISTORY_CHUNK;
+					}
+				} else {
+					view.setBackground(parsed.background ?? "");
+					for (const entry of parsed.history) view.compose(entry);
+					oldestSeq = firstSeq ?? null;
 					historyDone = parsed.history.length < HISTORY_CHUNK;
 				}
 				historyPending = false;
@@ -701,8 +744,12 @@ async function main(): Promise<void> {
 				if (index >= 0) roster.splice(index, 1);
 				renderRoster(roster, manifest.avatars);
 			} else if (parsed.type === "error") {
-				status.textContent = parsed.reason;
-				delete status.dataset.ready;
+				if (parsed.reason === RATE_LIMIT_REASON && hasWelcomed) {
+					notifyRateLimited();
+				} else {
+					status.textContent = parsed.reason;
+					delete status.dataset.ready;
+				}
 			}
 		};
 
@@ -753,7 +800,10 @@ async function main(): Promise<void> {
 			const text = element<HTMLInputElement>("composer-text");
 			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
 			if (!text.value.trim()) return;
-			if (sendChat(text.value, mode)) text.value = "";
+			if (sendChat(text.value, mode)) {
+				lastComposerSend = text.value;
+				text.value = "";
+			}
 		});
 	});
 }

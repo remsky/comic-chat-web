@@ -10,6 +10,8 @@ export const HISTORY_CHUNK = 50;
 export const BACKGROUND_MODE = 6;
 // IDS_DEFAULT_BACKDROP (chat.rc:2327)
 export const DEFAULT_BACKGROUND = "field";
+// error reason shared so the client can tell a dropped message from a fatal rejection
+export const RATE_LIMIT_REASON = "message rate limit exceeded";
 
 // SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
 export interface PoseIndices {

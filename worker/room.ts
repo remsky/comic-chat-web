@@ -8,6 +8,7 @@ import {
 	HISTORY_CHUNK,
 	parseClientMessage,
 	pickAvatar,
+	RATE_LIMIT_REASON,
 	type RosterEntry,
 	roomNameFromPath,
 	type ServerMessage,
@@ -18,6 +19,8 @@ const HISTORY_RETENTION = 500;
 const SOCKET_LIMIT = 12;
 const RATE_BURST = 10;
 const RATE_REFILL_MS = 500;
+// a rate-limited message is dropped with an error; only this many consecutive drops closes the socket
+const FLOOD_CLOSE_STRIKES = 20;
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 
@@ -31,6 +34,7 @@ interface SocketState {
 	avatar?: number;
 	tokens?: number;
 	at?: number;
+	strikes?: number;
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
@@ -92,6 +96,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			...(typeof state.avatar === "number" ? { avatar: state.avatar } : {}),
 			...(typeof state.tokens === "number" ? { tokens: state.tokens } : {}),
 			...(typeof state.at === "number" ? { at: state.at } : {}),
+			...(typeof state.strikes === "number" ? { strikes: state.strikes } : {}),
 		};
 	}
 
@@ -115,6 +120,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			...state,
 			tokens: allowed ? tokens - 1 : tokens,
 			at: now,
+			strikes: allowed ? 0 : (state.strikes ?? 0) + 1,
 		});
 		return allowed;
 	}
@@ -202,7 +208,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 		raw: string | ArrayBuffer,
 	): Promise<void> {
 		if (!this.takeRateToken(ws)) {
-			ws.close(1008, "message rate limit exceeded");
+			if ((this.stateOf(ws).strikes ?? 0) >= FLOOD_CLOSE_STRIKES)
+				ws.close(1008, RATE_LIMIT_REASON);
+			else this.send(ws, { type: "error", reason: RATE_LIMIT_REASON });
 			return;
 		}
 		const message = parseClientMessage(raw);

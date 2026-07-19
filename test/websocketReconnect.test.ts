@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	describeWebSocketClose,
+	historyHasGap,
 	reconnectDelay,
 	shouldReconnect,
 } from "../src/browser/websocketReconnect.js";
@@ -25,5 +26,14 @@ describe("WebSocket reconnect policy", () => {
 		);
 		expect(describeWebSocketClose(1006, "")).toBe("connection lost");
 		expect(describeWebSocketClose(4321, "")).toBe("connection closed (4321)");
+	});
+
+	it("detects when a re-welcome chunk no longer reaches back to local history", () => {
+		expect(historyHasGap(10, 11)).toBe(false);
+		expect(historyHasGap(10, 8)).toBe(false);
+		expect(historyHasGap(10, 12)).toBe(true);
+		expect(historyHasGap(0, 11)).toBe(true);
+		expect(historyHasGap(0, 1)).toBe(false);
+		expect(historyHasGap(10, undefined)).toBe(false);
 	});
 });
