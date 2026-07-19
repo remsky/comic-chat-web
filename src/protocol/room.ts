@@ -5,12 +5,20 @@ export const MAX_TEXT_LENGTH = 1000;
 export const CAST_SIZE = 6;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
 
+// SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
+export interface PoseIndices {
+	expr: number;
+	gest: number;
+	req: number;
+}
+
 export interface ChatEntry {
 	seq: number;
 	avatar: number;
 	name: string;
 	text: string;
 	mode: number;
+	pose?: PoseIndices;
 }
 
 export interface RosterEntry {
@@ -20,7 +28,7 @@ export interface RosterEntry {
 
 export type ClientMessage =
 	| { type: "join"; name: string; avatar: number }
-	| { type: "chat"; text: string; mode: number };
+	| { type: "chat"; text: string; mode: number; pose?: PoseIndices };
 
 export type ServerMessage =
 	| {
@@ -60,9 +68,30 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		if (text.trim().length === 0) return null;
 		const mode = Math.trunc(message.mode);
 		if (!(ROOM_MODES as readonly number[]).includes(mode)) return null;
-		return { type: "chat", text, mode };
+		const pose = parsePose(message.pose);
+		if (pose === null) return null;
+		return pose
+			? { type: "chat", text, mode, pose }
+			: { type: "chat", text, mode };
 	}
 	return null;
+}
+
+function uchar(value: unknown): number | null {
+	if (typeof value !== "number" || !Number.isInteger(value)) return null;
+	return value >= 0 && value <= 255 ? value : null;
+}
+
+// GetIndices/SetIndices exchange UCHARs (avatar.cpp:825-857); null means malformed
+function parsePose(raw: unknown): PoseIndices | null | undefined {
+	if (raw === undefined) return undefined;
+	if (typeof raw !== "object" || raw === null) return null;
+	const pose = raw as Record<string, unknown>;
+	const expr = uchar(pose.expr);
+	const gest = uchar(pose.gest);
+	const req = uchar(pose.req);
+	if (expr === null || gest === null || req === null || req > 1) return null;
+	return { expr, gest, req };
 }
 
 export function parseServerMessage(raw: unknown): ServerMessage | null {

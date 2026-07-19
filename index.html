@@ -22,6 +22,34 @@
 			<aside class="sidebar" aria-label="Room members">
 				<h2 class="sidebar-heading">Members</h2>
 				<ul id="roster" class="roster"></ul>
+				<h2 id="bodycam-heading" class="sidebar-heading bodycam-heading" hidden>
+					You
+				</h2>
+				<figure id="bodycam" class="bodycam" hidden>
+					<canvas
+						id="bodycam-canvas"
+						tabindex="0"
+						aria-label="Emotion wheel: drag the dot from the center toward an emotion; distance sets intensity"
+					></canvas>
+					<figcaption
+						id="bodycam-status"
+						class="bodycam-status"
+						role="status"
+					></figcaption>
+				</figure>
+				<label class="tweaks-toggle">
+					<input
+						id="modern-toggle"
+						type="checkbox"
+						checked
+						aria-describedby="tweaks-hint"
+					/>
+					Modern tweaks
+				</label>
+				<p id="tweaks-hint" class="tweaks-hint">
+					Smaller text fits more per balloon. Turn off for the original 1996
+					layout; panels may break differently for other viewers.
+				</p>
 			</aside>
 		</main>
 		<form id="composer" class="composer">

@@ -359,8 +359,10 @@ export class PanelPage {
 			this.startNewPanel();
 			return;
 		}
-		if (words === "<Chr>")
-			throw new Error("reaction panels are not part of the trace port yet");
+		if (words === "<Chr>") {
+			this.addReaction(speakerID);
+			return;
+		}
 
 		const avatar = this.registry.get(speakerID);
 		if (!avatar) throw new Error(`missing avatar ${speakerID}`);
@@ -401,6 +403,43 @@ export class PanelPage {
 		this.hooks.onCommit?.(panel);
 		avatar.reset();
 		if (result.leftover) this.addLine(speakerID, result.leftover, mode);
+	}
+
+	// CUnitPanelPage::AddReaction (panel.cpp:433-470): a balloonless "<Chr>" pose panel
+	addReaction(speakerID: number): void {
+		const avatar = this.registry.get(speakerID);
+		if (!avatar) throw new Error(`missing avatar ${speakerID}`);
+		const oldPanel = this.panels.at(-1) ?? null;
+		const replaceLast = !(
+			this.newPanel ||
+			(oldPanel?.bodies.length ?? 0) >= 5 ||
+			this.panels.length < 2
+		);
+		const panel =
+			replaceLast && oldPanel ? cloneUnitPanel(oldPanel) : this.createPanel();
+		if (!replaceLast) this.newPanel = false;
+		const establishing =
+			this.panels.length <= 1 || (replaceLast && this.panels.length <= 2);
+
+		this.hooks.onDecision?.({
+			cloned: replaceLast,
+			speaker: speakerID,
+			words: "<Chr>",
+		});
+		if (!replaceBody(panel, avatar)) fetchSpeaker(panel, avatar);
+		this.layoutAvatars(panel, establishing);
+		const result = this.hooks.layoutBalloons(panel, this.rand);
+		if (!result.fits) {
+			this.hooks.onRetry?.();
+			this.startNewPanel();
+			this.addReaction(speakerID);
+			return;
+		}
+
+		if (replaceLast) this.panels.pop();
+		this.panels.push(panel);
+		this.hooks.onCommit?.(panel);
+		avatar.reset();
 	}
 }
 

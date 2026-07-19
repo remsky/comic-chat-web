@@ -1,6 +1,11 @@
 // Live room client: joins a Durable Object room and composes every message into panels.
 
-import { type AvatarData, AvatarRegistry } from "../engine/avatar.js";
+import {
+	AF_UNFROZEN,
+	type Avatar,
+	type AvatarData,
+	AvatarRegistry,
+} from "../engine/avatar.js";
 import { EmotionEngine } from "../engine/emotion.js";
 import { PanelPage, type UnitPanel } from "../engine/panel.js";
 import {
@@ -10,10 +15,12 @@ import {
 import { MsvcRand } from "../engine/rand.js";
 import {
 	type ChatEntry,
+	type PoseIndices,
 	parseServerMessage,
 	type RosterEntry,
 } from "../protocol/room.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
+import { BodyCamWidget } from "./bodycamWidget.js";
 import { CanvasPanelRenderer } from "./canvasRenderer.js";
 import { CanvasSurface } from "./canvasSurface.js";
 import {
@@ -24,8 +31,10 @@ import {
 import { syncPanelAccessibility } from "./panelAccessibility.js";
 
 // square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
-const UNIT_WIDTH = 3000;
-const UNIT_HEIGHT = 3000;
+const CLASSIC_UNIT = 3000;
+// larger unit shrinks text relative to the panel (~25 chars/line, 4-line balloons) so messages split less
+const MODERN_UNIT = 4000;
+const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -43,55 +52,123 @@ function displayName(name: string): string {
 	return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+interface Composition {
+	registry: AvatarRegistry;
+	emotions: EmotionEngine;
+	page: PanelPage;
+}
+
 class RoomView {
 	private readonly rendered: RenderedPanel[] = [];
-	private readonly page: PanelPage;
-	private readonly emotions = new EmotionEngine();
+	private readonly entries: ChatEntry[] = [];
+	private readonly resolveStyle: ReturnType<
+		CanvasTextMeasurer["styleResolver"]
+	>;
+	private composition: Composition;
+	private unit: number;
+	private localAvatarID: number | null = null;
 
 	private autoScroll = true;
+	onComposed?: () => void;
+	onRebuilt?: () => void;
 
 	constructor(
-		private readonly registry: AvatarRegistry,
 		private readonly atlases: AvatarAtlasCache,
 		private readonly avatars: AvatarData[],
 		private readonly container: HTMLElement,
 		private readonly scroller: HTMLElement,
+		modernTweaks: boolean,
 	) {
 		scroller.addEventListener("scroll", () => {
 			this.autoScroll =
 				scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 24;
 		});
 		const measurer = new CanvasTextMeasurer(createCanvasMeasureContext());
-		const resolveStyle = measurer.styleResolver();
+		this.resolveStyle = measurer.styleResolver();
+		this.unit = modernTweaks ? MODERN_UNIT : CLASSIC_UNIT;
+		this.composition = this.createComposition();
+	}
+
+	private createComposition(): Composition {
+		const registry = new AvatarRegistry(this.avatars);
+		const unit = this.unit;
 		const layoutOptions = {
-			unitWidth: UNIT_WIDTH,
-			unitHeight: UNIT_HEIGHT,
-			resolveStyle,
+			unitWidth: unit,
+			unitHeight: unit,
+			resolveStyle: this.resolveStyle,
 		};
-		this.page = new PanelPage({
+		const page = new PanelPage({
 			registry,
 			rand: new MsvcRand(1515),
-			unitWidth: UNIT_WIDTH,
-			unitHeight: UNIT_HEIGHT,
+			unitWidth: unit,
+			unitHeight: unit,
 			hooks: {
 				makeBalloon: (text, mode, speaker) =>
-					makeRuntimeBalloon(text, mode, speaker, resolveStyle),
+					makeRuntimeBalloon(text, mode, speaker, this.resolveStyle),
 				layoutBalloons: (panel, rand) =>
 					layoutPanelBalloons(panel, rand, layoutOptions),
 			},
 		});
+		return { registry, emotions: new EmotionEngine(), page };
+	}
+
+	private feed(entry: ChatEntry): void {
+		const { registry, emotions, page } = this.composition;
+		const avatar = registry.get(entry.avatar);
+		if (!avatar) return;
+		// SayEntry::Execute applies sent pose indices verbatim (histent.cpp:74-76); no pose = re-run text rules
+		if (entry.pose)
+			avatar.setIndices(entry.pose.expr, entry.pose.gest, entry.pose.req);
+		else
+			avatar.updateBody(
+				avatar.getBodyFromOptions(emotions.getEmotionsFromString(entry.text)),
+			);
+		page.addLine(entry.avatar, entry.text, entry.mode);
 	}
 
 	compose(entry: ChatEntry): void {
-		const avatar = this.registry.get(entry.avatar);
-		if (!avatar) return;
-		avatar.updateBody(
-			avatar.getBodyFromOptions(
-				this.emotions.getEmotionsFromString(entry.text),
-			),
-		);
-		this.page.addLine(entry.avatar, entry.text, entry.mode);
+		this.entries.push(entry);
+		this.feed(entry);
 		this.reconcile();
+		this.onComposed?.();
+	}
+
+	setLocalAvatarID(avatarID: number): void {
+		this.localAvatarID = avatarID;
+	}
+
+	localAvatar(): Avatar | undefined {
+		if (this.localAvatarID === null) return undefined;
+		return this.composition.registry.get(this.localAvatarID);
+	}
+
+	// ChatPreSendText (textpose.cpp:115-125) then GetIndices for the wire (chatprot.cpp:172-177)
+	prepareOutgoing(text: string): PoseIndices | undefined {
+		const avatar = this.localAvatar();
+		if (!avatar) return undefined;
+		if (avatar.freeze === AF_UNFROZEN)
+			avatar.updateBody(
+				avatar.getBodyFromOptions(
+					this.composition.emotions.getEmotionsFromString(text),
+				),
+			);
+		const indices = avatar.getIndices();
+		return {
+			expr: indices.faceIndex,
+			gest: indices.torsoIndex,
+			req: indices.requested,
+		};
+	}
+
+	// rebuilds with fresh registry/emotion/rand state and replays history, so the result matches a fresh join in that mode
+	setModernTweaks(on: boolean): void {
+		const unit = on ? MODERN_UNIT : CLASSIC_UNIT;
+		if (unit === this.unit) return;
+		this.unit = unit;
+		this.composition = this.createComposition();
+		for (const entry of this.entries) this.feed(entry);
+		this.reconcile();
+		this.onRebuilt?.();
 	}
 
 	private makeCard(panel: UnitPanel): RenderedPanel {
@@ -104,26 +181,23 @@ class RoomView {
 		transcript.className = "sr-only";
 		card.append(canvas, transcript);
 		syncPanelAccessibility(canvas, transcript, panel, this.avatars);
+		const { registry } = this.composition;
+		const unit = this.unit;
 		let renderer: CanvasPanelRenderer | undefined;
-		const surface = new CanvasSurface(
-			canvas,
-			UNIT_WIDTH,
-			UNIT_HEIGHT,
-			(context) => {
-				renderer ??= new CanvasPanelRenderer(
-					context,
-					this.atlases,
-					this.registry.avatars,
-					{ unitWidth: UNIT_WIDTH, unitHeight: UNIT_HEIGHT },
-				);
-				renderer.render(panel);
-			},
-		);
+		const surface = new CanvasSurface(canvas, unit, unit, (context) => {
+			renderer ??= new CanvasPanelRenderer(
+				context,
+				this.atlases,
+				registry.avatars,
+				{ unitWidth: unit, unitHeight: unit },
+			);
+			renderer.render(panel);
+		});
 		return { panel, card, surface };
 	}
 
 	private reconcile(): void {
-		const panels = this.page.panels.filter(
+		const panels = this.composition.page.panels.filter(
 			(panel): panel is UnitPanel => panel !== null,
 		);
 		for (let i = 0; i < panels.length; i++) {
@@ -140,6 +214,13 @@ class RoomView {
 			}
 			this.rendered[i] = replacement;
 		}
+		for (let i = panels.length; i < this.rendered.length; i++) {
+			const extra = this.rendered[i];
+			if (!extra) continue;
+			extra.surface.dispose();
+			extra.card.remove();
+		}
+		this.rendered.length = panels.length;
 		if (this.autoScroll) this.scroller.scrollTop = this.scroller.scrollHeight;
 	}
 }
@@ -184,20 +265,25 @@ async function main(): Promise<void> {
 	if (!response.ok)
 		throw new Error(`failed to load avatar manifest: ${response.status}`);
 	const manifest = (await response.json()) as { avatars: AvatarData[] };
-	const registry = new AvatarRegistry(manifest.avatars);
 	const atlases = new AvatarAtlasCache();
 	await atlases.preload(manifest.avatars);
 	wireJoinForm(manifest.avatars);
 	status.dataset.ready = "true";
 
 	let roster: RosterEntry[] = [];
+	const tweaks = element<HTMLInputElement>("modern-toggle");
+	tweaks.checked = localStorage.getItem(MODERN_TWEAKS_KEY) !== "off";
 	const view = new RoomView(
-		registry,
 		atlases,
 		manifest.avatars,
 		element("panels"),
 		element("strip"),
+		tweaks.checked,
 	);
+	tweaks.addEventListener("change", () => {
+		localStorage.setItem(MODERN_TWEAKS_KEY, tweaks.checked ? "on" : "off");
+		view.setModernTweaks(tweaks.checked);
+	});
 
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
@@ -216,6 +302,36 @@ async function main(): Promise<void> {
 		status.textContent = "Connecting…";
 		delete status.dataset.ready;
 
+		// cui.Say: run the presend hook, then transmit text plus pose indices
+		const sendChat = (text: string, mode: number): void => {
+			const pose = view.prepareOutgoing(text);
+			socket.send(
+				JSON.stringify({ type: "chat", text, mode, ...(pose && { pose }) }),
+			);
+		};
+
+		let bodycam: BodyCamWidget | null = null;
+		const mountBodycam = (): void => {
+			element("bodycam-heading").hidden = false;
+			element("bodycam").hidden = false;
+			bodycam = new BodyCamWidget({
+				canvas: element<HTMLCanvasElement>("bodycam-canvas"),
+				atlases,
+				getAvatar: () => view.localAvatar(),
+				setStatus: (text) => {
+					element("bodycam-status").textContent = text ?? "";
+				},
+				sendExpression: () => sendChat("<Chr>", 1),
+				forwardTyping: (key) => {
+					const input = element<HTMLInputElement>("composer-text");
+					input.value += key;
+					input.focus();
+				},
+			});
+			view.onComposed = () => bodycam?.refresh();
+			view.onRebuilt = () => bodycam?.restore();
+		};
+
 		socket.addEventListener("open", () => {
 			socket.send(JSON.stringify({ type: "join", name, avatar }));
 		});
@@ -228,7 +344,9 @@ async function main(): Promise<void> {
 				status.dataset.ready = "true";
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
+				view.setLocalAvatarID(parsed.avatar);
 				for (const entry of parsed.history) view.compose(entry);
+				mountBodycam();
 				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);
@@ -267,7 +385,7 @@ async function main(): Promise<void> {
 				const text = element<HTMLInputElement>("composer-text");
 				const mode = Number(element<HTMLSelectElement>("composer-mode").value);
 				if (!text.value.trim()) return;
-				socket.send(JSON.stringify({ type: "chat", text: text.value, mode }));
+				sendChat(text.value, mode);
 				text.value = "";
 			},
 		);

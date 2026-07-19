@@ -25,9 +25,22 @@ export class ChatRoomDO extends DurableObject<Env> {
 					name TEXT NOT NULL,
 					text TEXT NOT NULL,
 					mode INTEGER NOT NULL,
-					at INTEGER NOT NULL
+					at INTEGER NOT NULL,
+					expr INTEGER,
+					gest INTEGER,
+					req INTEGER
 				)
 			`);
+			const columns = this.ctx.storage.sql
+				.exec<{ name: string }>("PRAGMA table_info(messages)")
+				.toArray()
+				.map((column) => column.name);
+			for (const column of ["expr", "gest", "req"]) {
+				if (!columns.includes(column))
+					this.ctx.storage.sql.exec(
+						`ALTER TABLE messages ADD COLUMN ${column} INTEGER`,
+					);
+			}
 		});
 	}
 
@@ -71,8 +84,18 @@ export class ChatRoomDO extends DurableObject<Env> {
 				name: string;
 				text: string;
 				mode: number;
-			}>("SELECT seq, avatar, name, text, mode FROM messages ORDER BY seq")
-			.toArray();
+				expr: number | null;
+				gest: number | null;
+				req: number | null;
+			}>(
+				"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages ORDER BY seq",
+			)
+			.toArray()
+			.map(({ expr, gest, req, ...entry }) =>
+				expr !== null && gest !== null && req !== null
+					? { ...entry, pose: { expr, gest, req } }
+					: entry,
+			);
 	}
 
 	async webSocketMessage(
@@ -117,12 +140,15 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		const result = this.ctx.storage.sql.exec<{ seq: number }>(
-			"INSERT INTO messages (avatar, name, text, mode, at) VALUES (?, ?, ?, ?, ?) RETURNING seq",
+			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
 			seat.avatar,
 			seat.name,
 			message.text,
 			message.mode,
 			Date.now(),
+			message.pose?.expr ?? null,
+			message.pose?.gest ?? null,
+			message.pose?.req ?? null,
 		);
 		this.broadcast({
 			type: "chat",
@@ -132,6 +158,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				name: seat.name,
 				text: message.text,
 				mode: message.mode,
+				...(message.pose ? { pose: message.pose } : {}),
 			},
 		});
 	}

@@ -131,6 +131,73 @@
 	font-size: 0.75rem;
 }
 
+.bodycam-heading {
+	margin-top: 0.35rem;
+}
+
+.bodycam {
+	margin: 0;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+}
+
+.bodycam canvas {
+	display: block;
+	width: 100%;
+	outline-offset: -2px;
+	touch-action: none;
+}
+
+.bodycam-status {
+	min-height: 1.1rem;
+	padding: 0.1rem 0.25rem;
+	border-top: 1px solid #808080;
+	background: #c0c0c0;
+	font-size: 0.7rem;
+}
+
+.bodycam-menu {
+	position: fixed;
+	z-index: 10;
+	margin: 0;
+	padding: 2px;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080,
+		0.2rem 0.2rem 0 rgb(0 0 0 / 35%);
+	background: #c0c0c0;
+	list-style: none;
+}
+
+.bodycam-menu li {
+	padding: 0.25rem 1.25rem 0.25rem 0.5rem;
+	cursor: default;
+	white-space: pre;
+}
+
+.bodycam-menu li:hover {
+	background: #000080;
+	color: #fff;
+}
+
+.tweaks-toggle {
+	display: flex;
+	gap: 0.35rem;
+	align-items: center;
+	margin-top: 0.35rem;
+	font-weight: 700;
+}
+
+.tweaks-hint {
+	margin: 0.2rem 0 0;
+	color: #555;
+	font-size: 0.7rem;
+}
+
 .composer {
 	display: flex;
 	gap: 0.25rem;

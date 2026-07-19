@@ -181,6 +181,11 @@ export abstract class Avatar {
 	abstract setNeutral(): void;
 	abstract recordBody(body: AvatarBody): void;
 	abstract getIndices(): BodyIndices;
+	abstract setIndices(
+		faceIndex: number,
+		torsoIndex: number,
+		requested: number,
+	): void;
 	abstract getDimInfo(body: AvatarBody): BodyDimInfo;
 
 	updateBody(newBody: AvatarBody): void {
@@ -361,6 +366,16 @@ export class ComplexAvatar extends Avatar {
 		};
 	}
 
+	// CAvatarComplex::SetIndices (avatar.cpp:841-849)
+	setIndices(faceIndex: number, torsoIndex: number, requested: number): void {
+		if (this.body?.kind !== "complex") return;
+		if (faceIndex >= 0 && faceIndex < this.data.faces.length)
+			this.body.faceIndex = faceIndex;
+		if (torsoIndex >= 0 && torsoIndex < this.data.torsos.length)
+			this.body.torsoIndex = torsoIndex;
+		this.body.requested = requested !== 0;
+	}
+
 	getDimInfo(body: AvatarBody): BodyDimInfo {
 		if (body.kind !== "complex") {
 			return {
@@ -509,6 +524,14 @@ export class SimpleAvatar extends Avatar {
 			torsoIndex: this.body.bodyIndex,
 			requested: this.freeze === AF_UNFROZEN ? 0 : 1,
 		};
+	}
+
+	// CAvatarSimple::SetIndices (avatar.cpp:851-857); faceIndex is ignored
+	setIndices(_faceIndex: number, torsoIndex: number, requested: number): void {
+		if (this.body?.kind !== "simple") return;
+		if (torsoIndex >= 0 && torsoIndex < this.data.bodies.length)
+			this.body.bodyIndex = torsoIndex;
+		this.body.requested = requested !== 0;
 	}
 
 	getDimInfo(body: AvatarBody): BodyDimInfo {

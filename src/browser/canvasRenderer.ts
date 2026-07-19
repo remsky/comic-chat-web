@@ -240,6 +240,37 @@ function addBezierPath(
 	return true;
 }
 
+export function drawSpriteLayer(
+	context: CanvasRenderingContext2D,
+	assets: AvatarAtlasCache,
+	layer: SpriteLayer,
+): void {
+	if (!layer.pose.sprite)
+		throw new Error(`pose ${layer.pose.poseID} has no sprite`);
+	const image = assets.get(layer.pose);
+	const x = Math.min(layer.left, layer.right);
+	const y = -Math.max(layer.top, layer.bottom);
+	const width = Math.abs(layer.right - layer.left);
+	const height = Math.abs(layer.top - layer.bottom);
+	context.save();
+	if (layer.left > layer.right) {
+		context.translate(2 * x + width, 0);
+		context.scale(-1, 1);
+	}
+	context.drawImage(
+		image,
+		layer.pose.sprite.x,
+		layer.pose.sprite.y,
+		layer.pose.width,
+		layer.pose.height,
+		x,
+		y,
+		width,
+		height,
+	);
+	context.restore();
+}
+
 export interface CanvasPanelRendererOptions {
 	unitWidth: number;
 	unitHeight: number;
@@ -274,39 +305,13 @@ export class CanvasPanelRenderer {
 		return this.whisperFontCache;
 	}
 
-	private drawLayer(layer: SpriteLayer): void {
-		if (!layer.pose.sprite)
-			throw new Error(`pose ${layer.pose.poseID} has no sprite`);
-		const image = this.assets.get(layer.pose);
-		const x = Math.min(layer.left, layer.right);
-		const y = -Math.max(layer.top, layer.bottom);
-		const width = Math.abs(layer.right - layer.left);
-		const height = Math.abs(layer.top - layer.bottom);
-		this.context.save();
-		if (layer.left > layer.right) {
-			this.context.translate(2 * x + width, 0);
-			this.context.scale(-1, 1);
-		}
-		this.context.drawImage(
-			image,
-			layer.pose.sprite.x,
-			layer.pose.sprite.y,
-			layer.pose.width,
-			layer.pose.height,
-			x,
-			y,
-			width,
-			height,
-		);
-		this.context.restore();
-	}
-
 	private drawBody(body: AvatarBody): void {
 		const avatar = this.avatars.find(
 			(candidate) => candidate.avatarID === body.avatarID,
 		);
 		if (!avatar) throw new Error(`missing avatar ${body.avatarID}`);
-		for (const layer of bodySpriteLayers(avatar, body)) this.drawLayer(layer);
+		for (const layer of bodySpriteLayers(avatar, body))
+			drawSpriteLayer(this.context, this.assets, layer);
 	}
 
 	private balloonPath(balloon: PanelBalloon, runtime: BalloonRuntime): void {

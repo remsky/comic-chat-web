@@ -342,3 +342,86 @@ describe.each(traceNames)("%s panel lifecycle", (name) => {
 		expect(commitIndex).toBe(expectedPanels.length);
 	});
 });
+
+// AddReaction (panel.cpp:433-470): "<Chr>" pose panels with no balloon
+describe("reaction panels", () => {
+	function makePage(registry: AvatarRegistry, decisions?: PanelDecision[]) {
+		return new PanelPage({
+			registry,
+			rand: new MsvcRand(1515),
+			unitWidth: 2300,
+			unitHeight: 5400,
+			hooks: {
+				layoutBalloons: () => ({ fits: true }),
+				onDecision: (decision) => decisions?.push(decision),
+			},
+		});
+	}
+
+	it("replaces the poser's body in a cloned panel without adding a balloon", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		const decisions: PanelDecision[] = [];
+		const page = makePage(registry, decisions);
+		requestedBody(registry, 1);
+		page.addLine(1, "one", 1);
+		requestedBody(registry, 2);
+		page.addLine(2, "two", 1);
+		expect(page.panels).toHaveLength(2);
+
+		const avatar = registry.get(1);
+		if (!avatar) throw new Error("missing avatar 1");
+		const posed = avatar.getBodyFromEmotion(0, 1);
+		avatar.updateBody(posed);
+		page.addLine(1, "<Chr>", 1);
+
+		expect(page.panels).toHaveLength(2);
+		const panel = page.panels.at(-1);
+		expect(panel?.balloons).toHaveLength(2);
+		const body = panel?.bodies.find((candidate) => candidate.avatarID === 1);
+		expect(body?.requested).toBe(true);
+		expect(body?.kind === "complex" ? body.faceIndex : undefined).toBe(
+			posed.kind === "complex" ? posed.faceIndex : undefined,
+		);
+		expect(decisions.at(-1)).toEqual({
+			cloned: true,
+			speaker: 1,
+			words: "<Chr>",
+		});
+		// ResetAvatar ran: temp state decayed back to a neutral, unrequested body
+		expect(avatar.body?.requested).toBe(false);
+	});
+
+	it("fetches a newcomer into the cloned panel", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		const page = makePage(registry);
+		requestedBody(registry, 1);
+		page.addLine(1, "one", 1);
+		requestedBody(registry, 2);
+		page.addLine(2, "two", 1);
+
+		const avatar = registry.get(3);
+		if (!avatar) throw new Error("missing avatar 3");
+		avatar.updateBody(avatar.getBodyFromEmotion(0, 1));
+		page.addLine(3, "<Chr>", 1);
+
+		const panel = page.panels.at(-1);
+		expect(panel?.balloons).toHaveLength(2);
+		expect(panel?.bodies.some((candidate) => candidate.avatarID === 3)).toBe(
+			true,
+		);
+	});
+
+	it("starts fresh when the page has no panel to clone", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		const decisions: PanelDecision[] = [];
+		const page = makePage(registry, decisions);
+		const avatar = registry.get(1);
+		if (!avatar) throw new Error("missing avatar 1");
+		avatar.updateBody(avatar.getBodyFromEmotion(0, 1));
+		page.addLine(1, "<Chr>", 1);
+		expect(decisions).toEqual([{ cloned: false, speaker: 1, words: "<Chr>" }]);
+		const panel = page.panels.at(-1);
+		expect(panel?.balloons).toHaveLength(0);
+		expect(panel?.bodies).toHaveLength(1);
+	});
+});
