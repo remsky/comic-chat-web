@@ -181,6 +181,36 @@ class RoomView {
 		return this.entries;
 	}
 
+	// File > Save's web stand-in: composite the strip grid into one PNG
+	async exportPng(): Promise<Blob | null> {
+		if (this.rendered.length === 0) return null;
+		const size = 600;
+		const perRow = 4;
+		// the on-screen 1.2%-of-container grid gap, expressed against a 600px panel
+		const gap = 31;
+		const cols = Math.min(perRow, this.rendered.length);
+		const rows = Math.ceil(this.rendered.length / perRow);
+		const sheet = document.createElement("canvas");
+		sheet.width = gap + cols * (size + gap);
+		sheet.height = gap + rows * (size + gap);
+		const context = sheet.getContext("2d");
+		if (!context) return null;
+		context.fillStyle = "#fff";
+		context.fillRect(0, 0, sheet.width, sheet.height);
+		this.rendered.forEach((entry, index) => {
+			const canvas = entry.card.querySelector("canvas");
+			if (!canvas) return;
+			context.drawImage(
+				canvas,
+				gap + (index % perRow) * (size + gap),
+				gap + Math.floor(index / perRow) * (size + gap),
+				size,
+				size,
+			);
+		});
+		return new Promise((resolve) => sheet.toBlob(resolve, "image/png"));
+	}
+
 	localAvatar(): Avatar | undefined {
 		if (this.localAvatarID === null) return undefined;
 		return this.composition.registry.get(this.localAvatarID);
@@ -532,6 +562,21 @@ async function main(): Promise<void> {
 				JSON.stringify({ type: "background", name: backgroundSelect.value }),
 			);
 		});
+
+		element<HTMLButtonElement>("save-strip").addEventListener(
+			"click",
+			async () => {
+				const blob = await view.exportPng();
+				if (!blob) return;
+				const url = URL.createObjectURL(blob);
+				const anchor = document.createElement("a");
+				anchor.href = url;
+				const stamp = new Date().toISOString().slice(0, 16).replace(":", "-");
+				anchor.download = `comic-chat-${room}-${stamp}.png`;
+				anchor.click();
+				URL.revokeObjectURL(url);
+			},
+		);
 
 		const transcript = element<HTMLOListElement>("transcript");
 		const refreshTranscript = (): void => {
