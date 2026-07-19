@@ -63,6 +63,21 @@ h1 {
 	margin: 0 auto 5rem;
 }
 
+.legal-footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem 0.65rem;
+	justify-content: center;
+	width: min(76rem, calc(100% - 2rem));
+	margin: -2.5rem auto 2.5rem;
+	color: #535149;
+	font-size: 0.75rem;
+}
+
+.legal-footer a {
+	color: inherit;
+}
+
 .panel-card {
 	contain: layout style paint;
 	margin: 0;

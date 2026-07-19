@@ -69,6 +69,17 @@
 			/>
 			<button type="submit">Send</button>
 		</form>
+		<footer class="legal-footer">
+			<span>© 2026 Comic Chat Web contributors</span>
+			<span aria-hidden="true">·</span>
+			<a href="https://github.com/remsky/comic-chat-web">Source</a>
+			<span aria-hidden="true">·</span>
+			<a href="https://github.com/remsky/comic-chat-web/blob/main/LICENSE"
+				>AGPL-3.0</a
+			>
+			<span aria-hidden="true">·</span>
+			<span>No warranty</span>
+		</footer>
 		<section id="join" class="join-overlay" aria-label="Connect to a room">
 			<div class="dialog">
 				<header class="dialog-titlebar">Connect</header>
@@ -95,10 +106,10 @@
 							autocomplete="nickname"
 						/>
 					</label>
-					<label>
-						Character
-						<select id="join-avatar" name="avatar"></select>
-					</label>
+					<fieldset id="join-avatar" class="character-picker">
+						<legend>Character</legend>
+						<div class="character-options"></div>
+					</fieldset>
 					<div class="dialog-buttons">
 						<button type="submit">Connect</button>
 					</div>

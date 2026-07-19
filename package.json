@@ -1,7 +1,17 @@
 {
 	"name": "comic-chat-web",
 	"version": "0.0.0",
+	"description": "An experimental browser port of the Microsoft Comic Chat composition engine.",
 	"private": true,
+	"license": "AGPL-3.0-only",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/remsky/comic-chat-web.git"
+	},
+	"homepage": "https://github.com/remsky/comic-chat-web#readme",
+	"bugs": {
+		"url": "https://github.com/remsky/comic-chat-web/issues"
+	},
 	"type": "module",
 	"scripts": {
 		"test": "vitest run",

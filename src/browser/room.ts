@@ -53,6 +53,16 @@ function displayName(name: string): string {
 	return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+function avatarIndexForName(name: string, count: number): number {
+	if (count < 1) return -1;
+	const normalized = name.trim().toLowerCase();
+	if (!normalized) return 0;
+	let hash = 0;
+	for (const character of normalized)
+		hash = (Math.imul(hash, 31) + (character.codePointAt(0) ?? 0)) >>> 0;
+	return hash % count;
+}
+
 interface Composition {
 	registry: AvatarRegistry;
 	emotions: EmotionEngine;
@@ -237,14 +247,55 @@ class RoomView {
 	}
 }
 
-function wireJoinForm(avatars: AvatarData[]): void {
-	const select = element<HTMLSelectElement>("join-avatar");
-	for (const avatar of avatars) {
-		const option = document.createElement("option");
-		option.value = String(avatar.avatarID);
-		option.textContent = displayName(avatar.name);
-		select.append(option);
-	}
+function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
+	const picker = element<HTMLFieldSetElement>("join-avatar");
+	const options = picker.querySelector<HTMLElement>(".character-options");
+	if (!options) throw new Error("character picker is missing its options");
+	const radios = avatars.map((avatar, index) => {
+		const label = document.createElement("label");
+		label.className = "character-option";
+		const radio = document.createElement("input");
+		radio.type = "radio";
+		radio.name = "avatar";
+		radio.value = String(avatar.avatarID);
+		radio.autocomplete = "off";
+		radio.checked = index === 0;
+		const canvas = document.createElement("canvas");
+		canvas.width = 40;
+		canvas.height = 40;
+		canvas.setAttribute("aria-hidden", "true");
+		const name = document.createElement("span");
+		name.textContent = displayName(avatar.name);
+		const content = document.createElement("span");
+		content.className = "character-option-content";
+		const icon = avatar.poses.find((pose) => pose.poseID === avatar.iconPoseID);
+		if (icon?.sprite) {
+			const context = canvas.getContext("2d");
+			context?.drawImage(
+				atlases.get(icon),
+				icon.sprite.x,
+				icon.sprite.y,
+				icon.width,
+				icon.height,
+				0,
+				0,
+				40,
+				40,
+			);
+		}
+		content.append(canvas, name);
+		label.append(radio, content);
+		options.append(label);
+		return radio;
+	});
+	const nameInput = element<HTMLInputElement>("join-name");
+	const suggestAvatar = (): void => {
+		const index = avatarIndexForName(nameInput.value, radios.length);
+		const radio = radios[index];
+		if (radio) radio.checked = true;
+	};
+	nameInput.addEventListener("change", suggestAvatar);
+	suggestAvatar();
 	const params = new URLSearchParams(location.search);
 	const room = params.get("room");
 	if (room) element<HTMLInputElement>("join-room").value = room;
@@ -279,7 +330,7 @@ async function main(): Promise<void> {
 	const manifest = (await response.json()) as { avatars: AvatarData[] };
 	const atlases = new AvatarAtlasCache();
 	await atlases.preload(manifest.avatars);
-	wireJoinForm(manifest.avatars);
+	wireJoinForm(manifest.avatars, atlases);
 	status.dataset.ready = "true";
 
 	let roster: RosterEntry[] = [];
@@ -304,7 +355,11 @@ async function main(): Promise<void> {
 			?.setAttribute("disabled", "");
 		const room = element<HTMLInputElement>("join-room").value.trim();
 		const name = element<HTMLInputElement>("join-name").value.trim();
-		const avatar = Number(element<HTMLSelectElement>("join-avatar").value);
+		const avatar = Number(
+			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
+				'input[name="avatar"]:checked',
+			)?.value,
+		);
 		if (!room || !name) return;
 		history.replaceState(null, "", `?room=${encodeURIComponent(room)}`);
 		const protocol = location.protocol === "https:" ? "wss" : "ws";
