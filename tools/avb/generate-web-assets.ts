@@ -1,6 +1,6 @@
 // Generates one request-efficient transparent avatar atlas per cast member and the runtime manifest.
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { composeImageRgba, decodePose } from "./convert.ts";
@@ -66,23 +66,27 @@ function buildAtlas(
 	return atlas;
 }
 
-const avatarDir = resolve(
-	process.argv[2] ??
-		fileURLToPath(
-			new URL(
-				"../../../comic-chat/v1.0-pre-modern/comicart/avatars/",
-				import.meta.url,
-			),
-		),
-);
+// v1.0 art first for the classic cast, then the old-magic v2.1b additions and art pack 1
+const SOURCE_DIRS = [
+	"../../../comic-chat/v1.0-pre-modern/comicart/avatars/",
+	"../../../comic-chat/v2.1b/cchat/comicart/",
+	"../../../comic-chat/v2.1b/cchat/artpack1/",
+].map((dir) => fileURLToPath(new URL(dir, import.meta.url)));
+
+function readAvb(name: string): Uint8Array {
+	const dirs = process.argv[2] ? [resolve(process.argv[2])] : SOURCE_DIRS;
+	for (const dir of dirs) {
+		const path = join(dir, `${name}.avb`);
+		if (existsSync(path)) return new Uint8Array(readFileSync(path));
+	}
+	throw new Error(`${name}.avb not found under ${dirs.join(", ")}`);
+}
+
 const outputDir = resolve(
 	process.argv[3] ??
 		fileURLToPath(new URL("../../public/assets/avatars/", import.meta.url)),
 );
-const inputs = FULL_CAST.map((name) => ({
-	name,
-	bytes: new Uint8Array(readFileSync(join(avatarDir, `${name}.avb`))),
-}));
+const inputs = FULL_CAST.map((name) => ({ name, bytes: readAvb(name) }));
 const fixtures = buildAvatarFixtures(inputs);
 mkdirSync(outputDir, { recursive: true });
 
@@ -102,7 +106,7 @@ for (let avatarIndex = 0; avatarIndex < inputs.length; avatarIndex++) {
 			localPoseID: pose.poseID,
 			width: decoded.image.width,
 			height: decoded.image.height,
-			rgba: composeImageRgba(decoded.image, decoded.mask),
+			rgba: composeImageRgba(decoded.image, decoded.mask, decoded.aura),
 			x: 0,
 			y: 0,
 		});
