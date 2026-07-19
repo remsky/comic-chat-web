@@ -15,6 +15,7 @@ import {
 import { MsvcRand } from "../engine/rand.js";
 import {
 	type ChatEntry,
+	HISTORY_CHUNK,
 	type PoseIndices,
 	parseServerMessage,
 	type RosterEntry,
@@ -131,6 +132,17 @@ class RoomView {
 		this.feed(entry);
 		this.reconcile();
 		this.onComposed?.();
+	}
+
+	prepend(entries: ChatEntry[]): void {
+		const known = new Set(this.entries.map((entry) => entry.seq));
+		const additions = entries.filter((entry) => !known.has(entry.seq));
+		if (additions.length === 0) return;
+		this.entries.unshift(...additions);
+		this.composition = this.createComposition();
+		for (const entry of this.entries) this.feed(entry);
+		this.reconcile();
+		this.onRebuilt?.();
 	}
 
 	setLocalAvatarID(avatarID: number): void {
@@ -301,6 +313,25 @@ async function main(): Promise<void> {
 		);
 		status.textContent = "Connecting…";
 		delete status.dataset.ready;
+		const scroller = element("strip");
+		let oldestSeq: number | null = null;
+		let historyPending = false;
+		let historyDone = false;
+
+		const requestOlderHistory = (): void => {
+			if (
+				historyPending ||
+				historyDone ||
+				oldestSeq === null ||
+				socket.readyState !== WebSocket.OPEN
+			)
+				return;
+			historyPending = true;
+			socket.send(JSON.stringify({ type: "history", before: oldestSeq }));
+		};
+		scroller.addEventListener("scroll", () => {
+			if (scroller.scrollTop < 80) requestOlderHistory();
+		});
 
 		// cui.Say: run the presend hook, then transmit text plus pose indices
 		const sendChat = (text: string, mode: number): void => {
@@ -346,10 +377,25 @@ async function main(): Promise<void> {
 				renderRoster(roster, manifest.avatars);
 				view.setLocalAvatarID(parsed.avatar);
 				for (const entry of parsed.history) view.compose(entry);
+				oldestSeq = parsed.history[0]?.seq ?? null;
+				historyDone = parsed.history.length < HISTORY_CHUNK;
 				mountBodycam();
 				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);
+			} else if (parsed.type === "history") {
+				const previousHeight = scroller.scrollHeight;
+				const previousTop = scroller.scrollTop;
+				historyPending = false;
+				if (parsed.entries.length === 0) {
+					historyDone = true;
+					return;
+				}
+				view.prepend(parsed.entries);
+				oldestSeq = parsed.entries[0]?.seq ?? oldestSeq;
+				historyDone = parsed.entries.length < HISTORY_CHUNK;
+				scroller.scrollTop =
+					previousTop + (scroller.scrollHeight - previousHeight);
 			} else if (parsed.type === "joined") {
 				if (
 					!roster.some(

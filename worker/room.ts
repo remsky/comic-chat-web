@@ -3,15 +3,29 @@
 import { DurableObject } from "cloudflare:workers";
 import {
 	type ChatEntry,
+	HISTORY_CHUNK,
 	parseClientMessage,
 	pickAvatar,
 	type RosterEntry,
 	type ServerMessage,
 } from "../src/protocol/room.js";
 
+// server policy: bound per-room storage, connections, and per-socket send rate
+const HISTORY_RETENTION = 500;
+const SOCKET_LIMIT = 12;
+const RATE_BURST = 5;
+const RATE_REFILL_MS = 1000;
+
 interface SocketSeat {
 	name: string;
 	avatar: number;
+}
+
+interface SocketState {
+	name?: string;
+	avatar?: number;
+	tokens?: number;
+	at?: number;
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
@@ -47,13 +61,48 @@ export class ChatRoomDO extends DurableObject<Env> {
 	async fetch(request: Request): Promise<Response> {
 		if (request.headers.get("Upgrade") !== "websocket")
 			return new Response("expected a websocket upgrade", { status: 426 });
+		if (this.ctx.getWebSockets().length >= SOCKET_LIMIT)
+			return new Response("room is at its connection limit", { status: 503 });
 		const pair = new WebSocketPair();
 		this.ctx.acceptWebSocket(pair[1]);
+		pair[1].serializeAttachment({ tokens: RATE_BURST, at: Date.now() });
 		return new Response(null, { status: 101, webSocket: pair[0] });
 	}
 
+	private stateOf(ws: WebSocket): SocketState {
+		const attachment = ws.deserializeAttachment() as unknown;
+		if (typeof attachment !== "object" || attachment === null) return {};
+		const state = attachment as Record<string, unknown>;
+		return {
+			...(typeof state.name === "string" ? { name: state.name } : {}),
+			...(typeof state.avatar === "number" ? { avatar: state.avatar } : {}),
+			...(typeof state.tokens === "number" ? { tokens: state.tokens } : {}),
+			...(typeof state.at === "number" ? { at: state.at } : {}),
+		};
+	}
+
 	private seatOf(ws: WebSocket): SocketSeat | null {
-		return (ws.deserializeAttachment() as SocketSeat | null) ?? null;
+		const state = this.stateOf(ws);
+		return state.name !== undefined && state.avatar !== undefined
+			? { name: state.name, avatar: state.avatar }
+			: null;
+	}
+
+	private takeRateToken(ws: WebSocket): boolean {
+		const state = this.stateOf(ws);
+		const now = Date.now();
+		const elapsed = Math.max(0, now - (state.at ?? now));
+		const tokens = Math.min(
+			RATE_BURST,
+			(state.tokens ?? RATE_BURST) + elapsed / RATE_REFILL_MS,
+		);
+		const allowed = tokens >= 1;
+		ws.serializeAttachment({
+			...state,
+			tokens: allowed ? tokens - 1 : tokens,
+			at: now,
+		});
+		return allowed;
 	}
 
 	private roster(): RosterEntry[] {
@@ -76,21 +125,42 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 	}
 
-	private history(): ChatEntry[] {
-		return this.ctx.storage.sql
-			.exec<{
-				seq: number;
-				avatar: number;
-				name: string;
-				text: string;
-				mode: number;
-				expr: number | null;
-				gest: number | null;
-				req: number | null;
-			}>(
-				"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages ORDER BY seq",
-			)
-			.toArray()
+	private history(before?: number): ChatEntry[] {
+		const rows =
+			before === undefined
+				? this.ctx.storage.sql
+						.exec<{
+							seq: number;
+							avatar: number;
+							name: string;
+							text: string;
+							mode: number;
+							expr: number | null;
+							gest: number | null;
+							req: number | null;
+						}>(
+							"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages ORDER BY seq DESC LIMIT ?",
+							HISTORY_CHUNK,
+						)
+						.toArray()
+				: this.ctx.storage.sql
+						.exec<{
+							seq: number;
+							avatar: number;
+							name: string;
+							text: string;
+							mode: number;
+							expr: number | null;
+							gest: number | null;
+							req: number | null;
+						}>(
+							"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages WHERE seq < ? ORDER BY seq DESC LIMIT ?",
+							before,
+							HISTORY_CHUNK,
+						)
+						.toArray();
+		return rows
+			.reverse()
 			.map(({ expr, gest, req, ...entry }) =>
 				expr !== null && gest !== null && req !== null
 					? { ...entry, pose: { expr, gest, req } }
@@ -102,6 +172,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 		ws: WebSocket,
 		raw: string | ArrayBuffer,
 	): Promise<void> {
+		if (!this.takeRateToken(ws)) {
+			ws.close(1008, "message rate limit exceeded");
+			return;
+		}
 		const message = parseClientMessage(raw);
 		if (!message) {
 			this.send(ws, { type: "error", reason: "malformed message" });
@@ -122,7 +196,11 @@ export class ChatRoomDO extends DurableObject<Env> {
 				ws.close(1008, "room is full");
 				return;
 			}
-			ws.serializeAttachment({ name: message.name, avatar });
+			ws.serializeAttachment({
+				...this.stateOf(ws),
+				name: message.name,
+				avatar,
+			});
 			this.send(ws, {
 				type: "welcome",
 				avatar,
@@ -139,6 +217,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.send(ws, { type: "error", reason: "join first" });
 			return;
 		}
+		if (message.type === "history") {
+			this.send(ws, { type: "history", entries: this.history(message.before) });
+			return;
+		}
 		const result = this.ctx.storage.sql.exec<{ seq: number }>(
 			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
 			seat.avatar,
@@ -150,10 +232,16 @@ export class ChatRoomDO extends DurableObject<Env> {
 			message.pose?.gest ?? null,
 			message.pose?.req ?? null,
 		);
+		const seq = result.one().seq;
+		if (seq > HISTORY_RETENTION)
+			this.ctx.storage.sql.exec(
+				"DELETE FROM messages WHERE seq <= ?",
+				seq - HISTORY_RETENTION,
+			);
 		this.broadcast({
 			type: "chat",
 			entry: {
-				seq: result.one().seq,
+				seq,
 				avatar: seat.avatar,
 				name: seat.name,
 				text: message.text,

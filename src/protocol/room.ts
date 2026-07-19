@@ -4,6 +4,8 @@ export const MAX_NAME_LENGTH = 24;
 export const MAX_TEXT_LENGTH = 1000;
 export const CAST_SIZE = 6;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
+// welcome carries the newest chunk; older chunks arrive via history requests
+export const HISTORY_CHUNK = 50;
 
 // SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
 export interface PoseIndices {
@@ -28,7 +30,8 @@ export interface RosterEntry {
 
 export type ClientMessage =
 	| { type: "join"; name: string; avatar: number }
-	| { type: "chat"; text: string; mode: number; pose?: PoseIndices };
+	| { type: "chat"; text: string; mode: number; pose?: PoseIndices }
+	| { type: "history"; before: number };
 
 export type ServerMessage =
 	| {
@@ -38,6 +41,7 @@ export type ServerMessage =
 			history: ChatEntry[];
 	  }
 	| { type: "chat"; entry: ChatEntry }
+	| { type: "history"; entries: ChatEntry[] }
 	| { type: "joined"; who: RosterEntry }
 	| { type: "left"; who: RosterEntry }
 	| { type: "error"; reason: string };
@@ -73,6 +77,13 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		return pose
 			? { type: "chat", text, mode, pose }
 			: { type: "chat", text, mode };
+	}
+	if (message.type === "history") {
+		if (typeof message.before !== "number" || !Number.isFinite(message.before))
+			return null;
+		const before = Math.trunc(message.before);
+		if (before < 1) return null;
+		return { type: "history", before };
 	}
 	return null;
 }

@@ -17,6 +17,9 @@ describe("room wire protocol", () => {
 		expect(
 			parseClientMessage(JSON.stringify({ type: "chat", text: "hi", mode: 5 })),
 		).toEqual({ type: "chat", text: "hi", mode: 5 });
+		expect(
+			parseClientMessage(JSON.stringify({ type: "history", before: 51 })),
+		).toEqual({ type: "history", before: 51 });
 	});
 
 	it("rejects malformed, empty, and out-of-range messages", () => {
@@ -37,6 +40,14 @@ describe("room wire protocol", () => {
 		).toBeNull();
 		expect(
 			parseClientMessage(JSON.stringify({ type: "chat", text: " ", mode: 1 })),
+		).toBeNull();
+		expect(
+			parseClientMessage(JSON.stringify({ type: "history", before: 0 })),
+		).toBeNull();
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "history", before: Number.POSITIVE_INFINITY }),
+			),
 		).toBeNull();
 	});
 
