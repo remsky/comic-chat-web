@@ -321,6 +321,7 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 		canvas.height = 40;
 		canvas.setAttribute("aria-hidden", "true");
 		const name = document.createElement("span");
+		name.className = "character-option-name";
 		name.textContent = displayName(avatar.name);
 		const content = document.createElement("span");
 		content.className = "character-option-content";
@@ -348,7 +349,9 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	const suggestAvatar = (): void => {
 		const index = avatarIndexForName(nameInput.value, radios.length);
 		const radio = radios[index];
-		if (radio) radio.checked = true;
+		if (!radio) return;
+		radio.checked = true;
+		radio.closest(".character-option")?.scrollIntoView({ block: "nearest" });
 	};
 	nameInput.addEventListener("change", suggestAvatar);
 	suggestAvatar();
