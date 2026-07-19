@@ -28,6 +28,13 @@ export interface RosterEntry {
 	avatar: number;
 }
 
+// one row of GET /api/rooms, the web stand-in for the IRC LIST-backed Chat Room List dialog
+export interface RoomListing {
+	name: string;
+	members: number;
+	active: number;
+}
+
 export type ClientMessage =
 	| { type: "join"; name: string; avatar: number }
 	| { type: "chat"; text: string; mode: number; pose?: PoseIndices }
@@ -115,6 +122,30 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 	} catch {
 		return null;
 	}
+}
+
+// GET /api/rooms body; null on any shape mismatch (static hosting answers this path with HTML)
+export function parseRoomListings(raw: unknown): RoomListing[] | null {
+	if (typeof raw !== "object" || raw === null) return null;
+	const rooms = (raw as Record<string, unknown>).rooms;
+	if (!Array.isArray(rooms)) return null;
+	const listings: RoomListing[] = [];
+	for (const item of rooms) {
+		if (typeof item !== "object" || item === null) return null;
+		const listing = item as Record<string, unknown>;
+		if (
+			typeof listing.name !== "string" ||
+			typeof listing.members !== "number" ||
+			typeof listing.active !== "number"
+		)
+			return null;
+		listings.push({
+			name: listing.name,
+			members: listing.members,
+			active: listing.active,
+		});
+	}
+	return listings;
 }
 
 export function roomNameFromPath(pathname: string): string | null {

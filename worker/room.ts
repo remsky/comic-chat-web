@@ -7,6 +7,7 @@ import {
 	parseClientMessage,
 	pickAvatar,
 	type RosterEntry,
+	roomNameFromPath,
 	type ServerMessage,
 } from "../src/protocol/room.js";
 
@@ -15,6 +16,8 @@ const HISTORY_RETENTION = 500;
 const SOCKET_LIMIT = 12;
 const RATE_BURST = 5;
 const RATE_REFILL_MS = 1000;
+// keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
+const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 
 interface SocketSeat {
 	name: string;
@@ -29,6 +32,10 @@ interface SocketState {
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
+	// ctx.id.name is unavailable after a hibernation wake, so the name is persisted on connect
+	private roomName: string | null = null;
+	private reportedAt = 0;
+
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 		ctx.blockConcurrencyWhile(async () => {
@@ -63,6 +70,11 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return new Response("expected a websocket upgrade", { status: 426 });
 		if (this.ctx.getWebSockets().length >= SOCKET_LIMIT)
 			return new Response("room is at its connection limit", { status: 503 });
+		const name = roomNameFromPath(new URL(request.url).pathname);
+		if (name && name !== this.roomName) {
+			this.roomName = name;
+			await this.ctx.storage.put("room-name", name);
+		}
 		const pair = new WebSocketPair();
 		this.ctx.acceptWebSocket(pair[1]);
 		pair[1].serializeAttachment({ tokens: RATE_BURST, at: Date.now() });
@@ -112,6 +124,21 @@ export class ChatRoomDO extends DurableObject<Env> {
 			if (seat) seats.push({ name: seat.name, avatar: seat.avatar });
 		}
 		return seats;
+	}
+
+	// the connect screen's room directory; tolerated as best-effort so chat never depends on it
+	private async reportPresence(): Promise<void> {
+		this.roomName ??= (await this.ctx.storage.get<string>("room-name")) ?? null;
+		if (!this.roomName) return;
+		this.reportedAt = Date.now();
+		try {
+			await this.env.ROOM_DIRECTORY.getByName("directory").report(
+				this.roomName,
+				this.roster().length,
+			);
+		} catch {
+			// a directory outage only stales the room list
+		}
 	}
 
 	private send(ws: WebSocket, message: ServerMessage): void {
@@ -211,6 +238,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				type: "joined",
 				who: { name: message.name, avatar },
 			});
+			await this.reportPresence();
 			return;
 		}
 		if (!seat) {
@@ -249,15 +277,19 @@ export class ChatRoomDO extends DurableObject<Env> {
 				...(message.pose ? { pose: message.pose } : {}),
 			},
 		});
+		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
+			await this.reportPresence();
 	}
 
 	async webSocketClose(ws: WebSocket): Promise<void> {
 		const seat = this.seatOf(ws);
 		ws.serializeAttachment(null);
-		if (seat)
+		if (seat) {
 			this.broadcast({
 				type: "left",
 				who: { name: seat.name, avatar: seat.avatar },
 			});
+			await this.reportPresence();
+		}
 	}
 }

@@ -15,6 +15,10 @@ test("landing page boots the app shell with the connect dialog", async ({
 	await expect(page.locator("#join-form")).toBeVisible();
 	await expect(page.locator("#join-room")).toHaveValue("preview");
 	await expect(page.locator("#room")).toBeHidden();
+	// static preview has no worker behind /api/rooms; the list must fail soft, not error
+	await expect(page.locator("#room-list .room-list-empty")).toHaveText(
+		"Room list unavailable.",
+	);
 	const characters = page.locator('#join-avatar input[name="avatar"]');
 	expect(await characters.count()).toBeGreaterThanOrEqual(2);
 	await expect(

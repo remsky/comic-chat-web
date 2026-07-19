@@ -17,6 +17,7 @@ import {
 	type ChatEntry,
 	HISTORY_CHUNK,
 	type PoseIndices,
+	parseRoomListings,
 	parseServerMessage,
 	type RosterEntry,
 } from "../protocol/room.js";
@@ -301,6 +302,59 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	if (room) element<HTMLInputElement>("join-room").value = room;
 }
 
+// the Chat Room List, directory-backed instead of IRC LIST; clicking a row fills the room field
+async function refreshRoomList(): Promise<void> {
+	const list = element<HTMLUListElement>("room-list");
+	const note = (text: string): void => {
+		const item = document.createElement("li");
+		item.className = "room-list-empty";
+		item.textContent = text;
+		list.replaceChildren(item);
+	};
+	note("Loading…");
+	let listings: ReturnType<typeof parseRoomListings>;
+	try {
+		const response = await fetch("/api/rooms");
+		listings = response.ok ? parseRoomListings(await response.json()) : null;
+	} catch {
+		listings = null;
+	}
+	if (!listings) {
+		note("Room list unavailable.");
+		return;
+	}
+	if (listings.length === 0) {
+		note("No rooms yet. Name one to create it.");
+		return;
+	}
+	list.replaceChildren(
+		...listings.map((listing) => {
+			const item = document.createElement("li");
+			const row = document.createElement("button");
+			row.type = "button";
+			const name = document.createElement("strong");
+			name.textContent = listing.name;
+			const members = document.createElement("span");
+			members.textContent =
+				listing.members === 1 ? "1 member" : `${listing.members} members`;
+			row.append(name, members);
+			row.addEventListener("click", () => {
+				element<HTMLInputElement>("join-room").value = listing.name;
+				element<HTMLInputElement>("join-name").focus();
+			});
+			item.append(row);
+			return item;
+		}),
+	);
+}
+
+function wireRoomList(): void {
+	element<HTMLButtonElement>("room-list-update").addEventListener("click", () =>
+		refreshRoomList(),
+	);
+	void refreshRoomList();
+}
+
 function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	const list = element<HTMLUListElement>("roster");
 	const items = roster.map((entry) => {
@@ -331,6 +385,7 @@ async function main(): Promise<void> {
 	const atlases = new AvatarAtlasCache();
 	await atlases.preload(manifest.avatars);
 	wireJoinForm(manifest.avatars, atlases);
+	wireRoomList();
 	status.dataset.ready = "true";
 
 	let roster: RosterEntry[] = [];

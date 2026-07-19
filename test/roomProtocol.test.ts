@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	MAX_TEXT_LENGTH,
 	parseClientMessage,
+	parseRoomListings,
 	parseServerMessage,
 	pickAvatar,
 	roomNameFromPath,
@@ -75,6 +76,27 @@ describe("room wire protocol", () => {
 		expect(pickAvatar(2, [2])).toBe(1);
 		expect(pickAvatar(1, [1, 2, 3])).toBe(4);
 		expect(pickAvatar(1, [1, 2, 3, 4, 5, 6])).toBeNull();
+	});
+
+	it("parses room directory listings and rejects other shapes", () => {
+		expect(
+			parseRoomListings({
+				rooms: [
+					{ name: "lobby", members: 3, active: 17 },
+					{ name: "attic", members: 1, active: 12 },
+				],
+			}),
+		).toEqual([
+			{ name: "lobby", members: 3, active: 17 },
+			{ name: "attic", members: 1, active: 12 },
+		]);
+		expect(parseRoomListings({ rooms: [] })).toEqual([]);
+		expect(parseRoomListings(null)).toBeNull();
+		expect(parseRoomListings("<!doctype html>")).toBeNull();
+		expect(parseRoomListings({ rooms: [{ name: "lobby" }] })).toBeNull();
+		expect(
+			parseRoomListings({ rooms: [{ name: 7, members: 1, active: 1 }] }),
+		).toBeNull();
 	});
 
 	it("round-trips server messages", () => {
