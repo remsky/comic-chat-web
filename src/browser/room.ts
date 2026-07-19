@@ -33,12 +33,14 @@ import {
 	loadCanvasFonts,
 } from "./canvasText.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
+import { transcriptHeader, transcriptLine } from "./textView.js";
 
 // square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
 const CLASSIC_UNIT = 3000;
 // larger unit shrinks text relative to the panel (~25 chars/line, 4-line balloons) so messages split less
 const MODERN_UNIT = 4000;
 const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
+const TEXT_VIEW_KEY = "comic-chat.text-view";
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -173,6 +175,10 @@ class RoomView {
 
 	setLocalAvatarID(avatarID: number): void {
 		this.localAvatarID = avatarID;
+	}
+
+	entriesView(): readonly ChatEntry[] {
+		return this.entries;
 	}
 
 	localAvatar(): Avatar | undefined {
@@ -374,6 +380,28 @@ function wireRoomList(): void {
 	void refreshRoomList();
 }
 
+function renderTranscript(
+	list: HTMLOListElement,
+	entries: readonly ChatEntry[],
+): void {
+	const items: HTMLLIElement[] = [];
+	for (const entry of entries) {
+		const line = transcriptLine(entry);
+		if (!line) continue;
+		const item = document.createElement("li");
+		item.className = `transcript-${line.kind}`;
+		if (line.kind === "system") {
+			item.textContent = `${line.name} ${line.body}`;
+		} else {
+			const header = document.createElement("strong");
+			header.textContent = transcriptHeader(line);
+			item.append(header, ` ${line.body}`);
+		}
+		items.push(item);
+	}
+	list.replaceChildren(...items);
+}
+
 function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	const list = element<HTMLUListElement>("roster");
 	const items = roster.map((entry) => {
@@ -440,6 +468,17 @@ async function main(): Promise<void> {
 		view.setModernTweaks(tweaks.checked);
 	});
 
+	// ID_VIEW_COMICS / ID_VIEW_TEXT: one strip pane, two renderings
+	const textToggle = element<HTMLInputElement>("text-toggle");
+	textToggle.checked = localStorage.getItem(TEXT_VIEW_KEY) === "on";
+	document.body.classList.toggle("text-view", textToggle.checked);
+	textToggle.addEventListener("change", () => {
+		localStorage.setItem(TEXT_VIEW_KEY, textToggle.checked ? "on" : "off");
+		document.body.classList.toggle("text-view", textToggle.checked);
+		const strip = element("strip");
+		strip.scrollTop = strip.scrollHeight;
+	});
+
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
 		element<HTMLFormElement>("join-form")
@@ -494,6 +533,14 @@ async function main(): Promise<void> {
 			);
 		});
 
+		const transcript = element<HTMLOListElement>("transcript");
+		const refreshTranscript = (): void => {
+			const atBottom =
+				scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 24;
+			renderTranscript(transcript, view.entriesView());
+			if (atBottom) scroller.scrollTop = scroller.scrollHeight;
+		};
+
 		let bodycam: BodyCamWidget | null = null;
 		const mountBodycam = (): void => {
 			element("bodycam-heading").hidden = false;
@@ -512,8 +559,14 @@ async function main(): Promise<void> {
 					input.focus();
 				},
 			});
-			view.onComposed = () => bodycam?.refresh();
-			view.onRebuilt = () => bodycam?.restore();
+			view.onComposed = () => {
+				bodycam?.refresh();
+				refreshTranscript();
+			};
+			view.onRebuilt = () => {
+				bodycam?.restore();
+				refreshTranscript();
+			};
 		};
 
 		socket.addEventListener("open", () => {
@@ -535,6 +588,7 @@ async function main(): Promise<void> {
 				oldestSeq = parsed.history[0]?.seq ?? null;
 				historyDone = parsed.history.length < HISTORY_CHUNK;
 				mountBodycam();
+				refreshTranscript();
 				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);

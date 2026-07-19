@@ -18,6 +18,7 @@
 		<main id="room" class="workspace">
 			<section id="strip" class="strip" aria-label="Comic strip">
 				<div id="panels" class="strip-page" aria-live="polite"></div>
+				<ol id="transcript" class="transcript" aria-live="polite"></ol>
 			</section>
 			<aside class="sidebar" aria-label="Room members">
 				<h2 class="sidebar-heading">Members</h2>
@@ -40,6 +41,10 @@
 				<label id="background-picker" class="background-picker" hidden>
 					Background
 					<select id="background-select"></select>
+				</label>
+				<label class="tweaks-toggle">
+					<input id="text-toggle" type="checkbox" />
+					Plain text view
 				</label>
 				<label class="tweaks-toggle">
 					<input

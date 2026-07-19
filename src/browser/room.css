@@ -275,6 +275,35 @@
 	font-weight: 700;
 }
 
+.transcript {
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	list-style: none;
+}
+
+.transcript li {
+	padding: 0.1rem 0;
+	overflow-wrap: anywhere;
+}
+
+.transcript-whisper,
+.transcript-action {
+	font-style: italic;
+}
+
+.transcript-system {
+	color: #555;
+	font-size: 0.75rem;
+}
+
+.app:not(.text-view) .transcript {
+	display: none;
+}
+
+.app.text-view .strip-page {
+	display: none;
+}
+
 .background-picker {
 	display: grid;
 	gap: 0.2rem;
