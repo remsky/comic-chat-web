@@ -65,6 +65,18 @@ function displayName(name: string): string {
 	return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+const RELEASE_CHIP: Record<string, { label: string; tone: string }> = {
+	buck: { label: "v2.1b", tone: "v2" },
+	kirby: { label: "v2.1b", tone: "v2" },
+	veronica: { label: "v2.1b", tone: "v2" },
+	kevin: { label: "ART1", tone: "art1" },
+	kwensa: { label: "ART1", tone: "art1" },
+	maynard: { label: "ART1", tone: "art1" },
+	rebecca: { label: "ART1", tone: "art1" },
+	sage: { label: "ART1", tone: "art1" },
+	scotty: { label: "ART1", tone: "art1" },
+};
+
 function avatarIndexForName(name: string, count: number): number {
 	if (count < 1) return -1;
 	const normalized = name.trim().toLowerCase();
@@ -358,6 +370,13 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 			);
 		}
 		content.append(canvas, name);
+		const release = RELEASE_CHIP[avatar.name];
+		if (release) {
+			const chip = document.createElement("span");
+			chip.className = `character-option-chip character-option-chip--${release.tone}`;
+			chip.textContent = release.label;
+			content.append(chip);
+		}
 		label.append(radio, content);
 		options.append(label);
 		return radio;

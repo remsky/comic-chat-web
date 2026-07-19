@@ -38,6 +38,15 @@ export const FULL_CAST = [
 	"tux",
 	"waf",
 	"xeno",
+	"buck",
+	"kirby",
+	"veronica",
+	"kevin",
+	"kwensa",
+	"maynard",
+	"rebecca",
+	"sage",
+	"scotty",
 ] as const;
 
 export type TraceAvatarName = (typeof TRACE_CAST)[number];

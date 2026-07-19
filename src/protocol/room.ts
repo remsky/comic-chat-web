@@ -2,7 +2,7 @@
 
 export const MAX_NAME_LENGTH = 24;
 export const MAX_TEXT_LENGTH = 1000;
-export const CAST_SIZE = 22;
+export const CAST_SIZE = 31;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
 // welcome carries the newest chunk; older chunks arrive via history requests
 export const HISTORY_CHUNK = 50;

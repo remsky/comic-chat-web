@@ -479,6 +479,27 @@
 	color: #000;
 }
 
+.character-option-chip {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	padding: 0 0.14rem;
+	border-radius: 2px;
+	color: #fff;
+	font-size: 0.38rem;
+	line-height: 1.5;
+	letter-spacing: 0.02em;
+	pointer-events: none;
+}
+
+.character-option-chip--v2 {
+	background: #2f6fa8;
+}
+
+.character-option-chip--art1 {
+	background: #7a4f9c;
+}
+
 .character-option input {
 	position: absolute;
 	inset: 0;
