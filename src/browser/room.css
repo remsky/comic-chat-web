@@ -1,85 +1,263 @@
-.masthead-room {
-	padding-bottom: clamp(1rem, 2vw, 2rem);
+:root {
+	color-scheme: light;
+	font-synthesis: none;
 }
 
-.masthead-room .eyebrow a {
-	color: inherit;
-	text-decoration: none;
+* {
+	box-sizing: border-box;
 }
 
-.join-card {
-	width: min(30rem, calc(100% - 2rem));
-	margin: 0 auto 4rem;
-	padding: clamp(1rem, 3vw, 2rem);
-	border: 1px solid rgb(23 23 20 / 16%);
-	border-radius: 0.5rem;
-	background: #f8f7f2;
-	box-shadow: 0 1rem 2.5rem rgb(42 37 22 / 8%);
+.app {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+	margin: 0;
+	background: #c0c0c0;
+	color: #000;
+	font:
+		0.8125rem / 1.4 Tahoma,
+		"Segoe UI",
+		system-ui,
+		sans-serif;
 }
 
-.join-card form {
-	display: grid;
-	gap: 1rem;
+.raised,
+.composer button,
+.dialog-buttons button {
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
 }
 
-.join-card label {
-	display: grid;
-	gap: 0.35rem;
-	font-size: 0.8rem;
+.titlebar {
+	display: flex;
+	gap: 0.5rem;
+	align-items: baseline;
+	padding: 0.25rem 0.5rem;
+	background: linear-gradient(90deg, #000080, #1084d0);
+	color: #fff;
+}
+
+.titlebar-text {
 	font-weight: 700;
-	color: #555148;
 }
 
-.join-card input,
-.join-card select,
-.composer input,
-.composer select {
-	padding: 0.6rem 0.75rem;
-	border: 1px solid rgb(23 23 20 / 24%);
-	border-radius: 0.35rem;
-	background: white;
-	font: inherit;
+.titlebar-room {
+	font-size: 0.75rem;
+	opacity: 0.85;
 }
 
-.join-card button,
-.composer button {
-	padding: 0.65rem 1rem;
-	border: none;
-	border-radius: 0.35rem;
-	background: #171714;
-	color: white;
-	font: inherit;
+.workspace {
+	display: flex;
+	flex: 1;
+	gap: 0.25rem;
+	min-height: 0;
+	padding: 0.25rem;
+}
+
+.strip {
+	flex: 1;
+	min-width: 0;
+	overflow-y: auto;
+	scrollbar-gutter: stable;
+	overscroll-behavior: contain;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+}
+
+/* the original page: square unit panels, 4 per row, interstice 144/2300 of a panel (~1.5% of the page) */
+.strip-page {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 1.5%;
+	align-content: start;
+	padding: 1.5%;
+}
+
+.panel {
+	margin: 0;
+}
+
+.panel canvas {
+	display: block;
+	background: #fff;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	width: 12rem;
+	min-height: 0;
+}
+
+.sidebar-heading {
+	margin: 0 0 0.25rem;
+	font-size: 0.8125rem;
 	font-weight: 700;
-	cursor: pointer;
 }
 
 .roster {
-	width: min(76rem, calc(100% - 2rem));
-	margin: 0 auto 1rem;
-	font-size: 0.85rem;
-	color: #555148;
+	flex: 1;
+	margin: 0;
+	padding: 0.25rem;
+	overflow-y: auto;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+	list-style: none;
 }
 
-.room-panels {
-	margin-bottom: 8rem;
+.roster li {
+	padding: 0.15rem 0.25rem;
+}
+
+.roster li span {
+	color: #555;
+	font-size: 0.75rem;
 }
 
 .composer {
-	position: fixed;
-	inset: auto 0 0;
 	display: flex;
-	gap: 0.5rem;
-	width: min(46rem, calc(100% - 2rem));
-	margin: 0 auto;
-	padding: 0.75rem;
-	border: 1px solid rgb(23 23 20 / 16%);
-	border-radius: 0.75rem 0.75rem 0 0;
-	border-bottom: none;
-	background: #f8f7f2;
-	box-shadow: 0 -0.5rem 2rem rgb(42 37 22 / 12%);
+	gap: 0.25rem;
+	padding: 0.25rem;
+}
+
+.composer input,
+.composer select,
+.dialog-body input,
+.dialog-body select {
+	padding: 0.3rem 0.4rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+	font: inherit;
 }
 
 .composer input {
 	flex: 1;
 	min-width: 0;
+}
+
+.composer button,
+.dialog-buttons button {
+	padding: 0.3rem 1.1rem;
+	font: inherit;
+	cursor: pointer;
+}
+
+.composer button:active,
+.dialog-buttons button:active {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow:
+		inset -1px -1px 0 #fff,
+		inset 1px 1px 0 #808080;
+}
+
+.join-overlay {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-content: center;
+	padding: 1rem;
+}
+
+.dialog {
+	width: min(20rem, 90vw);
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080,
+		0.25rem 0.25rem 0 rgb(0 0 0 / 35%);
+	background: #c0c0c0;
+}
+
+.dialog-titlebar {
+	margin: 2px;
+	padding: 0.2rem 0.5rem;
+	background: linear-gradient(90deg, #000080, #1084d0);
+	color: #fff;
+	font-weight: 700;
+}
+
+.dialog-body {
+	display: grid;
+	gap: 0.6rem;
+	padding: 0.75rem;
+}
+
+.dialog-body label {
+	display: grid;
+	gap: 0.2rem;
+	font-weight: 700;
+}
+
+.dialog-buttons {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.status {
+	position: fixed;
+	right: 0.5rem;
+	bottom: 2.5rem;
+	margin: 0;
+	padding: 0.35rem 0.6rem;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	font-size: 0.75rem;
+}
+
+.status[data-ready="true"] {
+	display: none;
+}
+
+.app:not(.joined) .workspace,
+.app:not(.joined) .composer,
+.app.joined .join-overlay {
+	display: none;
+}
+
+@media (max-width: 700px) {
+	.workspace {
+		flex-direction: column;
+	}
+
+	.strip-page {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.sidebar {
+		flex-direction: row;
+		gap: 0.5rem;
+		align-items: baseline;
+		width: auto;
+		max-height: 5rem;
+	}
+
+	.roster {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
 }

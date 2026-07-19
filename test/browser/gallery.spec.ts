@@ -9,7 +9,7 @@ test("renders responsive, accessible comic panels", async ({
 	});
 	page.on("pageerror", (error) => errors.push(error.message));
 
-	await page.goto("/");
+	await page.goto("/gallery.html");
 	await expect(page.locator("#gallery")).toHaveAttribute("aria-busy", "false");
 	const cards = page.locator(".panel-card");
 	expect(await cards.count()).toBeGreaterThan(0);

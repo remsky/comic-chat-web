@@ -48,12 +48,19 @@ class RoomView {
 	private readonly page: PanelPage;
 	private readonly emotions = new EmotionEngine();
 
+	private autoScroll = true;
+
 	constructor(
 		private readonly registry: AvatarRegistry,
 		private readonly atlases: AvatarAtlasCache,
 		private readonly avatars: AvatarData[],
 		private readonly container: HTMLElement,
+		private readonly scroller: HTMLElement,
 	) {
+		scroller.addEventListener("scroll", () => {
+			this.autoScroll =
+				scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 24;
+		});
 		const measurer = new CanvasTextMeasurer(createCanvasMeasureContext());
 		const resolveStyle = measurer.styleResolver();
 		const layoutOptions = {
@@ -87,19 +94,15 @@ class RoomView {
 		this.reconcile();
 	}
 
-	private makeCard(panel: UnitPanel, index: number): RenderedPanel {
+	private makeCard(panel: UnitPanel): RenderedPanel {
 		const card = document.createElement("figure");
-		card.className = "panel-card";
-		card.style.setProperty("--panel-index", String(index));
+		card.className = "panel";
 		const canvas = document.createElement("canvas");
 		canvas.width = 460;
 		canvas.height = 460;
-		const details = document.createElement("details");
-		const summary = document.createElement("summary");
-		summary.textContent = `Panel ${index + 1} transcript`;
 		const transcript = document.createElement("ol");
-		details.append(summary, transcript);
-		card.append(canvas, details);
+		transcript.className = "sr-only";
+		card.append(canvas, transcript);
 		syncPanelAccessibility(canvas, transcript, panel, this.avatars);
 		let renderer: CanvasPanelRenderer | undefined;
 		const surface = new CanvasSurface(
@@ -128,7 +131,7 @@ class RoomView {
 			if (!panel) continue;
 			const existing = this.rendered[i];
 			if (existing?.panel === panel) continue;
-			const replacement = this.makeCard(panel, i);
+			const replacement = this.makeCard(panel);
 			if (existing) {
 				existing.surface.dispose();
 				existing.card.replaceWith(replacement.card);
@@ -137,10 +140,7 @@ class RoomView {
 			}
 			this.rendered[i] = replacement;
 		}
-		this.rendered.at(-1)?.card.scrollIntoView({
-			behavior: "smooth",
-			block: "end",
-		});
+		if (this.autoScroll) this.scroller.scrollTop = this.scroller.scrollHeight;
 	}
 }
 
@@ -158,13 +158,23 @@ function wireJoinForm(avatars: AvatarData[]): void {
 }
 
 function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
-	const names = roster.map((entry) => {
+	const list = element<HTMLUListElement>("roster");
+	const items = roster.map((entry) => {
 		const cast = avatars.find((avatar) => avatar.avatarID === entry.avatar);
-		return `${entry.name} (${displayName(cast?.name ?? "?")})`;
+		const item = document.createElement("li");
+		const name = document.createElement("strong");
+		name.textContent = entry.name;
+		const character = document.createElement("span");
+		character.textContent = ` ${displayName(cast?.name ?? "?")}`;
+		item.append(name, character);
+		return item;
 	});
-	element("roster").textContent = names.length
-		? `In this room: ${names.join(", ")}`
-		: "Nobody else is here yet.";
+	if (items.length === 0) {
+		const empty = document.createElement("li");
+		empty.textContent = "Nobody here yet.";
+		items.push(empty);
+	}
+	list.replaceChildren(...items);
 }
 
 async function main(): Promise<void> {
@@ -186,6 +196,7 @@ async function main(): Promise<void> {
 		atlases,
 		manifest.avatars,
 		element("panels"),
+		element("strip"),
 	);
 
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
@@ -212,12 +223,13 @@ async function main(): Promise<void> {
 			const parsed = parseServerMessage(message.data);
 			if (!parsed) return;
 			if (parsed.type === "welcome") {
-				element("join").hidden = true;
-				element("room").hidden = false;
+				document.body.classList.add("joined");
+				element("title-room").textContent = `- ${room}`;
 				status.dataset.ready = "true";
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
 				for (const entry of parsed.history) view.compose(entry);
+				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);
 			} else if (parsed.type === "joined") {

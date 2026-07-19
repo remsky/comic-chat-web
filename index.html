@@ -5,22 +5,79 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta
 			name="description"
-			content="A browser rendering gallery for the open-source Microsoft Comic Chat engine port."
+			content="Live comic chat rooms rendered by the open-source Microsoft Comic Chat engine port."
 		/>
-		<title>Comic Chat Web Renderer</title>
-		<link rel="stylesheet" href="/src/browser/gallery.css" />
+		<title>Comic Chat Web</title>
+		<link rel="stylesheet" href="/src/browser/room.css" />
 	</head>
-	<body>
-		<header class="masthead">
-			<p class="eyebrow">Engine rendering gallery</p>
-			<h1>Comic Chat, drawn by the browser</h1>
-			<p class="intro">
-				Panels below are composed by the TypeScript port and painted from the
-				original open-source avatar art.
-			</p>
+	<body class="app">
+		<header class="titlebar">
+			<span class="titlebar-text">Comic Chat Web</span>
+			<span id="title-room" class="titlebar-room"></span>
 		</header>
-		<main id="gallery" class="gallery" aria-busy="true"></main>
+		<main id="room" class="workspace">
+			<section id="strip" class="strip" aria-label="Comic strip">
+				<div id="panels" class="strip-page" aria-live="polite"></div>
+			</section>
+			<aside class="sidebar" aria-label="Room members">
+				<h2 class="sidebar-heading">Members</h2>
+				<ul id="roster" class="roster"></ul>
+			</aside>
+		</main>
+		<form id="composer" class="composer">
+			<select id="composer-mode" aria-label="Balloon type">
+				<option value="1">Say</option>
+				<option value="3">Think</option>
+				<option value="2">Whisper</option>
+				<option value="5">Action</option>
+			</select>
+			<input
+				id="composer-text"
+				maxlength="1000"
+				required
+				placeholder="Type your message"
+				autocomplete="off"
+				aria-label="Message"
+			/>
+			<button type="submit">Send</button>
+		</form>
+		<section id="join" class="join-overlay" aria-label="Connect to a room">
+			<div class="dialog">
+				<header class="dialog-titlebar">Connect</header>
+				<form id="join-form" class="dialog-body">
+					<label>
+						Room
+						<input
+							id="join-room"
+							name="room"
+							required
+							pattern="[\w\-]{1,64}"
+							placeholder="lobby"
+							autocomplete="off"
+						/>
+					</label>
+					<label>
+						Nickname
+						<input
+							id="join-name"
+							name="name"
+							required
+							maxlength="24"
+							placeholder="Your name"
+							autocomplete="nickname"
+						/>
+					</label>
+					<label>
+						Character
+						<select id="join-avatar" name="avatar"></select>
+					</label>
+					<div class="dialog-buttons">
+						<button type="submit">Connect</button>
+					</div>
+				</form>
+			</div>
+		</section>
 		<p id="status" class="status" role="status">Loading fonts and avatar art…</p>
-		<script type="module" src="/src/browser/gallery.ts"></script>
+		<script type="module" src="/src/browser/room.ts"></script>
 	</body>
 </html>
