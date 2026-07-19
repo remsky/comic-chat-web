@@ -10,9 +10,19 @@
 > [!IMPORTANT]
 > This is a work in progress. Rooms are anonymous and do not have accounts, moderation, or private-message guarantees.
 
-A TypeScript port of the Microsoft Comic Chat composition engine. 
+A TypeScript port of the Microsoft Comic Chat composition engine:
 
- Validated bit-exact against sampled traces from an instrumented C++ client in the companion [`trace-harness` branch](https://github.com/remsky/comic-chat/tree/trace-harness).
+Original engine validated against selected JSONL traces via an instrumented C++ client harness [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness):
+
+| Trace | Validation focus |
+| --- | --- |
+| `smoke-01` | Core two-speaker flow, balloon modes, emotions, and panel breaks |
+| `balloon-01` | Interleaved say, think, whisper, and shout balloon geometry |
+| `edge-01` | Single-character, punctuation-only, and repeated messages |
+| `emotion-01` | Shouting, laughter, greetings, smileys, pointing, and waving rules |
+| `long-01` | Multi-panel overflow, retries, continuation, and three-speaker ordering |
+| `speakers-01` | Six-speaker avatar selection, placement, flipping, and ordering |
+| `wrap-01` | Long text, wrap boundaries, URLs, and unbreakable words |
 
 
 <table>
@@ -40,8 +50,6 @@ npm test             # engine unit + golden trace suites
 npm run test:browser # Playwright desktop + mobile smoke
 npm run check        # biome + strict tsc over src, test, and tools
 ```
-
-The golden suites replay seven JSONL traces recorded with the companion [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness) (`traces/`); panel seeds, balloon geometry, avatar poses, and emotion picks must match exactly.
 
 ## Deploy to Cloudflare
 
