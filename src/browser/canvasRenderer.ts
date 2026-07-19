@@ -24,7 +24,7 @@ import {
 	vectorToAngle,
 } from "../engine/vector2d.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
-import { NORMAL_FONT_CSS, WHISPER_FONT_CSS } from "./canvasText.js";
+import { BALLOON_FONT_SIZE, gdiCellFont } from "./canvasText.js";
 
 const TORSOFIRST = 4;
 
@@ -250,12 +250,29 @@ export interface CanvasPanelRendererOptions {
 }
 
 export class CanvasPanelRenderer {
+	private normalFontCache?: string;
+	private whisperFontCache?: string;
+
 	constructor(
 		readonly context: CanvasRenderingContext2D,
 		readonly assets: AvatarAtlasCache,
 		readonly avatars: readonly Avatar[],
 		readonly options: CanvasPanelRendererOptions,
 	) {}
+
+	private get normalFont(): string {
+		this.normalFontCache ??=
+			this.options.normalFont ??
+			gdiCellFont(this.context, "400", BALLOON_FONT_SIZE);
+		return this.normalFontCache;
+	}
+
+	private get whisperFont(): string {
+		this.whisperFontCache ??=
+			this.options.whisperFont ??
+			gdiCellFont(this.context, "italic 400", BALLOON_FONT_SIZE);
+		return this.whisperFontCache;
+	}
 
 	private drawLayer(layer: SpriteLayer): void {
 		if (!layer.pose.sprite)
@@ -406,9 +423,7 @@ export class CanvasPanelRenderer {
 
 		this.context.fillStyle = this.options.foreground ?? "#000";
 		this.context.font =
-			balloon.mode === SM_WHISPER
-				? (this.options.whisperFont ?? WHISPER_FONT_CSS)
-				: (this.options.normalFont ?? NORMAL_FONT_CSS);
+			balloon.mode === SM_WHISPER ? this.whisperFont : this.normalFont;
 		this.context.textBaseline = "top";
 		for (let i = 0; i < fInfo.nLines; i++) {
 			const line = fInfo.lines[i];

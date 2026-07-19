@@ -12,11 +12,29 @@ import type {
 } from "../engine/panelBalloon.js";
 
 export const BALLOON_FONT_SIZE = 400;
-export const NORMAL_FONT_CSS =
-	'400 400px "Comic Sans MS", "Comic Sans", "Comic Neue", cursive';
-export const WHISPER_FONT_CSS =
-	'italic 400 400px "Comic Sans MS", "Comic Sans", "Comic Neue", cursive';
+export const BALLOON_FONT_FAMILIES =
+	'"Comic Sans MS", "Comic Sans", "Comic Neue", cursive';
+export const NORMAL_FONT_CSS = `400 400px ${BALLOON_FONT_FAMILIES}`;
+export const WHISPER_FONT_CSS = `italic 400 400px ${BALLOON_FONT_FAMILIES}`;
 export const SYSTEM_FONT_CSS = "400 212px system-ui, sans-serif";
+
+// GDI lfHeight requests a character cell (ascent + descent) while CSS px sets the em, so scale the em until the bounding box matches the cell
+export function gdiCellFont(
+	context: CanvasMeasureContext,
+	style: string,
+	cellHeight: number,
+	families: string = BALLOON_FONT_FAMILIES,
+): string {
+	const probe = `${style} ${cellHeight}px ${families}`.trim();
+	context.font = probe;
+	const metrics = context.measureText("Mg");
+	const box =
+		(metrics.fontBoundingBoxAscent ?? 0) +
+		(metrics.fontBoundingBoxDescent ?? 0);
+	if (!Number.isFinite(box) || box <= 0) return probe;
+	const size = Math.round((cellHeight * cellHeight) / box);
+	return `${style} ${size}px ${families}`.trim();
+}
 
 export const NORMAL_FONT_METRICS: FontMetrics = {
 	lineHeight: 327,
@@ -32,7 +50,11 @@ export const WHISPER_FONT_METRICS: FontMetrics = {
 
 export interface CanvasMeasureContext {
 	font: string;
-	measureText(text: string): { width: number };
+	measureText(text: string): {
+		width: number;
+		fontBoundingBoxAscent?: number;
+		fontBoundingBoxDescent?: number;
+	};
 }
 
 export interface CanvasTextMeasurerOptions {
@@ -51,9 +73,10 @@ function canvasSafeText(text: string): string {
 export class CanvasTextMeasurer {
 	readonly context: CanvasMeasureContext;
 	readonly maxEntries: number;
-	readonly normalFont: string;
-	readonly whisperFont: string;
 	readonly systemFont: string;
+	private readonly options: CanvasTextMeasurerOptions;
+	private normalFontCache?: string;
+	private whisperFontCache?: string;
 	private readonly widths = new Map<string, number>();
 
 	constructor(
@@ -61,10 +84,23 @@ export class CanvasTextMeasurer {
 		options: CanvasTextMeasurerOptions = {},
 	) {
 		this.context = context;
+		this.options = options;
 		this.maxEntries = Math.max(1, options.maxEntries ?? 4096);
-		this.normalFont = options.normalFont ?? NORMAL_FONT_CSS;
-		this.whisperFont = options.whisperFont ?? WHISPER_FONT_CSS;
 		this.systemFont = options.systemFont ?? SYSTEM_FONT_CSS;
+	}
+
+	get normalFont(): string {
+		this.normalFontCache ??=
+			this.options.normalFont ??
+			gdiCellFont(this.context, "400", BALLOON_FONT_SIZE);
+		return this.normalFontCache;
+	}
+
+	get whisperFont(): string {
+		this.whisperFontCache ??=
+			this.options.whisperFont ??
+			gdiCellFont(this.context, "italic 400", BALLOON_FONT_SIZE);
+		return this.whisperFontCache;
 	}
 
 	get size(): number {

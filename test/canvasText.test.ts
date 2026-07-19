@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+	BALLOON_FONT_FAMILIES,
 	CanvasTextMeasurer,
+	gdiCellFont,
 	NORMAL_FONT_METRICS,
 	WHISPER_FONT_METRICS,
 } from "../src/browser/canvasText.js";
@@ -51,6 +53,30 @@ describe("canvas text metrics adapter", () => {
 		measure("B");
 		expect(context.calls.map((call) => call[1])).toEqual(["A", "B", "C", "B"]);
 		expect(measurer.size).toBe(2);
+	});
+
+	it("scales the em until the font bounding box matches the GDI cell", () => {
+		const context = {
+			font: "",
+			measureText: () => ({
+				width: 0,
+				fontBoundingBoxAscent: 450,
+				fontBoundingBoxDescent: 107,
+			}),
+		};
+		expect(gdiCellFont(context, "400", 400)).toBe(
+			`400 287px ${BALLOON_FONT_FAMILIES}`,
+		);
+		expect(gdiCellFont(context, "italic 400", 400)).toBe(
+			`italic 400 287px ${BALLOON_FONT_FAMILIES}`,
+		);
+	});
+
+	it("keeps the requested size when bounding box metrics are unavailable", () => {
+		const context = new FakeContext();
+		expect(gdiCellFont(context, "400", 400)).toBe(
+			`400 400px ${BALLOON_FONT_FAMILIES}`,
+		);
 	});
 
 	it("resolves normal and whisper styles with stable oracle line metrics", () => {
