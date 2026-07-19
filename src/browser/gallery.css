@@ -71,7 +71,7 @@ h1 {
 
 .panel-card:nth-child(n + 4) {
 	content-visibility: auto;
-	contain-intrinsic-size: auto 48rem;
+	contain-intrinsic-size: auto 20rem;
 }
 
 .panel-card canvas {

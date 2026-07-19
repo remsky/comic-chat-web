@@ -22,8 +22,9 @@ import {
 } from "./canvasText.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
 
+// the oracle traces pin square panels: SetUnitPanelWidth/Height(MINUNITPANELWIDTH) in trace mode
 const UNIT_WIDTH = 2300;
-const UNIT_HEIGHT = 5400;
+const UNIT_HEIGHT = 2300;
 
 const messages = [
 	{ speaker: 1, mode: SM_SAY, text: "Hello there Bolo!" },
@@ -101,7 +102,7 @@ async function main(): Promise<void> {
 		card.style.setProperty("--panel-index", String(index));
 		const canvas = document.createElement("canvas");
 		canvas.width = 460;
-		canvas.height = 1080;
+		canvas.height = 460;
 		const details = document.createElement("details");
 		const summary = document.createElement("summary");
 		summary.textContent = `Panel ${index + 1} transcript`;
