@@ -16,8 +16,8 @@ import {
 // server policy: bound per-room storage, connections, and per-socket send rate
 const HISTORY_RETENTION = 500;
 const SOCKET_LIMIT = 12;
-const RATE_BURST = 5;
-const RATE_REFILL_MS = 1000;
+const RATE_BURST = 10;
+const RATE_REFILL_MS = 500;
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 

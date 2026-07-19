@@ -34,6 +34,11 @@ import {
 } from "./canvasText.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
 import { transcriptHeader, transcriptLine } from "./textView.js";
+import {
+	describeWebSocketClose,
+	reconnectDelay,
+	shouldReconnect,
+} from "./websocketReconnect.js";
 
 // square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
 const CLASSIC_UNIT = 3000;
@@ -527,12 +532,23 @@ async function main(): Promise<void> {
 		if (!room || !name) return;
 		history.replaceState(null, "", `?room=${encodeURIComponent(room)}`);
 		const protocol = location.protocol === "https:" ? "wss" : "ws";
-		const socket = new WebSocket(
-			`${protocol}://${location.host}/api/rooms/${room}/websocket`,
-		);
+		const socketUrl = `${protocol}://${location.host}/api/rooms/${room}/websocket`;
+		let socket: WebSocket | null = null;
+		let reconnectTimer: number | undefined;
+		let reconnectAttempt = 0;
+		let reconnectAllowed = true;
+		let hasWelcomed = false;
 		status.textContent = "Connecting…";
 		delete status.dataset.ready;
 		const scroller = element("strip");
+		const composer = element<HTMLFormElement>("composer");
+		const setComposerEnabled = (enabled: boolean): void => {
+			for (const control of composer.querySelectorAll<
+				HTMLInputElement | HTMLSelectElement | HTMLButtonElement
+			>("input, select, button"))
+				control.disabled = !enabled;
+		};
+		setComposerEnabled(false);
 		let oldestSeq: number | null = null;
 		let historyPending = false;
 		let historyDone = false;
@@ -542,7 +558,7 @@ async function main(): Promise<void> {
 				historyPending ||
 				historyDone ||
 				oldestSeq === null ||
-				socket.readyState !== WebSocket.OPEN
+				socket?.readyState !== WebSocket.OPEN
 			)
 				return;
 			historyPending = true;
@@ -553,14 +569,17 @@ async function main(): Promise<void> {
 		});
 
 		// cui.Say: run the presend hook, then transmit text plus pose indices
-		const sendChat = (text: string, mode: number): void => {
+		const sendChat = (text: string, mode: number): boolean => {
+			if (socket?.readyState !== WebSocket.OPEN) return false;
 			const pose = view.prepareOutgoing(text);
 			socket.send(
 				JSON.stringify({ type: "chat", text, mode, ...(pose && { pose }) }),
 			);
+			return true;
 		};
 
 		backgroundSelect.addEventListener("change", () => {
+			if (socket?.readyState !== WebSocket.OPEN) return;
 			socket.send(
 				JSON.stringify({ type: "background", name: backgroundSelect.value }),
 			);
@@ -617,25 +636,33 @@ async function main(): Promise<void> {
 			};
 		};
 
-		socket.addEventListener("open", () => {
-			socket.send(JSON.stringify({ type: "join", name, avatar }));
-		});
-		socket.addEventListener("message", (message) => {
+		const handleMessage = (message: MessageEvent): void => {
 			const parsed = parseServerMessage(message.data);
 			if (!parsed) return;
 			if (parsed.type === "welcome") {
+				const previousNewestSeq = view.entriesView().at(-1)?.seq ?? 0;
 				document.body.classList.add("joined");
 				element("title-room").textContent = `- ${room}`;
+				status.textContent = "Connected.";
 				status.dataset.ready = "true";
+				setComposerEnabled(true);
+				reconnectAttempt = 0;
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
 				view.setLocalAvatarID(parsed.avatar);
 				view.setBackground(parsed.background ?? "");
 				backgroundSelect.value = parsed.background ?? "";
-				for (const entry of parsed.history) view.compose(entry);
-				oldestSeq = parsed.history[0]?.seq ?? null;
-				historyDone = parsed.history.length < HISTORY_CHUNK;
-				mountBodycam();
+				for (const entry of parsed.history) {
+					if (!hasWelcomed || entry.seq > previousNewestSeq)
+						view.compose(entry);
+				}
+				if (!hasWelcomed || oldestSeq === null) {
+					oldestSeq = parsed.history[0]?.seq ?? null;
+					historyDone = parsed.history.length < HISTORY_CHUNK;
+				}
+				historyPending = false;
+				if (!bodycam) mountBodycam();
+				hasWelcomed = true;
 				refreshTranscript();
 				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
@@ -677,23 +704,57 @@ async function main(): Promise<void> {
 				status.textContent = parsed.reason;
 				delete status.dataset.ready;
 			}
-		});
-		socket.addEventListener("close", () => {
-			status.textContent = "Disconnected. Reload to rejoin.";
-			delete status.dataset.ready;
-		});
+		};
 
-		element<HTMLFormElement>("composer").addEventListener(
-			"submit",
-			(sendEvent) => {
-				sendEvent.preventDefault();
-				const text = element<HTMLInputElement>("composer-text");
-				const mode = Number(element<HTMLSelectElement>("composer-mode").value);
-				if (!text.value.trim()) return;
-				sendChat(text.value, mode);
-				text.value = "";
-			},
-		);
+		const connect = (): void => {
+			if (reconnectTimer !== undefined) {
+				window.clearTimeout(reconnectTimer);
+				reconnectTimer = undefined;
+			}
+			if (
+				socket?.readyState === WebSocket.CONNECTING ||
+				socket?.readyState === WebSocket.OPEN
+			)
+				return;
+			status.textContent = hasWelcomed ? "Reconnecting…" : "Connecting…";
+			delete status.dataset.ready;
+			const next = new WebSocket(socketUrl);
+			socket = next;
+			next.addEventListener("open", () => {
+				next.send(JSON.stringify({ type: "join", name, avatar }));
+			});
+			next.addEventListener("message", handleMessage);
+			next.addEventListener("close", (event) => {
+				if (socket !== next) return;
+				socket = null;
+				historyPending = false;
+				setComposerEnabled(false);
+				delete status.dataset.ready;
+				const detail = describeWebSocketClose(event.code, event.reason);
+				const delay = reconnectDelay(reconnectAttempt);
+				if (!shouldReconnect(event.code)) {
+					reconnectAllowed = false;
+					status.textContent = `Disconnected: ${detail}. Reload to rejoin.`;
+					return;
+				}
+				reconnectAttempt++;
+				status.textContent = `Disconnected: ${detail}. Reconnecting in ${delay / 1000}s…`;
+				reconnectTimer = window.setTimeout(connect, delay);
+			});
+		};
+
+		window.addEventListener("online", () => {
+			if (socket === null && reconnectAllowed) connect();
+		});
+		connect();
+
+		composer.addEventListener("submit", (sendEvent) => {
+			sendEvent.preventDefault();
+			const text = element<HTMLInputElement>("composer-text");
+			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
+			if (!text.value.trim()) return;
+			if (sendChat(text.value, mode)) text.value = "";
+		});
 	});
 }
 
