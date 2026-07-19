@@ -70,13 +70,13 @@
 	background: #fff;
 }
 
-/* the original page: square unit panels, 4 per row, interstice 144/2300 of a panel (~1.5% of the page) */
+/* the original page: square unit panels, 4 per row, 144-twip interstice = 144/(4*3000+3*144) of the page */
 .strip-page {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 1.5%;
+	gap: 1.2%;
 	align-content: start;
-	padding: 1.5%;
+	padding: 1.2%;
 }
 
 .panel {

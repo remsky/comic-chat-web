@@ -23,9 +23,9 @@ import {
 } from "./canvasText.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
 
-// the oracle traces pin square panels: SetUnitPanelWidth/Height(MINUNITPANELWIDTH) in trace mode
-const UNIT_WIDTH = 2300;
-const UNIT_HEIGHT = 2300;
+// square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
+const UNIT_WIDTH = 3000;
+const UNIT_HEIGHT = 3000;
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -98,8 +98,8 @@ class RoomView {
 		const card = document.createElement("figure");
 		card.className = "panel";
 		const canvas = document.createElement("canvas");
-		canvas.width = 460;
-		canvas.height = 460;
+		canvas.width = 600;
+		canvas.height = 600;
 		const transcript = document.createElement("ol");
 		transcript.className = "sr-only";
 		card.append(canvas, transcript);
