@@ -61,6 +61,36 @@ describe("panel page lifecycle", () => {
 		]);
 	});
 
+	it("snapshots the room backdrop at panel creation, not retroactively", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		const page = new PanelPage({
+			registry,
+			rand: new MsvcRand(1515),
+			unitWidth: 2300,
+			unitHeight: 2300,
+			hooks: { layoutBalloons: () => ({ fits: true }) },
+		});
+		requestedBody(registry, 1);
+		page.addLine(1, "one", 1);
+		expect(page.panels[0]?.backdrop).toBeUndefined();
+
+		// combined-speaker panels clone the previous panel, keeping ITS backdrop (v2.5 copy ctor)
+		page.backdrop = "field";
+		requestedBody(registry, 2);
+		page.addLine(2, "two", 1);
+		expect(page.panels[1]?.backdrop).toBeUndefined();
+
+		// a fresh panel snapshots the current room backdrop like CPanel::CPanel
+		requestedBody(registry, 1);
+		page.addLine(1, "three", 1);
+		const fresh = page.panels[2];
+		expect(fresh?.backdrop).toBe("field");
+
+		const clone = cloneUnitPanel(fresh as UnitPanel);
+		expect(clone.backdrop).toBe("field");
+		expect(clone.backdropMode).toBe(0);
+	});
+
 	it("copies panel seeds without consuming a draw and deep-clones body links", () => {
 		const registry = new AvatarRegistry(fixture.avatars);
 		requestedBody(registry, 1);

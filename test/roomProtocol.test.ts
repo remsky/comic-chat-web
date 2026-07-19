@@ -78,6 +78,25 @@ describe("room wire protocol", () => {
 		expect(pickAvatar(1, [1, 2, 3, 4, 5, 6])).toBeNull();
 	});
 
+	it("accepts background changes and rejects bad names", () => {
+		expect(
+			parseClientMessage(JSON.stringify({ type: "background", name: "field" })),
+		).toEqual({ type: "background", name: "field" });
+		expect(
+			parseClientMessage(JSON.stringify({ type: "background", name: "" })),
+		).toEqual({ type: "background", name: "" });
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "background", name: "../etc" }),
+			),
+		).toBeNull();
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "background", name: "x".repeat(33) }),
+			),
+		).toBeNull();
+	});
+
 	it("parses room directory listings and rejects other shapes", () => {
 		expect(
 			parseRoomListings({

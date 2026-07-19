@@ -6,6 +6,10 @@ export const CAST_SIZE = 6;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
 // welcome carries the newest chunk; older chunks arrive via history requests
 export const HISTORY_CHUNK = 50;
+// stream entry whose text is a backdrop name, replayed so every client recomposes identically
+export const BACKGROUND_MODE = 6;
+// IDS_DEFAULT_BACKDROP (chat.rc:2327)
+export const DEFAULT_BACKGROUND = "field";
 
 // SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
 export interface PoseIndices {
@@ -38,12 +42,14 @@ export interface RoomListing {
 export type ClientMessage =
 	| { type: "join"; name: string; avatar: number }
 	| { type: "chat"; text: string; mode: number; pose?: PoseIndices }
-	| { type: "history"; before: number };
+	| { type: "history"; before: number }
+	| { type: "background"; name: string };
 
 export type ServerMessage =
 	| {
 			type: "welcome";
 			avatar: number;
+			background: string;
 			roster: RosterEntry[];
 			history: ChatEntry[];
 	  }
@@ -91,6 +97,11 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		const before = Math.trunc(message.before);
 		if (before < 1) return null;
 		return { type: "history", before };
+	}
+	if (message.type === "background") {
+		if (typeof message.name !== "string") return null;
+		if (message.name !== "" && !/^[\w-]{1,32}$/.test(message.name)) return null;
+		return { type: "background", name: message.name };
 	}
 	return null;
 }

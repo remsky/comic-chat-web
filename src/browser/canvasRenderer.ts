@@ -278,6 +278,7 @@ export interface CanvasPanelRendererOptions {
 	foreground?: string;
 	normalFont?: string;
 	whisperFont?: string;
+	resolveBackdrop?: (name: string) => CanvasImageSource | undefined;
 }
 
 export class CanvasPanelRenderer {
@@ -449,6 +450,18 @@ export class CanvasPanelRenderer {
 		context.fillRect(0, 0, this.options.unitWidth, this.options.unitHeight);
 		context.imageSmoothingEnabled = true;
 		context.imageSmoothingQuality = "high";
+		// CBackDrop::Draw StretchBlts the DIB across the whole panel rect (backdrop.cpp:330)
+		const backdrop = panel.backdrop
+			? this.options.resolveBackdrop?.(panel.backdrop)
+			: undefined;
+		if (backdrop)
+			context.drawImage(
+				backdrop,
+				0,
+				0,
+				this.options.unitWidth,
+				this.options.unitHeight,
+			);
 		for (const body of panel.bodies) this.drawBody(body);
 		for (let i = panel.balloons.length - 1; i >= 0; i--) {
 			const balloon = panel.balloons[i];

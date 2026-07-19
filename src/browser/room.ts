@@ -14,6 +14,7 @@ import {
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
 import {
+	BACKGROUND_MODE,
 	type ChatEntry,
 	HISTORY_CHUNK,
 	type PoseIndices,
@@ -22,6 +23,7 @@ import {
 	type RosterEntry,
 } from "../protocol/room.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
+import { BackdropCache } from "./backdropAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
 import { CanvasPanelRenderer } from "./canvasRenderer.js";
 import { CanvasSurface } from "./canvasSurface.js";
@@ -79,6 +81,7 @@ class RoomView {
 	private composition: Composition;
 	private unit: number;
 	private localAvatarID: number | null = null;
+	private baseBackdrop = "";
 
 	private autoScroll = true;
 	onComposed?: () => void;
@@ -86,6 +89,7 @@ class RoomView {
 
 	constructor(
 		private readonly atlases: AvatarAtlasCache,
+		private readonly backdrops: BackdropCache,
 		private readonly avatars: AvatarData[],
 		private readonly container: HTMLElement,
 		private readonly scroller: HTMLElement,
@@ -121,11 +125,22 @@ class RoomView {
 					layoutPanelBalloons(panel, rand, layoutOptions),
 			},
 		});
+		page.backdrop = this.baseBackdrop;
 		return { registry, emotions: new EmotionEngine(), page };
+	}
+
+	// welcome's current room backdrop; historical changes replay through feed
+	setBackground(name: string): void {
+		this.baseBackdrop = name;
+		this.composition.page.backdrop = name;
 	}
 
 	private feed(entry: ChatEntry): void {
 		const { registry, emotions, page } = this.composition;
+		if (entry.mode === BACKGROUND_MODE) {
+			page.backdrop = entry.text;
+			return;
+		}
 		const avatar = registry.get(entry.avatar);
 		if (!avatar) return;
 		// SayEntry::Execute applies sent pose indices verbatim (histent.cpp:74-76); no pose = re-run text rules
@@ -212,7 +227,11 @@ class RoomView {
 				context,
 				this.atlases,
 				registry.avatars,
-				{ unitWidth: unit, unitHeight: unit },
+				{
+					unitWidth: unit,
+					unitHeight: unit,
+					resolveBackdrop: (name) => this.backdrops.get(name),
+				},
 			);
 			renderer.render(panel);
 		});
@@ -383,9 +402,26 @@ async function main(): Promise<void> {
 		throw new Error(`failed to load avatar manifest: ${response.status}`);
 	const manifest = (await response.json()) as { avatars: AvatarData[] };
 	const atlases = new AvatarAtlasCache();
-	await atlases.preload(manifest.avatars);
+	const backdrops = new BackdropCache();
+	await Promise.all([atlases.preload(manifest.avatars), backdrops.load()]);
 	wireJoinForm(manifest.avatars, atlases);
 	wireRoomList();
+	const backgroundSelect = element<HTMLSelectElement>("background-select");
+	if (backdrops.backdrops.length > 0) {
+		const none = document.createElement("option");
+		none.value = "";
+		none.textContent = "None";
+		backgroundSelect.append(
+			none,
+			...backdrops.backdrops.map((info) => {
+				const option = document.createElement("option");
+				option.value = info.name;
+				option.textContent = displayName(info.name);
+				return option;
+			}),
+		);
+		element("background-picker").hidden = false;
+	}
 	status.dataset.ready = "true";
 
 	let roster: RosterEntry[] = [];
@@ -393,6 +429,7 @@ async function main(): Promise<void> {
 	tweaks.checked = localStorage.getItem(MODERN_TWEAKS_KEY) !== "off";
 	const view = new RoomView(
 		atlases,
+		backdrops,
 		manifest.avatars,
 		element("panels"),
 		element("strip"),
@@ -451,6 +488,12 @@ async function main(): Promise<void> {
 			);
 		};
 
+		backgroundSelect.addEventListener("change", () => {
+			socket.send(
+				JSON.stringify({ type: "background", name: backgroundSelect.value }),
+			);
+		});
+
 		let bodycam: BodyCamWidget | null = null;
 		const mountBodycam = (): void => {
 			element("bodycam-heading").hidden = false;
@@ -486,6 +529,8 @@ async function main(): Promise<void> {
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
 				view.setLocalAvatarID(parsed.avatar);
+				view.setBackground(parsed.background ?? "");
+				backgroundSelect.value = parsed.background ?? "";
 				for (const entry of parsed.history) view.compose(entry);
 				oldestSeq = parsed.history[0]?.seq ?? null;
 				historyDone = parsed.history.length < HISTORY_CHUNK;
@@ -493,6 +538,8 @@ async function main(): Promise<void> {
 				element<HTMLInputElement>("composer-text").focus();
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);
+				if (parsed.entry.mode === BACKGROUND_MODE)
+					backgroundSelect.value = parsed.entry.text;
 			} else if (parsed.type === "history") {
 				const previousHeight = scroller.scrollHeight;
 				const previousTop = scroller.scrollTop;

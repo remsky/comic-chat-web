@@ -2,7 +2,9 @@
 
 import { DurableObject } from "cloudflare:workers";
 import {
+	BACKGROUND_MODE,
 	type ChatEntry,
+	DEFAULT_BACKGROUND,
 	HISTORY_CHUNK,
 	parseClientMessage,
 	pickAvatar,
@@ -231,6 +233,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.send(ws, {
 				type: "welcome",
 				avatar,
+				background:
+					(await this.ctx.storage.get<string>("background")) ??
+					DEFAULT_BACKGROUND,
 				roster: this.roster(),
 				history: this.history(),
 			});
@@ -249,16 +254,22 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.send(ws, { type: "history", entries: this.history(message.before) });
 			return;
 		}
+		// background changes ride the message stream so replay recomposes identically everywhere
+		const text = message.type === "background" ? message.name : message.text;
+		const mode = message.type === "background" ? BACKGROUND_MODE : message.mode;
+		const pose = message.type === "background" ? undefined : message.pose;
+		if (message.type === "background")
+			await this.ctx.storage.put("background", message.name);
 		const result = this.ctx.storage.sql.exec<{ seq: number }>(
 			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
 			seat.avatar,
 			seat.name,
-			message.text,
-			message.mode,
+			text,
+			mode,
 			Date.now(),
-			message.pose?.expr ?? null,
-			message.pose?.gest ?? null,
-			message.pose?.req ?? null,
+			pose?.expr ?? null,
+			pose?.gest ?? null,
+			pose?.req ?? null,
 		);
 		const seq = result.one().seq;
 		if (seq > HISTORY_RETENTION)
@@ -272,9 +283,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 				seq,
 				avatar: seat.avatar,
 				name: seat.name,
-				text: message.text,
-				mode: message.mode,
-				...(message.pose ? { pose: message.pose } : {}),
+				text,
+				mode,
+				...(pose ? { pose } : {}),
 			},
 		});
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)

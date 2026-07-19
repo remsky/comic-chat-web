@@ -275,6 +275,22 @@
 	font-weight: 700;
 }
 
+.background-picker {
+	display: grid;
+	gap: 0.2rem;
+	font-weight: 700;
+}
+
+.background-picker select {
+	padding: 0.2rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+	font: inherit;
+	font-weight: 400;
+}
+
 .room-list-block {
 	display: grid;
 	gap: 0.2rem;

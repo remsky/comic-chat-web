@@ -49,6 +49,7 @@ function paletteForType(
 	r: ByteReader,
 	paletteType: number,
 	globalPalette: Rgb[] | null,
+	sizedTags: boolean,
 ): Rgb[] {
 	if (paletteType === AIP_GLOBALPALETTE) {
 		return globalPalette ?? [];
@@ -64,6 +65,7 @@ function paletteForType(
 		if (tag !== AK.COLORPALETTE) {
 			throw new Error(`expected inline palette tag, got ${tag}`);
 		}
+		if (sizedTags) r.u16();
 		const nEntries = r.i16();
 		const out: Rgb[] = [];
 		for (let i = 0; i < nEntries; i++) {
@@ -82,10 +84,11 @@ function decodeZlibImage(
 	offset: number,
 	paletteType: number,
 	globalPalette: Rgb[] | null,
+	sizedTags: boolean,
 ): Dib {
 	const r = new ByteReader(buf);
 	r.seek(offset);
-	const palette = paletteForType(r, paletteType, globalPalette);
+	const palette = paletteForType(r, paletteType, globalPalette, sizedTags);
 	const headerSize = r.u32();
 	const width = r.i32();
 	const height = r.i32();
@@ -129,6 +132,7 @@ function decodeImage(
 	format: number,
 	paletteType: number,
 	globalPalette: Rgb[] | null,
+	sizedTags: boolean,
 ): Dib {
 	if (offset === 0) {
 		throw new Error("null offset");
@@ -137,7 +141,7 @@ function decodeImage(
 		return decodeBmp(buf, offset);
 	}
 	if (format === AIF_LZDEFLATE) {
-		return decodeZlibImage(buf, offset, paletteType, globalPalette);
+		return decodeZlibImage(buf, offset, paletteType, globalPalette, sizedTags);
 	}
 	throw new Error(`unsupported image format ${format}`);
 }
@@ -148,17 +152,27 @@ function decodeOptional(
 	format: number,
 	paletteType: number,
 	globalPalette: Rgb[] | null,
+	sizedTags: boolean,
 ): Dib | null {
 	if (offset === 0) {
 		return null;
 	}
-	return decodeImage(buf, offset, format, paletteType, globalPalette);
+	return decodeImage(
+		buf,
+		offset,
+		format,
+		paletteType,
+		globalPalette,
+		sizedTags,
+	);
 }
 
+// sizedTags: new-magic (0x8181) files frame inline data-section tags with a u16 byte size
 export function decodePose(
 	buf: Uint8Array,
 	pose: PoseRef,
 	globalPalette: Rgb[] | null,
+	sizedTags = false,
 ): DecodedPose {
 	let image: Dib | null = null;
 	let imageError: string | null = null;
@@ -172,6 +186,7 @@ export function decodePose(
 						pose.imageFormat,
 						pose.imagePaletteType,
 						globalPalette,
+						sizedTags,
 					);
 	} catch (err) {
 		imageError = err instanceof Error ? err.message : String(err);
@@ -182,6 +197,7 @@ export function decodePose(
 		pose.maskFormat,
 		pose.maskPaletteType,
 		globalPalette,
+		sizedTags,
 	);
 	const aura = decodeOptional(
 		buf,
@@ -189,6 +205,7 @@ export function decodePose(
 		pose.auraFormat,
 		pose.auraPaletteType,
 		globalPalette,
+		sizedTags,
 	);
 	return { poseID: pose.poseID, image, mask, aura, imageError };
 }

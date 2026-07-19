@@ -1,0 +1,67 @@
+{
+	"backdrops": [
+		{
+			"name": "buckroom",
+			"url": "/assets/backgrounds/buckroom.png",
+			"width": 350,
+			"height": 350,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "clouds",
+			"url": "/assets/backgrounds/clouds.png",
+			"width": 640,
+			"height": 480,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "den",
+			"url": "/assets/backgrounds/den.png",
+			"width": 315,
+			"height": 315,
+			"copyright": null
+		},
+		{
+			"name": "field",
+			"url": "/assets/backgrounds/field.png",
+			"width": 315,
+			"height": 315,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "pastoral",
+			"url": "/assets/backgrounds/pastoral.png",
+			"width": 315,
+			"height": 315,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "room",
+			"url": "/assets/backgrounds/room.png",
+			"width": 315,
+			"height": 315,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "space",
+			"url": "/assets/backgrounds/space.png",
+			"width": 350,
+			"height": 350,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		},
+		{
+			"name": "volcano",
+			"url": "/assets/backgrounds/volcano.png",
+			"width": 315,
+			"height": 315,
+			"copyright": null
+		},
+		{
+			"name": "yellow",
+			"url": "/assets/backgrounds/yellow.png",
+			"width": 315,
+			"height": 315,
+			"copyright": "Copyright © 1996, 1997, 1998 Microsoft Corporation"
+		}
+	]
+}

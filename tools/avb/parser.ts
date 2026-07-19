@@ -506,4 +506,69 @@ function loadBodies(
 	}
 }
 
+export interface BgbParseResult {
+	magicNum: number;
+	version: number;
+	copyright: string | null;
+	originalUrl: string | null;
+	overrideUrl: string | null;
+	backdrop: { offset: number; format: number; paletteType: number };
+}
+
+// CChatBackdrop::Load (avbfile.cpp:1774): avatar tag machinery, new tags only, one AK_BACKDROP record
+export function parseBgb(buf: Uint8Array): BgbParseResult {
+	const r = new ByteReader(buf);
+	const magicNum = r.u16();
+	if (magicNum !== AF_MAGICNUM_NEW) {
+		throw new Error(`not a backdrop file (magic 0x${magicNum.toString(16)})`);
+	}
+	const type = r.u16();
+	if (type !== AT_BACKDROP) {
+		throw new Error(`not a backdrop (type ${type})`);
+	}
+	const version = r.u16();
+	const result: Omit<BgbParseResult, "backdrop"> = {
+		magicNum,
+		version,
+		copyright: null,
+		originalUrl: null,
+		overrideUrl: null,
+	};
+	let adjustment = 0;
+	while (r.remaining > 0) {
+		const tag = r.u16();
+		if (tag < AK.ICON_NEW) {
+			throw new Error(`old tag ${tag} not allowed in a backdrop`);
+		}
+		const size = r.u16();
+		switch (tag) {
+			case AK.COPYRIGHT:
+				result.copyright = r.cString(256);
+				break;
+			case AK.ORIGINAL_URL:
+				result.originalUrl = r.cString(512);
+				break;
+			case AK.OVERRIDE_URL:
+				result.overrideUrl = r.cString(512);
+				break;
+			case AK.OFFSET_ADJUSTMENT:
+				adjustment += r.i32();
+				break;
+			case AK.BACKDROP: {
+				const offset = r.u32() + adjustment;
+				const format = r.u8();
+				const paletteType = r.u8();
+				if (paletteType !== AIP_LOCALPALETTE && paletteType !== AIP_NOPALETTE) {
+					throw new Error(`backdrop palette type ${paletteType} unsupported`);
+				}
+				return { ...result, backdrop: { offset, format, paletteType } };
+			}
+			default:
+				r.skip(size);
+				break;
+		}
+	}
+	throw new Error("backdrop file has no AK_BACKDROP record");
+}
+
 export { readPalette };

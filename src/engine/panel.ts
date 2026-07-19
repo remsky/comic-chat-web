@@ -208,6 +208,8 @@ export interface UnitPanel {
 	seed: number;
 	hasBorder: boolean;
 	backdropMode: number;
+	// room backdrop name snapshotted at creation like CPanel reading GetBackDropID (v2.5 panel.cpp:558)
+	backdrop?: string;
 	bodies: AvatarBody[];
 	balloons: PanelBalloon[];
 }
@@ -247,6 +249,7 @@ export function cloneUnitPanel(panel: UnitPanel): UnitPanel {
 		seed: panel.seed,
 		hasBorder: panel.hasBorder,
 		backdropMode: 0,
+		...(panel.backdrop ? { backdrop: panel.backdrop } : {}),
 		bodies,
 		balloons: panel.balloons.map((balloon) => {
 			const bodyIndex = panel.bodies.indexOf(balloon.speaker);
@@ -299,6 +302,8 @@ export class PanelPage {
 	readonly hooks: PanelPageHooks;
 	readonly panels: (UnitPanel | null)[];
 	newPanel = true;
+	// current room backdrop (CChatDoc::m_myBackDropID); new panels snapshot it
+	backdrop = "";
 
 	constructor(options: PanelPageOptions) {
 		this.registry = options.registry;
@@ -321,6 +326,7 @@ export class PanelPage {
 			seed: this.rand.rand(),
 			hasBorder: true,
 			backdropMode: 0,
+			...(this.backdrop ? { backdrop: this.backdrop } : {}),
 			bodies: [],
 			balloons: [],
 		};
