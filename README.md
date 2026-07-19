@@ -1,10 +1,18 @@
-# Comic Chat Web
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web)
+# Comic Chat Web [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web)
+
 
 > [!IMPORTANT]
 > This is a work in progress. Rooms are anonymous and do not have accounts, moderation, or private-message guarantees.
 
-A TypeScript port of the Microsoft Comic Chat composition engine, validated bit-exact against sampled traces from an instrumented C++ client in the companion [`trace-harness` branch](https://github.com/remsky/comic-chat/tree/trace-harness).
+A TypeScript port of the Microsoft Comic Chat composition engine. 
+
+ Validated bit-exact against sampled traces from an instrumented C++ client in the companion [`trace-harness` branch](https://github.com/remsky/comic-chat/tree/trace-harness).
+
+
+<p align="center">
+  <img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" border="1">
+</p>
+
 
 ## What works
 
