@@ -6,6 +6,7 @@ import {
 	type AvatarData,
 	AvatarRegistry,
 } from "../engine/avatar.js";
+import { toLowerAscii } from "../engine/ctype.js";
 import { EmotionEngine } from "../engine/emotion.js";
 import { PanelPage, type UnitPanel } from "../engine/panel.js";
 import {
@@ -23,6 +24,7 @@ import {
 	RATE_LIMIT_REASON,
 	type RosterEntry,
 } from "../protocol/room.js";
+import { parseAddressees } from "./addressing.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
 import { BackdropCache } from "./backdropAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
@@ -91,6 +93,8 @@ interface Composition {
 	registry: AvatarRegistry;
 	emotions: EmotionEngine;
 	page: PanelPage;
+	// nickname -> avatarID, accumulated as entries replay so addressee facing recomputes identically
+	speakers: Map<string, number>;
 }
 
 class RoomView {
@@ -147,7 +151,12 @@ class RoomView {
 			},
 		});
 		page.backdrop = this.baseBackdrop;
-		return { registry, emotions: new EmotionEngine(), page };
+		return {
+			registry,
+			emotions: new EmotionEngine(),
+			page,
+			speakers: new Map(),
+		};
 	}
 
 	// welcome's current room backdrop; historical changes replay through feed
@@ -157,13 +166,15 @@ class RoomView {
 	}
 
 	private feed(entry: ChatEntry): void {
-		const { registry, emotions, page } = this.composition;
+		const { registry, emotions, page, speakers } = this.composition;
 		if (entry.mode === BACKGROUND_MODE) {
 			page.backdrop = entry.text;
 			return;
 		}
 		const avatar = registry.get(entry.avatar);
 		if (!avatar) return;
+		avatar.talkTo = parseAddressees(entry.text, speakers, entry.avatar);
+		speakers.set(toLowerAscii(entry.name), entry.avatar);
 		// SayEntry::Execute applies sent pose indices verbatim (histent.cpp:74-76); no pose = re-run text rules
 		if (entry.pose)
 			avatar.setIndices(entry.pose.expr, entry.pose.gest, entry.pose.req);
