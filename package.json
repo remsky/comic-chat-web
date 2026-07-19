@@ -13,6 +13,9 @@
 		"url": "https://github.com/remsky/comic-chat-web/issues"
 	},
 	"type": "module",
+	"engines": {
+		"node": ">=22.12.0"
+	},
 	"scripts": {
 		"test": "vitest run",
 		"test:browser": "playwright test",
