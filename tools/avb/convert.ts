@@ -219,12 +219,27 @@ function isDark(c: Rgb): boolean {
 	return (c.r + c.g + c.b) / 3 < 128;
 }
 
-// Composites a drawing into RGBA (alpha from mask where dark, else white key).
-export function composeImageRgba(image: Dib, mask: Dib | null): Uint8Array {
+// The original StretchBlts helper DIBs to the drawing rect, so sample with a nearest-neighbor stretch
+function darkAtStretched(
+	dib: Dib,
+	x: number,
+	y: number,
+	width: number,
+	height: number,
+): boolean {
+	const sx = Math.min(dib.width - 1, Math.trunc((x * dib.width) / width));
+	const sy = Math.min(dib.height - 1, Math.trunc((y * dib.height) / height));
+	return isDark(pixelRgb(dib, sx, sy));
+}
+
+// Composites a drawing into RGBA mirroring DrawBody's MERGEPAINT aura/mask white-out followed by the SRCAND drawing: the silhouette region (and any stray ink) is opaque, interior whites included, so backdrops do not show through bodies (bodycam.cpp:443-480).
+export function composeImageRgba(
+	image: Dib,
+	mask: Dib | null,
+	aura: Dib | null = null,
+): Uint8Array {
 	const { width, height } = image;
 	const out = new Uint8Array(width * height * 4);
-	const useMask =
-		mask !== null && mask.width === width && mask.height === height;
 	for (let y = 0; y < height; y++) {
 		for (let x = 0; x < width; x++) {
 			const c = pixelRgb(image, x, y);
@@ -232,13 +247,11 @@ export function composeImageRgba(image: Dib, mask: Dib | null): Uint8Array {
 			out[p] = c.r;
 			out[p + 1] = c.g;
 			out[p + 2] = c.b;
-			let alpha: number;
-			if (useMask && mask) {
-				alpha = isDark(pixelRgb(mask, x, y)) ? 255 : 0;
-			} else {
-				alpha = c.r === 255 && c.g === 255 && c.b === 255 ? 0 : 255;
-			}
-			out[p + 3] = alpha;
+			const ink = !(c.r === 255 && c.g === 255 && c.b === 255);
+			const whited =
+				(aura !== null && darkAtStretched(aura, x, y, width, height)) ||
+				(mask !== null && darkAtStretched(mask, x, y, width, height));
+			out[p + 3] = whited || ink ? 255 : 0;
 		}
 	}
 	return out;
@@ -313,7 +326,7 @@ export function convert(buf: Uint8Array, baseName: string): ConvertResult {
 		};
 
 		if (decoded.image) {
-			const rgba = composeImageRgba(decoded.image, decoded.mask);
+			const rgba = composeImageRgba(decoded.image, decoded.mask, decoded.aura);
 			const file = `${baseName}_pose${pose.poseID}.png`;
 			pngs.push({
 				file,
@@ -324,7 +337,11 @@ export function convert(buf: Uint8Array, baseName: string): ConvertResult {
 			entry.image = {
 				file,
 				...dibSummary(decoded.image),
-				alphaSource: decoded.mask ? "mask" : "whiteKey",
+				alphaSource: decoded.aura
+					? "auraWhiteOut"
+					: decoded.mask
+						? "mask"
+						: "whiteKey",
 			};
 		} else if (decoded.imageError) {
 			entry.imageError = decoded.imageError;
