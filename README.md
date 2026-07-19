@@ -2,7 +2,8 @@
 
 <p>
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="20"></a>
-  <img src="https://img.shields.io/badge/tests-174%20passing-brightgreen" alt="174 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-182%20passing-brightgreen" alt="182 tests passing" height="20">
+  <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
 
@@ -27,7 +28,7 @@ A TypeScript port of the Microsoft Comic Chat composition engine.
 - Live, room-based chat over Cloudflare Durable Object WebSockets
 - Deterministic comic-panel composition and avatar posing
 - Responsive canvas rendering with an accessible transcript
-- A six-character cast and the classic emotion wheel
+- The full 22-character cast, with automatic emotion posing from message text and the classic emotion wheel
 - Bounded, chunked message history with per-socket abuse controls
 
 ## Develop
@@ -57,7 +58,7 @@ New joins receive the latest 50 messages and can load older history in 50-messag
 
 ## Art pipeline
 
-`npm run assets:avatars` regenerates the six packed avatar atlases and runtime manifest in `public/assets/avatars/` from the original `.avb` files in a sibling checkout of the [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness); `npm run fixtures:avatars` regenerates the test fixture. Both are deterministic and byte-reproducible.
+`npm run assets:avatars` regenerates the packed per-character avatar atlases and runtime manifest in `public/assets/avatars/` from the original `.avb` files in a sibling checkout of the [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness); `npm run fixtures:avatars` regenerates the test fixture. Both are deterministic and byte-reproducible.
 
 ## License and Attributions
 

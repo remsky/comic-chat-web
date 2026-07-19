@@ -9,6 +9,7 @@ import {
 	type TorsoRecord,
 } from "./parser.ts";
 
+// Golden-trace cast; order is positional (avatarID + global pose base) and must not change.
 export const TRACE_CAST = [
 	"anna",
 	"bolo",
@@ -18,7 +19,29 @@ export const TRACE_CAST = [
 	"susan",
 ] as const;
 
+// Full runtime roster; TRACE_CAST stays first so traced characters keep identical IDs/pose bases.
+export const FULL_CAST = [
+	...TRACE_CAST,
+	"armando",
+	"cro",
+	"dan",
+	"glenda",
+	"jordan",
+	"lance",
+	"lynnea",
+	"margaret",
+	"mike",
+	"pedagog",
+	"rainbow",
+	"tiki",
+	"tongtyed",
+	"tux",
+	"waf",
+	"xeno",
+] as const;
+
 export type TraceAvatarName = (typeof TRACE_CAST)[number];
+export type AvatarName = (typeof FULL_CAST)[number];
 
 // biome-ignore lint/suspicious/noApproximativeNumericConstant: vector2d.h defines PI as 3.14159; fixture floats must match the oracle
 const ORACLE_PI = 3.14159;
@@ -90,7 +113,7 @@ export interface AvatarBodyFixture {
 
 export interface AvatarFixture {
 	avatarID: number;
-	name: TraceAvatarName;
+	name: AvatarName;
 	type: "simple" | "complex";
 	iconPoseID: number;
 	flags: number;
@@ -101,13 +124,13 @@ export interface AvatarFixture {
 }
 
 export interface AvatarFixtureSet {
-	castOrder: TraceAvatarName[];
+	castOrder: AvatarName[];
 	avatars: AvatarFixture[];
 	poseCount: number;
 }
 
 export interface AvatarFixtureInput {
-	name: TraceAvatarName;
+	name: AvatarName;
 	bytes: Uint8Array;
 }
 
@@ -121,7 +144,13 @@ export function formatAvatarFixtureSet(fixtures: AvatarFixtureSet): string {
 	const compactCast = `\t"castOrder": [${fixtures.castOrder
 		.map((name) => `"${name}"`)
 		.join(", ")}]`;
-	return `${JSON.stringify(fixtures, null, "\t").replace(expandedCast, compactCast)}\n`;
+	const json = JSON.stringify(fixtures, null, "\t");
+	// Match Biome: inline the array only when it fits the 80-col line (tab counts as width 2).
+	const body =
+		compactCast.replace("\t", "  ").length <= 80
+			? json.replace(expandedCast, compactCast)
+			: json;
+	return `${body}\n`;
 }
 
 function globalPoseID(localPoseID: number, poseBase: number): number {

@@ -1,4 +1,4 @@
-// Generates six request-efficient transparent avatar atlases and their runtime manifest.
+// Generates one request-efficient transparent avatar atlas per cast member and the runtime manifest.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 import { composeImageRgba, decodePose } from "./convert.ts";
 import {
 	buildAvatarFixtures,
+	FULL_CAST,
 	formatAvatarFixtureSet,
-	TRACE_CAST,
 } from "./fixtures.ts";
 import { parseAvb } from "./parser.ts";
 import { encodePng } from "./png.ts";
@@ -79,7 +79,7 @@ const outputDir = resolve(
 	process.argv[3] ??
 		fileURLToPath(new URL("../../public/assets/avatars/", import.meta.url)),
 );
-const inputs = TRACE_CAST.map((name) => ({
+const inputs = FULL_CAST.map((name) => ({
 	name,
 	bytes: new Uint8Array(readFileSync(join(avatarDir, `${name}.avb`))),
 }));

@@ -30,12 +30,12 @@ describe("avatar atlas cache", () => {
 			cache.preload(manifest.avatars),
 			cache.preload(manifest.avatars),
 		]);
-		expect(calls).toHaveLength(6);
+		expect(calls).toHaveLength(manifest.avatars.length);
 		const pose = manifest.avatars[0]?.poses[0];
 		if (!pose) throw new Error("fixture has no pose");
 		expect(cache.get(pose)).toBe(image);
 		cache.dispose();
-		expect(closes).toBe(6);
+		expect(closes).toBe(manifest.avatars.length);
 	});
 });
 

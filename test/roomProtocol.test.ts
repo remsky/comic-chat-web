@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	CAST_SIZE,
 	MAX_TEXT_LENGTH,
 	parseClientMessage,
 	parseRoomListings,
@@ -33,7 +34,7 @@ describe("room wire protocol", () => {
 		).toBeNull();
 		expect(
 			parseClientMessage(
-				JSON.stringify({ type: "join", name: "x", avatar: 7 }),
+				JSON.stringify({ type: "join", name: "x", avatar: CAST_SIZE + 1 }),
 			),
 		).toBeNull();
 		expect(
@@ -75,7 +76,8 @@ describe("room wire protocol", () => {
 		expect(pickAvatar(2, [])).toBe(2);
 		expect(pickAvatar(2, [2])).toBe(1);
 		expect(pickAvatar(1, [1, 2, 3])).toBe(4);
-		expect(pickAvatar(1, [1, 2, 3, 4, 5, 6])).toBeNull();
+		const everySeat = Array.from({ length: CAST_SIZE }, (_, i) => i + 1);
+		expect(pickAvatar(1, everySeat)).toBeNull();
 	});
 
 	it("accepts background changes and rejects bad names", () => {

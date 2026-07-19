@@ -43,7 +43,7 @@ describe("avatar web atlases", () => {
 				poseCount++;
 			}
 		}
-		expect(atlasUrls.size).toBe(6);
+		expect(atlasUrls.size).toBe(manifest.avatars.length);
 		expect(poseCount).toBe(manifest.poseCount);
 	});
 
