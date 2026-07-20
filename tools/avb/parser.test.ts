@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
@@ -13,6 +13,9 @@ const AVATAR_DIR = new URL(
 );
 const BOLO = fileURLToPath(new URL("bolo.avb", AVATAR_DIR));
 const ANNA = fileURLToPath(new URL("anna.avb", AVATAR_DIR));
+
+// suites below need the sibling trace-harness checkout; absent on CI
+const hasAvatarArt = existsSync(BOLO) && existsSync(ANNA);
 
 function load(path: string): Uint8Array {
 	return new Uint8Array(readFileSync(path));
@@ -33,52 +36,56 @@ describe("dib helpers", () => {
 	});
 });
 
-describe("parseAvb on bolo.avb", () => {
-	const parsed = parseAvb(load(BOLO));
+if (hasAvatarArt) {
+	describe("parseAvb on bolo.avb", () => {
+		const parsed = parseAvb(load(BOLO));
 
-	it("reads the old format header", () => {
-		expect(parsed.magicNum).toBe(AF_MAGICNUM);
-		expect(parsed.type).toBe(AT_COMPLEX);
-		expect(parsed.typeName).toBe("complex");
-		expect(parsed.version).toBe(1);
-		expect(parsed.name).toBe("Bolo");
+		it("reads the old format header", () => {
+			expect(parsed.magicNum).toBe(AF_MAGICNUM);
+			expect(parsed.type).toBe(AT_COMPLEX);
+			expect(parsed.typeName).toBe("complex");
+			expect(parsed.version).toBe(1);
+			expect(parsed.name).toBe("Bolo");
+		});
+
+		it("reads face and torso record counts", () => {
+			expect(parsed.faces.length).toBe(12);
+			expect(parsed.torsos.length).toBe(11);
+			expect(parsed.bodies.length).toBe(0);
+		});
+
+		it("maps emotion indices to labels", () => {
+			const first = parsed.faces[0];
+			expect(first).toBeDefined();
+			if (first) {
+				expect(first.emotion.index).toBe(9);
+				expect(first.emotion.label).toBe("neutral");
+			}
+		});
+
+		it("assigns an icon pose and dedups ditto offsets", () => {
+			expect(parsed.iconPoseID).toBeGreaterThan(0);
+			expect(parsed.poses.length).toBeGreaterThan(0);
+			for (const rec of [...parsed.faces, ...parsed.torsos]) {
+				expect(rec.poseID).toBeGreaterThanOrEqual(1);
+				expect(rec.poseID).toBeLessThanOrEqual(parsed.poses.length);
+			}
+		});
 	});
 
-	it("reads face and torso record counts", () => {
-		expect(parsed.faces.length).toBe(12);
-		expect(parsed.torsos.length).toBe(11);
-		expect(parsed.bodies.length).toBe(0);
-	});
+	describe("parseAvb on anna.avb", () => {
+		const parsed = parseAvb(load(ANNA));
 
-	it("maps emotion indices to labels", () => {
-		const first = parsed.faces[0];
-		expect(first).toBeDefined();
-		if (first) {
-			expect(first.emotion.index).toBe(9);
-			expect(first.emotion.label).toBe("neutral");
-		}
+		it("parses a complex avatar named Anna", () => {
+			expect(parsed.magicNum).toBe(AF_MAGICNUM);
+			expect(parsed.name).toBe("Anna");
+			expect(parsed.faces.length).toBe(18);
+			expect(parsed.torsos.length).toBe(16);
+		});
 	});
-
-	it("assigns an icon pose and dedups ditto offsets", () => {
-		expect(parsed.iconPoseID).toBeGreaterThan(0);
-		expect(parsed.poses.length).toBeGreaterThan(0);
-		for (const rec of [...parsed.faces, ...parsed.torsos]) {
-			expect(rec.poseID).toBeGreaterThanOrEqual(1);
-			expect(rec.poseID).toBeLessThanOrEqual(parsed.poses.length);
-		}
-	});
-});
-
-describe("parseAvb on anna.avb", () => {
-	const parsed = parseAvb(load(ANNA));
-
-	it("parses a complex avatar named Anna", () => {
-		expect(parsed.magicNum).toBe(AF_MAGICNUM);
-		expect(parsed.name).toBe("Anna");
-		expect(parsed.faces.length).toBe(18);
-		expect(parsed.torsos.length).toBe(16);
-	});
-});
+} else {
+	describe.todo("avb parsing against sibling comic-chat checkout");
+}
 
 describe("png encoder", () => {
 	it("emits a valid signature and inflatable IDAT", () => {
@@ -116,24 +123,28 @@ describe("png encoder", () => {
 	});
 });
 
-describe("convert on bolo.avb", () => {
-	const result = convert(load(BOLO), "bolo");
+if (hasAvatarArt) {
+	describe("convert on bolo.avb", () => {
+		const result = convert(load(BOLO), "bolo");
 
-	it("decodes poses into RGBA sprites with plausible dimensions", () => {
-		expect(result.pngs.length).toBeGreaterThan(0);
-		const body = result.pngs.find((png) => png.file === "bolo_pose2.png");
-		expect(body).toBeDefined();
-		if (body) {
-			expect(body.width).toBe(192);
-			expect(body.height).toBe(156);
-		}
-	});
+		it("decodes poses into RGBA sprites with plausible dimensions", () => {
+			expect(result.pngs.length).toBeGreaterThan(0);
+			const body = result.pngs.find((png) => png.file === "bolo_pose2.png");
+			expect(body).toBeDefined();
+			if (body) {
+				expect(body.width).toBe(192);
+				expect(body.height).toBe(156);
+			}
+		});
 
-	it("records the white transparent color in metadata", () => {
-		expect(result.metadata.transparentColor).toEqual({
-			r: 255,
-			g: 255,
-			b: 255,
+		it("records the white transparent color in metadata", () => {
+			expect(result.metadata.transparentColor).toEqual({
+				r: 255,
+				g: 255,
+				b: 255,
+			});
 		});
 	});
-});
+} else {
+	describe.todo("avb conversion against sibling comic-chat checkout");
+}
