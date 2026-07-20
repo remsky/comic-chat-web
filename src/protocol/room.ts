@@ -3,6 +3,10 @@
 export const MAX_NAME_LENGTH = 24;
 export const MAX_TEXT_LENGTH = 1000;
 export const CAST_SIZE = 31;
+// room names share one charset across the websocket route, the allowlist, and the join field
+export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
+// the bounded default room set for a demo deploy; override with the worker ROOMS var
+export const DEFAULT_ROOMS = ["lobby", "comics", "arcade", "lounge"] as const;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
 // welcome carries the newest chunk; older chunks arrive via history requests
 export const HISTORY_CHUNK = 50;
@@ -164,6 +168,22 @@ export function parseRoomListings(raw: unknown): RoomListing[] | null {
 export function roomNameFromPath(pathname: string): string | null {
 	const match = /^\/api\/rooms\/([\w-]{1,64})\/websocket$/.exec(pathname);
 	return match?.[1] ?? null;
+}
+
+// The one aggregate bound on a deploy: only these rooms spin up a DO. Reads the ROOMS var (array or comma/space string), validates and de-dupes, falls back to DEFAULT_ROOMS so a room always exists.
+export function resolveRoomAllowlist(value: unknown): string[] {
+	const raw = Array.isArray(value)
+		? value
+		: typeof value === "string"
+			? value.split(/[\s,]+/)
+			: [];
+	const names = new Set<string>();
+	for (const item of raw) {
+		if (typeof item !== "string") continue;
+		const name = item.trim();
+		if (ROOM_NAME_PATTERN.test(name)) names.add(name);
+	}
+	return names.size > 0 ? [...names] : [...DEFAULT_ROOMS];
 }
 
 export function pickAvatar(

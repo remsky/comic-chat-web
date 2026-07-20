@@ -23,56 +23,66 @@
 				<ol id="transcript" class="transcript" aria-live="polite"></ol>
 			</section>
 			<aside class="sidebar" aria-label="Room members">
-				<h2 class="sidebar-heading">Members</h2>
-				<ul id="roster" class="roster"></ul>
-				<h2 id="bodycam-heading" class="sidebar-heading bodycam-heading" hidden>
-					You
-				</h2>
-				<figure id="bodycam" class="bodycam" hidden>
-					<canvas
-						id="bodycam-canvas"
-						tabindex="0"
-						aria-label="Emotion wheel: drag the dot from the center toward an emotion; distance sets intensity"
-					></canvas>
-					<figcaption
-						id="bodycam-status"
-						class="bodycam-status"
-						role="status"
-					></figcaption>
-				</figure>
-				<div class="strip-actions">
-					<button id="save-strip" class="strip-button" type="button">
-						Save Strip…
-					</button>
-					<button
-						id="leave-room"
-						class="strip-button strip-button--leave"
-						type="button"
+				<section class="sidebar-members">
+					<h2 class="sidebar-heading">Members</h2>
+					<ul id="roster" class="roster"></ul>
+				</section>
+				<section class="sidebar-self">
+					<h2
+						id="bodycam-heading"
+						class="sidebar-heading bodycam-heading"
+						hidden
 					>
-						Leave Room
-					</button>
+						You
+					</h2>
+					<figure id="bodycam" class="bodycam" hidden>
+						<canvas
+							id="bodycam-canvas"
+							tabindex="0"
+							aria-label="Emotion wheel: drag the dot from the center toward an emotion; distance sets intensity"
+						></canvas>
+						<figcaption
+							id="bodycam-status"
+							class="bodycam-status"
+							role="status"
+						></figcaption>
+					</figure>
+				</section>
+				<div class="sidebar-controls">
+					<div class="strip-actions">
+						<button id="save-strip" class="strip-button" type="button">
+							Save Strip…
+						</button>
+						<button
+							id="leave-room"
+							class="strip-button strip-button--leave"
+							type="button"
+						>
+							Leave Room
+						</button>
+					</div>
+					<label id="background-picker" class="background-picker" hidden>
+						Background
+						<select id="background-select"></select>
+					</label>
+					<label class="tweaks-toggle">
+						<input id="text-toggle" type="checkbox" />
+						Plain text view
+					</label>
+					<label class="tweaks-toggle">
+						<input
+							id="modern-toggle"
+							type="checkbox"
+							checked
+							aria-describedby="tweaks-hint"
+						/>
+						Modern tweaks
+					</label>
+					<p id="tweaks-hint" class="tweaks-hint">
+						Smaller text fits more per balloon. Turn off for the original 1996
+						layout; panels may break differently for other viewers.
+					</p>
 				</div>
-				<label id="background-picker" class="background-picker" hidden>
-					Background
-					<select id="background-select"></select>
-				</label>
-				<label class="tweaks-toggle">
-					<input id="text-toggle" type="checkbox" />
-					Plain text view
-				</label>
-				<label class="tweaks-toggle">
-					<input
-						id="modern-toggle"
-						type="checkbox"
-						checked
-						aria-describedby="tweaks-hint"
-					/>
-					Modern tweaks
-				</label>
-				<p id="tweaks-hint" class="tweaks-hint">
-					Smaller text fits more per balloon. Turn off for the original 1996
-					layout; panels may break differently for other viewers.
-				</p>
 			</aside>
 		</main>
 		<form id="composer" class="composer">

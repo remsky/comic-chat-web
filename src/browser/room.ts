@@ -393,7 +393,14 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 		return radio;
 	});
 	const nameInput = element<HTMLInputElement>("join-name");
+	// once the user picks a character, stop the name-based suggestion from overriding it (e.g. on Enter)
+	let avatarPicked = false;
+	for (const radio of radios)
+		radio.addEventListener("change", () => {
+			avatarPicked = true;
+		});
 	const suggestAvatar = (): void => {
+		if (avatarPicked) return;
 		const index = avatarIndexForName(nameInput.value, radios.length);
 		const radio = radios[index];
 		if (!radio) return;
@@ -406,6 +413,9 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	const room = params.get("room");
 	if (room) element<HTMLInputElement>("join-room").value = room;
 }
+
+// the allowed room set, learned from the last successful list fetch; null until then
+let knownRooms: string[] | null = null;
 
 // the Chat Room List, directory-backed instead of IRC LIST; clicking a row fills the room field
 async function refreshRoomList(): Promise<void> {
@@ -428,8 +438,9 @@ async function refreshRoomList(): Promise<void> {
 		note("Room list unavailable.");
 		return;
 	}
+	knownRooms = listings.map((listing) => listing.name);
 	if (listings.length === 0) {
-		note("No rooms yet. Name one to create it.");
+		note("No rooms available.");
 		return;
 	}
 	list.replaceChildren(
@@ -559,12 +570,12 @@ async function main(): Promise<void> {
 		strip.scrollTop = strip.scrollHeight;
 	});
 
+	const roomInput = element<HTMLInputElement>("join-room");
+	// a stale custom-validity message would block resubmits, so clear it as the field changes
+	roomInput.addEventListener("input", () => roomInput.setCustomValidity(""));
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
-		element<HTMLFormElement>("join-form")
-			.querySelector("button")
-			?.setAttribute("disabled", "");
-		const room = element<HTMLInputElement>("join-room").value.trim();
+		const room = roomInput.value.trim();
 		const name = element<HTMLInputElement>("join-name").value.trim();
 		const avatar = Number(
 			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
@@ -572,6 +583,16 @@ async function main(): Promise<void> {
 			)?.value,
 		);
 		if (!room || !name) return;
+		// the worker rejects unlisted rooms; catch it here so a typo shows on the field instead of a reconnect loop
+		if (knownRooms && !knownRooms.includes(room)) {
+			roomInput.setCustomValidity("Pick one of the listed rooms.");
+			roomInput.reportValidity();
+			return;
+		}
+		roomInput.setCustomValidity("");
+		element<HTMLFormElement>("join-form")
+			.querySelector("button")
+			?.setAttribute("disabled", "");
 		history.replaceState(null, "", `?room=${encodeURIComponent(room)}`);
 		const protocol = location.protocol === "https:" ? "wss" : "ws";
 		const socketUrl = `${protocol}://${location.host}/api/rooms/${room}/websocket`;

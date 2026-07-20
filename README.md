@@ -41,7 +41,8 @@ npm run preview:worker
 ```
 
 - For Cloudflare Workers Builds, use `npm run build` as the build command and `npx wrangler deploy` as the deploy command.
-- For a public deployment, add a Cloudflare rate-limiting rule for repeated upgrade attempts to `/api/rooms/*/websocket`. The Durable Object separately limits active room sockets and post-upgrade messages.
+- Only the rooms in the `ROOMS` var (`wrangler.jsonc`, or the dashboard) accept connections. That small default set bounds how many Durable Objects a public deploy can ever create. Each room separately caps active sockets (12) and per-socket send rate.
+- For a public deployment, add a Cloudflare rate-limiting rule for repeated upgrade attempts to `/api/rooms/*/websocket`.
 - New joins receive the latest 50 messages and load older history in 50-message chunks. Each room retains at most 500 messages.
 
 </details>

@@ -36,6 +36,7 @@
 	display: flex;
 	gap: 0.5rem;
 	align-items: baseline;
+	min-width: 0;
 	padding: 0.25rem 0.5rem;
 	background: linear-gradient(90deg, #000080, #1084d0);
 	color: #fff;
@@ -60,8 +61,12 @@
 }
 
 .titlebar-room {
+	min-width: 0;
+	overflow: hidden;
 	font-size: 0.75rem;
 	opacity: 0.85;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .workspace {
@@ -82,6 +87,7 @@
 	border-color: #808080 #dfdfdf #dfdfdf #808080;
 	box-shadow: inset 1px 1px 0 #000;
 	background: #fff;
+	container: strip / inline-size;
 }
 
 /* the original page: square unit panels, 4 per row, 144-twip interstice = 144/(4*3000+3*144) of the page */
@@ -94,11 +100,15 @@
 }
 
 .panel {
+	min-width: 0;
 	margin: 0;
 }
 
 .panel canvas {
 	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
 	background: #fff;
 }
 
@@ -116,6 +126,22 @@
 	flex-direction: column;
 	width: 12rem;
 	min-height: 0;
+}
+
+.sidebar-members {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.sidebar-self,
+.sidebar-controls {
+	display: grid;
+}
+
+.sidebar-controls {
+	gap: 0.35rem;
 }
 
 .sidebar-heading {
@@ -583,6 +609,7 @@
 	position: fixed;
 	right: 0.5rem;
 	bottom: 2.5rem;
+	max-width: calc(100% - 1rem);
 	margin: 0;
 	padding: 0.35rem 0.6rem;
 	border: 1px solid;
@@ -592,6 +619,7 @@
 		inset -1px -1px 0 #808080;
 	background: #c0c0c0;
 	font-size: 0.75rem;
+	overflow-wrap: anywhere;
 }
 
 .status[data-ready="true"] {
@@ -612,26 +640,57 @@
 	z-index: 2;
 }
 
-@media (max-width: 700px) {
+@container strip (max-width: 44rem) {
+	.strip-page {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+@container strip (max-width: 32rem) {
+	.strip-page {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@container strip (max-width: 18rem) {
+	.strip-page {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (max-width: 760px) {
 	.workspace {
 		flex-direction: column;
 	}
 
-	.strip-page {
+	.sidebar {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(8rem, 12rem);
+		gap: 0.35rem 0.5rem;
+		align-items: start;
+		width: auto;
+		max-height: min(19rem, 42dvh);
+		overflow-y: auto;
+		scrollbar-gutter: stable;
+		overscroll-behavior: contain;
+	}
+
+	.sidebar-members {
+		min-height: 6rem;
+	}
+
+	.sidebar-self {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.sidebar-controls {
+		grid-column: 1 / -1;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.sidebar {
-		flex-direction: row;
-		gap: 0.5rem;
-		align-items: baseline;
-		width: auto;
-		max-height: 5rem;
-	}
-
-	.roster {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25rem;
+	.strip-actions,
+	.tweaks-hint {
+		grid-column: 1 / -1;
 	}
 }

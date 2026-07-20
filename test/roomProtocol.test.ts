@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
 	CAST_SIZE,
+	DEFAULT_ROOMS,
 	MAX_TEXT_LENGTH,
 	parseClientMessage,
 	parseRoomListings,
 	parseServerMessage,
 	pickAvatar,
+	resolveRoomAllowlist,
 	roomNameFromPath,
 } from "../src/protocol/room.js";
 
@@ -118,6 +120,28 @@ describe("room wire protocol", () => {
 		expect(
 			parseRoomListings({ rooms: [{ name: 7, members: 1, active: 1 }] }),
 		).toBeNull();
+	});
+
+	it("resolves the room allowlist, validating and de-duplicating names", () => {
+		expect(resolveRoomAllowlist(["lobby", "attic", "lobby"])).toEqual([
+			"lobby",
+			"attic",
+		]);
+		expect(resolveRoomAllowlist(" lobby, attic  comics ")).toEqual([
+			"lobby",
+			"attic",
+			"comics",
+		]);
+		expect(
+			resolveRoomAllowlist([" spaced name ", "ok", 7, "bad/slash"]),
+		).toEqual(["ok"]);
+	});
+
+	it("falls back to the default room set when the allowlist is empty or unusable", () => {
+		expect(resolveRoomAllowlist(undefined)).toEqual([...DEFAULT_ROOMS]);
+		expect(resolveRoomAllowlist([])).toEqual([...DEFAULT_ROOMS]);
+		expect(resolveRoomAllowlist("!!! ///")).toEqual([...DEFAULT_ROOMS]);
+		expect(resolveRoomAllowlist(42)).toEqual([...DEFAULT_ROOMS]);
 	});
 
 	it("round-trips server messages", () => {
