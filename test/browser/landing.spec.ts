@@ -13,12 +13,10 @@ test("landing page boots the app shell with the connect dialog", async ({
 	await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
 	await expect(page.locator(".titlebar-text")).toHaveText("Comic Chat Web");
 	await expect(page.locator("#join-form")).toBeVisible();
-	await expect(page.locator("#join-room")).toHaveValue("preview");
+	await expect(page.locator("#join-room")).toBeVisible();
 	await expect(page.locator("#room")).toBeHidden();
-	// static preview has no worker behind /api/rooms; the list must fail soft, not error
-	await expect(page.locator("#room-list .room-list-empty")).toHaveText(
-		"Room list unavailable.",
-	);
+	// static preview has no worker behind /api/rooms; the dropdown must fail soft (empty, no error)
+	await expect(page.locator("#join-room option")).toHaveCount(0);
 	const characters = page.locator('#join-avatar input[name="avatar"]');
 	expect(await characters.count()).toBeGreaterThanOrEqual(2);
 	await expect(

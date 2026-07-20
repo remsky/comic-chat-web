@@ -409,24 +409,14 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	};
 	nameInput.addEventListener("change", suggestAvatar);
 	suggestAvatar();
-	const params = new URLSearchParams(location.search);
-	const room = params.get("room");
-	if (room) element<HTMLInputElement>("join-room").value = room;
 }
 
-// the allowed room set, learned from the last successful list fetch; null until then
-let knownRooms: string[] | null = null;
+// the room the user wants selected, honored once the directory options load
+let desiredRoom = new URLSearchParams(location.search).get("room") ?? "";
 
-// the Chat Room List, directory-backed instead of IRC LIST; clicking a row fills the room field
+// the Chat Room List, directory-backed instead of IRC LIST; fills the room dropdown
 async function refreshRoomList(): Promise<void> {
-	const list = element<HTMLUListElement>("room-list");
-	const note = (text: string): void => {
-		const item = document.createElement("li");
-		item.className = "room-list-empty";
-		item.textContent = text;
-		list.replaceChildren(item);
-	};
-	note("Loading…");
+	const select = element<HTMLSelectElement>("join-room");
 	let listings: ReturnType<typeof parseRoomListings>;
 	try {
 		const response = await fetch("/api/rooms");
@@ -434,39 +424,31 @@ async function refreshRoomList(): Promise<void> {
 	} catch {
 		listings = null;
 	}
-	if (!listings) {
-		note("Room list unavailable.");
-		return;
-	}
-	knownRooms = listings.map((listing) => listing.name);
-	if (listings.length === 0) {
-		note("No rooms available.");
-		return;
-	}
-	list.replaceChildren(
+	// keep the current selection across a failed or empty refresh so the field never blanks out
+	if (!listings || listings.length === 0) return;
+	const keep = select.value || desiredRoom;
+	select.replaceChildren(
 		...listings.map((listing) => {
-			const item = document.createElement("li");
-			const row = document.createElement("button");
-			row.type = "button";
-			const name = document.createElement("strong");
-			name.textContent = listing.name;
-			const members = document.createElement("span");
-			members.textContent =
+			const option = document.createElement("option");
+			option.value = listing.name;
+			const count =
 				listing.members === 1 ? "1 member" : `${listing.members} members`;
-			row.append(name, members);
-			row.addEventListener("click", () => {
-				element<HTMLInputElement>("join-room").value = listing.name;
-				element<HTMLInputElement>("join-name").focus();
-			});
-			item.append(row);
-			return item;
+			option.textContent = `${listing.name} (${count})`;
+			return option;
 		}),
 	);
+	if (keep && listings.some((listing) => listing.name === keep))
+		select.value = keep;
+	desiredRoom = "";
 }
 
 function wireRoomList(): void {
-	element<HTMLButtonElement>("room-list-update").addEventListener("click", () =>
-		refreshRoomList(),
+	// refresh counts when the user opens the dropdown, so they stay fresh without a manual button
+	element<HTMLSelectElement>("join-room").addEventListener(
+		"pointerdown",
+		() => {
+			void refreshRoomList();
+		},
 	);
 	void refreshRoomList();
 }
@@ -570,11 +552,10 @@ async function main(): Promise<void> {
 		strip.scrollTop = strip.scrollHeight;
 	});
 
-	const roomInput = element<HTMLInputElement>("join-room");
-	// a stale custom-validity message would block resubmits, so clear it as the field changes
-	roomInput.addEventListener("input", () => roomInput.setCustomValidity(""));
+	const roomInput = element<HTMLSelectElement>("join-room");
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
+		// the dropdown only offers directory rooms, so any selected value is a valid room
 		const room = roomInput.value.trim();
 		const name = element<HTMLInputElement>("join-name").value.trim();
 		const avatar = Number(
@@ -583,13 +564,6 @@ async function main(): Promise<void> {
 			)?.value,
 		);
 		if (!room || !name) return;
-		// the worker rejects unlisted rooms; catch it here so a typo shows on the field instead of a reconnect loop
-		if (knownRooms && !knownRooms.includes(room)) {
-			roomInput.setCustomValidity("Pick one of the listed rooms.");
-			roomInput.reportValidity();
-			return;
-		}
-		roomInput.setCustomValidity("");
 		element<HTMLFormElement>("join-form")
 			.querySelector("button")
 			?.setAttribute("disabled", "");

@@ -1,18 +1,23 @@
-# Comic Chat Web
-**Modern TypeScript implementation of the 1996 Microsoft Comic Chat IRC client, using Cloudflare Durable Objects as the network layer.**
+<h1>
+  <img src="assets/tiki-icon.png" alt="" height="42" valign="middle">
+  Comic Chat Web
+</h1>
 
+**Modern TypeScript port of the 1996 Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
   <img src="https://img.shields.io/badge/tests-189%20passing-forestgreen" alt="189 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
-  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="40"></a>
+
+Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
 
 ## Features
+  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="40"></a>
 
 The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) by David Kurlander, Tim Skelly, and David Salesin. 
 
-Validated against traces from an instrumented C++ client of the original to accurately reproduce the original comic composition engine including:
+Validated against traces from an instrumented C++ client of the original to accurately reproduce the original engine including:
 
 - 31-character cast, automatic panel layout
 - Emotion detection, speech balloon splines

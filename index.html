@@ -119,26 +119,8 @@
 				<form id="join-form" class="dialog-body">
 					<label>
 						Room
-						<input
-							id="join-room"
-							name="room"
-							required
-							pattern="[\w\-]{1,64}"
-							placeholder="lobby"
-							autocomplete="off"
-						/>
+						<select id="join-room" name="room" required></select>
 					</label>
-					<div class="room-list-block">
-						<div class="room-list-head">
-							<span id="room-list-label">Rooms</span>
-							<button id="room-list-update" type="button">Update List</button>
-						</div>
-						<ul
-							id="room-list"
-							class="room-list"
-							aria-labelledby="room-list-label"
-						></ul>
-					</div>
 					<label>
 						Nickname
 						<input
