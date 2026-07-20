@@ -1,0 +1,19 @@
+# Cache-Control for Workers static assets (later rules win, so broad then specific).
+
+# hashed JS/CSS + fixed-name fonts never change under a given URL
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# avatar/background/wheel art: fixed names but can be regenerated, so revalidate weekly
+/assets/avatars/*
+  Cache-Control: public, max-age=604800
+/assets/backgrounds/*
+  Cache-Control: public, max-age=604800
+/assets/wheel/*
+  Cache-Control: public, max-age=604800
+
+# manifests drive the room/avatar/background lists; keep them fresher
+/assets/avatars/manifest.json
+  Cache-Control: public, max-age=3600
+/assets/backgrounds/manifest.json
+  Cache-Control: public, max-age=3600
