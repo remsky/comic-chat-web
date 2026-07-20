@@ -13,6 +13,7 @@ import {
 	roomNameFromPath,
 	type ServerMessage,
 } from "../src/protocol/room.js";
+import { isProhibited } from "./moderation.js";
 
 // server policy: bound per-room storage, connections, and per-socket send rate
 const HISTORY_RETENTION = 500;
@@ -21,6 +22,11 @@ const RATE_BURST = 10;
 const RATE_REFILL_MS = 500;
 // a rate-limited message is dropped with an error; only this many consecutive drops closes the socket
 const FLOOD_CLOSE_STRIKES = 20;
+// each blocked message mutes the socket for strikes * this, so repeat offenders wait longer
+const MUTE_STEP_MS = 30_000;
+// after this many blocked messages the socket is closed rather than muted again
+const MOD_CLOSE_STRIKES = 5;
+const MESSAGE_BLOCKED_REASON = "message blocked";
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 
@@ -35,6 +41,8 @@ interface SocketState {
 	tokens?: number;
 	at?: number;
 	strikes?: number;
+	modStrikes?: number;
+	mutedUntil?: number;
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
@@ -97,7 +105,30 @@ export class ChatRoomDO extends DurableObject<Env> {
 			...(typeof state.tokens === "number" ? { tokens: state.tokens } : {}),
 			...(typeof state.at === "number" ? { at: state.at } : {}),
 			...(typeof state.strikes === "number" ? { strikes: state.strikes } : {}),
+			...(typeof state.modStrikes === "number"
+				? { modStrikes: state.modStrikes }
+				: {}),
+			...(typeof state.mutedUntil === "number"
+				? { mutedUntil: state.mutedUntil }
+				: {}),
 		};
+	}
+
+	// records a blocked message: escalates the mute, closes the socket past the strike ceiling
+	private penalize(ws: WebSocket): void {
+		const state = this.stateOf(ws);
+		const modStrikes = (state.modStrikes ?? 0) + 1;
+		if (modStrikes >= MOD_CLOSE_STRIKES) {
+			ws.serializeAttachment({ ...state, modStrikes });
+			ws.close(1008, MESSAGE_BLOCKED_REASON);
+			return;
+		}
+		ws.serializeAttachment({
+			...state,
+			modStrikes,
+			mutedUntil: Date.now() + modStrikes * MUTE_STEP_MS,
+		});
+		this.send(ws, { type: "error", reason: MESSAGE_BLOCKED_REASON });
 	}
 
 	private seatOf(ws: WebSocket): SocketSeat | null {
@@ -224,6 +255,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 				this.send(ws, { type: "error", reason: "already joined" });
 				return;
 			}
+			if (isProhibited(message.name)) {
+				this.send(ws, { type: "error", reason: "name blocked" });
+				return;
+			}
 			const avatar = pickAvatar(
 				message.avatar,
 				this.roster().map((entry) => entry.avatar),
@@ -260,6 +295,15 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 		if (message.type === "history") {
 			this.send(ws, { type: "history", entries: this.history(message.before) });
+			return;
+		}
+		const mutedUntil = this.stateOf(ws).mutedUntil ?? 0;
+		if (Date.now() < mutedUntil) {
+			this.send(ws, { type: "error", reason: MESSAGE_BLOCKED_REASON });
+			return;
+		}
+		if (message.type === "chat" && isProhibited(message.text)) {
+			this.penalize(ws);
 			return;
 		}
 		// background changes ride the message stream so replay recomposes identically everywhere

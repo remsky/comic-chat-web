@@ -6,7 +6,7 @@
 **Modern TypeScript port of the 1996 Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
-  <img src="https://img.shields.io/badge/tests-189%20passing-forestgreen" alt="189 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-191%20passing-forestgreen" alt="191 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
