@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [release]
+    tags: ["v*"]
 
 permissions:
   contents: write
@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -24,26 +25,19 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
 
-      - name: Resolve version
-        id: version
+      - name: Verify tag matches package.json
         run: |
-          tag="v$(node -p "require('./package.json').version")"
-          if [ "$tag" = "v0.0.0" ]; then
-            echo "package.json version is still 0.0.0; bump it before pushing to release" >&2
+          pkg="v$(node -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json version $pkg; bump package.json before tagging" >&2
             exit 1
           fi
-          if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
-            echo "tag $tag already exists; skipping release"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          fi
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Generate notes from commit log
-        if: steps.version.outputs.skip != 'true'
         run: |
-          prev=$(git describe --tags --abbrev=0 2>/dev/null || true)
-          range=${prev:+$prev..}HEAD
-          log=$(git log $range --no-merges --pretty=format:'- %s (%h)')
+          prev=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2>/dev/null || true)
+          range=${prev:+$prev..}$GITHUB_REF_NAME
+          log=$(git log "$range" --no-merges --pretty=format:'- %s (%h)')
           feats=$(printf '%s\n' "$log" | grep -E '^- feat' || true)
           fixes=$(printf '%s\n' "$log" | grep -E '^- fix' || true)
           other=$(printf '%s\n' "$log" | grep -Ev '^- (feat|fix)' || true)
@@ -52,12 +46,10 @@ jobs:
           if [ -n "$fixes" ]; then printf '## Fixes\n%s\n\n' "$fixes" >> notes.md; fi
           if [ -n "$other" ]; then printf '## Maintenance\n%s\n\n' "$other" >> notes.md; fi
 
-      - name: Create tag and release
-        if: steps.version.outputs.skip != 'true'
+      - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            --target "$GITHUB_SHA" \
-            --title "${{ steps.version.outputs.tag }}" \
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
             --notes-file notes.md
