@@ -61,10 +61,16 @@
 							Leave Room
 						</button>
 					</div>
-					<label id="background-picker" class="background-picker" hidden>
-						Background
-						<select id="background-select"></select>
-					</label>
+					<div id="background-picker" class="background-picker" hidden>
+						<label class="background-picker-classic">
+							Background
+							<select id="background-select"></select>
+						</label>
+						<fieldset class="background-picker-grid character-picker">
+							<legend>Background</legend>
+							<div id="background-options" class="character-options"></div>
+						</fieldset>
+					</div>
 					<label class="tweaks-toggle">
 						<input id="text-toggle" type="checkbox" />
 						Plain text view

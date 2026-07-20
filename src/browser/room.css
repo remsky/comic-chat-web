@@ -427,6 +427,29 @@
 	font-weight: 400;
 }
 
+/* modern tweaks swaps the plain dropdown for the thumbnail grid; classic keeps the select */
+body.modern-tweaks .background-picker-classic {
+	display: none;
+}
+
+body:not(.modern-tweaks) .background-picker-grid {
+	display: none;
+}
+
+.background-thumb {
+	display: block;
+	width: 100%;
+	height: 2.4rem;
+	background: #000;
+	object-fit: cover;
+	image-rendering: pixelated;
+}
+
+.background-thumb--none {
+	background:
+		repeating-conic-gradient(#808080 0% 25%, #c0c0c0 0% 50%) 50% / 0.6rem 0.6rem;
+}
+
 .character-picker {
 	min-width: 0;
 	margin: 0;
@@ -564,6 +587,26 @@
 
 .character-option:active {
 	transform: translateY(1px);
+}
+
+/* the sidebar background grid reuses the character tile look; base tile box is scoped to the dialog */
+.background-picker-grid .character-options {
+	grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+}
+
+.background-picker-grid .character-option {
+	position: relative;
+	display: block;
+	min-width: 0;
+	padding: 2px;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	cursor: pointer;
+	font-size: 0.7rem;
 }
 
 .dialog-buttons {

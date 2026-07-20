@@ -89,6 +89,48 @@ const BACKDROP_PACK: Record<string, string> = {
 	volcano: "ART1",
 };
 
+// a thumbnail tile for the modern background grid, mirroring the join-form character tiles
+function buildBackgroundTile(
+	value: string,
+	label: string,
+	url: string | null,
+	pack: string | undefined,
+): HTMLLabelElement {
+	const option = document.createElement("label");
+	option.className = "character-option";
+	const radio = document.createElement("input");
+	radio.type = "radio";
+	radio.name = "background";
+	radio.value = value;
+	radio.autocomplete = "off";
+	const content = document.createElement("span");
+	content.className = "character-option-content";
+	let thumb: HTMLElement;
+	if (url === null) {
+		thumb = document.createElement("span");
+		thumb.className = "background-thumb background-thumb--none";
+	} else {
+		const img = document.createElement("img");
+		img.className = "background-thumb";
+		img.src = url;
+		img.alt = "";
+		img.loading = "lazy";
+		thumb = img;
+	}
+	const name = document.createElement("span");
+	name.className = "character-option-name";
+	name.textContent = label;
+	content.append(thumb, name);
+	if (pack) {
+		const chip = document.createElement("span");
+		chip.className = "character-option-chip character-option-chip--art1";
+		chip.textContent = pack;
+		content.append(chip);
+	}
+	option.append(radio, content);
+	return option;
+}
+
 interface Composition {
 	registry: AvatarRegistry;
 	emotions: EmotionEngine;
@@ -571,6 +613,15 @@ async function main(): Promise<void> {
 	wireJoinForm(manifest.avatars, atlases);
 	wireRoomList();
 	const backgroundSelect = element<HTMLSelectElement>("background-select");
+	const backgroundOptions = element("background-options");
+	// keep the classic dropdown and the modern grid pointing at the same backdrop without resending it
+	const syncBackground = (name: string): void => {
+		backgroundSelect.value = name;
+		for (const radio of backgroundOptions.querySelectorAll<HTMLInputElement>(
+			'input[name="background"]',
+		))
+			radio.checked = radio.value === name;
+	};
 	if (backdrops.backdrops.length > 0) {
 		const none = document.createElement("option");
 		none.value = "";
@@ -587,6 +638,26 @@ async function main(): Promise<void> {
 				return option;
 			}),
 		);
+		backgroundOptions.append(
+			buildBackgroundTile("", "None", null, undefined),
+			...backdrops.backdrops.map((info) =>
+				buildBackgroundTile(
+					info.name,
+					displayName(info.name),
+					info.url,
+					BACKDROP_PACK[info.name],
+				),
+			),
+		);
+		// a grid pick drives the same change path as the dropdown, so one sender handles both
+		backgroundOptions.addEventListener("change", (event) => {
+			const target = event.target;
+			if (!(target instanceof HTMLInputElement) || target.name !== "background")
+				return;
+			backgroundSelect.value = target.value;
+			backgroundSelect.dispatchEvent(new Event("change"));
+		});
+		syncBackground("");
 		element("background-picker").hidden = false;
 		const backgroundButton = document.querySelector<HTMLButtonElement>(
 			'.toolbar-button[data-panel="bg"]',
@@ -598,6 +669,7 @@ async function main(): Promise<void> {
 	let roster: RosterEntry[] = [];
 	const tweaks = element<HTMLInputElement>("modern-toggle");
 	tweaks.checked = localStorage.getItem(MODERN_TWEAKS_KEY) !== "off";
+	document.body.classList.toggle("modern-tweaks", tweaks.checked);
 	const view = new RoomView(
 		atlases,
 		backdrops,
@@ -608,6 +680,9 @@ async function main(): Promise<void> {
 	);
 	tweaks.addEventListener("change", () => {
 		localStorage.setItem(MODERN_TWEAKS_KEY, tweaks.checked ? "on" : "off");
+		document.body.classList.toggle("modern-tweaks", tweaks.checked);
+		// the grid may have missed a dropdown-driven change while it was hidden
+		if (tweaks.checked) syncBackground(backgroundSelect.value);
 		view.setModernTweaks(tweaks.checked);
 	});
 
@@ -839,7 +914,7 @@ async function main(): Promise<void> {
 				roster = parsed.roster;
 				renderRoster(roster, manifest.avatars);
 				view.setLocalAvatarID(parsed.avatar);
-				backgroundSelect.value = parsed.background ?? "";
+				syncBackground(parsed.background ?? "");
 				const firstSeq = parsed.history[0]?.seq;
 				if (hasWelcomed && historyHasGap(previousNewestSeq, firstSeq)) {
 					// the outage outran the welcome chunk; recompose wholesale so the strip matches a fresh join
@@ -869,7 +944,7 @@ async function main(): Promise<void> {
 			} else if (parsed.type === "chat") {
 				view.compose(parsed.entry);
 				if (parsed.entry.mode === BACKGROUND_MODE)
-					backgroundSelect.value = parsed.entry.text;
+					syncBackground(parsed.entry.text);
 			} else if (parsed.type === "history") {
 				const previousHeight = scroller.scrollHeight;
 				const previousTop = scroller.scrollTop;
