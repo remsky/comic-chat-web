@@ -24,7 +24,7 @@ const RATE_REFILL_MS = 1000;
 // a rate-limited message is dropped with an error; only this many consecutive drops closes the socket
 const FLOOD_CLOSE_STRIKES = 20;
 // each blocked message mutes the socket for strikes * this, so repeat offenders wait longer
-const MUTE_STEP_MS = 30_000;
+const MUTE_STEP_MS = 15_000;
 // after this many blocked messages the socket is closed rather than muted again
 const MOD_CLOSE_STRIKES = 5;
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message

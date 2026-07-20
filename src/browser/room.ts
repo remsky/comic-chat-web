@@ -871,7 +871,7 @@ async function main(): Promise<void> {
 				input.value = lastComposerSend;
 			lastComposerSend = null;
 			const notice = element("filter-notice");
-			let remaining = Math.max(1, Math.ceil((retryAfter ?? 30_000) / 1000));
+			let remaining = Math.max(1, Math.ceil((retryAfter ?? 15_000) / 1000));
 			const render = (): void => {
 				notice.textContent = `Content filter: wait ${remaining}s before trying again.`;
 			};
