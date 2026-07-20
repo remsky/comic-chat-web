@@ -83,6 +83,12 @@ const RELEASE_CHIP: Record<string, { label: string; tone: string }> = {
 	scotty: { label: "ART1", tone: "art1" },
 };
 
+// backdrops sourced from artpack1 rather than the base comicart pack; base ones stay unlabeled
+const BACKDROP_PACK: Record<string, string> = {
+	den: "ART1",
+	volcano: "ART1",
+};
+
 interface Composition {
 	registry: AvatarRegistry;
 	emotions: EmotionEngine;
@@ -574,7 +580,10 @@ async function main(): Promise<void> {
 			...backdrops.backdrops.map((info) => {
 				const option = document.createElement("option");
 				option.value = info.name;
-				option.textContent = displayName(info.name);
+				const pack = BACKDROP_PACK[info.name];
+				option.textContent = pack
+					? `${displayName(info.name)} (${pack})`
+					: displayName(info.name);
 				return option;
 			}),
 		);
