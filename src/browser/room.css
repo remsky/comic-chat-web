@@ -24,6 +24,13 @@
 	box-sizing: border-box;
 }
 
+/* not display:none, which breaks <use> */
+.icon-sprite {
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+
 .app {
 	display: flex;
 	flex-direction: column;
@@ -617,6 +624,7 @@ body:not(.modern-tweaks) .background-picker-grid {
 .legal-footer {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 0.2rem 0.45rem;
 	justify-content: center;
 	padding: 0.15rem 0.5rem 0.25rem;
@@ -626,6 +634,16 @@ body:not(.modern-tweaks) .background-picker-grid {
 
 .legal-footer a {
 	color: #000080;
+}
+
+.legal-footer-github {
+	display: flex;
+	color: inherit;
+	opacity: 0.7;
+}
+
+.legal-footer-github:hover {
+	opacity: 1;
 }
 
 .status {
@@ -661,7 +679,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 2;
+	/* below .join-overlay so the opaque dialog covers it instead of overlapping the avatar picker */
+	z-index: 0;
 }
 
 @container strip (max-width: 44rem) {
@@ -710,6 +729,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 	}
 
 	.toolbar-button {
+		/* glyph cuts track the button color */
+		--gap: #c0c0c0;
 		display: flex;
 		flex: 1;
 		flex-direction: column;
@@ -723,10 +744,25 @@ body:not(.modern-tweaks) .background-picker-grid {
 			inset 1px 1px 0 #fff,
 			inset -1px -1px 0 #808080;
 		background: #c0c0c0;
+		color: #000;
 		font: inherit;
 		font-size: 0.9rem;
 		line-height: 1;
 		cursor: pointer;
+	}
+
+	.toolbar-icon {
+		width: 1.35rem;
+		height: 1.35rem;
+		fill: currentColor;
+	}
+
+	.toolbar-icon .gap {
+		fill: var(--gap);
+	}
+
+	.toolbar-icon .gap-s {
+		stroke: var(--gap);
 	}
 
 	.mobile-toolbar .toolbar-button span {
@@ -739,6 +775,7 @@ body:not(.modern-tweaks) .background-picker-grid {
 	}
 
 	.toolbar-button[aria-expanded="true"] {
+		--gap: #1084d0;
 		border-color: #000 #dfdfdf #dfdfdf #000;
 		box-shadow:
 			inset -1px -1px 0 #fff,
@@ -793,7 +830,7 @@ body:not(.modern-tweaks) .background-picker-grid {
 		display: flex;
 	}
 
-	.mobile-sheet[data-panel="you"] .sidebar-self {
+	.mobile-sheet[data-panel="pose"] .sidebar-self {
 		display: grid;
 	}
 
