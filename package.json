@@ -22,6 +22,7 @@
 		"test:watch": "vitest",
 		"check": "biome check . && tsc && tsc -p tools/avb && tsc -p worker",
 		"dev": "vite",
+		"dev:api": "wrangler dev --port 8787",
 		"build": "tsc && vite build",
 		"deploy": "npm run build && wrangler deploy",
 		"preview:worker": "npm run build && wrangler dev",
