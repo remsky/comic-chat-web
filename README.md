@@ -1,57 +1,55 @@
 # Comic Chat Web
-  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="40"></a>
+**Modern TypeScript implementation of the 1996 Microsoft Comic Chat IRC client, using Cloudflare Durable Objects as the network layer.**
+
 
 <p>
-  <img src="https://img.shields.io/badge/tests-187%20passing-brightgreen" alt="187 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-189%20passing-forestgreen" alt="189 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
-
-A TypeScript port of the Microsoft Comic Chat composition engine, self-hosted networking via CloudFlare Durable Object integration (free tier)
+  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="40"></a>
 
 ## Features
 
-- Original rules engine on comic-panel composition and avatar posing
-    - 31-character cast
-    - Automatic emotion posing from message text, plus the emotion wheel
-    - Characters turn to face whoever they address by name
-- Responsive canvas rendering with an accessible transcript and text-only view
-- Live rooms over Cloudflare Durable Object WebSockets
-    - Bounded, chunked message history with per-socket abuse limits
+The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) by David Kurlander, Tim Skelly, and David Salesin. 
 
-<table>
-  <tr>
-    <td width="40%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
-    <td width="41%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
-  </tr>
-</table>
+Validated against traces from an instrumented C++ client of the original to accurately reproduce the original comic composition engine including:
+
+- 31-character cast, automatic panel layout
+- Emotion detection, speech balloon splines
+- Avatar posing, reactive angles and camera
 
 > [!IMPORTANT]
-> Work in progress. Rooms are anonymous: no accounts, authentication, moderation, or rate-safe guarantees.
+> Work in progress. Rooms are anonymous: no accounts, authentication, moderation. Despite best efforts, rate safety on a billed plan is not guaranteed.
+
+## Technical
 
 <details open>
-<summary>Deploy to Cloudflare</summary>
-
-The production build runs on the Free Tier as a static site served by a Cloudflare Worker via the assets binding in `wrangler.jsonc`:
+<summary>Local Run</summary>
 
 Spin up locally to test via:
 
 ```sh
+git clone https://github.com/remsky/comic-chat-web
+cd comic-chat-web
 npm install
 npm run preview:worker
 ```
 
+<details>
+<summary>Deployment Details</summary>
+
+- Live rooms operate over Cloudflare Durable Object WebSockets
+    - Bounded, chunked message history with per-socket abuse limit
 - For Cloudflare Workers Builds, use `npm run build` as the build command and `npx wrangler deploy` as the deploy command.
-- Only the rooms in the `ROOMS` var (`wrangler.jsonc`, or the dashboard) accept connections. That small default set bounds how many Durable Objects a public deploy can ever create. Each room separately caps active sockets (12) and per-socket send rate.
-- For a public deployment, add a Cloudflare rate-limiting rule for repeated upgrade attempts to `/api/rooms/*/websocket`.
+- Only the rooms in the `ROOMS` var (`wrangler.jsonc`, or the dashboard) accept connections, bounding how many Durable Objects a public deploy can create.
+- Each room caps active sockets (12) and per-socket send rate.
 - New joins receive the latest 50 messages and load older history in 50-message chunks. Each room retains at most 500 messages.
+- For a public deployment, add a Cloudflare rate-limiting rule for repeated upgrade attempts to `/api/rooms/*/websocket`.
 
 </details>
 
-
-## Technical
-
 <details>
-<summary>Develop</summary>
+<summary>Testing</summary>
 
 ```sh
 npm ci
@@ -89,6 +87,19 @@ Both steps are deterministic and byte-reproducible, sourced from a sibling check
 - `npm run fixtures:avatars`: the test fixture.
 
 </details>
+
+
+<details open>
+<summary>Screenshots</summary>
+
+<table>
+  <tr>
+    <td width="40%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="41%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
+  </tr>
+</table>
+</details>
+
 
 ## License and attributions
 
