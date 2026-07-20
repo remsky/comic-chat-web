@@ -85,34 +85,73 @@
 				</div>
 			</aside>
 		</main>
-		<form id="composer" class="composer">
-			<select id="composer-mode" aria-label="Balloon type">
-				<option value="1">Say</option>
-				<option value="3">Think</option>
-				<option value="2">Whisper</option>
-				<option value="5">Action</option>
-			</select>
-			<input
-				id="composer-text"
-				maxlength="1000"
-				required
-				placeholder="Type your message"
-				autocomplete="off"
-				aria-label="Message"
-			/>
-			<button type="submit">Send</button>
-		</form>
-		<footer class="legal-footer">
-			<span>© 2026 Comic Chat Web contributors</span>
-			<span aria-hidden="true">·</span>
-			<a href="https://github.com/remsky/comic-chat-web">Source</a>
-			<span aria-hidden="true">·</span>
-			<a href="https://github.com/remsky/comic-chat-web/blob/main/LICENSE"
-				>AGPL-3.0</a
-			>
-			<span aria-hidden="true">·</span>
-			<span>No warranty</span>
-		</footer>
+		<div class="dock">
+			<div id="mobile-sheet" class="mobile-sheet" hidden></div>
+			<nav class="mobile-toolbar" aria-label="Panels">
+				<button
+					type="button"
+					class="toolbar-button"
+					data-panel="members"
+					aria-expanded="false"
+				>
+					👥<span>Members</span>
+				</button>
+				<button
+					type="button"
+					class="toolbar-button"
+					data-panel="you"
+					aria-expanded="false"
+				>
+					🎭<span>You</span>
+				</button>
+				<button
+					type="button"
+					class="toolbar-button"
+					data-panel="bg"
+					aria-expanded="false"
+					hidden
+				>
+					🖼️<span>Background</span>
+				</button>
+				<button
+					type="button"
+					class="toolbar-button"
+					data-panel="more"
+					aria-expanded="false"
+				>
+					⋯<span>More</span>
+				</button>
+			</nav>
+			<p id="filter-notice" class="filter-notice" role="alert" hidden></p>
+			<form id="composer" class="composer">
+				<select id="composer-mode" aria-label="Balloon type">
+					<option value="1">Say</option>
+					<option value="3">Think</option>
+					<option value="2">Whisper</option>
+					<option value="5">Action</option>
+				</select>
+				<input
+					id="composer-text"
+					maxlength="1000"
+					required
+					placeholder="Type your message"
+					autocomplete="off"
+					aria-label="Message"
+				/>
+				<button type="submit">Send</button>
+			</form>
+			<footer class="legal-footer">
+				<span>© 2026 Comic Chat Web contributors</span>
+				<span aria-hidden="true">·</span>
+				<a href="https://github.com/remsky/comic-chat-web">Source</a>
+				<span aria-hidden="true">·</span>
+				<a href="https://github.com/remsky/comic-chat-web/blob/main/LICENSE"
+					>AGPL-3.0</a
+				>
+				<span aria-hidden="true">·</span>
+				<span>No warranty</span>
+			</footer>
+		</div>
 		<section id="join" class="join-overlay" aria-label="Connect to a room">
 			<div class="dialog">
 				<header class="dialog-titlebar">Connect</header>
@@ -135,6 +174,9 @@
 					<fieldset id="join-avatar" class="character-picker">
 						<legend>Character</legend>
 						<div class="character-options"></div>
+						<p id="join-avatar-error" class="field-error" role="alert" hidden>
+							Pick a character to connect.
+						</p>
 					</fieldset>
 					<div class="dialog-buttons">
 						<button type="submit">Connect</button>

@@ -18,6 +18,7 @@ import {
 	BACKGROUND_MODE,
 	type ChatEntry,
 	HISTORY_CHUNK,
+	MESSAGE_BLOCKED_REASON,
 	type PoseIndices,
 	parseRoomListings,
 	parseServerMessage,
@@ -50,6 +51,9 @@ const CLASSIC_UNIT = 3000;
 const MODERN_UNIT = 5200;
 const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
 const TEXT_VIEW_KEY = "comic-chat.text-view";
+// client mirror of the server send bucket (worker/room.ts): kill Enter-mashing before it hits the wire
+const SEND_BURST = 5;
+const SEND_REFILL_MS = 1000;
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -78,16 +82,6 @@ const RELEASE_CHIP: Record<string, { label: string; tone: string }> = {
 	sage: { label: "ART1", tone: "art1" },
 	scotty: { label: "ART1", tone: "art1" },
 };
-
-function avatarIndexForName(name: string, count: number): number {
-	if (count < 1) return -1;
-	const normalized = name.trim().toLowerCase();
-	if (!normalized) return 0;
-	let hash = 0;
-	for (const character of normalized)
-		hash = (Math.imul(hash, 31) + (character.codePointAt(0) ?? 0)) >>> 0;
-	return hash % count;
-}
 
 interface Composition {
 	registry: AvatarRegistry;
@@ -347,7 +341,7 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	const picker = element<HTMLFieldSetElement>("join-avatar");
 	const options = picker.querySelector<HTMLElement>(".character-options");
 	if (!options) throw new Error("character picker is missing its options");
-	const radios = avatars.map((avatar, index) => {
+	for (const avatar of avatars) {
 		const label = document.createElement("label");
 		label.className = "character-option";
 		const radio = document.createElement("input");
@@ -355,7 +349,10 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 		radio.name = "avatar";
 		radio.value = String(avatar.avatarID);
 		radio.autocomplete = "off";
-		radio.checked = index === 0;
+		// no default pick; selection is required, enforced inline on submit (see wireJoinForm submit)
+		radio.addEventListener("change", () => {
+			element("join-avatar-error").hidden = true;
+		});
 		const canvas = document.createElement("canvas");
 		canvas.width = 40;
 		canvas.height = 40;
@@ -390,25 +387,7 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 		}
 		label.append(radio, content);
 		options.append(label);
-		return radio;
-	});
-	const nameInput = element<HTMLInputElement>("join-name");
-	// once the user picks a character, stop the name-based suggestion from overriding it (e.g. on Enter)
-	let avatarPicked = false;
-	for (const radio of radios)
-		radio.addEventListener("change", () => {
-			avatarPicked = true;
-		});
-	const suggestAvatar = (): void => {
-		if (avatarPicked) return;
-		const index = avatarIndexForName(nameInput.value, radios.length);
-		const radio = radios[index];
-		if (!radio) return;
-		radio.checked = true;
-		radio.closest(".character-option")?.scrollIntoView({ block: "nearest" });
-	};
-	nameInput.addEventListener("change", suggestAvatar);
-	suggestAvatar();
+	}
 }
 
 // the room the user wants selected, honored once the directory options load
@@ -495,8 +474,86 @@ function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	list.replaceChildren(...items);
 }
 
+// pin the app to the visible viewport so the iOS keyboard slides over nothing but the composer
+function trackVisibleViewport(): void {
+	const viewport = window.visualViewport;
+	if (!viewport) return;
+	const apply = () => {
+		document.documentElement.style.setProperty(
+			"--app-height",
+			`${viewport.height}px`,
+		);
+		// follow any iOS scroll offset so the pinned app stays glued to the visible area
+		document.body.style.transform = `translateY(${viewport.offsetTop}px)`;
+	};
+	viewport.addEventListener("resize", apply);
+	viewport.addEventListener("scroll", apply);
+	apply();
+}
+
+// on phones the sidebar moves into a tap-open sheet above the send bar, one section at a time
+function wireMobilePanels(): void {
+	const sidebar = document.querySelector<HTMLElement>(".sidebar");
+	const toolbar = document.querySelector<HTMLElement>(".mobile-toolbar");
+	const sheet = element("mobile-sheet");
+	const workspace = element("room");
+	if (!sidebar || !toolbar) return;
+	const buttons = [
+		...toolbar.querySelectorAll<HTMLButtonElement>(".toolbar-button"),
+	];
+	const mobile = window.matchMedia("(max-width: 760px)");
+
+	const closePanel = () => {
+		sheet.hidden = true;
+		sheet.removeAttribute("data-panel");
+		for (const button of buttons) button.setAttribute("aria-expanded", "false");
+	};
+
+	const openPanel = (panel: string, active: HTMLButtonElement) => {
+		sheet.dataset.panel = panel;
+		sheet.hidden = false;
+		for (const button of buttons)
+			button.setAttribute("aria-expanded", String(button === active));
+	};
+
+	// desktop shows the sidebar inline; mobile parks it in the sheet
+	const placeSidebar = () => {
+		const host = mobile.matches ? sheet : workspace;
+		if (sidebar.parentElement !== host) host.append(sidebar);
+		if (!mobile.matches) closePanel();
+	};
+
+	for (const button of buttons) {
+		button.addEventListener("click", () => {
+			const panel = button.dataset.panel ?? "";
+			if (!sheet.hidden && sheet.dataset.panel === panel) closePanel();
+			else openPanel(panel, button);
+		});
+	}
+
+	// dismiss the sheet on a tap outside it (but not on the wheel/roster inside)
+	document.addEventListener("pointerdown", (event) => {
+		if (sheet.hidden) return;
+		const target = event.target;
+		if (
+			target instanceof Node &&
+			(sheet.contains(target) || toolbar.contains(target))
+		)
+			return;
+		closePanel();
+	});
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && !sheet.hidden) closePanel();
+	});
+
+	mobile.addEventListener("change", placeSidebar);
+	placeSidebar();
+}
+
 async function main(): Promise<void> {
 	const status = element("status");
+	trackVisibleViewport();
+	wireMobilePanels();
 	await loadCanvasFonts();
 	const response = await fetch("/assets/avatars/manifest.json");
 	if (!response.ok)
@@ -522,6 +579,10 @@ async function main(): Promise<void> {
 			}),
 		);
 		element("background-picker").hidden = false;
+		const backgroundButton = document.querySelector<HTMLButtonElement>(
+			'.toolbar-button[data-panel="bg"]',
+		);
+		if (backgroundButton) backgroundButton.hidden = false;
 	}
 	status.dataset.ready = "true";
 
@@ -564,6 +625,13 @@ async function main(): Promise<void> {
 			)?.value,
 		);
 		if (!room || !name) return;
+		// inline requirement instead of a native bubble, which auto-scrolls the picker jarringly
+		const avatarError = element("join-avatar-error");
+		if (Number.isNaN(avatar)) {
+			avatarError.hidden = false;
+			return;
+		}
+		avatarError.hidden = true;
 		element<HTMLFormElement>("join-form")
 			.querySelector("button")
 			?.setAttribute("disabled", "");
@@ -576,6 +644,7 @@ async function main(): Promise<void> {
 		let reconnectAllowed = true;
 		let hasWelcomed = false;
 		let statusRestoreTimer: number | undefined;
+		let filterTimer: number | undefined;
 		let lastComposerSend: string | null = null;
 		status.textContent = "Connecting…";
 		delete status.dataset.ready;
@@ -711,6 +780,37 @@ async function main(): Promise<void> {
 			}, 4000);
 		};
 
+		// the content filter rejected the message: lock the composer and count the mute down inline
+		const notifyBlocked = (retryAfter: number | undefined): void => {
+			const input = element<HTMLInputElement>("composer-text");
+			if (lastComposerSend !== null && !input.value)
+				input.value = lastComposerSend;
+			lastComposerSend = null;
+			const notice = element("filter-notice");
+			let remaining = Math.max(1, Math.ceil((retryAfter ?? 30_000) / 1000));
+			const render = (): void => {
+				notice.textContent = `Content filter: wait ${remaining}s before trying again.`;
+			};
+			const release = (): void => {
+				if (filterTimer !== undefined) window.clearInterval(filterTimer);
+				filterTimer = undefined;
+				notice.hidden = true;
+				if (socket?.readyState === WebSocket.OPEN) {
+					setComposerEnabled(true);
+					input.focus();
+				}
+			};
+			setComposerEnabled(false);
+			notice.hidden = false;
+			render();
+			if (filterTimer !== undefined) window.clearInterval(filterTimer);
+			filterTimer = window.setInterval(() => {
+				remaining -= 1;
+				if (remaining <= 0) release();
+				else render();
+			}, 1000);
+		};
+
 		const handleMessage = (message: MessageEvent): void => {
 			const parsed = parseServerMessage(message.data);
 			if (!parsed) return;
@@ -720,6 +820,11 @@ async function main(): Promise<void> {
 				element("title-room").textContent = `- ${room}`;
 				status.textContent = "Connected.";
 				status.dataset.ready = "true";
+				if (filterTimer !== undefined) {
+					window.clearInterval(filterTimer);
+					filterTimer = undefined;
+					element("filter-notice").hidden = true;
+				}
 				setComposerEnabled(true);
 				reconnectAttempt = 0;
 				roster = parsed.roster;
@@ -790,6 +895,8 @@ async function main(): Promise<void> {
 			} else if (parsed.type === "error") {
 				if (parsed.reason === RATE_LIMIT_REASON && hasWelcomed) {
 					notifyRateLimited();
+				} else if (parsed.reason === MESSAGE_BLOCKED_REASON && hasWelcomed) {
+					notifyBlocked(parsed.retryAfter);
 				} else {
 					status.textContent = parsed.reason;
 					delete status.dataset.ready;
@@ -839,11 +946,37 @@ async function main(): Promise<void> {
 		});
 		connect();
 
+		// client-side mirror of the server bucket: a mash drains tokens locally and toasts instead of flooding the wire
+		let sendTokens = SEND_BURST;
+		let sendAt = 0;
+		const takeSendToken = (): boolean => {
+			const now = Date.now();
+			sendTokens = Math.min(
+				SEND_BURST,
+				sendTokens + (now - sendAt) / SEND_REFILL_MS,
+			);
+			sendAt = now;
+			if (sendTokens < 1) return false;
+			sendTokens -= 1;
+			return true;
+		};
 		composer.addEventListener("submit", (sendEvent) => {
 			sendEvent.preventDefault();
 			const text = element<HTMLInputElement>("composer-text");
 			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
 			if (!text.value.trim()) return;
+			if (!takeSendToken()) {
+				status.textContent = "Slow down a moment.";
+				delete status.dataset.ready;
+				if (statusRestoreTimer !== undefined)
+					window.clearTimeout(statusRestoreTimer);
+				statusRestoreTimer = window.setTimeout(() => {
+					statusRestoreTimer = undefined;
+					if (socket?.readyState === WebSocket.OPEN)
+						status.dataset.ready = "true";
+				}, 1500);
+				return;
+			}
 			if (sendChat(text.value, mode)) {
 				lastComposerSend = text.value;
 				text.value = "";

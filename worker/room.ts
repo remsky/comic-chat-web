@@ -6,6 +6,7 @@ import {
 	type ChatEntry,
 	DEFAULT_BACKGROUND,
 	HISTORY_CHUNK,
+	MESSAGE_BLOCKED_REASON,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
@@ -18,15 +19,14 @@ import { isProhibited } from "./moderation.js";
 // server policy: bound per-room storage, connections, and per-socket send rate
 const HISTORY_RETENTION = 500;
 const SOCKET_LIMIT = 12;
-const RATE_BURST = 10;
-const RATE_REFILL_MS = 500;
+const RATE_BURST = 5;
+const RATE_REFILL_MS = 1000;
 // a rate-limited message is dropped with an error; only this many consecutive drops closes the socket
 const FLOOD_CLOSE_STRIKES = 20;
 // each blocked message mutes the socket for strikes * this, so repeat offenders wait longer
 const MUTE_STEP_MS = 30_000;
 // after this many blocked messages the socket is closed rather than muted again
 const MOD_CLOSE_STRIKES = 5;
-const MESSAGE_BLOCKED_REASON = "message blocked";
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 
@@ -123,12 +123,17 @@ export class ChatRoomDO extends DurableObject<Env> {
 			ws.close(1008, MESSAGE_BLOCKED_REASON);
 			return;
 		}
+		const muteMs = modStrikes * MUTE_STEP_MS;
 		ws.serializeAttachment({
 			...state,
 			modStrikes,
-			mutedUntil: Date.now() + modStrikes * MUTE_STEP_MS,
+			mutedUntil: Date.now() + muteMs,
 		});
-		this.send(ws, { type: "error", reason: MESSAGE_BLOCKED_REASON });
+		this.send(ws, {
+			type: "error",
+			reason: MESSAGE_BLOCKED_REASON,
+			retryAfter: muteMs,
+		});
 	}
 
 	private seatOf(ws: WebSocket): SocketSeat | null {
@@ -299,7 +304,11 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 		const mutedUntil = this.stateOf(ws).mutedUntil ?? 0;
 		if (Date.now() < mutedUntil) {
-			this.send(ws, { type: "error", reason: MESSAGE_BLOCKED_REASON });
+			this.send(ws, {
+				type: "error",
+				reason: MESSAGE_BLOCKED_REASON,
+				retryAfter: mutedUntil - Date.now(),
+			});
 			return;
 		}
 		if (message.type === "chat" && isProhibited(message.text)) {

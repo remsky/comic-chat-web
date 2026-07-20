@@ -16,6 +16,8 @@ export const BACKGROUND_MODE = 6;
 export const DEFAULT_BACKGROUND = "field";
 // error reason shared so the client can tell a dropped message from a fatal rejection
 export const RATE_LIMIT_REASON = "message rate limit exceeded";
+// content-filter rejection; the client shows a countdown from the error's retryAfter
+export const MESSAGE_BLOCKED_REASON = "message blocked";
 
 // SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
 export interface PoseIndices {
@@ -63,7 +65,7 @@ export type ServerMessage =
 	| { type: "history"; entries: ChatEntry[] }
 	| { type: "joined"; who: RosterEntry }
 	| { type: "left"; who: RosterEntry }
-	| { type: "error"; reason: string };
+	| { type: "error"; reason: string; retryAfter?: number };
 
 export function parseClientMessage(raw: unknown): ClientMessage | null {
 	if (typeof raw !== "string") return null;
