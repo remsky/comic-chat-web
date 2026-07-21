@@ -8,6 +8,7 @@
 			content="Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip."
 		/>
 		<title>Comic Chat Web</title>
+		<link rel="canonical" href="https://comics.remsky.art/" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Comic Chat Web" />
 		<meta
@@ -23,6 +24,18 @@
 			content="Three-panel comic strip of Comic Chat characters discussing the TypeScript port"
 		/>
 		<meta name="twitter:card" content="summary_large_image" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Comic Chat Web",
+				"url": "https://comics.remsky.art/",
+				"description": "Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip.",
+				"applicationCategory": "CommunicationApplication",
+				"operatingSystem": "Any",
+				"image": "https://comics.remsky.art/og.jpg"
+			}
+		</script>
 		<link rel="stylesheet" href="/src/browser/room.css" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -320,6 +333,12 @@
 					</div>
 				</form>
 			</div>
+			<p class="join-tagline">
+				Modern port of Microsoft Comic Chat (1996) using Cloudflare Durable
+				Objects as the network layer. Live chat rendered as comic strips by a
+				validated TypeScript rewrite of the original engine.
+				<a href="https://github.com/remsky/comic-chat-web">Open Source</a>.
+			</p>
 		</section>
 		<p id="status" class="status" role="status">Loading fonts and avatar art…</p>
 		<script type="module" src="/src/browser/room.ts"></script>

@@ -10,7 +10,8 @@
 		"includes": [
 			"**",
 			"!worker-configuration.d.ts",
-			"!.claude/settings.local.json"
+			"!.claude/settings.local.json",
+			"!.glyph"
 		]
 	},
 	"formatter": {

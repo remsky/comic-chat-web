@@ -109,9 +109,15 @@ function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	list.replaceChildren(...items);
 }
 
+// a refused join hands the form back for a resubmit; aborting drops the dead session's listeners
+let sessionAbort: AbortController | null = null;
+
 export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	const { view, hooks } = deps;
 	const { room, name, avatar, from, remember } = options;
+	sessionAbort?.abort();
+	sessionAbort = new AbortController();
+	const { signal } = sessionAbort;
 	const status = element("status");
 	element<HTMLFormElement>("join-form")
 		.querySelector("button")
@@ -231,9 +237,13 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		historyPending = true;
 		wsSend(JSON.stringify({ type: "history", before: oldestSeq }));
 	};
-	scroller.addEventListener("scroll", () => {
-		if (scroller.scrollTop < 80) requestOlderHistory();
-	});
+	scroller.addEventListener(
+		"scroll",
+		() => {
+			if (scroller.scrollTop < 80) requestOlderHistory();
+		},
+		{ signal },
+	);
 
 	// cui.Say: run the presend hook, then transmit text plus pose indices
 	const sendChat = (text: string, mode: number): boolean => {
@@ -251,11 +261,15 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	};
 
 	const backgroundSelect = element<HTMLSelectElement>("background-select");
-	backgroundSelect.addEventListener("change", () => {
-		wsSend(
-			JSON.stringify({ type: "background", name: backgroundSelect.value }),
-		);
-	});
+	backgroundSelect.addEventListener(
+		"change",
+		() => {
+			wsSend(
+				JSON.stringify({ type: "background", name: backgroundSelect.value }),
+			);
+		},
+		{ signal },
+	);
 
 	const profileError = element("profile-error");
 	hooks.applyProfile = (rawName, rawAvatar) => {
@@ -316,12 +330,16 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		if (isJoinedEntry(history.state)) history.back();
 		else leaveRoom();
 	};
-	element<HTMLButtonElement>("leave-room").addEventListener("click", () =>
-		exitRoom(true),
+	element<HTMLButtonElement>("leave-room").addEventListener(
+		"click",
+		() => exitRoom(true),
+		{ signal },
 	);
 	// the titlebar name doubles as a "home" link back to the connect screen
-	element<HTMLButtonElement>("title-home").addEventListener("click", () =>
-		exitRoom(false),
+	element<HTMLButtonElement>("title-home").addEventListener(
+		"click",
+		() => exitRoom(false),
+		{ signal },
 	);
 
 	element<HTMLButtonElement>("save-strip").addEventListener(
@@ -337,6 +355,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			anchor.click();
 			URL.revokeObjectURL(url);
 		},
+		{ signal },
 	);
 
 	const transcript = element<HTMLOListElement>("transcript");
@@ -638,15 +657,23 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	};
 
 	// the browser knows the network flipped before any timeout can
-	window.addEventListener("offline", () => {
-		if (socket?.readyState === WebSocket.OPEN) socket.close(4000, "offline");
-	});
-	window.addEventListener("online", () => {
-		if (socket === null && reconnectAllowed) {
-			reconnectAttempt = 0;
-			connect();
-		}
-	});
+	window.addEventListener(
+		"offline",
+		() => {
+			if (socket?.readyState === WebSocket.OPEN) socket.close(4000, "offline");
+		},
+		{ signal },
+	);
+	window.addEventListener(
+		"online",
+		() => {
+			if (socket === null && reconnectAllowed) {
+				reconnectAttempt = 0;
+				connect();
+			}
+		},
+		{ signal },
+	);
 	connect();
 
 	// client-side mirror of the server bucket: a mash drains tokens locally and toasts instead of flooding the wire
@@ -663,21 +690,25 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		sendTokens -= 1;
 		return true;
 	};
-	composer.addEventListener("submit", (sendEvent) => {
-		sendEvent.preventDefault();
-		const mode = Number(element<HTMLSelectElement>("composer-mode").value);
-		if (!composerInput.value.trim()) return;
-		// single flight: the previous send must echo back or fail before the next leaves
-		if (lastComposerSend !== null) return;
-		// composer is disabled while down, but guard anyway: never burn a token into a closed pipe
-		if (socket?.readyState !== WebSocket.OPEN || !navigator.onLine) return;
-		if (!takeSendToken()) {
-			flashNotice("Slow down a moment.");
-			return;
-		}
-		if (sendChat(composerInput.value, mode)) {
-			lastComposerSend = composerInput.value;
-			composerInput.value = "";
-		}
-	});
+	composer.addEventListener(
+		"submit",
+		(sendEvent) => {
+			sendEvent.preventDefault();
+			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
+			if (!composerInput.value.trim()) return;
+			// single flight: the previous send must echo back or fail before the next leaves
+			if (lastComposerSend !== null) return;
+			// composer is disabled while down, but guard anyway: never burn a token into a closed pipe
+			if (socket?.readyState !== WebSocket.OPEN || !navigator.onLine) return;
+			if (!takeSendToken()) {
+				flashNotice("Slow down a moment.");
+				return;
+			}
+			if (sendChat(composerInput.value, mode)) {
+				lastComposerSend = composerInput.value;
+				composerInput.value = "";
+			}
+		},
+		{ signal },
+	);
 }

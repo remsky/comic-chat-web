@@ -412,6 +412,19 @@
 	font-weight: 700;
 }
 
+.join-tagline {
+	pointer-events: auto;
+	max-width: min(20rem, 90vw);
+	margin: 0.6rem 0 0;
+	color: #555;
+	font-size: 0.75rem;
+	text-align: center;
+}
+
+.join-tagline a {
+	color: #000080;
+}
+
 .dialog-body {
 	display: grid;
 	gap: 0.5rem;
