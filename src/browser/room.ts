@@ -445,6 +445,14 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 // the room the user wants selected, honored once the directory options load
 let desiredRoom = new URLSearchParams(location.search).get("room") ?? "";
 
+// compact relative stamp for empty rooms; the directory forgets rooms after a day, so hours suffice
+function lastActiveLabel(active: number): string {
+	const minutes = Math.max(0, Math.round((Date.now() - active) / 60_000));
+	if (minutes < 1) return "active just now";
+	if (minutes < 60) return `active ${minutes}m ago`;
+	return `active ${Math.round(minutes / 60)}h ago`;
+}
+
 // the Chat Room List, directory-backed instead of IRC LIST; fills the room dropdown
 async function refreshRoomList(): Promise<void> {
 	const select = element<HTMLSelectElement>("join-room");
@@ -462,9 +470,13 @@ async function refreshRoomList(): Promise<void> {
 		...listings.map((listing) => {
 			const option = document.createElement("option");
 			option.value = listing.name;
-			const count =
-				listing.members === 1 ? "1 member" : `${listing.members} members`;
-			option.textContent = `${listing.name} (${count})`;
+			const detail =
+				listing.members === 1
+					? "1 member"
+					: listing.members === 0 && listing.active > 0
+						? lastActiveLabel(listing.active)
+						: `${listing.members} members`;
+			option.textContent = `${listing.name} (${detail})`;
 			return option;
 		}),
 	);

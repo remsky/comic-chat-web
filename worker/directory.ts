@@ -20,16 +20,12 @@ export class RoomDirectoryDO extends DurableObject<Env> {
 		});
 	}
 
-	// rooms report on join/leave and periodically while chatting; 0 members = room gone (IRC semantics)
+	// rooms report on join/leave and periodically while chatting; an emptied room keeps its row so the connect screen can say how recently it was alive
 	report(name: string, members: number): void {
-		if (members <= 0) {
-			this.ctx.storage.sql.exec("DELETE FROM rooms WHERE name = ?", name);
-			return;
-		}
 		this.ctx.storage.sql.exec(
 			"INSERT INTO rooms (name, members, active) VALUES (?, ?, ?) ON CONFLICT(name) DO UPDATE SET members = excluded.members, active = excluded.active",
 			name,
-			members,
+			Math.max(0, members),
 			Date.now(),
 		);
 	}
