@@ -38,6 +38,7 @@ import {
 	loadCanvasFonts,
 } from "./canvasText.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
+import { isJoinedEntry, JOINED_STATE } from "./roomHistory.js";
 import { transcriptHeader, transcriptLine } from "./textView.js";
 import {
 	describeWebSocketClose,
@@ -733,6 +734,10 @@ async function main(): Promise<void> {
 		strip.scrollTop = strip.scrollHeight;
 	});
 
+	// bound once: a refused join hands the form back, so the submit handler can rerun
+	let onBack: (() => void) | null = null;
+	window.addEventListener("popstate", () => onBack?.());
+
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
 		const room =
@@ -757,7 +762,11 @@ async function main(): Promise<void> {
 		element<HTMLFormElement>("join-form")
 			.querySelector("button")
 			?.setAttribute("disabled", "");
-		history.replaceState(null, "", `?room=${encodeURIComponent(room)}`);
+		// a joined room is its own history entry, so hardware back leaves the room
+		const url = `?room=${encodeURIComponent(room)}`;
+		if (isJoinedEntry(history.state))
+			history.replaceState(JOINED_STATE, "", url);
+		else history.pushState(JOINED_STATE, "", url);
 		const protocol = location.protocol === "https:" ? "wss" : "ws";
 		const socketUrl = `${protocol}://${location.host}/api/rooms/${room}/websocket`;
 		let socket: WebSocket | null = null;
@@ -897,14 +906,20 @@ async function main(): Promise<void> {
 			socket?.close();
 			location.reload();
 		};
+		onBack = leaveRoom;
+		// pop the room's own entry so every exit lands on the same pre-join state
+		const exitRoom = (): void => {
+			if (isJoinedEntry(history.state)) history.back();
+			else leaveRoom();
+		};
 		element<HTMLButtonElement>("leave-room").addEventListener(
 			"click",
-			leaveRoom,
+			exitRoom,
 		);
 		// the titlebar name doubles as a "home" link back to the connect screen
 		element<HTMLButtonElement>("title-home").addEventListener(
 			"click",
-			leaveRoom,
+			exitRoom,
 		);
 
 		element<HTMLButtonElement>("save-strip").addEventListener(
