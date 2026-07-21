@@ -24,7 +24,8 @@ Validated against traces from an instrumented C++ client of the original to accu
 - Avatar posing, reactive angles and camera
 
 > [!IMPORTANT]
-> Work in progress. Rooms are anonymous: no accounts, authentication, moderation. Despite best efforts, rate safety on a billed plan is not guaranteed.
+> Work in progress. Rooms are anonymous: no accounts, authentication, moderation. 
+> Despite best efforts, rate safety on a billed plan is not guaranteed.
 
 ## Technical
 
@@ -119,4 +120,4 @@ Except for the third-party material identified below, this project is licensed u
 
 Microsoft-derived code and artwork retain Microsoft's MIT license and notice. See [Third-Party Notices](THIRD_PARTY_NOTICES.md) and the preserved [Microsoft MIT license](LICENSES/MIT-Microsoft.txt) for details.
 
-This is an unofficial community project and is not affiliated with or endorsed by Microsoft. It is based on the [open-source Microsoft Comic Chat repository](https://github.com/microsoft/comic-chat).
+This is an unofficial community project and is not affiliated with or endorsed by Microsoft; based on the [open-source Microsoft Comic Chat repository](https://github.com/microsoft/comic-chat).
