@@ -24,11 +24,16 @@ export default defineConfig({
 						miniflare: {
 							bindings: {
 								ROOMS: [
+									"arrive",
 									"backdrop-tags",
 									"backdrop-chunk",
+									"depart",
 									"flood",
 									"mute",
 									"name-block",
+									"profile",
+									"profile-avatar",
+									"profile-block",
 									"retention",
 									"roster",
 									"socket-cap",

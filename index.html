@@ -95,19 +95,29 @@
 				<div id="panels" class="strip-page" aria-live="polite"></div>
 				<ol id="transcript" class="transcript" aria-live="polite"></ol>
 			</section>
+			<div
+				id="sidebar-resizer"
+				class="sidebar-resizer"
+				aria-hidden="true"
+			></div>
 			<aside class="sidebar" aria-label="Room members">
 				<section class="sidebar-members">
 					<h2 class="sidebar-heading">Members</h2>
 					<ul id="roster" class="roster"></ul>
 				</section>
 				<section class="sidebar-self">
-					<h2
-						id="bodycam-heading"
-						class="sidebar-heading bodycam-heading"
-						hidden
-					>
-						You
-					</h2>
+					<span class="profile-name-row">
+						<input
+							id="profile-name"
+							maxlength="24"
+							autocomplete="nickname"
+							aria-label="Nickname"
+						/>
+						<button id="profile-name-apply" class="strip-button" type="button">
+							Set
+						</button>
+					</span>
+					<p id="profile-error" class="field-error" role="alert" hidden></p>
 					<figure id="bodycam" class="bodycam" hidden>
 						<canvas
 							id="bodycam-canvas"
@@ -119,7 +129,23 @@
 							class="bodycam-status"
 							role="status"
 						></figcaption>
+						<button
+							id="avatar-edit"
+							class="bodycam-edit"
+							type="button"
+							aria-expanded="false"
+							aria-controls="profile-avatar-picker"
+						>
+							Change Character…
+						</button>
 					</figure>
+					<fieldset
+						id="profile-avatar-picker"
+						class="character-picker profile-picker-grid"
+					>
+						<legend>Character</legend>
+						<div id="profile-avatar-options" class="character-options"></div>
+					</fieldset>
 				</section>
 				<div class="sidebar-controls">
 					<div class="strip-actions">
@@ -131,8 +157,14 @@
 							class="strip-button strip-button--leave"
 							type="button"
 						>
-							Leave Room
+							Disconnect
 						</button>
+					</div>
+					<div id="profile-picker" class="profile-picker">
+						<fieldset class="room-picker">
+							<legend>Room</legend>
+							<div id="profile-room-options" class="room-options"></div>
+						</fieldset>
 					</div>
 					<div id="background-picker" class="background-picker" hidden>
 						<label class="background-picker-classic">
@@ -280,6 +312,10 @@
 						</p>
 					</fieldset>
 					<div class="dialog-buttons">
+						<label class="remember-toggle">
+							<input id="join-remember" type="checkbox" />
+							Remember me
+						</label>
 						<button type="submit">Connect</button>
 					</div>
 				</form>

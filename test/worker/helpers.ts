@@ -33,9 +33,16 @@ export async function connect(
 	return { socket, inbox: { next } };
 }
 
-export async function join(room: string, name: string, avatar: number) {
+export async function join(
+	room: string,
+	name: string,
+	avatar: number,
+	from?: string,
+) {
 	const { socket, inbox } = await connect(room);
-	socket.send(JSON.stringify({ type: "join", name, avatar }));
+	socket.send(
+		JSON.stringify({ type: "join", name, avatar, ...(from ? { from } : {}) }),
+	);
 	const welcome = await inbox.next("welcome");
 	if (welcome.type !== "welcome") throw new Error("expected a welcome");
 	return { socket, inbox, welcome };

@@ -154,10 +154,23 @@
 .sidebar {
 	display: flex;
 	flex-direction: column;
-	width: 12rem;
+	flex-shrink: 0;
+	width: var(--sidebar-width, 15rem);
+	max-width: 60vw;
 	min-height: 0;
 	overflow-y: auto;
 	scrollbar-gutter: stable;
+}
+
+.sidebar-resizer {
+	flex: 0 0 0.3rem;
+	cursor: col-resize;
+	touch-action: none;
+}
+
+.sidebar-resizer:hover,
+.sidebar-resizer:active {
+	background: #808080;
 }
 
 .sidebar-members {
@@ -171,6 +184,11 @@
 .sidebar-self,
 .sidebar-controls {
 	display: grid;
+}
+
+.sidebar-self {
+	gap: 0.35rem;
+	margin-top: 0.35rem;
 }
 
 .sidebar-controls {
@@ -204,10 +222,6 @@
 	font-size: 0.75rem;
 }
 
-.bodycam-heading {
-	margin-top: 0.35rem;
-}
-
 .bodycam {
 	margin: 0;
 	border: 1px solid;
@@ -229,6 +243,29 @@
 	border-top: 1px solid #808080;
 	background: #c0c0c0;
 	font-size: 0.7rem;
+}
+
+.bodycam-edit {
+	display: block;
+	width: 100%;
+	padding: 0.2rem 0.25rem;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	color: #000;
+	font: inherit;
+	font-size: 0.7rem;
+	cursor: pointer;
+}
+
+.bodycam-edit:active {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow:
+		inset -1px -1px 0 #fff,
+		inset 1px 1px 0 #808080;
 }
 
 .bodycam-menu {
@@ -451,6 +488,51 @@
 	font-weight: 700;
 }
 
+.dialog-body label.remember-toggle {
+	display: flex;
+	gap: 0.35rem;
+	align-items: center;
+}
+
+.profile-picker {
+	display: grid;
+	gap: 0.35rem;
+}
+
+/* desktop keeps the grid tucked behind the bodycam's Change Character button */
+.profile-picker-grid {
+	display: none;
+}
+
+.profile-picker-grid.open {
+	display: block;
+}
+
+.profile-picker-grid legend {
+	display: none;
+}
+
+.profile-name-row {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.profile-name-row input {
+	flex: 1;
+	min-width: 0;
+	padding: 0.3rem 0.4rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+	font: inherit;
+	font-weight: 400;
+}
+
+.profile-name-row .strip-button {
+	flex: 0 0 auto;
+}
+
 .background-picker select {
 	padding: 0.2rem;
 	border: 1px solid;
@@ -645,7 +727,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 	background: #fff;
 }
 
-.dialog-body .room-option {
+.dialog-body .room-option,
+.profile-picker .room-option {
 	position: relative;
 	display: grid;
 	grid-template-columns: 1fr auto;
@@ -702,7 +785,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 	grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
 }
 
-.background-picker-grid .character-option {
+.background-picker-grid .character-option,
+.profile-picker-grid .character-option {
 	position: relative;
 	display: block;
 	min-width: 0;
@@ -719,7 +803,9 @@ body:not(.modern-tweaks) .background-picker-grid {
 
 .dialog-buttons {
 	display: flex;
-	justify-content: flex-end;
+	gap: 0.6rem;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .legal-footer {
@@ -811,7 +897,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 	.composer select,
 	.dialog-body input,
 	.dialog-body select,
-	.background-picker select {
+	.background-picker select,
+	.profile-name-row input {
 		font-size: 16px;
 	}
 }
@@ -915,8 +1002,13 @@ body:not(.modern-tweaks) .background-picker-grid {
 	.mobile-sheet .sidebar {
 		display: block;
 		width: auto;
+		max-width: none;
 		max-height: none;
 		overflow: visible;
+	}
+
+	.sidebar-resizer {
+		display: none;
 	}
 
 	.sidebar-members {
@@ -938,11 +1030,36 @@ body:not(.modern-tweaks) .background-picker-grid {
 		display: grid;
 	}
 
+	/* the pose panel is just the wheel; nickname and grid live in More */
+	.mobile-sheet[data-panel="pose"] .sidebar-self > :not(.bodycam) {
+		display: none;
+	}
+
+	.mobile-sheet[data-panel="pose"] .bodycam-edit {
+		display: none;
+	}
+
 	.mobile-sheet[data-panel="bg"] .sidebar-controls {
 		display: grid;
 	}
 
 	.mobile-sheet[data-panel="bg"] .sidebar-controls > :not(.background-picker) {
+		display: none;
+	}
+
+	/* More carries the profile bits; only the wheel itself stays behind */
+	.mobile-sheet[data-panel="more"] .sidebar-self {
+		display: grid;
+	}
+
+	.mobile-sheet[data-panel="more"] .bodycam {
+		border: 0;
+		box-shadow: none;
+		background: none;
+	}
+
+	.mobile-sheet[data-panel="more"] .bodycam canvas,
+	.mobile-sheet[data-panel="more"] .bodycam-status {
 		display: none;
 	}
 
@@ -956,6 +1073,7 @@ body:not(.modern-tweaks) .background-picker-grid {
 	}
 
 	.mobile-sheet[data-panel="more"] .strip-actions,
+	.mobile-sheet[data-panel="more"] .profile-picker,
 	.mobile-sheet[data-panel="more"] .tweaks-hint {
 		grid-column: 1 / -1;
 	}

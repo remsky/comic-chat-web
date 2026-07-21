@@ -15,15 +15,20 @@ import {
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
 import {
+	ARRIVE_MODE,
+	AVATAR_MODE,
 	BACKGROUND_MODE,
 	type ChatEntry,
+	DEPART_MODE,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
+	NICK_MODE,
 	type PoseIndices,
 	parseRoomListings,
 	parseServerMessage,
 	RATE_LIMIT_REASON,
+	type RoomListing,
 	type RosterEntry,
 } from "../protocol/room.js";
 import { parseAddressees } from "./addressing.js";
@@ -53,6 +58,19 @@ const CLASSIC_UNIT = 3000;
 const MODERN_UNIT = 5200;
 const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
 const TEXT_VIEW_KEY = "comic-chat.text-view";
+// opt-in identity, kept only while "Remember me" is on; Disconnect wipes it
+const PROFILE_KEY = "comic-chat.profile";
+// one-shot breadcrumb across the room-switch reload; carries the origin for the arrival announcement
+const SWITCH_KEY = "comic-chat.switch";
+// a UI preference, not identity; leaveRoom leaves it alone
+const SIDEBAR_WIDTH_KEY = "comic-chat.sidebar-width";
+// announcement entries ride the stream for the transcript but never compose a panel
+const ANNOUNCE_MODES: readonly number[] = [
+	NICK_MODE,
+	AVATAR_MODE,
+	DEPART_MODE,
+	ARRIVE_MODE,
+];
 // client mirror of the server send bucket (worker/room.ts): kill Enter-mashing before it hits the wire
 const SEND_BURST = 5;
 const SEND_REFILL_MS = 1000;
@@ -75,6 +93,58 @@ function element<T extends HTMLElement>(id: string): T {
 
 function displayName(name: string): string {
 	return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+interface StoredProfile {
+	name: string;
+	avatar: number;
+}
+
+function parseProfile(raw: string | null): StoredProfile | null {
+	if (!raw) return null;
+	try {
+		const data = JSON.parse(raw) as Record<string, unknown>;
+		if (
+			typeof data === "object" &&
+			data !== null &&
+			typeof data.name === "string" &&
+			data.name.length > 0 &&
+			typeof data.avatar === "number"
+		)
+			return { name: data.name, avatar: data.avatar };
+	} catch {
+		// fall through to null
+	}
+	return null;
+}
+
+function loadStoredProfile(): StoredProfile | null {
+	return parseProfile(localStorage.getItem(PROFILE_KEY));
+}
+
+interface RoomSwitch extends StoredProfile {
+	room: string;
+	from: string;
+}
+
+// consume the switch breadcrumb; it must never replay on a plain reload
+function takeRoomSwitch(): RoomSwitch | null {
+	const raw = sessionStorage.getItem(SWITCH_KEY);
+	sessionStorage.removeItem(SWITCH_KEY);
+	if (!raw) return null;
+	try {
+		const data = JSON.parse(raw) as Record<string, unknown>;
+		const profile = parseProfile(raw);
+		if (
+			profile &&
+			typeof data.room === "string" &&
+			typeof data.from === "string"
+		)
+			return { ...profile, room: data.room, from: data.from };
+	} catch {
+		// fall through to null
+	}
+	return null;
 }
 
 const RELEASE_CHIP: Record<string, { label: string; tone: string }> = {
@@ -217,6 +287,12 @@ class RoomView {
 		const { registry, emotions, page, speakers } = this.composition;
 		if (entry.mode === BACKGROUND_MODE) {
 			page.backdrop = entry.text;
+			return;
+		}
+		if (ANNOUNCE_MODES.includes(entry.mode)) {
+			// a rename teaches addressee facing the new nickname
+			if (entry.mode === NICK_MODE)
+				speakers.set(toLowerAscii(entry.text), entry.avatar);
 			return;
 		}
 		const avatar = registry.get(entry.avatar);
@@ -391,55 +467,64 @@ class RoomView {
 	}
 }
 
+function buildCharacterTile(
+	avatar: AvatarData,
+	atlases: AvatarAtlasCache,
+	group: string,
+): HTMLLabelElement {
+	const label = document.createElement("label");
+	label.className = "character-option";
+	const radio = document.createElement("input");
+	radio.type = "radio";
+	radio.name = group;
+	radio.value = String(avatar.avatarID);
+	radio.autocomplete = "off";
+	const canvas = document.createElement("canvas");
+	canvas.width = 40;
+	canvas.height = 40;
+	canvas.setAttribute("aria-hidden", "true");
+	const name = document.createElement("span");
+	name.className = "character-option-name";
+	name.textContent = displayName(avatar.name);
+	const content = document.createElement("span");
+	content.className = "character-option-content";
+	const icon = avatar.poses.find((pose) => pose.poseID === avatar.iconPoseID);
+	if (icon?.sprite) {
+		const context = canvas.getContext("2d");
+		context?.drawImage(
+			atlases.get(icon),
+			icon.sprite.x,
+			icon.sprite.y,
+			icon.width,
+			icon.height,
+			0,
+			0,
+			40,
+			40,
+		);
+	}
+	content.append(canvas, name);
+	const release = RELEASE_CHIP[avatar.name];
+	if (release) {
+		const chip = document.createElement("span");
+		chip.className = `character-option-chip character-option-chip--${release.tone}`;
+		chip.textContent = release.label;
+		content.append(chip);
+	}
+	label.append(radio, content);
+	return label;
+}
+
 function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	const picker = element<HTMLFieldSetElement>("join-avatar");
 	const options = picker.querySelector<HTMLElement>(".character-options");
 	if (!options) throw new Error("character picker is missing its options");
 	for (const avatar of avatars) {
-		const label = document.createElement("label");
-		label.className = "character-option";
-		const radio = document.createElement("input");
-		radio.type = "radio";
-		radio.name = "avatar";
-		radio.value = String(avatar.avatarID);
-		radio.autocomplete = "off";
-		// no default pick; selection is required, enforced inline on submit (see wireJoinForm submit)
-		radio.addEventListener("change", () => {
+		const label = buildCharacterTile(avatar, atlases, "avatar");
+		// no default pick; selection is required, enforced inline on submit
+		label.querySelector("input")?.addEventListener("change", () => {
 			element("join-avatar-error").hidden = true;
 		});
-		const canvas = document.createElement("canvas");
-		canvas.width = 40;
-		canvas.height = 40;
-		canvas.setAttribute("aria-hidden", "true");
-		const name = document.createElement("span");
-		name.className = "character-option-name";
-		name.textContent = displayName(avatar.name);
-		const content = document.createElement("span");
-		content.className = "character-option-content";
-		const icon = avatar.poses.find((pose) => pose.poseID === avatar.iconPoseID);
-		if (icon?.sprite) {
-			const context = canvas.getContext("2d");
-			context?.drawImage(
-				atlases.get(icon),
-				icon.sprite.x,
-				icon.sprite.y,
-				icon.width,
-				icon.height,
-				0,
-				0,
-				40,
-				40,
-			);
-		}
-		content.append(canvas, name);
-		const release = RELEASE_CHIP[avatar.name];
-		if (release) {
-			const chip = document.createElement("span");
-			chip.className = `character-option-chip character-option-chip--${release.tone}`;
-			chip.textContent = release.label;
-			content.append(chip);
-		}
-		label.append(radio, content);
 		options.append(label);
 	}
 }
@@ -455,45 +540,53 @@ function lastActiveLabel(active: number): string {
 	return `active ${Math.round(minutes / 60)}h ago`;
 }
 
+async function fetchRoomListings(): Promise<RoomListing[] | null> {
+	try {
+		const response = await fetch("/api/rooms");
+		return response.ok ? parseRoomListings(await response.json()) : null;
+	} catch {
+		return null;
+	}
+}
+
+function buildRoomOption(
+	group: string,
+	listing: RoomListing,
+): HTMLLabelElement {
+	const label = document.createElement("label");
+	label.className = "room-option";
+	const radio = document.createElement("input");
+	radio.type = "radio";
+	radio.name = group;
+	radio.value = listing.name;
+	const name = document.createElement("span");
+	name.className = "room-option-name";
+	name.textContent = listing.name;
+	const detail = document.createElement("span");
+	detail.className = "room-option-detail";
+	detail.textContent =
+		listing.members === 1
+			? "1 member"
+			: listing.members > 1
+				? `${listing.members} members`
+				: listing.active > 0
+					? lastActiveLabel(listing.active)
+					: "empty";
+	label.append(radio, name, detail);
+	return label;
+}
+
 // the IRC LIST stand-in; fills the room grid
 async function refreshRoomList(): Promise<void> {
 	const options = element("join-room-options");
-	let listings: ReturnType<typeof parseRoomListings>;
-	try {
-		const response = await fetch("/api/rooms");
-		listings = response.ok ? parseRoomListings(await response.json()) : null;
-	} catch {
-		listings = null;
-	}
+	const listings = await fetchRoomListings();
 	// keep current options on a failed refresh
 	if (!listings || listings.length === 0) return;
 	const keep =
 		options.querySelector<HTMLInputElement>("input:checked")?.value ||
 		desiredRoom;
 	options.replaceChildren(
-		...listings.map((listing) => {
-			const label = document.createElement("label");
-			label.className = "room-option";
-			const radio = document.createElement("input");
-			radio.type = "radio";
-			radio.name = "room";
-			radio.value = listing.name;
-			const name = document.createElement("span");
-			name.className = "room-option-name";
-			name.textContent = listing.name;
-			const detail = document.createElement("span");
-			detail.className = "room-option-detail";
-			detail.textContent =
-				listing.members === 1
-					? "1 member"
-					: listing.members > 1
-						? `${listing.members} members`
-						: listing.active > 0
-							? lastActiveLabel(listing.active)
-							: "empty";
-			label.append(radio, name, detail);
-			return label;
-		}),
+		...listings.map((listing) => buildRoomOption("room", listing)),
 	);
 	const radios = [...options.querySelectorAll<HTMLInputElement>("input")];
 	const target = radios.find((input) => input.value === keep) ?? radios[0];
@@ -501,11 +594,15 @@ async function refreshRoomList(): Promise<void> {
 	desiredRoom = "";
 }
 
+// set once a room is joined so the poll keeps the sidebar's room list fresh too
+let profileRoomsRefresh: (() => void) | null = null;
+
 function wireRoomList(): void {
 	// slow poll keeps the visible stamps fresh
 	window.setInterval(() => {
-		if (document.hidden || document.body.classList.contains("joined")) return;
-		void refreshRoomList();
+		if (document.hidden) return;
+		if (document.body.classList.contains("joined")) profileRoomsRefresh?.();
+		else void refreshRoomList();
 	}, 30_000);
 	void refreshRoomList();
 }
@@ -513,10 +610,11 @@ function wireRoomList(): void {
 function renderTranscript(
 	list: HTMLOListElement,
 	entries: readonly ChatEntry[],
+	avatarName: (avatarID: number) => string,
 ): void {
 	const items: HTMLLIElement[] = [];
 	for (const entry of entries) {
-		const line = transcriptLine(entry);
+		const line = transcriptLine(entry, avatarName);
 		if (!line) continue;
 		const item = document.createElement("li");
 		item.className = `transcript-${line.kind}`;
@@ -635,10 +733,47 @@ function wireMobilePanels(): void {
 	placeSidebar();
 }
 
+// desktop only: drag the divider to trade strip space for sidebar space
+function wireSidebarResize(): void {
+	const resizer = element("sidebar-resizer");
+	const sidebar = document.querySelector<HTMLElement>(".sidebar");
+	if (!sidebar) return;
+	const apply = (width: number): number => {
+		const max = Math.min(640, window.innerWidth * 0.6);
+		const clamped = Math.round(Math.min(Math.max(width, 176), max));
+		sidebar.style.setProperty("--sidebar-width", `${clamped}px`);
+		return clamped;
+	};
+	const stored = Number(localStorage.getItem(SIDEBAR_WIDTH_KEY));
+	if (Number.isFinite(stored) && stored > 0) apply(stored);
+	resizer.addEventListener("pointerdown", (event) => {
+		event.preventDefault();
+		resizer.setPointerCapture(event.pointerId);
+		let width = sidebar.getBoundingClientRect().width;
+		const move = (ev: PointerEvent): void => {
+			width = apply(sidebar.getBoundingClientRect().right - ev.clientX);
+		};
+		const finish = (): void => {
+			resizer.removeEventListener("pointermove", move);
+			resizer.removeEventListener("pointerup", finish);
+			resizer.removeEventListener("pointercancel", finish);
+			localStorage.setItem(SIDEBAR_WIDTH_KEY, String(width));
+		};
+		resizer.addEventListener("pointermove", move);
+		resizer.addEventListener("pointerup", finish);
+		resizer.addEventListener("pointercancel", finish);
+	});
+	resizer.addEventListener("dblclick", () => {
+		sidebar.style.removeProperty("--sidebar-width");
+		localStorage.removeItem(SIDEBAR_WIDTH_KEY);
+	});
+}
+
 async function main(): Promise<void> {
 	const status = element("status");
 	trackVisibleViewport();
 	wireMobilePanels();
+	wireSidebarResize();
 	await loadCanvasFonts();
 	const response = await fetch("/assets/avatars/manifest.json");
 	if (!response.ok)
@@ -649,6 +784,75 @@ async function main(): Promise<void> {
 	await Promise.all([atlases.preload(manifest.avatars), backdrops.load()]);
 	wireJoinForm(manifest.avatars, atlases);
 	wireRoomList();
+	const avatarDisplayName = (avatarID: number): string => {
+		const cast = manifest.avatars.find(
+			(avatar) => avatar.avatarID === avatarID,
+		);
+		return cast ? displayName(cast.name) : `#${avatarID}`;
+	};
+
+	// a remembered identity prefills the connect screen
+	const rememberInput = element<HTMLInputElement>("join-remember");
+	const storedProfile = loadStoredProfile();
+	if (storedProfile) {
+		rememberInput.checked = true;
+		element<HTMLInputElement>("join-name").value = storedProfile.name;
+		const remembered = document.querySelector<HTMLInputElement>(
+			`#join-avatar input[value="${storedProfile.avatar}"]`,
+		);
+		if (remembered) remembered.checked = true;
+	}
+
+	// the in-room picker; the live join session fills these hooks in
+	let applyProfile: ((name: string, avatar: number) => void) | null = null;
+	let switchRoom: ((to: string) => void) | null = null;
+	const profileNameInput = element<HTMLInputElement>("profile-name");
+	const profileAvatarOptions = element("profile-avatar-options");
+	profileAvatarOptions.append(
+		...manifest.avatars.map((avatar) =>
+			buildCharacterTile(avatar, atlases, "profile-avatar"),
+		),
+	);
+	const syncProfileAvatar = (avatarID: number): void => {
+		for (const radio of profileAvatarOptions.querySelectorAll<HTMLInputElement>(
+			"input",
+		))
+			radio.checked = radio.value === String(avatarID);
+	};
+	const avatarPicker = element("profile-avatar-picker");
+	const avatarEdit = element<HTMLButtonElement>("avatar-edit");
+	const setAvatarPickerOpen = (open: boolean): void => {
+		avatarPicker.classList.toggle("open", open);
+		avatarEdit.setAttribute("aria-expanded", String(open));
+		if (open)
+			avatarPicker
+				.querySelector("input:checked")
+				?.closest("label")
+				?.scrollIntoView({ block: "nearest" });
+	};
+	avatarEdit.addEventListener("click", () => {
+		setAvatarPickerOpen(!avatarPicker.classList.contains("open"));
+	});
+	const submitProfileName = (): void => {
+		applyProfile?.(profileNameInput.value, Number.NaN);
+	};
+	element("profile-name-apply").addEventListener("click", submitProfileName);
+	profileNameInput.addEventListener("keydown", (event) => {
+		if (event.key !== "Enter") return;
+		event.preventDefault();
+		submitProfileName();
+	});
+	profileAvatarOptions.addEventListener("change", (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLInputElement)) return;
+		applyProfile?.(profileNameInput.value, Number(target.value));
+		setAvatarPickerOpen(false);
+	});
+	element("profile-room-options").addEventListener("change", (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLInputElement)) return;
+		switchRoom?.(target.value);
+	});
 	const backgroundSelect = element<HTMLSelectElement>("background-select");
 	const backgroundOptions = element("background-options");
 	// keep the classic dropdown and the modern grid pointing at the same backdrop without resending it
@@ -738,27 +942,13 @@ async function main(): Promise<void> {
 	let onBack: (() => void) | null = null;
 	window.addEventListener("popstate", () => onBack?.());
 
-	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
-		event.preventDefault();
-		const room =
-			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
-				'input[name="room"]:checked',
-			)?.value ?? "";
-		const name = element<HTMLInputElement>("join-name").value.trim();
-		const avatar = Number(
-			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
-				'input[name="avatar"]:checked',
-			)?.value,
-		);
-		if (!room || !name) return;
-		// inline requirement instead of a native bubble, which auto-scrolls the picker jarringly
-		const avatarError = element("join-avatar-error");
-		if (Number.isNaN(avatar)) {
-			avatarError.hidden = false;
-			return;
-		}
-		avatarError.hidden = true;
-		element("join-name-error").hidden = true;
+	const joinRoom = (
+		room: string,
+		name: string,
+		avatar: number,
+		from: string | undefined,
+		remember: boolean,
+	): void => {
 		element<HTMLFormElement>("join-form")
 			.querySelector("button")
 			?.setAttribute("disabled", "");
@@ -777,6 +967,10 @@ async function main(): Promise<void> {
 		let watchdogTimer: number | undefined;
 		let suspectTimer: number | undefined;
 		let seatAvatar: number | null = null;
+		// the live identity; profile changes move it, reconnects re-join with it
+		let currentName = name;
+		// announced once: the first welcome consumes it so reconnects don't re-arrive
+		let announceFrom = from;
 		let hasWelcomed = false;
 		let joinFailed = false;
 		let noticeTimer: number | undefined;
@@ -897,10 +1091,59 @@ async function main(): Promise<void> {
 			);
 		});
 
+		const profileError = element("profile-error");
+		applyProfile = (rawName, rawAvatar) => {
+			if (socket?.readyState !== WebSocket.OPEN || seatAvatar === null) return;
+			const nextName = rawName.trim() || currentName;
+			const nextAvatar = Number.isNaN(rawAvatar) ? seatAvatar : rawAvatar;
+			if (nextName === currentName && nextAvatar === seatAvatar) return;
+			profileError.hidden = true;
+			wsSend(
+				JSON.stringify({ type: "profile", name: nextName, avatar: nextAvatar }),
+			);
+		};
+		const renderProfileRooms = async (): Promise<void> => {
+			const listings = await fetchRoomListings();
+			if (!listings || listings.length === 0) return;
+			element("profile-room-options").replaceChildren(
+				...listings.map((listing) => {
+					const option = buildRoomOption("profile-room", listing);
+					const input = option.querySelector("input");
+					if (input) input.checked = listing.name === room;
+					return option;
+				}),
+			);
+		};
+		profileRoomsRefresh = () => void renderProfileRooms();
+		switchRoom = (to) => {
+			if (to === room) return;
+			if (socket?.readyState === WebSocket.OPEN)
+				wsSend(JSON.stringify({ type: "depart", to }));
+			sessionStorage.setItem(
+				SWITCH_KEY,
+				JSON.stringify({
+					room: to,
+					from: room,
+					name: currentName,
+					avatar: seatAvatar ?? avatar,
+				}),
+			);
+			reconnectAllowed = false;
+			if (reconnectTimer !== undefined) window.clearTimeout(reconnectTimer);
+			// let the depart frame flush before navigation tears the socket down
+			window.setTimeout(() => {
+				location.href = `?room=${encodeURIComponent(to)}`;
+			}, 150);
+		};
+
 		// Leave: drop the socket and return to the connect screen. A reload is the
 		// clean teardown here — closing the tab's socket broadcasts our "left" to the
 		// room, and the connect screen re-renders with the room prefilled from the URL.
+		// only an explicit Disconnect forgets the remembered identity; back and the titlebar keep it
+		let forgetOnLeave = false;
 		const leaveRoom = (): void => {
+			if (forgetOnLeave) localStorage.removeItem(PROFILE_KEY);
+			sessionStorage.removeItem(SWITCH_KEY);
 			reconnectAllowed = false;
 			if (reconnectTimer !== undefined) window.clearTimeout(reconnectTimer);
 			socket?.close();
@@ -908,18 +1151,17 @@ async function main(): Promise<void> {
 		};
 		onBack = leaveRoom;
 		// pop the room's own entry so every exit lands on the same pre-join state
-		const exitRoom = (): void => {
+		const exitRoom = (forget: boolean): void => {
+			forgetOnLeave = forget;
 			if (isJoinedEntry(history.state)) history.back();
 			else leaveRoom();
 		};
-		element<HTMLButtonElement>("leave-room").addEventListener(
-			"click",
-			exitRoom,
+		element<HTMLButtonElement>("leave-room").addEventListener("click", () =>
+			exitRoom(true),
 		);
 		// the titlebar name doubles as a "home" link back to the connect screen
-		element<HTMLButtonElement>("title-home").addEventListener(
-			"click",
-			exitRoom,
+		element<HTMLButtonElement>("title-home").addEventListener("click", () =>
+			exitRoom(false),
 		);
 
 		element<HTMLButtonElement>("save-strip").addEventListener(
@@ -941,13 +1183,12 @@ async function main(): Promise<void> {
 		const refreshTranscript = (): void => {
 			const atBottom =
 				scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 24;
-			renderTranscript(transcript, view.entriesView());
+			renderTranscript(transcript, view.entriesView(), avatarDisplayName);
 			if (atBottom) scroller.scrollTop = scroller.scrollHeight;
 		};
 
 		let bodycam: BodyCamWidget | null = null;
 		const mountBodycam = (): void => {
-			element("bodycam-heading").hidden = false;
 			element("bodycam").hidden = false;
 			bodycam = new BodyCamWidget({
 				canvas: element<HTMLCanvasElement>("bodycam-canvas"),
@@ -1067,6 +1308,10 @@ async function main(): Promise<void> {
 				renderRoster(roster, manifest.avatars);
 				seatAvatar = parsed.avatar;
 				view.setLocalAvatarID(parsed.avatar);
+				announceFrom = undefined;
+				profileNameInput.value = currentName;
+				syncProfileAvatar(parsed.avatar);
+				void renderProfileRooms();
 				syncBackground(parsed.background ?? "");
 				const firstSeq = parsed.history[0]?.seq;
 				if (hasWelcomed && historyHasGap(previousNewestSeq, firstSeq)) {
@@ -1153,11 +1398,36 @@ async function main(): Promise<void> {
 				);
 				if (index >= 0) roster.splice(index, 1);
 				renderRoster(roster, manifest.avatars);
+			} else if (parsed.type === "profile") {
+				const index = roster.findIndex(
+					(entry) =>
+						entry.avatar === parsed.was.avatar &&
+						entry.name === parsed.was.name,
+				);
+				if (index >= 0) roster[index] = parsed.who;
+				renderRoster(roster, manifest.avatars);
+				// seats are unique per avatar, so a matching seat means it was ours
+				if (parsed.was.avatar === seatAvatar) {
+					currentName = parsed.who.name;
+					seatAvatar = parsed.who.avatar;
+					view.setLocalAvatarID(seatAvatar);
+					profileNameInput.value = currentName;
+					syncProfileAvatar(seatAvatar);
+					if (remember)
+						localStorage.setItem(
+							PROFILE_KEY,
+							JSON.stringify({ name: currentName, avatar: seatAvatar }),
+						);
+				}
 			} else if (parsed.type === "error") {
 				if (parsed.reason === RATE_LIMIT_REASON && hasWelcomed) {
 					notifyRateLimited();
 				} else if (parsed.reason === MESSAGE_BLOCKED_REASON && hasWelcomed) {
 					notifyBlocked(parsed.retryAfter);
+				} else if (parsed.reason === NAME_BLOCKED_REASON && hasWelcomed) {
+					profileError.textContent = "That nickname is blocked. Try another.";
+					profileError.hidden = false;
+					profileNameInput.value = currentName;
 				} else if (!hasWelcomed) {
 					failJoin(parsed.reason);
 				} else {
@@ -1182,7 +1452,13 @@ async function main(): Promise<void> {
 			socket = next;
 			next.addEventListener("open", () => {
 				wsSend(
-					JSON.stringify({ type: "join", name, avatar, sent: Date.now() }),
+					JSON.stringify({
+						type: "join",
+						name: currentName,
+						avatar: seatAvatar ?? avatar,
+						...(announceFrom !== undefined ? { from: announceFrom } : {}),
+						sent: Date.now(),
+					}),
 				);
 				// idle ping so a dead-but-still-"open" pipe surfaces as a reconnect, not a silent swallow
 				if (heartbeatTimer !== undefined) window.clearInterval(heartbeatTimer);
@@ -1260,7 +1536,56 @@ async function main(): Promise<void> {
 				text.value = "";
 			}
 		});
+	};
+
+	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
+		event.preventDefault();
+		const room =
+			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
+				'input[name="room"]:checked',
+			)?.value ?? "";
+		const name = element<HTMLInputElement>("join-name").value.trim();
+		const avatar = Number(
+			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
+				'input[name="avatar"]:checked',
+			)?.value,
+		);
+		if (!room || !name) return;
+		// inline requirement instead of a native bubble, which auto-scrolls the picker jarringly
+		const avatarError = element("join-avatar-error");
+		if (Number.isNaN(avatar)) {
+			avatarError.hidden = false;
+			return;
+		}
+		avatarError.hidden = true;
+		element("join-name-error").hidden = true;
+		const remember = rememberInput.checked;
+		if (remember)
+			localStorage.setItem(PROFILE_KEY, JSON.stringify({ name, avatar }));
+		else localStorage.removeItem(PROFILE_KEY);
+		joinRoom(room, name, avatar, undefined, remember);
 	});
+
+	// a room switch rejoins on the far side of the reload, announcing where we came from
+	const pending = takeRoomSwitch();
+	if (
+		pending &&
+		new URLSearchParams(location.search).get("room") === pending.room
+	) {
+		desiredRoom = pending.room;
+		element<HTMLInputElement>("join-name").value = pending.name;
+		const carried = document.querySelector<HTMLInputElement>(
+			`#join-avatar input[value="${pending.avatar}"]`,
+		);
+		if (carried) carried.checked = true;
+		joinRoom(
+			pending.room,
+			pending.name,
+			pending.avatar,
+			pending.from,
+			loadStoredProfile() !== null,
+		);
+	}
 }
 
 main().catch((error: unknown) => {

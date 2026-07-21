@@ -30,6 +30,24 @@ describe("plain-text view formatting", () => {
 		expect(transcriptLine(entry(5, "waves"))?.kind).toBe("action");
 	});
 
+	it("renders announcement modes as system lines", () => {
+		expect(transcriptLine(entry(7, "Beatrice"))).toEqual({
+			kind: "system",
+			name: "Anna",
+			body: "is now Beatrice",
+		});
+		expect(transcriptLine(entry(8, "3"), (id) => `Avatar${id}`)).toEqual({
+			kind: "system",
+			name: "Anna",
+			body: "changed avatar to Avatar3",
+		});
+		expect(transcriptLine(entry(8, "3"))?.body).toBe("changed avatar to 3");
+		expect(transcriptLine(entry(9, "lobby"))?.body).toBe(
+			"left and went to lobby",
+		);
+		expect(transcriptLine(entry(10, "lobby"))?.body).toBe("is back from lobby");
+	});
+
 	it("skips <Chr> pose lines and renders background changes as system lines", () => {
 		expect(transcriptLine(entry(1, "<Chr>"))).toBeNull();
 		expect(transcriptLine(entry(6, "space"))).toEqual({

@@ -24,7 +24,7 @@ async function stageJoinedRoom(page: import("@playwright/test").Page) {
 				roster.append(item);
 			}
 		}
-		for (const id of ["bodycam-heading", "bodycam", "background-picker"])
+		for (const id of ["bodycam", "background-picker"])
 			document.getElementById(id)?.removeAttribute("hidden");
 		const status = document.querySelector("#bodycam-status");
 		if (status) status.textContent = "Neutral";
@@ -95,6 +95,8 @@ for (const viewport of [
 			await page.locator('.toolbar-button[data-panel="more"]').click();
 			await expect(page.locator("#save-strip")).toBeVisible();
 			await expect(page.locator("#leave-room")).toBeVisible();
+			await expect(page.locator("#profile-name")).toBeVisible();
+			await expect(page.locator("#avatar-edit")).toBeVisible();
 			await expect(page.locator("#modern-toggle")).toBeVisible();
 			await expect(page.locator(".tweaks-hint")).toBeInViewport();
 			await page.locator('.toolbar-button[data-panel="pose"]').click();

@@ -82,6 +82,46 @@ describe("room wire protocol", () => {
 		expect(pickAvatar(1, everySeat)).toBeNull();
 	});
 
+	it("parses profile, depart, and join-from messages", () => {
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "profile", name: " Bea ", avatar: 4 }),
+			),
+		).toEqual({ type: "profile", name: "Bea", avatar: 4 });
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "profile", name: " ", avatar: 4 }),
+			),
+		).toBeNull();
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "profile", name: "x", avatar: 0 }),
+			),
+		).toBeNull();
+		expect(
+			parseClientMessage(JSON.stringify({ type: "depart", to: "lobby" })),
+		).toEqual({ type: "depart", to: "lobby" });
+		expect(
+			parseClientMessage(JSON.stringify({ type: "depart", to: "bad room" })),
+		).toBeNull();
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "join", name: "x", avatar: 1, from: "lobby" }),
+			),
+		).toEqual({ type: "join", name: "x", avatar: 1, from: "lobby" });
+		// a malformed origin room is dropped, not fatal
+		expect(
+			parseClientMessage(
+				JSON.stringify({
+					type: "join",
+					name: "x",
+					avatar: 1,
+					from: "bad room",
+				}),
+			),
+		).toEqual({ type: "join", name: "x", avatar: 1 });
+	});
+
 	it("accepts background changes and rejects bad names", () => {
 		expect(
 			parseClientMessage(JSON.stringify({ type: "background", name: "field" })),

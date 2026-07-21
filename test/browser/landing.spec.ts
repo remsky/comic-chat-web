@@ -17,7 +17,7 @@ test("landing page boots the app shell with the connect dialog", async ({
 	await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
 	await expect(page.locator(".titlebar-text")).toHaveText("Comic Chat Web");
 	await expect(page.locator("#join-form")).toBeVisible();
-	await expect(page.locator(".room-picker legend")).toBeVisible();
+	await expect(page.locator("#join-form .room-picker legend")).toBeVisible();
 	await expect(page.locator("#room")).toBeHidden();
 	// the grid fails soft: empty, no error
 	await expect(

@@ -17,6 +17,11 @@ export const ROOM_MODES = [1, 2, 3, 5] as const;
 export const HISTORY_CHUNK = 50;
 // stream entry whose text is a backdrop name, replayed so every client recomposes identically
 export const BACKGROUND_MODE = 6;
+// announcement entries persisted like BACKGROUND_MODE; name/text carry the change ("old is now new")
+export const NICK_MODE = 7;
+export const AVATAR_MODE = 8;
+export const DEPART_MODE = 9;
+export const ARRIVE_MODE = 10;
 // IDS_DEFAULT_BACKDROP (chat.rc:2327)
 export const DEFAULT_BACKGROUND = "field";
 // error reason shared so the client can tell a dropped message from a fatal rejection
@@ -55,7 +60,7 @@ export interface RoomListing {
 }
 
 export type ClientMessage =
-	| { type: "join"; name: string; avatar: number; sent?: number }
+	| { type: "join"; name: string; avatar: number; from?: string; sent?: number }
 	| {
 			type: "chat";
 			text: string;
@@ -64,7 +69,9 @@ export type ClientMessage =
 			sent?: number;
 	  }
 	| { type: "history"; before: number }
-	| { type: "background"; name: string };
+	| { type: "background"; name: string }
+	| { type: "profile"; name: string; avatar: number }
+	| { type: "depart"; to: string };
 
 export type ServerMessage =
 	| {
@@ -80,6 +87,7 @@ export type ServerMessage =
 	| { type: "history"; entries: ChatEntry[]; background: string }
 	| { type: "joined"; who: RosterEntry }
 	| { type: "left"; who: RosterEntry }
+	| { type: "profile"; was: RosterEntry; who: RosterEntry }
 	| { type: "error"; reason: string; retryAfter?: number };
 
 export function parseClientMessage(raw: unknown): ClientMessage | null {
@@ -92,17 +100,32 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 	}
 	if (typeof data !== "object" || data === null) return null;
 	const message = data as Record<string, unknown>;
-	if (message.type === "join") {
+	if (message.type === "join" || message.type === "profile") {
 		if (typeof message.name !== "string" || typeof message.avatar !== "number")
 			return null;
 		const name = message.name.trim().slice(0, MAX_NAME_LENGTH);
 		if (name.length === 0) return null;
 		const avatar = Math.trunc(message.avatar);
 		if (avatar < 1 || avatar > CAST_SIZE) return null;
+		if (message.type === "profile") return { type: "profile", name, avatar };
+		// like sent, a malformed origin room is dropped rather than fatal
+		const from =
+			typeof message.from === "string" && ROOM_NAME_PATTERN.test(message.from)
+				? message.from
+				: undefined;
 		const sent = sentStamp(message.sent);
-		return sent === undefined
-			? { type: "join", name, avatar }
-			: { type: "join", name, avatar, sent };
+		return {
+			type: "join",
+			name,
+			avatar,
+			...(from !== undefined ? { from } : {}),
+			...(sent !== undefined ? { sent } : {}),
+		};
+	}
+	if (message.type === "depart") {
+		if (typeof message.to !== "string" || !ROOM_NAME_PATTERN.test(message.to))
+			return null;
+		return { type: "depart", to: message.to };
 	}
 	if (message.type === "chat") {
 		if (typeof message.text !== "string" || typeof message.mode !== "number")

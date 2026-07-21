@@ -2,12 +2,17 @@
 
 import { DurableObject } from "cloudflare:workers";
 import {
+	ARRIVE_MODE,
+	AVATAR_MODE,
 	BACKGROUND_MODE,
 	type ChatEntry,
 	DEFAULT_BACKGROUND,
+	DEPART_MODE,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
+	NICK_MODE,
+	type PoseIndices,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
@@ -217,6 +222,38 @@ export class ChatRoomDO extends DurableObject<Env> {
 		ws.send(JSON.stringify(message));
 	}
 
+	// append one entry to the persisted stream and broadcast it to every seat
+	private record(
+		avatar: number,
+		name: string,
+		text: string,
+		mode: number,
+		pose?: PoseIndices,
+	): void {
+		const result = this.ctx.storage.sql.exec<{ seq: number }>(
+			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
+			avatar,
+			name,
+			text,
+			mode,
+			Date.now(),
+			pose?.expr ?? null,
+			pose?.gest ?? null,
+			pose?.req ?? null,
+			this.background,
+		);
+		const seq = result.one().seq;
+		if (seq > HISTORY_RETENTION)
+			this.ctx.storage.sql.exec(
+				"DELETE FROM messages WHERE seq <= ?",
+				seq - HISTORY_RETENTION,
+			);
+		this.broadcast({
+			type: "chat",
+			entry: { seq, avatar, name, text, mode, ...(pose ? { pose } : {}) },
+		});
+	}
+
 	private broadcast(message: ServerMessage): void {
 		const raw = JSON.stringify(message);
 		for (const ws of this.ctx.getWebSockets()) {
@@ -323,6 +360,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 				type: "joined",
 				who: { name: message.name, avatar },
 			});
+			if (message.from !== undefined && message.from !== this.roomName)
+				this.record(avatar, message.name, message.from, ARRIVE_MODE);
 			await this.reportPresence();
 			return;
 		}
@@ -361,6 +400,46 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.penalize(ws);
 			return;
 		}
+		if (message.type === "depart") {
+			this.record(seat.avatar, seat.name, message.to, DEPART_MODE);
+			return;
+		}
+		if (message.type === "profile") {
+			if (isProhibited(message.name)) {
+				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
+				return;
+			}
+			const avatar =
+				message.avatar === seat.avatar
+					? seat.avatar
+					: (pickAvatar(
+							message.avatar,
+							this.roster()
+								.map((entry) => entry.avatar)
+								.filter((taken) => taken !== seat.avatar),
+						) ?? seat.avatar);
+			if (message.name === seat.name && avatar === seat.avatar) {
+				// nothing changed (e.g. a taken avatar was requested); resnap the requester's UI
+				this.send(ws, { type: "profile", was: seat, who: seat });
+				return;
+			}
+			ws.serializeAttachment({
+				...this.stateOf(ws),
+				name: message.name,
+				avatar,
+			});
+			this.broadcast({
+				type: "profile",
+				was: { name: seat.name, avatar: seat.avatar },
+				who: { name: message.name, avatar },
+			});
+			// old nick announces the new one; the avatar line already speaks as the new nick
+			if (message.name !== seat.name)
+				this.record(avatar, seat.name, message.name, NICK_MODE);
+			if (avatar !== seat.avatar)
+				this.record(avatar, message.name, String(avatar), AVATAR_MODE);
+			return;
+		}
 		// background changes ride the message stream so replay recomposes identically everywhere
 		const text = message.type === "background" ? message.name : message.text;
 		const mode = message.type === "background" ? BACKGROUND_MODE : message.mode;
@@ -369,35 +448,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.background = message.name;
 			await this.ctx.storage.put("background", message.name);
 		}
-		const result = this.ctx.storage.sql.exec<{ seq: number }>(
-			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
-			seat.avatar,
-			seat.name,
-			text,
-			mode,
-			Date.now(),
-			pose?.expr ?? null,
-			pose?.gest ?? null,
-			pose?.req ?? null,
-			this.background,
-		);
-		const seq = result.one().seq;
-		if (seq > HISTORY_RETENTION)
-			this.ctx.storage.sql.exec(
-				"DELETE FROM messages WHERE seq <= ?",
-				seq - HISTORY_RETENTION,
-			);
-		this.broadcast({
-			type: "chat",
-			entry: {
-				seq,
-				avatar: seat.avatar,
-				name: seat.name,
-				text,
-				mode,
-				...(pose ? { pose } : {}),
-			},
-		});
+		this.record(seat.avatar, seat.name, text, mode, pose);
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
 			await this.reportPresence();
 	}
