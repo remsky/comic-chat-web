@@ -29,6 +29,8 @@ const MUTE_STEP_MS = 15_000;
 const MOD_CLOSE_STRIKES = 5;
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
+// a chat composed this long ago is a dead pipe's TCP flush, not a late delivery; measured on the sender's own clock
+const STALE_SEND_MS = 5_000;
 
 interface SocketSeat {
 	name: string;
@@ -43,6 +45,7 @@ interface SocketState {
 	strikes?: number;
 	modStrikes?: number;
 	mutedUntil?: number;
+	skew?: number;
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
@@ -52,6 +55,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
+		// answer client liveness pings in the runtime without waking the hibernated DO
+		ctx.setWebSocketAutoResponse(
+			new WebSocketRequestResponsePair("ping", "pong"),
+		);
 		ctx.blockConcurrencyWhile(async () => {
 			this.ctx.storage.sql.exec(`
 				CREATE TABLE IF NOT EXISTS messages (
@@ -111,6 +118,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			...(typeof state.mutedUntil === "number"
 				? { mutedUntil: state.mutedUntil }
 				: {}),
+			...(typeof state.skew === "number" ? { skew: state.skew } : {}),
 		};
 	}
 
@@ -277,6 +285,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 				...this.stateOf(ws),
 				name: message.name,
 				avatar,
+				...(message.sent !== undefined
+					? { skew: Date.now() - message.sent }
+					: {}),
 			});
 			this.send(ws, {
 				type: "welcome",
@@ -302,6 +313,15 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.send(ws, { type: "history", entries: this.history(message.before) });
 			return;
 		}
+		// silently drop dead letters: sends that surface long after the sender composed them
+		const skew = this.stateOf(ws).skew;
+		if (
+			message.type === "chat" &&
+			message.sent !== undefined &&
+			skew !== undefined &&
+			Date.now() - message.sent - skew > STALE_SEND_MS
+		)
+			return;
 		const mutedUntil = this.stateOf(ws).mutedUntil ?? 0;
 		if (Date.now() < mutedUntil) {
 			this.send(ws, {

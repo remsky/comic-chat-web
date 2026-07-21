@@ -43,6 +43,25 @@ describe("parseClientMessage pose", () => {
 		}
 	});
 
+	it("passes a valid sent stamp through and drops malformed ones", () => {
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "chat", text: "hi", mode: 1, sent: 1234.9 }),
+			),
+		).toEqual({ type: "chat", text: "hi", mode: 1, sent: 1234 });
+		for (const sent of [-5, 0, 0.5, Number.NaN, "now"])
+			expect(
+				parseClientMessage(
+					JSON.stringify({ type: "chat", text: "hi", mode: 1, sent }),
+				),
+			).toEqual({ type: "chat", text: "hi", mode: 1 });
+		expect(
+			parseClientMessage(
+				JSON.stringify({ type: "join", name: "kim", avatar: 2, sent: 99 }),
+			),
+		).toEqual({ type: "join", name: "kim", avatar: 2, sent: 99 });
+	});
+
 	it("still passes <Chr> reaction text", () => {
 		expect(
 			parseClientMessage(

@@ -48,8 +48,14 @@ export interface RoomListing {
 }
 
 export type ClientMessage =
-	| { type: "join"; name: string; avatar: number }
-	| { type: "chat"; text: string; mode: number; pose?: PoseIndices }
+	| { type: "join"; name: string; avatar: number; sent?: number }
+	| {
+			type: "chat";
+			text: string;
+			mode: number;
+			pose?: PoseIndices;
+			sent?: number;
+	  }
 	| { type: "history"; before: number }
 	| { type: "background"; name: string };
 
@@ -84,7 +90,10 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		if (name.length === 0) return null;
 		const avatar = Math.trunc(message.avatar);
 		if (avatar < 1 || avatar > CAST_SIZE) return null;
-		return { type: "join", name, avatar };
+		const sent = sentStamp(message.sent);
+		return sent === undefined
+			? { type: "join", name, avatar }
+			: { type: "join", name, avatar, sent };
 	}
 	if (message.type === "chat") {
 		if (typeof message.text !== "string" || typeof message.mode !== "number")
@@ -95,9 +104,14 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		if (!(ROOM_MODES as readonly number[]).includes(mode)) return null;
 		const pose = parsePose(message.pose);
 		if (pose === null) return null;
-		return pose
-			? { type: "chat", text, mode, pose }
-			: { type: "chat", text, mode };
+		const sent = sentStamp(message.sent);
+		return {
+			type: "chat",
+			text,
+			mode,
+			...(pose ? { pose } : {}),
+			...(sent !== undefined ? { sent } : {}),
+		};
 	}
 	if (message.type === "history") {
 		if (typeof message.before !== "number" || !Number.isFinite(message.before))
@@ -112,6 +126,13 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		return { type: "background", name: message.name };
 	}
 	return null;
+}
+
+// the sender's clock stamp on joins and chats; malformed stamps are dropped, not fatal
+function sentStamp(value: unknown): number | undefined {
+	return typeof value === "number" && Number.isFinite(value) && value >= 1
+		? Math.trunc(value)
+		: undefined;
 }
 
 function uchar(value: unknown): number | null {
