@@ -29,7 +29,10 @@
 		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"assets:backgrounds": "node tools/avb/generate-bg-assets.ts",
-		"format": "biome format --write ."
+		"format": "biome format --write .",
+		"release": "npm version patch -m \"chore: v%s\" && git push --follow-tags",
+		"release:minor": "npm version minor -m \"chore: v%s\" && git push --follow-tags",
+		"release:major": "npm version major -m \"chore: v%s\" && git push --follow-tags"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.4",

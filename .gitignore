@@ -5,3 +5,4 @@ test-results/
 .wrangler/
 IRC_STYLE_ANNOTATIONS.md
 .dev.vars
+.claude/commands/*
