@@ -6,7 +6,7 @@
 **Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
-  <img src="https://img.shields.io/badge/tests-192%20passing-forestgreen" alt="192 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-200%20passing-forestgreen" alt="200 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
@@ -65,10 +65,19 @@ Suggested best-effort default settings against roving bots or bad actors are lis
 ```sh
 npm ci
 npm run dev          # Vite dev server at localhost:5173
-npm test             # engine unit + golden trace suites
+npm test             # both vitest projects: node + worker
 npm run test:browser # Playwright desktop + mobile smoke
 npm run check        # biome + strict tsc over src, worker, test, and tools
 ```
+
+`npm test` runs two vitest projects, selectable with `--project`:
+
+| Project | Runs in | Covers |
+| --- | --- | --- |
+| `node` (`test/`) | node | Engine units and golden trace suites |
+| `worker` (`test/worker/`) | workerd, via `@cloudflare/vitest-pool-workers` | Durable Object behavior against real SQL storage and the live WebSocket protocol |
+
+Worker tests get isolated storage per test and read their bindings from `wrangler.jsonc`. They typecheck under their own `test/worker/tsconfig.json`, since workers types collide with the node and DOM types the rest of the suite uses.
 
 </details>
 

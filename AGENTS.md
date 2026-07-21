@@ -19,12 +19,12 @@ The general instructions must also still be followed, same as any contributor, a
 - `src/protocol/room.ts` - wire protocol, room defaults, and error-reason constants shared by client and worker.
 - `worker/` - Cloudflare Worker. `room.ts` is the chat room Durable Object, `directory.ts` the room directory DO, `moderation.ts` the content filter.
 - `tools/avb/` - asset pipeline: parses the original `.avb`/`.bgb` binaries into the committed PNGs and test fixtures.
-- `test/` - vitest unit tests. `test/browser/` - Playwright specs against the built app.
+- `test/` - vitest unit tests, node project. `test/worker/` - Durable Object tests, run in workerd. `test/browser/` - Playwright specs against the built app.
 
 ## Commands
 
-- Unit tests: `npm test`. Browser tests: `npm run test:browser` (builds, then serves a preview on :4173).
-- Format and lint: `npm run format` then `npm run check` (Biome plus tsc for app, tools, and worker).
+- Unit tests: `npm test` (node and worker projects; `--project worker` for the Durable Object ones alone). Browser tests: `npm run test:browser` (builds, then serves a preview on :4173).
+- Format and lint: `npm run format` then `npm run check` (Biome plus tsc for app, tools, worker, and worker tests).
 - Dev: `npm run preview:worker` runs the built app with live rooms. `npm run dev` for UI-only hot reload; `npm run dev:api` alongside it if hot reload needs live rooms (vite proxies `/api` to :8787).
 
 ## Conventions

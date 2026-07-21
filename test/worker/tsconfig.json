@@ -3,13 +3,12 @@
 		"target": "ES2022",
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"allowImportingTsExtensions": true,
 		"strict": true,
 		"noUncheckedIndexedAccess": true,
 		"noEmit": true,
 		"skipLibCheck": true,
-		"types": ["node", "vite/client"]
+		"types": ["@cloudflare/vitest-pool-workers/types"],
+		"lib": ["ES2022"]
 	},
-	"include": ["src", "test"],
-	"exclude": ["test/worker"]
+	"include": ["./**/*.ts", "../../worker-configuration.d.ts"]
 }

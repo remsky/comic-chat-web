@@ -7,7 +7,11 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!worker-configuration.d.ts"]
+		"includes": [
+			"**",
+			"!worker-configuration.d.ts",
+			"!.claude/settings.local.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,

@@ -20,7 +20,7 @@
 		"test": "vitest run",
 		"test:browser": "playwright test",
 		"test:watch": "vitest",
-		"check": "biome check . && tsc && tsc -p tools/avb && tsc -p worker",
+		"check": "biome check . && tsc && tsc -p tools/avb && tsc -p worker && tsc -p test/worker",
 		"dev": "vite",
 		"dev:api": "wrangler dev --port 8787",
 		"build": "tsc && vite build",
@@ -36,6 +36,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.4",
+		"@cloudflare/vitest-pool-workers": "^0.18.6",
 		"@playwright/test": "^1.61.1",
 		"@types/node": "^26.1.1",
 		"typescript": "^7.0.2",

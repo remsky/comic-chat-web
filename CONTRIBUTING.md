@@ -37,6 +37,8 @@ Before submitting changes, please ensure all tests pass as this is an automated 
 npm test
 ```
 
+This covers two vitest projects: `node` for the engine and protocol, and `worker` for Durable Object behavior inside workerd. Narrow to one with `npm test -- --project worker`.
+
 Browser tests run against the built app and need the Playwright browser once:
 
 ```bash
