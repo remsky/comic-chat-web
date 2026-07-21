@@ -109,10 +109,10 @@ Both steps are deterministic and byte-reproducible, sourced from a sibling check
 
 ## Related projects to check out
 
-- [comic-chat-macos](https://github.com/TimBroddin/comic-chat-macos): a macOS port of Comic Chat
-- [comicchat](https://github.com/gyng/comicchat) (archived): a quick and dirty web client and node.js server based on Comic Chat
-- [comic-chat](https://github.com/codegod100/comic-chat): a fork of the official Microsoft source starting a Qt6 desktop port
-- [comic-chat-deslopped](https://github.com/theAlexes/comic-chat-deslopped): a fork of the official Microsoft source with "AI slop removed" and modern Windows build fixes
+- [TimBroddin/comic-chat-macos](https://github.com/TimBroddin/comic-chat-macos): a macOS port of Comic Chat
+- [gyng/comicchat](https://github.com/gyng/comicchat) (archived): quick and dirty web client and node.js server based on Comic Chat
+- [codegod100/comic-chat](https://github.com/codegod100/comic-chat): fork of the official Microsoft source starting a Qt6 desktop port
+- [theAlexes/comic-chat-deslopped](https://github.com/theAlexes/comic-chat-deslopped): fork of the official Microsoft source wihtout AI cruft, with Windows build fixes
 
 ## License and attributions
 
