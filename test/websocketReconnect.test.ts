@@ -10,7 +10,7 @@ describe("WebSocket reconnect policy", () => {
 	it("uses bounded exponential backoff", () => {
 		expect(
 			Array.from({ length: 7 }, (_, attempt) => reconnectDelay(attempt)),
-		).toEqual([500, 1000, 2000, 4000, 8000, 10_000, 10_000]);
+		).toEqual([500, 1000, 2000, 4000, 5000, 5000, 5000]);
 	});
 
 	it("retries transient failures but not clean or policy closes", () => {
