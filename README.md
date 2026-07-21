@@ -3,17 +3,17 @@
   Comic Chat Web
 </h1>
 
-**Modern TypeScript port of the 1996 Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
+**Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
-  <img src="https://img.shields.io/badge/tests-191%20passing-forestgreen" alt="191 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-192%20passing-forestgreen" alt="192 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
 Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
 
 ## Features
-  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="40"></a>
+  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
 
 The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) by David Kurlander, Tim Skelly, and David Salesin. 
 
@@ -23,9 +23,10 @@ Validated against traces from an instrumented C++ client of the original to accu
 - Emotion detection, speech balloon splines
 - Avatar posing, reactive angles and camera
 
-> [!IMPORTANT]
-> Work in progress. Rooms are anonymous: no accounts, authentication, moderation. 
-> Despite best efforts, rate safety on a billed plan is not guaranteed.
+> [!NOTE]
+> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. 
+> 
+> Deploy usage defaults are intentionally bounded by the fixed room list, but can be extended to create-on-join. If deploying publically; add Cloudflare rate-limiting rules (demo settings described below).
 
 ## Technical
 
@@ -41,8 +42,12 @@ npm install
 npm run preview:worker
 ```
 
+</details>
+
 <details>
 <summary>Deployment Details</summary>
+
+Suggested best-effort default settings against roving bots or bad actors are listed below.
 
 - Live rooms operate over Cloudflare Durable Object WebSockets
     - Bounded, chunked message history with per-socket abuse limit
@@ -50,7 +55,7 @@ npm run preview:worker
 - Only the rooms in the `ROOMS` var (`wrangler.jsonc`, or the dashboard) accept connections, bounding how many Durable Objects a public deploy can create.
 - Each room caps active sockets (12) and per-socket send rate.
 - New joins receive the latest 50 messages and load older history in 50-message chunks. Each room retains at most 500 messages.
-- For a public deployment, add a Cloudflare rate-limiting rule for repeated upgrade attempts to `/api/rooms/*/websocket`.
+- For a public deployment, add a Cloudflare rate-limiting rule on `/api/*` and a usage notification: worker invocations could scale with heavy automated abuse.
 
 </details>
 
@@ -59,10 +64,10 @@ npm run preview:worker
 
 ```sh
 npm ci
-npm run dev          # Vite gallery at localhost:5173
+npm run dev          # Vite dev server at localhost:5173
 npm test             # engine unit + golden trace suites
 npm run test:browser # Playwright desktop + mobile smoke
-npm run check        # biome + strict tsc over src, test, and tools
+npm run check        # biome + strict tsc over src, worker, test, and tools
 ```
 
 </details>
@@ -87,9 +92,10 @@ The engine is validated against JSONL traces from an instrumented C++ client, th
 <details>
 <summary>Art pipeline</summary>
 
-Both steps are deterministic and byte-reproducible, sourced from a sibling checkout of the [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness):
+All steps are deterministic and byte-reproducible, sourced from a sibling checkout of the [Comic Chat trace harness](https://github.com/remsky/comic-chat/tree/trace-harness):
 
 - `npm run assets:avatars`: packed per-character avatar atlases and runtime manifest in `public/assets/avatars/` from the original `.avb` files.
+- `npm run assets:backgrounds`: backdrop PNGs in `public/assets/backgrounds/` from the original `.bgb` files.
 - `npm run fixtures:avatars`: the test fixture.
 
 </details>
@@ -101,7 +107,7 @@ Both steps are deterministic and byte-reproducible, sourced from a sibling check
 <table>
   <tr>
     <td width="40%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
-    <td width="41%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
+    <td width="29%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
   </tr>
 </table>
 </details>
@@ -112,7 +118,8 @@ Both steps are deterministic and byte-reproducible, sourced from a sibling check
 - [TimBroddin/comic-chat-macos](https://github.com/TimBroddin/comic-chat-macos): a macOS port of Comic Chat
 - [gyng/comicchat](https://github.com/gyng/comicchat) (archived): quick and dirty web client and node.js server based on Comic Chat
 - [codegod100/comic-chat](https://github.com/codegod100/comic-chat): fork of the official Microsoft source starting a Qt6 desktop port
-- [theAlexes/comic-chat-deslopped](https://github.com/theAlexes/comic-chat-deslopped): fork of the official Microsoft source wihtout AI cruft, with Windows build fixes
+- [comicchat/comicchat](https://github.com/comicchat/comicchat): unofficial TypeScript port from the official source; connects to IRC servers over WebSockets, no backend
+- [theAlexes/comic-chat-deslopped](https://github.com/theAlexes/comic-chat-deslopped): fork of the official Microsoft source sans AI cruft; with Windows build fixes
 
 ## License and attributions
 

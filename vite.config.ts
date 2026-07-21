@@ -1,15 +1,6 @@
-import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-	build: {
-		rollupOptions: {
-			input: {
-				main: fileURLToPath(new URL("./index.html", import.meta.url)),
-				gallery: fileURLToPath(new URL("./gallery.html", import.meta.url)),
-			},
-		},
-	},
 	// so `vite` (HMR) can borrow the worker's /api + room websockets from a `wrangler dev` on :8787
 	server: {
 		proxy: {
