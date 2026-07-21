@@ -6,7 +6,12 @@ export const CAST_SIZE = 31;
 // room names share one charset across the websocket route, the allowlist, and the join field
 export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
 // the bounded default room set for a demo deploy; override with the worker ROOMS var
-export const DEFAULT_ROOMS = ["lobby", "comics", "arcade", "lounge"] as const;
+export const DEFAULT_ROOMS = [
+	"lobby",
+	"pen-pals",
+	"dial-up",
+	"crack-a-joke",
+] as const;
 export const ROOM_MODES = [1, 2, 3, 5] as const;
 // welcome carries the newest chunk; older chunks arrive via history requests
 export const HISTORY_CHUNK = 50;

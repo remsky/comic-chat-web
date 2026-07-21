@@ -10,7 +10,7 @@
 	},
 	// bounded default room set: only these rooms accept connections; keep it small to cap how many DOs a public deploy can create
 	"vars": {
-		"ROOMS": ["lobby", "comics", "arcade", "lounge"]
+		"ROOMS": ["lobby", "pen-pals", "dial-up", "crack-a-joke"]
 	},
 	"durable_objects": {
 		"bindings": [
