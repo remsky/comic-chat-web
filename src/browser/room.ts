@@ -19,6 +19,7 @@ import {
 	type ChatEntry,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
+	NAME_BLOCKED_REASON,
 	type PoseIndices,
 	parseRoomListings,
 	parseServerMessage,
@@ -445,7 +446,7 @@ function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 // the room the user wants selected, honored once the directory options load
 let desiredRoom = new URLSearchParams(location.search).get("room") ?? "";
 
-// compact relative stamp for empty rooms; the directory forgets rooms after a day, so hours suffice
+// the directory forgets rooms after a day; hours suffice
 function lastActiveLabel(active: number): string {
 	const minutes = Math.max(0, Math.round((Date.now() - active) / 60_000));
 	if (minutes < 1) return "active just now";
@@ -453,9 +454,9 @@ function lastActiveLabel(active: number): string {
 	return `active ${Math.round(minutes / 60)}h ago`;
 }
 
-// the Chat Room List, directory-backed instead of IRC LIST; fills the room dropdown
+// the IRC LIST stand-in; fills the room grid
 async function refreshRoomList(): Promise<void> {
-	const select = element<HTMLSelectElement>("join-room");
+	const options = element("join-room-options");
 	let listings: ReturnType<typeof parseRoomListings>;
 	try {
 		const response = await fetch("/api/rooms");
@@ -463,36 +464,48 @@ async function refreshRoomList(): Promise<void> {
 	} catch {
 		listings = null;
 	}
-	// keep the current selection across a failed or empty refresh so the field never blanks out
+	// keep current options on a failed refresh
 	if (!listings || listings.length === 0) return;
-	const keep = select.value || desiredRoom;
-	select.replaceChildren(
+	const keep =
+		options.querySelector<HTMLInputElement>("input:checked")?.value ||
+		desiredRoom;
+	options.replaceChildren(
 		...listings.map((listing) => {
-			const option = document.createElement("option");
-			option.value = listing.name;
-			const detail =
+			const label = document.createElement("label");
+			label.className = "room-option";
+			const radio = document.createElement("input");
+			radio.type = "radio";
+			radio.name = "room";
+			radio.value = listing.name;
+			const name = document.createElement("span");
+			name.className = "room-option-name";
+			name.textContent = listing.name;
+			const detail = document.createElement("span");
+			detail.className = "room-option-detail";
+			detail.textContent =
 				listing.members === 1
 					? "1 member"
-					: listing.members === 0 && listing.active > 0
-						? lastActiveLabel(listing.active)
-						: `${listing.members} members`;
-			option.textContent = `${listing.name} (${detail})`;
-			return option;
+					: listing.members > 1
+						? `${listing.members} members`
+						: listing.active > 0
+							? lastActiveLabel(listing.active)
+							: "empty";
+			label.append(radio, name, detail);
+			return label;
 		}),
 	);
-	if (keep && listings.some((listing) => listing.name === keep))
-		select.value = keep;
+	const radios = [...options.querySelectorAll<HTMLInputElement>("input")];
+	const target = radios.find((input) => input.value === keep) ?? radios[0];
+	if (target) target.checked = true;
 	desiredRoom = "";
 }
 
 function wireRoomList(): void {
-	// refresh counts when the user opens the dropdown, so they stay fresh without a manual button
-	element<HTMLSelectElement>("join-room").addEventListener(
-		"pointerdown",
-		() => {
-			void refreshRoomList();
-		},
-	);
+	// slow poll keeps the visible stamps fresh
+	window.setInterval(() => {
+		if (document.hidden || document.body.classList.contains("joined")) return;
+		void refreshRoomList();
+	}, 30_000);
 	void refreshRoomList();
 }
 
@@ -713,11 +726,12 @@ async function main(): Promise<void> {
 		strip.scrollTop = strip.scrollHeight;
 	});
 
-	const roomInput = element<HTMLSelectElement>("join-room");
 	element<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
 		event.preventDefault();
-		// the dropdown only offers directory rooms, so any selected value is a valid room
-		const room = roomInput.value.trim();
+		const room =
+			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
+				'input[name="room"]:checked',
+			)?.value ?? "";
 		const name = element<HTMLInputElement>("join-name").value.trim();
 		const avatar = Number(
 			element<HTMLFormElement>("join-form").querySelector<HTMLInputElement>(
@@ -732,6 +746,7 @@ async function main(): Promise<void> {
 			return;
 		}
 		avatarError.hidden = true;
+		element("join-name-error").hidden = true;
 		element<HTMLFormElement>("join-form")
 			.querySelector("button")
 			?.setAttribute("disabled", "");
@@ -747,6 +762,7 @@ async function main(): Promise<void> {
 		let suspectTimer: number | undefined;
 		let seatAvatar: number | null = null;
 		let hasWelcomed = false;
+		let joinFailed = false;
 		let noticeTimer: number | undefined;
 		let filterTimer: number | undefined;
 		let lastComposerSend: string | null = null;
@@ -990,6 +1006,22 @@ async function main(): Promise<void> {
 			}, 1000);
 		};
 
+		// a refused join hands the form back instead of dead-ending in the status line
+		const failJoin = (reason: string): void => {
+			joinFailed = true;
+			reconnectAllowed = false;
+			socket?.close(1000, "join refused");
+			const nameError = element("join-name-error");
+			nameError.textContent =
+				reason === NAME_BLOCKED_REASON
+					? "That nickname is blocked. Try another."
+					: `Couldn't join: ${reason}.`;
+			nameError.hidden = false;
+			element<HTMLFormElement>("join-form")
+				.querySelector("button")
+				?.removeAttribute("disabled");
+		};
+
 		const handleMessage = (message: MessageEvent): void => {
 			// any frame (including the raw "pong") proves the socket is still alive
 			clearWatchdog();
@@ -1098,6 +1130,8 @@ async function main(): Promise<void> {
 					notifyRateLimited();
 				} else if (parsed.reason === MESSAGE_BLOCKED_REASON && hasWelcomed) {
 					notifyBlocked(parsed.retryAfter);
+				} else if (!hasWelcomed) {
+					failJoin(parsed.reason);
 				} else {
 					status.textContent = parsed.reason;
 					delete status.dataset.ready;
@@ -1138,6 +1172,7 @@ async function main(): Promise<void> {
 				clearWatchdog();
 				socket = null;
 				historyPending = false;
+				if (joinFailed) return;
 				const detail = describeWebSocketClose(event.code, event.reason);
 				const delay = reconnectDelay(reconnectAttempt);
 				if (!shouldReconnect(event.code)) {

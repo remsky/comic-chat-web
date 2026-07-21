@@ -65,13 +65,12 @@ for (const viewport of [
 		await stageJoinedRoom(page);
 
 		await expectNoHorizontalOverflow(page);
-		for (const selector of [
-			".titlebar",
-			".workspace",
-			".composer",
-			".legal-footer",
-		])
+		for (const selector of [".titlebar", ".workspace", ".composer"])
 			await expect(page.locator(selector)).toBeInViewport();
+		// joined mobile hides the legal line; panels own the screen
+		if (viewport.width <= 760)
+			await expect(page.locator(".legal-footer")).toBeHidden();
+		else await expect(page.locator(".legal-footer")).toBeInViewport();
 
 		const panelFit = await page
 			.locator(".panel")
@@ -91,12 +90,23 @@ for (const viewport of [
 			),
 		});
 
-		await page.locator(".tweaks-hint").scrollIntoViewIfNeeded();
-		await expect(page.locator(".tweaks-hint")).toBeInViewport();
-		await expect(page.locator("#save-strip")).toBeVisible();
-		await expect(page.locator("#leave-room")).toBeVisible();
-		await expect(page.locator("#modern-toggle")).toBeVisible();
-		await expect(page.locator("#bodycam-canvas")).toBeVisible();
+		// narrow widths park the sidebar in the tap-open sheet
+		if (viewport.width <= 760) {
+			await page.locator('.toolbar-button[data-panel="more"]').click();
+			await expect(page.locator("#save-strip")).toBeVisible();
+			await expect(page.locator("#leave-room")).toBeVisible();
+			await expect(page.locator("#modern-toggle")).toBeVisible();
+			await expect(page.locator(".tweaks-hint")).toBeInViewport();
+			await page.locator('.toolbar-button[data-panel="pose"]').click();
+			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+		} else {
+			await page.locator(".tweaks-hint").scrollIntoViewIfNeeded();
+			await expect(page.locator(".tweaks-hint")).toBeInViewport();
+			await expect(page.locator("#save-strip")).toBeVisible();
+			await expect(page.locator("#leave-room")).toBeVisible();
+			await expect(page.locator("#modern-toggle")).toBeVisible();
+			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+		}
 
 		await page.screenshot({
 			path: testInfo.outputPath(

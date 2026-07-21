@@ -7,6 +7,7 @@ import {
 	DEFAULT_BACKGROUND,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
+	NAME_BLOCKED_REASON,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
@@ -269,7 +270,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				return;
 			}
 			if (isProhibited(message.name)) {
-				this.send(ws, { type: "error", reason: "name blocked" });
+				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
 			const avatar = pickAvatar(

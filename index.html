@@ -261,10 +261,6 @@
 				<header class="dialog-titlebar">Connect</header>
 				<form id="join-form" class="dialog-body">
 					<label>
-						Room
-						<select id="join-room" name="room" required></select>
-					</label>
-					<label>
 						Nickname
 						<input
 							id="join-name"
@@ -275,6 +271,11 @@
 							autocomplete="nickname"
 						/>
 					</label>
+					<p id="join-name-error" class="field-error" role="alert" hidden></p>
+					<fieldset class="room-picker">
+						<legend>Room</legend>
+						<div id="join-room-options" class="room-options"></div>
+					</fieldset>
 					<fieldset id="join-avatar" class="character-picker">
 						<legend>Character</legend>
 						<div class="character-options"></div>

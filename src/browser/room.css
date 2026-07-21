@@ -616,6 +616,80 @@ body:not(.modern-tweaks) .background-picker-grid {
 	transform: translateY(1px);
 }
 
+.room-picker {
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.room-picker legend {
+	margin-bottom: 0.2rem;
+	padding: 0;
+	font-weight: 700;
+}
+
+.room-options {
+	display: grid;
+	padding: 1px;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	box-shadow: inset 1px 1px 0 #000;
+	background: #fff;
+}
+
+.dialog-body .room-option {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: baseline;
+	gap: 0.5rem;
+	min-width: 0;
+	padding: 0.2rem 0.45rem;
+	cursor: pointer;
+	font-weight: 400;
+}
+
+.room-option input {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.room-option-name {
+	overflow: hidden;
+	font-size: 0.75rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.room-option-detail {
+	overflow: hidden;
+	color: #333;
+	font-size: 0.65rem;
+	font-style: italic;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.room-option:has(input:checked) {
+	background: #1084d0;
+	color: #fff;
+}
+
+.room-option:has(input:checked) .room-option-detail {
+	color: #d6e9f8;
+}
+
+.room-option:has(input:focus-visible) {
+	outline: 1px dotted #000;
+	outline-offset: -2px;
+}
+
 /* the sidebar background grid reuses the character tile look; base tile box is scoped to the dialog */
 .background-picker-grid .character-options {
 	grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
@@ -669,18 +743,18 @@ body:not(.modern-tweaks) .background-picker-grid {
 	opacity: 1;
 }
 
+/* the Win95 status bar: full-width strip, sunken text field */
 .status {
 	position: fixed;
-	right: 0.5rem;
-	bottom: 2.5rem;
-	max-width: calc(100% - 1rem);
+	right: 0;
+	bottom: 0;
+	left: 0;
 	margin: 0;
-	padding: 0.35rem 0.6rem;
-	border: 1px solid;
-	border-color: #dfdfdf #000 #000 #dfdfdf;
+	padding: 0.25rem 0.6rem;
+	border: 3px solid #c0c0c0;
 	box-shadow:
-		inset 1px 1px 0 #fff,
-		inset -1px -1px 0 #808080;
+		inset 1px 1px 0 #808080,
+		inset -1px -1px 0 #fff;
 	background: #c0c0c0;
 	font-size: 0.75rem;
 	overflow-wrap: anywhere;

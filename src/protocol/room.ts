@@ -23,6 +23,8 @@ export const DEFAULT_BACKGROUND = "field";
 export const RATE_LIMIT_REASON = "message rate limit exceeded";
 // content-filter rejection; the client shows a countdown from the error's retryAfter
 export const MESSAGE_BLOCKED_REASON = "message blocked";
+// join rejection; the client surfaces it at the nickname field
+export const NAME_BLOCKED_REASON = "name blocked";
 
 // SayEntry's m_expr/m_gest/m_req pose triple (histent.cpp:44-50), sent with each line
 export interface PoseIndices {
