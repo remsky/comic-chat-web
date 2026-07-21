@@ -351,6 +351,13 @@
 .dialog {
 	pointer-events: auto;
 	width: min(20rem, 90vw);
+	/* capped so the dialog can never grow tall enough to cover the fixed footer beneath it; scrolls internally instead */
+	max-height: calc(
+		var(--app-height, 100dvh) -
+		var(--footer-height, 2.5rem) -
+		3.5rem
+	);
+	overflow-y: auto;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
 	box-shadow:

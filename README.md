@@ -106,8 +106,9 @@ All steps are deterministic and byte-reproducible, sourced from a sibling checko
 
 <table>
   <tr>
-    <td width="40%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
-    <td width="29%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
+    <td width="41%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="21.5%"><img src="assets/wip-mobile-screenshot.png" alt="Comic Chat Web mobile view showing a three-panel conversation with the mobile toolbar" width="100%" border="1"></td>
+    <td width="29.5%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
   </tr>
 </table>
 </details>

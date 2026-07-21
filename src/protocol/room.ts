@@ -71,11 +71,13 @@ export type ServerMessage =
 			type: "welcome";
 			avatar: number;
 			background: string;
+			// backdrop in effect just before history[0], so replay starts where the room was
+			historyBackground: string;
 			roster: RosterEntry[];
 			history: ChatEntry[];
 	  }
 	| { type: "chat"; entry: ChatEntry }
-	| { type: "history"; entries: ChatEntry[] }
+	| { type: "history"; entries: ChatEntry[]; background: string }
 	| { type: "joined"; who: RosterEntry }
 	| { type: "left"; who: RosterEntry }
 	| { type: "error"; reason: string; retryAfter?: number };

@@ -206,8 +206,8 @@ class RoomView {
 		};
 	}
 
-	// welcome's current room backdrop; historical changes replay through feed
-	setBackground(name: string): void {
+	// the backdrop a replayed chunk starts from; changes within it replay through feed
+	setHistoryBackground(name: string): void {
 		this.baseBackdrop = name;
 		this.composition.page.backdrop = name;
 	}
@@ -555,11 +555,18 @@ function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 function trackVisibleViewport(): void {
 	const viewport = window.visualViewport;
 	if (!viewport) return;
+	const footer = document.querySelector<HTMLElement>(".legal-footer");
 	const apply = () => {
 		document.documentElement.style.setProperty(
 			"--app-height",
 			`${viewport.height}px`,
 		);
+		// reserve room in the join dialog's scroll area so it can never grow over the fixed footer beneath it
+		if (footer)
+			document.documentElement.style.setProperty(
+				"--footer-height",
+				`${footer.offsetHeight}px`,
+			);
 		// follow any iOS scroll offset so the pinned app stays glued to the visible area
 		document.body.style.transform = `translateY(${viewport.offsetTop}px)`;
 	};
@@ -1049,7 +1056,9 @@ async function main(): Promise<void> {
 				const firstSeq = parsed.history[0]?.seq;
 				if (hasWelcomed && historyHasGap(previousNewestSeq, firstSeq)) {
 					// the outage outran the welcome chunk; recompose wholesale so the strip matches a fresh join
-					view.setBackground(parsed.background ?? "");
+					view.setHistoryBackground(
+						parsed.historyBackground ?? parsed.background ?? "",
+					);
 					view.reset(parsed.history);
 					oldestSeq = firstSeq ?? null;
 					historyDone = parsed.history.length < HISTORY_CHUNK;
@@ -1062,7 +1071,9 @@ async function main(): Promise<void> {
 						historyDone = parsed.history.length < HISTORY_CHUNK;
 					}
 				} else {
-					view.setBackground(parsed.background ?? "");
+					view.setHistoryBackground(
+						parsed.historyBackground ?? parsed.background ?? "",
+					);
 					for (const entry of parsed.history) view.compose(entry);
 					oldestSeq = firstSeq ?? null;
 					historyDone = parsed.history.length < HISTORY_CHUNK;
@@ -1102,6 +1113,8 @@ async function main(): Promise<void> {
 					historyDone = true;
 					return;
 				}
+				// the older chunk reaches further back, so the rebuild reseeds from its backdrop
+				view.setHistoryBackground(parsed.background ?? "");
 				view.prepend(parsed.entries);
 				oldestSeq = parsed.entries[0]?.seq ?? oldestSeq;
 				historyDone = parsed.entries.length < HISTORY_CHUNK;

@@ -53,6 +53,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 	// ctx.id.name is unavailable after a hibernation wake, so the name is persisted on connect
 	private roomName: string | null = null;
 	private reportedAt = 0;
+	// mirrors the stored background so tagging each insert costs no storage read
+	private background = DEFAULT_BACKGROUND;
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
@@ -71,7 +73,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 					at INTEGER NOT NULL,
 					expr INTEGER,
 					gest INTEGER,
-					req INTEGER
+					req INTEGER,
+					bg TEXT
 				)
 			`);
 			const columns = this.ctx.storage.sql
@@ -84,6 +87,22 @@ export class ChatRoomDO extends DurableObject<Env> {
 						`ALTER TABLE messages ADD COLUMN ${column} INTEGER`,
 					);
 			}
+			// every row carries the backdrop in effect when it landed, so a chunk replays without reading room state
+			if (!columns.includes("bg")) {
+				this.ctx.storage.sql.exec("ALTER TABLE messages ADD COLUMN bg TEXT");
+				this.ctx.storage.sql.exec(
+					`UPDATE messages SET bg = COALESCE(
+						(SELECT prior.text FROM messages AS prior
+							WHERE prior.mode = ? AND prior.seq <= messages.seq
+							ORDER BY prior.seq DESC LIMIT 1),
+						?)`,
+					BACKGROUND_MODE,
+					DEFAULT_BACKGROUND,
+				);
+			}
+			this.background =
+				(await this.ctx.storage.get<string>("background")) ??
+				DEFAULT_BACKGROUND;
 		});
 	}
 
@@ -205,47 +224,48 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 	}
 
-	private history(before?: number): ChatEntry[] {
+	// background is the chunk's replay seed; an empty chunk falls back to where the room stands now
+	private history(before?: number): {
+		entries: ChatEntry[];
+		background: string;
+	} {
+		type Row = {
+			seq: number;
+			avatar: number;
+			name: string;
+			text: string;
+			mode: number;
+			expr: number | null;
+			gest: number | null;
+			req: number | null;
+			bg: string | null;
+		};
+		const columns = "seq, avatar, name, text, mode, expr, gest, req, bg";
 		const rows =
 			before === undefined
 				? this.ctx.storage.sql
-						.exec<{
-							seq: number;
-							avatar: number;
-							name: string;
-							text: string;
-							mode: number;
-							expr: number | null;
-							gest: number | null;
-							req: number | null;
-						}>(
-							"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages ORDER BY seq DESC LIMIT ?",
+						.exec<Row>(
+							`SELECT ${columns} FROM messages ORDER BY seq DESC LIMIT ?`,
 							HISTORY_CHUNK,
 						)
 						.toArray()
 				: this.ctx.storage.sql
-						.exec<{
-							seq: number;
-							avatar: number;
-							name: string;
-							text: string;
-							mode: number;
-							expr: number | null;
-							gest: number | null;
-							req: number | null;
-						}>(
-							"SELECT seq, avatar, name, text, mode, expr, gest, req FROM messages WHERE seq < ? ORDER BY seq DESC LIMIT ?",
+						.exec<Row>(
+							`SELECT ${columns} FROM messages WHERE seq < ? ORDER BY seq DESC LIMIT ?`,
 							before,
 							HISTORY_CHUNK,
 						)
 						.toArray();
-		return rows
-			.reverse()
-			.map(({ expr, gest, req, ...entry }) =>
+		rows.reverse();
+		const background = rows[0]?.bg ?? this.background;
+		return {
+			entries: rows.map(({ expr, gest, req, bg: _bg, ...entry }) =>
 				expr !== null && gest !== null && req !== null
 					? { ...entry, pose: { expr, gest, req } }
 					: entry,
-			);
+			),
+			background,
+		};
 	}
 
 	async webSocketMessage(
@@ -290,14 +310,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 					? { skew: Date.now() - message.sent }
 					: {}),
 			});
+			const welcomeHistory = this.history();
 			this.send(ws, {
 				type: "welcome",
 				avatar,
-				background:
-					(await this.ctx.storage.get<string>("background")) ??
-					DEFAULT_BACKGROUND,
+				background: this.background,
+				historyBackground: welcomeHistory.background,
 				roster: this.roster(),
-				history: this.history(),
+				history: welcomeHistory.entries,
 			});
 			this.broadcast({
 				type: "joined",
@@ -311,7 +331,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "history") {
-			this.send(ws, { type: "history", entries: this.history(message.before) });
+			const chunk = this.history(message.before);
+			this.send(ws, {
+				type: "history",
+				entries: chunk.entries,
+				background: chunk.background,
+			});
 			return;
 		}
 		// silently drop dead letters: sends that surface long after the sender composed them
@@ -340,10 +365,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 		const text = message.type === "background" ? message.name : message.text;
 		const mode = message.type === "background" ? BACKGROUND_MODE : message.mode;
 		const pose = message.type === "background" ? undefined : message.pose;
-		if (message.type === "background")
+		if (message.type === "background") {
+			this.background = message.name;
 			await this.ctx.storage.put("background", message.name);
+		}
 		const result = this.ctx.storage.sql.exec<{ seq: number }>(
-			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
+			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
 			seat.avatar,
 			seat.name,
 			text,
@@ -352,6 +379,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			pose?.expr ?? null,
 			pose?.gest ?? null,
 			pose?.req ?? null,
+			this.background,
 		);
 		const seq = result.one().seq;
 		if (seq > HISTORY_RETENTION)
