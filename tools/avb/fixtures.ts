@@ -95,7 +95,9 @@ export interface AvatarPoseFixture {
 export interface AvatarFaceFixture {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	xCX: number;
 	yCX: number;
 	deltaXCX: number;
@@ -107,7 +109,9 @@ export interface AvatarFaceFixture {
 export interface AvatarTorsoFixture {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	xCX: number;
 	yCX: number;
 }
@@ -115,7 +119,9 @@ export interface AvatarTorsoFixture {
 export interface AvatarBodyFixture {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	faceX: number;
 	faceY: number;
 }
@@ -166,11 +172,18 @@ function globalPoseID(localPoseID: number, poseBase: number): number {
 	return localPoseID === 0 ? 0 : poseBase + localPoseID;
 }
 
+// Wire intensity is (BYTE)(m_intensity * 10) truncation (avatario.cpp:78).
+function intensityTenths(intensityByte: number): number {
+	return Math.trunc(Math.fround(intensityByte / 255) * 10);
+}
+
 function faceFixture(rec: FaceRecord, poseBase: number): AvatarFaceFixture {
 	return {
 		poseID: globalPoseID(rec.poseID, poseBase),
 		emotion: oracleEmotion(rec.emotion.index),
+		emotionIndex: rec.emotion.index,
 		intensity: Math.fround(rec.intensityByte / 255),
+		intensityTenths: intensityTenths(rec.intensityByte),
 		xCX: rec.cx,
 		yCX: rec.cy,
 		deltaXCX: rec.cxDelta,
@@ -184,7 +197,9 @@ function torsoFixture(rec: TorsoRecord, poseBase: number): AvatarTorsoFixture {
 	return {
 		poseID: globalPoseID(rec.poseID, poseBase),
 		emotion: oracleEmotion(rec.emotion.index),
+		emotionIndex: rec.emotion.index,
 		intensity: Math.fround(rec.intensityByte / 255),
+		intensityTenths: intensityTenths(rec.intensityByte),
 		xCX: rec.cx,
 		yCX: rec.cy,
 	};
@@ -194,7 +209,9 @@ function bodyFixture(rec: BodyRecord, poseBase: number): AvatarBodyFixture {
 	return {
 		poseID: globalPoseID(rec.poseID, poseBase),
 		emotion: oracleEmotion(rec.emotion.index),
+		emotionIndex: rec.emotion.index,
 		intensity: Math.fround(rec.intensityByte / 255),
+		intensityTenths: intensityTenths(rec.intensityByte),
 		faceX: rec.faceX,
 		faceY: rec.faceY,
 	};

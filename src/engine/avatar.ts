@@ -26,7 +26,9 @@ export interface PoseData {
 export interface FaceData {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	xCX: number;
 	yCX: number;
 	deltaXCX: number;
@@ -38,7 +40,9 @@ export interface FaceData {
 export interface TorsoData {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	xCX: number;
 	yCX: number;
 }
@@ -46,7 +50,9 @@ export interface TorsoData {
 export interface SimpleBodyData {
 	poseID: number;
 	emotion: number;
+	emotionIndex: number;
 	intensity: number;
+	intensityTenths: number;
 	faceX: number;
 	faceY: number;
 }

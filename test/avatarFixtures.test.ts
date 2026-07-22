@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { parseTrace, recordsOfType } from "../src/trace/format.js";
 import type { AvatarFixtureSet } from "../tools/avb/fixtures.ts";
+import { oracleEmotion } from "../tools/avb/fixtures.ts";
 
 const fixture = JSON.parse(
 	readFileSync(new URL("./fixtures/avatars.json", import.meta.url), "utf8"),
@@ -79,6 +80,22 @@ describe("six-avatar runtime fixture", () => {
 		).toBe(true);
 		for (const face of anna.faces) {
 			expect(Math.fround(face.intensity)).toBe(face.intensity);
+		}
+	});
+
+	it("keeps the original AVB emotion table index and wire intensity tenths", () => {
+		for (const avatar of fixture.avatars) {
+			for (const rec of [...avatar.faces, ...avatar.torsos, ...avatar.bodies]) {
+				expect(Number.isInteger(rec.emotionIndex)).toBe(true);
+				expect(rec.emotionIndex).toBeGreaterThanOrEqual(0);
+				expect(rec.emotionIndex).toBeLessThanOrEqual(17);
+				expect(oracleEmotion(rec.emotionIndex)).toBe(rec.emotion);
+
+				const expectedTenths = Math.trunc(Math.fround(rec.intensity) * 10);
+				expect(rec.intensityTenths).toBe(expectedTenths);
+				expect(rec.intensityTenths).toBeGreaterThanOrEqual(0);
+				expect(rec.intensityTenths).toBeLessThanOrEqual(10);
+			}
 		}
 	});
 });
