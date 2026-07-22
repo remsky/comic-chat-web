@@ -1,6 +1,6 @@
 import { env, runInDurableObject } from "cloudflare:test";
 import { describe, expect, it } from "vitest";
-import { join, seedLines } from "./helpers.js";
+import { chatMessage, join, seedLines } from "./helpers.js";
 
 describe("room backdrop replay", () => {
 	it("tags each row with the backdrop in effect when it landed", async () => {
@@ -8,27 +8,45 @@ describe("room backdrop replay", () => {
 		const first = await join(room, "ann", 1);
 		expect(first.welcome.historyBackground).toBe("field");
 
-		first.socket.send(
-			JSON.stringify({ type: "chat", text: "before", mode: 1 }),
-		);
-		await first.inbox.next("chat");
+		first.socket.send(chatMessage("before", 1));
+		await first.inbox.next("entry");
 		first.socket.send(JSON.stringify({ type: "background", name: "volcano" }));
-		await first.inbox.next("chat");
-		first.socket.send(JSON.stringify({ type: "chat", text: "after", mode: 1 }));
-		await first.inbox.next("chat");
+		await first.inbox.next("entry");
+		first.socket.send(chatMessage("after", 1));
+		await first.inbox.next("entry");
 
 		const stub = env.CHAT_ROOM.getByName(room);
 		const tagged = await runInDurableObject(stub, (_instance, state) =>
 			state.storage.sql
-				.exec<{ text: string; bg: string }>(
-					"SELECT text, bg FROM messages ORDER BY seq",
+				.exec<{
+					event_type: string;
+					text: string | null;
+					background_name: string | null;
+					bg: string;
+				}>(
+					"SELECT event_type, text, background_name, bg FROM events ORDER BY seq",
 				)
 				.toArray(),
 		);
 		expect(tagged).toEqual([
-			{ text: "before", bg: "field" },
-			{ text: "volcano", bg: "volcano" },
-			{ text: "after", bg: "volcano" },
+			{
+				event_type: "chat",
+				text: "before",
+				background_name: null,
+				bg: "field",
+			},
+			{
+				event_type: "background",
+				text: null,
+				background_name: "volcano",
+				bg: "volcano",
+			},
+			{
+				event_type: "chat",
+				text: "after",
+				background_name: null,
+				bg: "volcano",
+			},
 		]);
 
 		// a later joiner replays from where the log started, not from where the room stands now
@@ -43,21 +61,22 @@ describe("room backdrop replay", () => {
 	});
 
 	it("seeds replay from the chunk's own backdrop when the change predates it", async () => {
-		// 60 lines on field, then the switch to den and a few more, so the mode-6 falls outside the 50-entry chunk
+		// 60 lines on field, then the switch to den and a few more, so the background event falls outside the 50-entry chunk
 		const room = "backdrop-chunk";
 		await seedLines(room, 60, "field");
 		const author = await join(room, "cass", 3);
 		author.socket.send(JSON.stringify({ type: "background", name: "den" }));
-		await author.inbox.next("chat");
+		await author.inbox.next("entry");
 		for (const text of ["later 0", "later 1", "later 2"]) {
-			author.socket.send(JSON.stringify({ type: "chat", text, mode: 1 }));
-			await author.inbox.next("chat");
+			author.socket.send(chatMessage(text, 3));
+			await author.inbox.next("entry");
 		}
 		author.socket.close();
 
 		const { socket, inbox, welcome } = await join(room, "dana", 4);
 		expect(welcome.history).toHaveLength(50);
-		expect(welcome.history[0]?.text).toBe("line 14");
+		const oldest = welcome.history[0];
+		expect(oldest?.type === "chat" && oldest.text).toBe("line 14");
 		// the room is on den now, but this chunk opens back on field
 		expect(welcome.background).toBe("den");
 		expect(welcome.historyBackground).toBe("field");

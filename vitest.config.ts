@@ -24,6 +24,8 @@ export default defineConfig({
 						miniflare: {
 							bindings: {
 								ROOMS: [
+									"annotation-bounds",
+									"annotation-trip",
 									"arrive",
 									"backdrop-tags",
 									"backdrop-chunk",

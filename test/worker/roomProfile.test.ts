@@ -1,12 +1,6 @@
 import { env, runInDurableObject } from "cloudflare:test";
 import { describe, expect, it } from "vitest";
-import {
-	ARRIVE_MODE,
-	AVATAR_MODE,
-	DEPART_MODE,
-	NAME_BLOCKED_REASON,
-	NICK_MODE,
-} from "../../src/protocol/room.js";
+import { NAME_BLOCKED_REASON } from "../../src/protocol/room.js";
 import { join } from "./helpers.js";
 
 describe("profile changes and room-switch announcements", () => {
@@ -22,21 +16,22 @@ describe("profile changes and room-switch announcements", () => {
 		expect(update.was).toEqual({ name: "bob", avatar: 2 });
 		expect(update.who).toEqual({ name: "rob", avatar: 2 });
 		// the old nick announces the new one in the persisted stream
-		const announce = await ann.inbox.next("chat");
-		expect(announce.type === "chat" && announce.entry).toMatchObject({
+		const announce = await ann.inbox.next("entry");
+		expect(announce.type === "entry" && announce.entry).toMatchObject({
+			type: "announce",
+			kind: "nick",
 			name: "bob",
-			text: "rob",
-			mode: NICK_MODE,
+			detail: "rob",
 		});
 		const stub = env.CHAT_ROOM.getByName(room);
 		const row = await runInDurableObject(stub, (_instance, state) =>
 			state.storage.sql
-				.exec<{ name: string; text: string; mode: number }>(
-					"SELECT name, text, mode FROM messages ORDER BY seq DESC LIMIT 1",
+				.exec<{ event_type: string; name: string; text: string }>(
+					"SELECT event_type, name, text FROM events ORDER BY seq DESC LIMIT 1",
 				)
 				.one(),
 		);
-		expect(row).toEqual({ name: "bob", text: "rob", mode: NICK_MODE });
+		expect(row).toEqual({ event_type: "nick", name: "bob", text: "rob" });
 		ann.socket.close();
 		bob.socket.close();
 	});
@@ -58,12 +53,13 @@ describe("profile changes and room-switch announcements", () => {
 		const update = await bob.inbox.next("profile");
 		if (update.type !== "profile") throw new Error("expected a profile");
 		expect(update.who).toEqual({ name: "bob", avatar: 4 });
-		const announce = await ann.inbox.next("chat");
-		expect(announce.type === "chat" && announce.entry).toMatchObject({
+		const announce = await ann.inbox.next("entry");
+		expect(announce.type === "entry" && announce.entry).toMatchObject({
+			type: "announce",
+			kind: "avatar",
 			avatar: 4,
 			name: "bob",
-			text: "4",
-			mode: AVATAR_MODE,
+			detail: "4",
 		});
 		ann.socket.close();
 		bob.socket.close();
@@ -87,31 +83,33 @@ describe("profile changes and room-switch announcements", () => {
 		const ann = await join(origin, "ann", 1);
 		const bob = await join(origin, "bob", 2);
 		bob.socket.send(JSON.stringify({ type: "depart", to: "arrive" }));
-		const gone = await ann.inbox.next("chat");
-		expect(gone.type === "chat" && gone.entry).toMatchObject({
+		const gone = await ann.inbox.next("entry");
+		expect(gone.type === "entry" && gone.entry).toMatchObject({
+			type: "announce",
+			kind: "depart",
 			name: "bob",
-			text: "arrive",
-			mode: DEPART_MODE,
+			detail: "arrive",
 		});
 		bob.socket.close();
 
 		const moved = await join("arrive", "bob", 2, origin);
-		const arrived = await moved.inbox.next("chat");
-		expect(arrived.type === "chat" && arrived.entry).toMatchObject({
+		const arrived = await moved.inbox.next("entry");
+		expect(arrived.type === "entry" && arrived.entry).toMatchObject({
+			type: "announce",
+			kind: "arrive",
 			name: "bob",
-			text: origin,
-			mode: ARRIVE_MODE,
+			detail: origin,
 		});
 		// the arrival is persisted so latecomers replay it
 		const stub = env.CHAT_ROOM.getByName("arrive");
 		const row = await runInDurableObject(stub, (_instance, state) =>
 			state.storage.sql
-				.exec<{ mode: number }>(
-					"SELECT mode FROM messages ORDER BY seq DESC LIMIT 1",
+				.exec<{ event_type: string }>(
+					"SELECT event_type FROM events ORDER BY seq DESC LIMIT 1",
 				)
 				.one(),
 		);
-		expect(row.mode).toBe(ARRIVE_MODE);
+		expect(row.event_type).toBe("arrive");
 		ann.socket.close();
 		moved.socket.close();
 	});

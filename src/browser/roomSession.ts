@@ -2,13 +2,14 @@
 
 import type { AvatarData } from "../engine/avatar.js";
 import {
-	BACKGROUND_MODE,
-	type ChatEntry,
+	CHAT_MODES,
+	type ChatMode,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
 	parseServerMessage,
 	RATE_LIMIT_REASON,
+	type RoomEntry,
 	type RosterEntry,
 } from "../protocol/room.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
@@ -68,7 +69,7 @@ export interface JoinOptions {
 
 function renderTranscript(
 	list: HTMLOListElement,
-	entries: readonly ChatEntry[],
+	entries: readonly RoomEntry[],
 	avatarName: (avatarID: number) => string,
 ): void {
 	const items: HTMLLIElement[] = [];
@@ -245,17 +246,18 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		{ signal },
 	);
 
-	// cui.Say: run the presend hook, then transmit text plus pose indices
-	const sendChat = (text: string, mode: number): boolean => {
+	// cui.Say: run the presend hook, then transmit text plus the resolved annotation
+	const sendChat = (text: string, mode: ChatMode): boolean => {
 		if (socket?.readyState !== WebSocket.OPEN) return false;
-		const pose = view.prepareOutgoing(text);
+		const annotation = view.prepareOutgoing(text, roster);
+		if (!annotation) return false;
 		return wsSend(
 			JSON.stringify({
 				type: "chat",
 				text,
 				mode,
+				annotation,
 				sent: Date.now(),
-				...(pose && { pose }),
 			}),
 		);
 	};
@@ -512,6 +514,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			if (hasWelcomed && lastComposerSend !== null) {
 				const arrived = parsed.history.some(
 					(entry) =>
+						entry.type === "chat" &&
 						entry.seq > previousNewestSeq &&
 						entry.avatar === previousSeat &&
 						entry.text === lastComposerSend,
@@ -524,16 +527,17 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			hasWelcomed = true;
 			refreshTranscript();
 			composerInput.focus();
-		} else if (parsed.type === "chat") {
+		} else if (parsed.type === "entry") {
 			// our own echo confirms the last send arrived, so it no longer needs restoring
 			if (
+				parsed.entry.type === "chat" &&
 				parsed.entry.avatar === seatAvatar &&
 				parsed.entry.text === lastComposerSend
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
-			if (parsed.entry.mode === BACKGROUND_MODE)
-				deps.syncBackground(parsed.entry.text);
+			if (parsed.entry.type === "background")
+				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {
 			const previousHeight = scroller.scrollHeight;
 			const previousTop = scroller.scrollTop;
@@ -695,6 +699,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		(sendEvent) => {
 			sendEvent.preventDefault();
 			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
+			if (!(CHAT_MODES as readonly number[]).includes(mode)) return;
 			if (!composerInput.value.trim()) return;
 			// single flight: the previous send must echo back or fail before the next leaves
 			if (lastComposerSend !== null) return;
@@ -704,7 +709,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				flashNotice("Slow down a moment.");
 				return;
 			}
-			if (sendChat(composerInput.value, mode)) {
+			if (sendChat(composerInput.value, mode as ChatMode)) {
 				lastComposerSend = composerInput.value;
 				composerInput.value = "";
 			}

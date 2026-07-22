@@ -1,4 +1,4 @@
-// Composes chat entries into comic panels and keeps the rendered strip in sync.
+// Composes room entries into comic panels and keeps the rendered strip in sync.
 
 import {
 	AF_UNFROZEN,
@@ -15,13 +15,11 @@ import {
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
 import {
-	ARRIVE_MODE,
-	AVATAR_MODE,
-	BACKGROUND_MODE,
-	type ChatEntry,
-	DEPART_MODE,
-	NICK_MODE,
-	type PoseIndices,
+	type ComicAnnotation,
+	MAX_TALK_TOS,
+	NEUTRAL_EMOTION_INDEX,
+	type RoomEntry,
+	type RosterEntry,
 } from "../protocol/room.js";
 import { parseAddressees } from "./addressing.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
@@ -39,13 +37,6 @@ import { syncPanelAccessibility } from "./panelAccessibility.js";
 const CLASSIC_UNIT = 3000;
 // larger unit shrinks text relative to the panel (~32 chars/line, 5-line balloons) so messages split less
 const MODERN_UNIT = 5200;
-// announcement entries ride the stream for the transcript but never compose a panel
-const ANNOUNCE_MODES: readonly number[] = [
-	NICK_MODE,
-	AVATAR_MODE,
-	DEPART_MODE,
-	ARRIVE_MODE,
-];
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -63,7 +54,7 @@ interface Composition {
 
 export class RoomView {
 	private readonly rendered: RenderedPanel[] = [];
-	private readonly entries: ChatEntry[] = [];
+	private readonly entries: RoomEntry[] = [];
 	private readonly resolveStyle: ReturnType<
 		CanvasTextMeasurer["styleResolver"]
 	>;
@@ -128,33 +119,34 @@ export class RoomView {
 		this.composition.page.backdrop = name;
 	}
 
-	private feed(entry: ChatEntry): void {
-		const { registry, emotions, page, speakers } = this.composition;
-		if (entry.mode === BACKGROUND_MODE) {
-			page.backdrop = entry.text;
+	private feed(entry: RoomEntry): void {
+		const { registry, page, speakers } = this.composition;
+		if (entry.type === "background") {
+			page.backdrop = entry.name;
 			return;
 		}
-		if (ANNOUNCE_MODES.includes(entry.mode)) {
+		if (entry.type === "announce") {
 			// a rename teaches addressee facing the new nickname
-			if (entry.mode === NICK_MODE)
-				speakers.set(toLowerAscii(entry.text), entry.avatar);
+			if (entry.kind === "nick")
+				speakers.set(toLowerAscii(entry.detail), entry.avatar);
 			return;
 		}
 		const avatar = registry.get(entry.avatar);
 		if (!avatar) return;
-		avatar.talkTo = parseAddressees(entry.text, speakers, entry.avatar);
+		avatar.talkTo = entry.annotation.talkTos
+			.map((nick) => speakers.get(toLowerAscii(nick)))
+			.filter((id): id is number => id !== undefined && id !== entry.avatar);
 		speakers.set(toLowerAscii(entry.name), entry.avatar);
-		// SayEntry::Execute applies sent pose indices verbatim (histent.cpp:74-76); no pose = re-run text rules
-		if (entry.pose)
-			avatar.setIndices(entry.pose.expr, entry.pose.gest, entry.pose.req);
-		else
-			avatar.updateBody(
-				avatar.getBodyFromOptions(emotions.getEmotionsFromString(entry.text)),
-			);
+		// SayEntry::Execute applies the sender's resolved indexes verbatim (histent.cpp:94-106); no receiver inference
+		avatar.setIndices(
+			entry.annotation.faceIndex,
+			entry.annotation.torsoIndex,
+			entry.annotation.requested ? 1 : 0,
+		);
 		page.addLine(entry.avatar, entry.text, entry.mode);
 	}
 
-	compose(entry: ChatEntry): void {
+	compose(entry: RoomEntry): void {
 		this.entries.push(entry);
 		this.feed(entry);
 		this.reconcile();
@@ -162,7 +154,7 @@ export class RoomView {
 	}
 
 	// discard local history and recompose from scratch, matching what a fresh join would show
-	reset(entries: ChatEntry[]): void {
+	reset(entries: RoomEntry[]): void {
 		this.entries.length = 0;
 		this.entries.push(...entries);
 		this.composition = this.createComposition();
@@ -171,7 +163,7 @@ export class RoomView {
 		this.onRebuilt?.();
 	}
 
-	prepend(entries: ChatEntry[]): void {
+	prepend(entries: RoomEntry[]): void {
 		const known = new Set(this.entries.map((entry) => entry.seq));
 		const additions = entries.filter((entry) => !known.has(entry.seq));
 		if (additions.length === 0) return;
@@ -186,7 +178,7 @@ export class RoomView {
 		this.localAvatarID = avatarID;
 	}
 
-	entriesView(): readonly ChatEntry[] {
+	entriesView(): readonly RoomEntry[] {
 		return this.entries;
 	}
 
@@ -225,8 +217,11 @@ export class RoomView {
 		return this.composition.registry.get(this.localAvatarID);
 	}
 
-	// ChatPreSendText (textpose.cpp:115-125) then GetIndices for the wire (chatprot.cpp:172-177)
-	prepareOutgoing(text: string): PoseIndices | undefined {
+	// ChatPreSendText (textpose.cpp:115-125) then GetIndices/GetEmotions for the wire (protsupp.cpp:3040-3041)
+	prepareOutgoing(
+		text: string,
+		roster: readonly RosterEntry[],
+	): ComicAnnotation | undefined {
 		const avatar = this.localAvatar();
 		if (!avatar) return undefined;
 		if (avatar.freeze === AF_UNFROZEN)
@@ -236,10 +231,41 @@ export class RoomView {
 				),
 			);
 		const indices = avatar.getIndices();
+		const requested = indices.requested !== 0;
+		const talkTos: string[] = [];
+		if (this.localAvatarID !== null) {
+			const { speakers } = this.composition;
+			for (const id of parseAddressees(text, speakers, this.localAvatarID)) {
+				const nick = roster.find((seat) => seat.avatar === id)?.name;
+				if (nick !== undefined) talkTos.push(nick);
+				if (talkTos.length >= MAX_TALK_TOS) break;
+			}
+		}
+		if (avatar.data.type === "simple") {
+			// GetEmotions carries the body emotion in the face slots (avatar.cpp:811-817)
+			const body = avatar.data.bodies[indices.torsoIndex];
+			return {
+				faceIndex: 0,
+				faceEmotionIndex: body?.emotionIndex ?? NEUTRAL_EMOTION_INDEX,
+				faceIntensity: (body?.intensityTenths ?? 0) / 10,
+				torsoIndex: indices.torsoIndex,
+				torsoEmotionIndex: 0,
+				torsoIntensity: 0,
+				requested,
+				talkTos,
+			};
+		}
+		const face = avatar.data.faces[indices.faceIndex];
+		const torso = avatar.data.torsos[indices.torsoIndex];
 		return {
-			expr: indices.faceIndex,
-			gest: indices.torsoIndex,
-			req: indices.requested,
+			faceIndex: indices.faceIndex,
+			faceEmotionIndex: face?.emotionIndex ?? NEUTRAL_EMOTION_INDEX,
+			faceIntensity: (face?.intensityTenths ?? 0) / 10,
+			torsoIndex: indices.torsoIndex,
+			torsoEmotionIndex: torso?.emotionIndex ?? NEUTRAL_EMOTION_INDEX,
+			torsoIntensity: (torso?.intensityTenths ?? 0) / 10,
+			requested,
+			talkTos,
 		};
 	}
 

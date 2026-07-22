@@ -1,8 +1,36 @@
 import { env, runInDurableObject, SELF } from "cloudflare:test";
-import type { ServerMessage } from "../../src/protocol/room.js";
+import { CAST_BOUNDS } from "../../src/protocol/castBounds.js";
+import type {
+	ComicAnnotation,
+	ServerMessage,
+} from "../../src/protocol/room.js";
 
 export interface Inbox {
 	next(type: ServerMessage["type"]): Promise<ServerMessage>;
+}
+
+// a valid neutral annotation for the seat's avatar, honoring the simple-avatar convention
+export function annotationFor(avatar: number): ComicAnnotation {
+	const bounds = CAST_BOUNDS[avatar - 1];
+	return {
+		faceIndex: 0,
+		faceEmotionIndex: 9,
+		faceIntensity: 0,
+		torsoIndex: 0,
+		torsoEmotionIndex: bounds?.type === "simple" ? 0 : 9,
+		torsoIntensity: 0,
+		requested: false,
+		talkTos: [],
+	};
+}
+
+export function chatMessage(text: string, avatar: number, mode = 1): string {
+	return JSON.stringify({
+		type: "chat",
+		text,
+		mode,
+		annotation: annotationFor(avatar),
+	});
 }
 
 // one room per test (allowlisted in vitest.config.ts): a shared DO's sockets outlive the test that opened them
@@ -58,15 +86,22 @@ export async function seedLines(
 	await runInDurableObject(stub, (_instance, state) => {
 		for (let index = 0; index < count; index++)
 			state.storage.sql.exec(
-				"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO events (event_type, avatar, name, text, mode, face_index, face_emotion_index, face_intensity_tenths, torso_index, torso_emotion_index, torso_intensity_tenths, requested, talk_tos_json, background_name, at, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"chat",
 				1,
 				"seed",
 				`line ${index}`,
 				1,
+				0,
+				9,
+				0,
+				0,
+				9,
+				0,
+				0,
+				"[]",
+				null,
 				Date.now(),
-				null,
-				null,
-				null,
 				bg,
 			);
 	});
