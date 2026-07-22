@@ -8,6 +8,7 @@ export function trackVisibleViewport(): void {
 	const viewport = window.visualViewport;
 	if (!viewport) return;
 	const footer = document.querySelector<HTMLElement>(".legal-footer");
+	const titlebar = document.querySelector<HTMLElement>(".titlebar");
 	const apply = () => {
 		document.documentElement.style.setProperty(
 			"--app-height",
@@ -18,6 +19,12 @@ export function trackVisibleViewport(): void {
 			document.documentElement.style.setProperty(
 				"--footer-height",
 				`${footer.offsetHeight}px`,
+			);
+		// the join tagline pins itself just below the measured header
+		if (titlebar)
+			document.documentElement.style.setProperty(
+				"--titlebar-height",
+				`${titlebar.offsetHeight}px`,
 			);
 		// follow any iOS scroll offset so the pinned app stays glued to the visible area
 		document.body.style.transform = `translateY(${viewport.offsetTop}px)`;
