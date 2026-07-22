@@ -501,7 +501,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				oldestSeq = firstSeq ?? null;
 				historyDone = parsed.history.length < HISTORY_CHUNK;
 			} else {
-				// missed entries resume the stream; any mode-6 among them brings the backdrop forward
+				// missed entries resume the stream; any background entry among them brings the backdrop forward
 				for (const entry of parsed.history)
 					if (entry.seq > previousNewestSeq) view.compose(entry);
 				if (oldestSeq === null) {
