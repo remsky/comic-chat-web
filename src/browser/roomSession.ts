@@ -372,7 +372,8 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		element("bodycam").hidden = false;
 		bodycam = new BodyCamWidget({
 			canvas: element<HTMLCanvasElement>("bodycam-canvas"),
-			menuButton: element<HTMLButtonElement>("bodycam-menu-button"),
+			lockButton: element<HTMLButtonElement>("bodycam-lock"),
+			sendButton: element<HTMLButtonElement>("bodycam-send"),
 			atlases: deps.atlases,
 			getAvatar: () => view.localAvatar(),
 			setStatus: (text) => {

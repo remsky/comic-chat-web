@@ -31,19 +31,13 @@ const PREVIEW_HEIGHT = 130;
 
 export interface BodyCamWidgetOptions {
 	canvas: HTMLCanvasElement;
-	menuButton: HTMLButtonElement;
+	lockButton: HTMLButtonElement;
+	sendButton: HTMLButtonElement;
 	atlases: AvatarAtlasCache;
 	getAvatar: () => Avatar | undefined;
 	setStatus: (text: string | null) => void;
 	sendExpression: () => void;
 	forwardTyping: (key: string) => void;
-}
-
-// idle status line naming the lock state; drag narration overrides it
-export function freezeStatusText(freeze: number): string | null {
-	if (freeze === AF_FROZEN) return "Expression frozen";
-	if (freeze === AF_TEMPFROZEN) return "Holding pose";
-	return null;
 }
 
 export class BodyCamWidget {
@@ -80,10 +74,11 @@ export class BodyCamWidget {
 			event.preventDefault();
 			this.openMenu(event.clientX, event.clientY);
 		});
-		options.menuButton.addEventListener("click", () => {
-			const rect = options.menuButton.getBoundingClientRect();
-			this.openMenu(rect.left, rect.bottom);
-		});
+		options.lockButton.addEventListener("click", () => this.toggleFreeze());
+		options.sendButton.addEventListener("click", () =>
+			options.sendExpression(),
+		);
+		this.syncFreeze();
 		canvas.addEventListener("keydown", (event) => this.onKeyDown(event));
 		new ResizeObserver(() => this.layout()).observe(canvas);
 		this.layout();
@@ -140,12 +135,26 @@ export class BodyCamWidget {
 		this.mouseDown = false;
 		this.options.canvas.releasePointerCapture(event.pointerId);
 		this.lastEmotionName = null;
-		this.syncFreeze();
+		this.options.setStatus(null);
 	}
 
+	private toggleFreeze(): void {
+		const avatar = this.options.getAvatar();
+		if (!avatar) return;
+		avatar.freeze = avatar.freeze === AF_FROZEN ? AF_UNFROZEN : AF_FROZEN;
+		this.freeze = avatar.freeze;
+		this.syncFreeze();
+		this.draw();
+	}
+
+	// mirror the lock state onto the corner button
 	private syncFreeze(): void {
-		if (this.mouseDown) return;
-		this.options.setStatus(freezeStatusText(this.freeze));
+		const frozen = this.freeze === AF_FROZEN;
+		const { lockButton } = this.options;
+		lockButton.textContent = frozen ? "\u{1F512}" : "\u{1F513}";
+		lockButton.title = frozen ? "Unfreeze expression" : "Freeze expression";
+		lockButton.setAttribute("aria-pressed", String(frozen));
+		lockButton.classList.toggle("bodycam-lock-active", frozen);
 	}
 
 	// UpdateEmotion: pose the avatar and narrate only when the cursor pixel moved
@@ -191,11 +200,7 @@ export class BodyCamWidget {
 		freeze.textContent = avatar?.freeze === AF_FROZEN ? "✓ Freeze" : "  Freeze";
 		freeze.addEventListener("click", () => {
 			this.closeMenu();
-			if (!avatar) return;
-			avatar.freeze = avatar.freeze === AF_FROZEN ? AF_UNFROZEN : AF_FROZEN;
-			this.freeze = avatar.freeze;
-			this.syncFreeze();
-			this.draw();
+			this.toggleFreeze();
 		});
 		const send = document.createElement("li");
 		send.textContent = "  Send Expression";
@@ -272,11 +277,11 @@ export class BodyCamWidget {
 			this.drawCursor(context);
 		}
 		this.drawBody(context);
-		if (this.freeze !== AF_UNFROZEN) this.drawFrozenFrame(context);
+		if (this.freeze === AF_FROZEN) this.drawFrozenFrame(context);
 		context.restore();
 	}
 
-	// lock indicator: navy frame while the pose is held or frozen
+	// lock indicator: navy frame only while explicitly frozen
 	private drawFrozenFrame(context: CanvasRenderingContext2D): void {
 		context.strokeStyle = "#000080";
 		context.lineWidth = 2;

@@ -132,6 +132,22 @@
 					</span>
 					<p id="profile-error" class="field-error" role="alert" hidden></p>
 					<figure id="bodycam" class="bodycam" hidden>
+						<button
+							id="bodycam-lock"
+							class="bodycam-corner bodycam-corner-left"
+							type="button"
+							aria-pressed="false"
+							aria-label="Freeze expression"
+						></button>
+						<button
+							id="bodycam-send"
+							class="bodycam-corner bodycam-corner-right"
+							type="button"
+							title="Send expression"
+							aria-label="Send expression"
+						>
+							&#x27F3;
+						</button>
 						<canvas
 							id="bodycam-canvas"
 							tabindex="0"
@@ -142,14 +158,6 @@
 							class="bodycam-status"
 							role="status"
 						></figcaption>
-						<button
-							id="bodycam-menu-button"
-							class="bodycam-edit bodycam-expression"
-							type="button"
-							aria-haspopup="menu"
-						>
-							Expression…
-						</button>
 						<button
 							id="avatar-edit"
 							class="bodycam-edit"

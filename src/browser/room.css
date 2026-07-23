@@ -223,11 +223,46 @@
 }
 
 .bodycam {
+	position: relative;
 	margin: 0;
 	border: 1px solid;
 	border-color: #808080 #dfdfdf #dfdfdf #808080;
 	box-shadow: inset 1px 1px 0 #000;
 	background: #fff;
+}
+
+.bodycam-corner {
+	position: absolute;
+	top: 3px;
+	z-index: 1;
+	width: 1.5rem;
+	height: 1.5rem;
+	padding: 0;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	font-size: 0.8rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.bodycam-corner:active,
+.bodycam-lock-active {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow:
+		inset -1px -1px 0 #fff,
+		inset 1px 1px 0 #808080;
+}
+
+.bodycam-corner-left {
+	left: 3px;
+}
+
+.bodycam-corner-right {
+	right: 3px;
 }
 
 .bodycam canvas {
@@ -1051,12 +1086,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 		display: none;
 	}
 
-	/* the expression menu stays with the wheel; mobile has no right-click */
-	.mobile-sheet[data-panel="pose"] .bodycam-edit.bodycam-expression {
-		display: block;
-	}
-
-	.mobile-sheet[data-panel="more"] .bodycam-expression {
+	/* More hides the wheel, so the corner buttons go with it */
+	.mobile-sheet[data-panel="more"] .bodycam-corner {
 		display: none;
 	}
 
