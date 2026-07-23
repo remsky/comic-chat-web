@@ -138,6 +138,7 @@ function renderTranscript(
 
 function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	const list = element<HTMLUListElement>("roster");
+	document.body.classList.toggle("room-alone", roster.length <= 1);
 	const items = roster.map((entry) => {
 		const cast = avatars.find((avatar) => avatar.avatarID === entry.avatar);
 		const item = document.createElement("li");

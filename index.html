@@ -63,6 +63,10 @@
 						stroke-width="1"
 					/>
 				</symbol>
+				<symbol id="ic-member" viewBox="0 0 16 16">
+					<circle cx="8" cy="6.1" r="2.7" />
+					<path d="M3.4 14v-2.2a4.6 4.6 0 0 1 9.2 0V14z" />
+				</symbol>
 				<symbol id="ic-pose" viewBox="0 0 16 16">
 					<g
 						fill="none"
@@ -259,8 +263,11 @@
 					data-panel="members"
 					aria-expanded="false"
 				>
-					<svg class="toolbar-icon" aria-hidden="true">
+					<svg class="toolbar-icon members-many" aria-hidden="true">
 						<use href="#ic-members" />
+					</svg>
+					<svg class="toolbar-icon members-alone" aria-hidden="true">
+						<use href="#ic-member" />
 					</svg>
 					<span>Members</span>
 				</button>

@@ -1007,6 +1007,16 @@ body:not(.modern-tweaks) .background-picker-grid {
 		stroke: var(--gap);
 	}
 
+	/* the Members tab shows one silhouette while you are alone */
+	.toolbar-button .members-alone,
+	body.room-alone .toolbar-button .members-many {
+		display: none;
+	}
+
+	body.room-alone .toolbar-button .members-alone {
+		display: block;
+	}
+
 	.mobile-toolbar .toolbar-button span {
 		max-width: 100%;
 		overflow: hidden;
