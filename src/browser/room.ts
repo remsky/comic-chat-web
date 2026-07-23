@@ -17,7 +17,11 @@ import {
 	buildCharacterTile,
 } from "./pickerTiles.js";
 import { setDesiredRoom, wireRoomList } from "./roomDirectory.js";
-import { joinRoom, type SessionDeps, type SessionHooks } from "./roomSession.js";
+import {
+	joinRoom,
+	type SessionDeps,
+	type SessionHooks,
+} from "./roomSession.js";
 import { RoomView } from "./roomView.js";
 import {
 	clearStoredProfile,
@@ -45,7 +49,9 @@ function wireTabUnreadBadge(): TabBadgeController {
 		const image = new Image();
 		const loaded = new Promise<void>((resolve, reject) => {
 			image.addEventListener("load", () => resolve());
-			image.addEventListener("error", () => reject(new Error("favicon load failed")));
+			image.addEventListener("error", () =>
+				reject(new Error("favicon load failed")),
+			);
 		});
 		image.src = "/favicon-32x32.png";
 		await loaded;
