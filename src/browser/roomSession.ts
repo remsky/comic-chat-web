@@ -41,6 +41,52 @@ const HEARTBEAT_MS = 10_000;
 const SUSPECT_MS = 1_200;
 const RESPONSE_TIMEOUT_MS = 4_000;
 
+// Save Strip popup: pick how much of the history goes into the PNG
+const SAVE_CHOICES = [8, 24];
+function openSaveMenu(
+	button: HTMLButtonElement,
+	total: number,
+	save: (limit?: number) => void,
+): void {
+	if (total <= (SAVE_CHOICES[0] ?? 0)) {
+		save();
+		return;
+	}
+	const menu = document.createElement("menu");
+	menu.className = "bodycam-menu";
+	const close = (): void => {
+		document.removeEventListener("pointerdown", dismiss, true);
+		document.removeEventListener("keydown", onEscape, true);
+		menu.remove();
+	};
+	const dismiss = (event: Event): void => {
+		if (event.target instanceof Node && menu.contains(event.target)) return;
+		close();
+	};
+	const onEscape = (event: KeyboardEvent): void => {
+		if (event.key === "Escape") close();
+	};
+	const add = (label: string, limit?: number): void => {
+		const item = document.createElement("li");
+		item.textContent = label;
+		item.addEventListener("click", () => {
+			close();
+			save(limit);
+		});
+		menu.append(item);
+	};
+	for (const choice of SAVE_CHOICES)
+		if (choice < total) add(`Last ${choice} panels`, choice);
+	add(`All ${total} panels`);
+	document.body.append(menu);
+	const anchor = button.getBoundingClientRect();
+	const size = menu.getBoundingClientRect();
+	menu.style.left = `${Math.max(0, Math.min(anchor.left, window.innerWidth - size.width))}px`;
+	menu.style.top = `${Math.max(0, anchor.top - size.height - 2)}px`;
+	document.addEventListener("pointerdown", dismiss, true);
+	document.addEventListener("keydown", onEscape, true);
+}
+
 // filled in by the live session so the shell's pickers and back handling reach it
 export interface SessionHooks {
 	applyProfile: ((name: string, avatar: number) => void) | null;
@@ -344,19 +390,21 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		{ signal },
 	);
 
-	element<HTMLButtonElement>("save-strip").addEventListener(
+	const savePng = async (limit?: number): Promise<void> => {
+		const blob = await view.exportPng(limit);
+		if (!blob) return;
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement("a");
+		anchor.href = url;
+		const stamp = new Date().toISOString().slice(0, 16).replace(":", "-");
+		anchor.download = `comic-chat-${room}-${stamp}.png`;
+		anchor.click();
+		URL.revokeObjectURL(url);
+	};
+	const saveButton = element<HTMLButtonElement>("save-strip");
+	saveButton.addEventListener(
 		"click",
-		async () => {
-			const blob = await view.exportPng();
-			if (!blob) return;
-			const url = URL.createObjectURL(blob);
-			const anchor = document.createElement("a");
-			anchor.href = url;
-			const stamp = new Date().toISOString().slice(0, 16).replace(":", "-");
-			anchor.download = `comic-chat-${room}-${stamp}.png`;
-			anchor.click();
-			URL.revokeObjectURL(url);
-		},
+		() => openSaveMenu(saveButton, view.panelCount(), savePng),
 		{ signal },
 	);
 

@@ -182,15 +182,20 @@ export class RoomView {
 		return this.entries;
 	}
 
-	// File > Save's web stand-in: composite the strip grid into one PNG
-	async exportPng(): Promise<Blob | null> {
-		if (this.rendered.length === 0) return null;
+	panelCount(): number {
+		return this.rendered.length;
+	}
+
+	// File > Save's web stand-in: composite the newest panels into one PNG grid
+	async exportPng(limit = Number.POSITIVE_INFINITY): Promise<Blob | null> {
+		const panels = this.rendered.slice(-limit);
+		if (panels.length === 0) return null;
 		const size = 600;
 		const perRow = 4;
 		// the on-screen 1.2%-of-container grid gap, expressed against a 600px panel
 		const gap = 31;
-		const cols = Math.min(perRow, this.rendered.length);
-		const rows = Math.ceil(this.rendered.length / perRow);
+		const cols = Math.min(perRow, panels.length);
+		const rows = Math.ceil(panels.length / perRow);
 		const sheet = document.createElement("canvas");
 		sheet.width = gap + cols * (size + gap);
 		sheet.height = gap + rows * (size + gap);
@@ -198,7 +203,7 @@ export class RoomView {
 		if (!context) return null;
 		context.fillStyle = "#fff";
 		context.fillRect(0, 0, sheet.width, sheet.height);
-		this.rendered.forEach((entry, index) => {
+		panels.forEach((entry, index) => {
 			const canvas = entry.card.querySelector("canvas");
 			if (!canvas) return;
 			context.drawImage(
