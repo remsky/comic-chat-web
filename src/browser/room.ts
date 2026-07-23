@@ -8,6 +8,7 @@ import { checkRadios, displayName, element } from "./dom.js";
 import {
 	trackVisibleViewport,
 	wireMobilePanels,
+	wireSidebarMore,
 	wireSidebarResize,
 } from "./layout.js";
 import {
@@ -149,6 +150,7 @@ async function main(): Promise<void> {
 	const status = element("status");
 	trackVisibleViewport();
 	wireMobilePanels();
+	wireSidebarMore();
 	wireSidebarResize();
 	await loadCanvasFonts();
 	const response = await fetch("/assets/avatars/manifest.json");

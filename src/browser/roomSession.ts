@@ -376,9 +376,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			sendButton: element<HTMLButtonElement>("bodycam-send"),
 			atlases: deps.atlases,
 			getAvatar: () => view.localAvatar(),
-			setStatus: (text) => {
-				element("bodycam-status").textContent = text ?? "";
-			},
 			sendExpression: () => sendChat("<Chr>", 1),
 			forwardTyping: (key) => {
 				composerInput.value += key;

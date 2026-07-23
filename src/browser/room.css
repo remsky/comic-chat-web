@@ -181,18 +181,19 @@
 	min-height: 7rem;
 }
 
-.sidebar-self,
-.sidebar-controls {
-	display: grid;
-}
-
 .sidebar-self {
+	display: grid;
 	gap: 0.35rem;
 	margin-top: 0.35rem;
 }
 
 .sidebar-controls {
+	display: none;
 	gap: 0.35rem;
+}
+
+.sidebar-more-open .sidebar-controls {
+	display: grid;
 }
 
 .sidebar-heading {
@@ -223,7 +224,6 @@
 }
 
 .bodycam {
-	position: relative;
 	margin: 0;
 	border: 1px solid;
 	border-color: #808080 #dfdfdf #dfdfdf #808080;
@@ -231,53 +231,11 @@
 	background: #fff;
 }
 
-.bodycam-corner {
-	position: absolute;
-	top: 3px;
-	z-index: 1;
-	width: 1.5rem;
-	height: 1.5rem;
-	padding: 0;
-	border: 1px solid;
-	border-color: #dfdfdf #000 #000 #dfdfdf;
-	box-shadow:
-		inset 1px 1px 0 #fff,
-		inset -1px -1px 0 #808080;
-	background: #c0c0c0;
-	font-size: 0.8rem;
-	line-height: 1;
-	cursor: pointer;
-}
-
-.bodycam-corner:active,
-.bodycam-lock-active {
-	border-color: #000 #dfdfdf #dfdfdf #000;
-	box-shadow:
-		inset -1px -1px 0 #fff,
-		inset 1px 1px 0 #808080;
-}
-
-.bodycam-corner-left {
-	left: 3px;
-}
-
-.bodycam-corner-right {
-	right: 3px;
-}
-
 .bodycam canvas {
 	display: block;
 	width: 100%;
 	outline-offset: -2px;
 	touch-action: none;
-}
-
-.bodycam-status {
-	min-height: 1.1rem;
-	padding: 0.1rem 0.25rem;
-	border-top: 1px solid #808080;
-	background: #c0c0c0;
-	font-size: 0.7rem;
 }
 
 .bodycam-edit {
@@ -296,7 +254,39 @@
 	cursor: pointer;
 }
 
-.bodycam-edit:active {
+.bodycam-actions {
+	display: flex;
+}
+
+.bodycam-actions .bodycam-edit {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+}
+
+.bodycam-actions svg {
+	width: 1rem;
+	height: 1rem;
+	color: #222;
+}
+
+#bodycam-lock svg {
+	fill: currentColor;
+}
+
+#bodycam-lock .lock-closed,
+#bodycam-lock.bodycam-lock-active .lock-open {
+	display: none;
+}
+
+#bodycam-lock.bodycam-lock-active .lock-closed {
+	display: block;
+}
+
+.bodycam-edit:active,
+.bodycam-lock-active {
 	border-color: #000 #dfdfdf #dfdfdf #000;
 	box-shadow:
 		inset -1px -1px 0 #fff,
@@ -529,9 +519,23 @@
 	color: #7f1010;
 }
 
+#sidebar-more {
+	margin-top: 0.35rem;
+	padding: 0.1rem 0.5rem;
+	font-size: 0.7rem;
+}
+
+#sidebar-more[aria-expanded="true"] {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow:
+		inset -1px -1px 0 #fff,
+		inset 1px 1px 0 #808080;
+}
+
 .background-picker {
 	display: grid;
 	gap: 0.2rem;
+	margin-top: 0.35rem;
 	font-weight: 700;
 }
 
@@ -1022,6 +1026,12 @@ body:not(.modern-tweaks) .background-picker-grid {
 		color: #fff;
 	}
 
+	/* pose tab keeps a blue ring while the expression is locked */
+	body.pose-locked .toolbar-button[data-panel="pose"] {
+		outline: 2px solid #1084d0;
+		outline-offset: -2px;
+	}
+
 	/* quick-view sheet floats directly above the toolbar without pushing the panels */
 	.mobile-sheet {
 		display: block;
@@ -1065,7 +1075,9 @@ body:not(.modern-tweaks) .background-picker-grid {
 	/* one section at a time, chosen by the tapped toolbar button */
 	.mobile-sheet .sidebar-members,
 	.mobile-sheet .sidebar-self,
-	.mobile-sheet .sidebar-controls {
+	.mobile-sheet .sidebar-controls,
+	.mobile-sheet .background-picker,
+	.mobile-sheet #sidebar-more {
 		display: none;
 	}
 
@@ -1086,17 +1098,13 @@ body:not(.modern-tweaks) .background-picker-grid {
 		display: none;
 	}
 
-	/* More hides the wheel, so the corner buttons go with it */
-	.mobile-sheet[data-panel="more"] .bodycam-corner {
-		display: none;
+	/* the freeze/send row stays with the wheel; Change Character lives in More */
+	.mobile-sheet[data-panel="pose"] .bodycam-actions .bodycam-edit {
+		display: flex;
 	}
 
-	.mobile-sheet[data-panel="bg"] .sidebar-controls {
+	.mobile-sheet[data-panel="bg"] .background-picker {
 		display: grid;
-	}
-
-	.mobile-sheet[data-panel="bg"] .sidebar-controls > :not(.background-picker) {
-		display: none;
 	}
 
 	/* More carries the profile bits; only the wheel itself stays behind */
@@ -1111,17 +1119,13 @@ body:not(.modern-tweaks) .background-picker-grid {
 	}
 
 	.mobile-sheet[data-panel="more"] .bodycam canvas,
-	.mobile-sheet[data-panel="more"] .bodycam-status {
+	.mobile-sheet[data-panel="more"] .bodycam-actions {
 		display: none;
 	}
 
 	.mobile-sheet[data-panel="more"] .sidebar-controls {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.mobile-sheet[data-panel="more"] .background-picker {
-		display: none;
 	}
 
 	.mobile-sheet[data-panel="more"] .strip-actions,

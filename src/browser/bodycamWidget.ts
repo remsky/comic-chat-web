@@ -35,7 +35,6 @@ export interface BodyCamWidgetOptions {
 	sendButton: HTMLButtonElement;
 	atlases: AvatarAtlasCache;
 	getAvatar: () => Avatar | undefined;
-	setStatus: (text: string | null) => void;
 	sendExpression: () => void;
 	forwardTyping: (key: string) => void;
 }
@@ -50,6 +49,8 @@ export class BodyCamWidget {
 	private width = 0;
 	private height = 0;
 	private menu: HTMLElement | null = null;
+	private menuCleanup: (() => void) | null = null;
+	private statusText: string | null = null;
 
 	constructor(private readonly options: BodyCamWidgetOptions) {
 		const { canvas } = options;
@@ -76,7 +77,7 @@ export class BodyCamWidget {
 		});
 		options.lockButton.addEventListener("click", () => this.toggleFreeze());
 		options.sendButton.addEventListener("click", () =>
-			options.sendExpression(),
+			this.sendCurrentExpression(),
 		);
 		this.syncFreeze();
 		canvas.addEventListener("keydown", (event) => this.onKeyDown(event));
@@ -135,7 +136,8 @@ export class BodyCamWidget {
 		this.mouseDown = false;
 		this.options.canvas.releasePointerCapture(event.pointerId);
 		this.lastEmotionName = null;
-		this.options.setStatus(null);
+		this.statusText = null;
+		this.draw();
 	}
 
 	private toggleFreeze(): void {
@@ -147,14 +149,24 @@ export class BodyCamWidget {
 		this.draw();
 	}
 
-	// mirror the lock state onto the corner button
+	// hold the displayed pose so prepareOutgoing sends it instead of inferring from "<Chr>"
+	private sendCurrentExpression(): void {
+		const avatar = this.options.getAvatar();
+		if (avatar && avatar.freeze === AF_UNFROZEN) {
+			avatar.freeze = AF_TEMPFROZEN;
+			this.freeze = AF_TEMPFROZEN;
+		}
+		this.options.sendExpression();
+	}
+
+	// mirror the lock state onto the freeze button and the mobile pose tab
 	private syncFreeze(): void {
 		const frozen = this.freeze === AF_FROZEN;
 		const { lockButton } = this.options;
-		lockButton.textContent = frozen ? "\u{1F512}" : "\u{1F513}";
 		lockButton.title = frozen ? "Unfreeze expression" : "Freeze expression";
 		lockButton.setAttribute("aria-pressed", String(frozen));
 		lockButton.classList.toggle("bodycam-lock-active", frozen);
+		document.body.classList.toggle("pose-locked", frozen);
 	}
 
 	// UpdateEmotion: pose the avatar and narrate only when the cursor pixel moved
@@ -168,7 +180,7 @@ export class BodyCamWidget {
 		if (this.mouseDown) {
 			const name = stringFromEmotion(emotion);
 			if (name !== this.lastEmotionName) {
-				this.options.setStatus(emotionIsStatus(name));
+				this.statusText = emotionIsStatus(name);
 				this.lastEmotionName = name;
 			}
 		}
@@ -206,7 +218,7 @@ export class BodyCamWidget {
 		send.textContent = "  Send Expression";
 		send.addEventListener("click", () => {
 			this.closeMenu();
-			this.options.sendExpression();
+			this.sendCurrentExpression();
 		});
 		menu.append(freeze, send);
 		document.body.append(menu);
@@ -220,19 +232,20 @@ export class BodyCamWidget {
 			if (event.target instanceof Node && menu.contains(event.target)) return;
 			this.closeMenu();
 		};
-		setTimeout(() => {
-			document.addEventListener("pointerdown", dismiss, { once: true });
-			document.addEventListener(
-				"keydown",
-				(event) => {
-					if (event.key === "Escape") this.closeMenu();
-				},
-				{ once: true },
-			);
-		});
+		const onEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") this.closeMenu();
+		};
+		document.addEventListener("pointerdown", dismiss, true);
+		document.addEventListener("keydown", onEscape, true);
+		this.menuCleanup = () => {
+			document.removeEventListener("pointerdown", dismiss, true);
+			document.removeEventListener("keydown", onEscape, true);
+		};
 	}
 
 	private closeMenu(): void {
+		this.menuCleanup?.();
+		this.menuCleanup = null;
 		this.menu?.remove();
 		this.menu = null;
 	}
@@ -277,8 +290,17 @@ export class BodyCamWidget {
 			this.drawCursor(context);
 		}
 		this.drawBody(context);
+		this.drawStatus(context);
 		if (this.freeze === AF_FROZEN) this.drawFrozenFrame(context);
 		context.restore();
+	}
+
+	// the status pane's "Emotion is ..." narration, drawn over the preview while dragging
+	private drawStatus(context: CanvasRenderingContext2D): void {
+		if (!this.statusText) return;
+		context.font = "10px sans-serif";
+		context.fillStyle = "#000";
+		context.fillText(this.statusText, 4, 12);
 	}
 
 	// lock indicator: navy frame only while explicitly frozen
