@@ -1,6 +1,7 @@
 // Live room client entry: boots assets, wires the shell, and hands joins to the session.
 
 import type { AvatarData } from "../engine/avatar.js";
+import { BACKGROUND_MODE } from "../protocol/room.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
 import { BackdropCache } from "./backdropAssets.js";
 import { loadCanvasFonts } from "./canvasText.js";
@@ -16,7 +17,11 @@ import {
 	buildCharacterTile,
 } from "./pickerTiles.js";
 import { setDesiredRoom, wireRoomList } from "./roomDirectory.js";
-import { joinRoom, type SessionHooks } from "./roomSession.js";
+import {
+	joinRoom,
+	type SessionDeps,
+	type SessionHooks,
+} from "./roomSession.js";
 import { RoomView } from "./roomView.js";
 import {
 	clearStoredProfile,
@@ -26,6 +31,90 @@ import {
 	TEXT_VIEW_KEY,
 	takeRoomSwitch,
 } from "./storage.js";
+
+interface TabBadgeController {
+	markUnread: () => void;
+	clearUnread: () => void;
+}
+
+function wireTabUnreadBadge(): TabBadgeController {
+	const baseTitle = document.title;
+	let unreadCount = 0;
+	const badgeHrefByCount = new Map<number, Promise<string>>();
+	const dynamicFavicon = document.createElement("link");
+	dynamicFavicon.rel = "icon";
+	dynamicFavicon.type = "image/png";
+
+	const buildBadgeHref = async (count: number): Promise<string> => {
+		const image = new Image();
+		const loaded = new Promise<void>((resolve, reject) => {
+			image.addEventListener("load", () => resolve());
+			image.addEventListener("error", () =>
+				reject(new Error("favicon load failed")),
+			);
+		});
+		image.src = "/favicon-32x32.png";
+		await loaded;
+		const canvas = document.createElement("canvas");
+		canvas.width = 32;
+		canvas.height = 32;
+		const context = canvas.getContext("2d");
+		if (!context) throw new Error("favicon context missing");
+		context.drawImage(image, 0, 0, 32, 32);
+		context.beginPath();
+		context.arc(24, 8, 6, 0, Math.PI * 2);
+		context.fillStyle = "#d30000";
+		context.fill();
+		context.strokeStyle = "#ffffff";
+		context.lineWidth = 2;
+		context.stroke();
+		context.fillStyle = "#ffffff";
+		context.font = "bold 7px sans-serif";
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText(count > 9 ? "9+" : String(count), 24, 8);
+		return canvas.toDataURL("image/png");
+	};
+
+	const clearUnread = (): void => {
+		unreadCount = 0;
+		document.title = baseTitle;
+		dynamicFavicon.remove();
+	};
+
+	const renderUnread = (): void => {
+		if (unreadCount < 1 || !document.hidden) return;
+		document.title = `(${unreadCount}) ${baseTitle}`;
+		if (!badgeHrefByCount.has(unreadCount))
+			badgeHrefByCount.set(unreadCount, buildBadgeHref(unreadCount));
+		const badgeHrefPromise = badgeHrefByCount.get(unreadCount);
+		if (!badgeHrefPromise) return;
+		void badgeHrefPromise
+			.then((href) => {
+				if (unreadCount < 1 || !document.hidden) return;
+				dynamicFavicon.href = href;
+				if (!dynamicFavicon.isConnected) document.head.append(dynamicFavicon);
+			})
+			.catch(() => {
+				// title marker still indicates unread when favicon rendering fails
+			});
+	};
+
+	document.addEventListener("visibilitychange", () => {
+		if (!document.hidden) clearUnread();
+		else renderUnread();
+	});
+	window.addEventListener("focus", clearUnread);
+
+	return {
+		markUnread: () => {
+			if (!document.hidden) return;
+			unreadCount += 1;
+			renderUnread();
+		},
+		clearUnread,
+	};
+}
 
 function wireJoinForm(avatars: AvatarData[], atlases: AvatarAtlasCache): void {
 	const picker = element<HTMLFieldSetElement>("join-avatar");
@@ -147,6 +236,7 @@ function wireBackgroundPicker(
 
 async function main(): Promise<void> {
 	const status = element("status");
+	const tabBadge = wireTabUnreadBadge();
 	trackVisibleViewport();
 	wireMobilePanels();
 	wireSidebarResize();
@@ -224,7 +314,7 @@ async function main(): Promise<void> {
 	// bound once: a refused join hands the form back, so the submit handler can rerun
 	window.addEventListener("popstate", () => hooks.onBack?.());
 
-	const deps = {
+	const deps: SessionDeps = {
 		view,
 		avatars: manifest.avatars,
 		atlases,
@@ -232,6 +322,11 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
+		onIncomingChat: (entry, localAvatar) => {
+			if (localAvatar !== null && entry.avatar === localAvatar) return;
+			if (entry.mode === BACKGROUND_MODE || entry.text === "<Chr>") return;
+			tabBadge.markUnread();
+		},
 	};
 
 	const form = element<HTMLFormElement>("join-form");
