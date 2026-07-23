@@ -1051,6 +1051,15 @@ body:not(.modern-tweaks) .background-picker-grid {
 		display: none;
 	}
 
+	/* the expression menu stays with the wheel; mobile has no right-click */
+	.mobile-sheet[data-panel="pose"] .bodycam-edit.bodycam-expression {
+		display: block;
+	}
+
+	.mobile-sheet[data-panel="more"] .bodycam-expression {
+		display: none;
+	}
+
 	.mobile-sheet[data-panel="bg"] .sidebar-controls {
 		display: grid;
 	}

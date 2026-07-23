@@ -31,11 +31,19 @@ const PREVIEW_HEIGHT = 130;
 
 export interface BodyCamWidgetOptions {
 	canvas: HTMLCanvasElement;
+	menuButton: HTMLButtonElement;
 	atlases: AvatarAtlasCache;
 	getAvatar: () => Avatar | undefined;
 	setStatus: (text: string | null) => void;
 	sendExpression: () => void;
 	forwardTyping: (key: string) => void;
+}
+
+// idle status line naming the lock state; drag narration overrides it
+export function freezeStatusText(freeze: number): string | null {
+	if (freeze === AF_FROZEN) return "Expression frozen";
+	if (freeze === AF_TEMPFROZEN) return "Holding pose";
+	return null;
 }
 
 export class BodyCamWidget {
@@ -71,6 +79,10 @@ export class BodyCamWidget {
 		canvas.addEventListener("contextmenu", (event) => {
 			event.preventDefault();
 			this.openMenu(event.clientX, event.clientY);
+		});
+		options.menuButton.addEventListener("click", () => {
+			const rect = options.menuButton.getBoundingClientRect();
+			this.openMenu(rect.left, rect.bottom);
 		});
 		canvas.addEventListener("keydown", (event) => this.onKeyDown(event));
 		new ResizeObserver(() => this.layout()).observe(canvas);
@@ -128,7 +140,12 @@ export class BodyCamWidget {
 		this.mouseDown = false;
 		this.options.canvas.releasePointerCapture(event.pointerId);
 		this.lastEmotionName = null;
-		this.options.setStatus(null);
+		this.syncFreeze();
+	}
+
+	private syncFreeze(): void {
+		if (this.mouseDown) return;
+		this.options.setStatus(freezeStatusText(this.freeze));
 	}
 
 	// UpdateEmotion: pose the avatar and narrate only when the cursor pixel moved
@@ -177,6 +194,8 @@ export class BodyCamWidget {
 			if (!avatar) return;
 			avatar.freeze = avatar.freeze === AF_FROZEN ? AF_UNFROZEN : AF_FROZEN;
 			this.freeze = avatar.freeze;
+			this.syncFreeze();
+			this.draw();
 		});
 		const send = document.createElement("li");
 		send.textContent = "  Send Expression";
@@ -187,6 +206,11 @@ export class BodyCamWidget {
 		menu.append(freeze, send);
 		document.body.append(menu);
 		this.menu = menu;
+		const rect = menu.getBoundingClientRect();
+		if (rect.right > window.innerWidth)
+			menu.style.left = `${Math.max(0, window.innerWidth - rect.width)}px`;
+		if (rect.bottom > window.innerHeight)
+			menu.style.top = `${Math.max(0, window.innerHeight - rect.height)}px`;
 		const dismiss = (event: Event) => {
 			if (event.target instanceof Node && menu.contains(event.target)) return;
 			this.closeMenu();
@@ -212,6 +236,7 @@ export class BodyCamWidget {
 	refresh(): void {
 		const avatar = this.options.getAvatar();
 		if (avatar) this.freeze = avatar.freeze;
+		this.syncFreeze();
 		this.draw();
 	}
 
@@ -227,6 +252,7 @@ export class BodyCamWidget {
 					this.model.emotion.intensity,
 				),
 			);
+		this.syncFreeze();
 		this.draw();
 	}
 
@@ -246,7 +272,15 @@ export class BodyCamWidget {
 			this.drawCursor(context);
 		}
 		this.drawBody(context);
+		if (this.freeze !== AF_UNFROZEN) this.drawFrozenFrame(context);
 		context.restore();
+	}
+
+	// lock indicator: navy frame while the pose is held or frozen
+	private drawFrozenFrame(context: CanvasRenderingContext2D): void {
+		context.strokeStyle = "#000080";
+		context.lineWidth = 2;
+		context.strokeRect(1, 1, this.width - 2, this.height - 2);
 	}
 
 	// DrawBullsEye: gray widget strip, white circle, plus-sign center (bodycam.cpp:196-213)

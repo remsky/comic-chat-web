@@ -99,8 +99,10 @@ for (const viewport of [
 			await expect(page.locator("#avatar-edit")).toBeVisible();
 			await expect(page.locator("#modern-toggle")).toBeVisible();
 			await expect(page.locator(".tweaks-hint")).toBeInViewport();
+			await expect(page.locator("#bodycam-menu-button")).toBeHidden();
 			await page.locator('.toolbar-button[data-panel="pose"]').click();
 			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+			await expect(page.locator("#bodycam-menu-button")).toBeVisible();
 		} else {
 			await page.locator(".tweaks-hint").scrollIntoViewIfNeeded();
 			await expect(page.locator(".tweaks-hint")).toBeInViewport();
@@ -108,6 +110,7 @@ for (const viewport of [
 			await expect(page.locator("#leave-room")).toBeVisible();
 			await expect(page.locator("#modern-toggle")).toBeVisible();
 			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+			await expect(page.locator("#bodycam-menu-button")).toBeVisible();
 		}
 
 		await page.screenshot({
