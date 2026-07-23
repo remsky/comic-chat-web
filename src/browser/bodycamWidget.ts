@@ -35,7 +35,7 @@ export interface BodyCamWidgetOptions {
 	sendButton: HTMLButtonElement;
 	atlases: AvatarAtlasCache;
 	getAvatar: () => Avatar | undefined;
-	sendExpression: () => void;
+	sendExpression: () => boolean;
 	forwardTyping: (key: string) => void;
 }
 
@@ -155,6 +155,12 @@ export class BodyCamWidget {
 		if (avatar && avatar.freeze === AF_UNFROZEN) {
 			avatar.freeze = AF_TEMPFROZEN;
 			this.freeze = AF_TEMPFROZEN;
+			// revert the hold if the send failed
+			if (!this.options.sendExpression()) {
+				avatar.freeze = AF_UNFROZEN;
+				this.freeze = AF_UNFROZEN;
+			}
+			return;
 		}
 		this.options.sendExpression();
 	}

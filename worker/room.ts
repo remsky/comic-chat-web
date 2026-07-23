@@ -10,6 +10,7 @@ import {
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
+	NEUTRAL_EMOTION_INDEX,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
@@ -139,6 +140,69 @@ function entryFromRow(row: EventRow): RoomEntry | null {
 	};
 }
 
+type LegacyMessageRow = {
+	seq: number;
+	avatar: number;
+	name: string;
+	text: string;
+	mode: number;
+	at: number;
+	expr: number | null;
+	gest: number | null;
+	req: number | null;
+	bg: string | null;
+};
+
+const LEGACY_BACKGROUND_MODE = 6;
+const LEGACY_ANNOUNCE_KINDS: Record<number, AnnounceKind> = {
+	7: "nick",
+	8: "avatar",
+	9: "depart",
+	10: "arrive",
+};
+
+// poses copy over verbatim; emotion metadata was never stored, so chat rows read as neutral
+function eventFromLegacyRow(row: LegacyMessageRow): EventRow & { at: number } {
+	const event: EventRow & { at: number } = {
+		seq: row.seq,
+		event_type: "chat",
+		avatar: row.avatar,
+		name: row.name,
+		text: row.text,
+		mode: null,
+		face_index: null,
+		face_emotion_index: null,
+		face_intensity_tenths: null,
+		torso_index: null,
+		torso_emotion_index: null,
+		torso_intensity_tenths: null,
+		requested: null,
+		talk_tos_json: null,
+		background_name: null,
+		bg: row.bg ?? DEFAULT_BACKGROUND,
+		at: row.at,
+	};
+	const announce = LEGACY_ANNOUNCE_KINDS[row.mode];
+	if (row.mode === LEGACY_BACKGROUND_MODE) {
+		event.event_type = "background";
+		event.background_name = row.text;
+		event.text = null;
+	} else if (announce !== undefined) {
+		event.event_type = announce;
+	} else {
+		event.mode = row.mode;
+		event.face_index = row.expr ?? 0;
+		event.face_emotion_index = NEUTRAL_EMOTION_INDEX;
+		event.face_intensity_tenths = 0;
+		event.torso_index = row.gest ?? 0;
+		event.torso_emotion_index = 0;
+		event.torso_intensity_tenths = 0;
+		event.requested = row.req ? 1 : 0;
+		event.talk_tos_json = "[]";
+	}
+	return event;
+}
+
 export class ChatRoomDO extends DurableObject<Env> {
 	// ctx.id.name is unavailable after a hibernation wake, so the name is persisted on connect
 	private roomName: string | null = null;
@@ -153,8 +217,6 @@ export class ChatRoomDO extends DurableObject<Env> {
 			new WebSocketRequestResponsePair("ping", "pong"),
 		);
 		ctx.blockConcurrencyWhile(async () => {
-			// pre-annotation history is disposable by design; drop it instead of migrating
-			this.ctx.storage.sql.exec("DROP TABLE IF EXISTS messages");
 			this.ctx.storage.sql.exec(`
 				CREATE TABLE IF NOT EXISTS events (
 					seq INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -176,9 +238,39 @@ export class ChatRoomDO extends DurableObject<Env> {
 					bg TEXT NOT NULL
 				)
 			`);
+			this.migrateLegacyMessages();
 			this.background =
 				(await this.ctx.storage.get<string>("background")) ??
 				DEFAULT_BACKGROUND;
+		});
+	}
+
+	// legacy messages rows keep their expr/gest/req poses; modes 6-10 become announce events
+	private migrateLegacyMessages(): void {
+		const sql = this.ctx.storage.sql;
+		const legacy = sql
+			.exec<{ name: string }>(
+				"SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'messages'",
+			)
+			.toArray();
+		if (legacy.length === 0) return;
+		if (sql.exec<{ n: number }>("SELECT COUNT(*) AS n FROM events").one().n > 0)
+			return;
+		const fields = `${EVENT_COLUMNS}, at`.split(", ") as (
+			| keyof EventRow
+			| "at"
+		)[];
+		const insert = `INSERT INTO events (${EVENT_COLUMNS}, at) VALUES (${fields.map(() => "?").join(", ")})`;
+		this.ctx.storage.transactionSync(() => {
+			// SELECT * tolerates ancient rooms that predate the pose and bg columns
+			const rows = sql
+				.exec<LegacyMessageRow>("SELECT * FROM messages ORDER BY seq")
+				.toArray();
+			for (const row of rows) {
+				const event = eventFromLegacyRow(row);
+				sql.exec(insert, ...fields.map((field) => event[field]));
+			}
+			sql.exec("DROP TABLE messages");
 		});
 	}
 

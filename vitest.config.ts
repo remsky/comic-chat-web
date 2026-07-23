@@ -31,6 +31,8 @@ export default defineConfig({
 									"backdrop-chunk",
 									"depart",
 									"flood",
+									"legacy-migrate",
+									"legacy-migrate-ancient",
 									"mute",
 									"name-block",
 									"profile",

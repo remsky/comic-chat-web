@@ -27,6 +27,10 @@ export function encodeIrcAnnotation(
 	annotation: ComicAnnotation,
 	text: string,
 ): string {
+	// strip characters that would break the framing
+	const talkTos = annotation.talkTos
+		.map((name) => name.replace(/[\s,()]/g, ""))
+		.filter((name) => name.length > 0);
 	const sections = [
 		"#",
 		"G",
@@ -40,7 +44,7 @@ export function encodeIrcAnnotation(
 		annotation.requested ? "R" : "",
 		"M",
 		toByte(mode),
-		annotation.talkTos.length > 0 ? `T${annotation.talkTos.join(",")}` : "",
+		talkTos.length > 0 ? `T${talkTos.join(",")}` : "",
 	].join("");
 	return `(${sections}) ${text}`;
 }
