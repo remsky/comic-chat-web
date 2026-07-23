@@ -56,6 +56,7 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
+	onIncomingChat?: (entry: ChatEntry, localAvatar: number | null) => void;
 }
 
 export interface JoinOptions {
@@ -532,6 +533,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
+			deps.onIncomingChat?.(parsed.entry, seatAvatar);
 			if (parsed.entry.mode === BACKGROUND_MODE)
 				deps.syncBackground(parsed.entry.text);
 		} else if (parsed.type === "history") {
