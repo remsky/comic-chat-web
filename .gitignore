@@ -5,3 +5,4 @@ test-results/
 .wrangler/
 .dev.vars
 IRC_STYLE_ANNOTATIONS.md
+.claude/commands/codex-review.md
