@@ -7,7 +7,6 @@ import {
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
 	parseClientMessage,
-	pickAvatar,
 	RATE_LIMIT_REASON,
 	type RoomEntry,
 	type RosterEntry,
@@ -33,12 +32,9 @@ const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 // a chat composed this long ago is a dead pipe's TCP flush, not a late delivery; measured on the sender's own clock
 const STALE_SEND_MS = 5_000;
 
-interface SocketSeat {
-	name: string;
-	avatar: number;
-}
-
 interface SocketState {
+	// per-connection identity; avatars are shareable, so this alone tells seats apart
+	id?: string;
 	name?: string;
 	avatar?: number;
 	tokens?: number;
@@ -92,6 +88,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 		if (typeof attachment !== "object" || attachment === null) return {};
 		const state = attachment as Record<string, unknown>;
 		return {
+			...(typeof state.id === "string" ? { id: state.id } : {}),
 			...(typeof state.name === "string" ? { name: state.name } : {}),
 			...(typeof state.avatar === "number" ? { avatar: state.avatar } : {}),
 			...(typeof state.tokens === "number" ? { tokens: state.tokens } : {}),
@@ -129,10 +126,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 		});
 	}
 
-	private seatOf(ws: WebSocket): SocketSeat | null {
+	private seatOf(ws: WebSocket): RosterEntry | null {
 		const state = this.stateOf(ws);
 		return state.name !== undefined && state.avatar !== undefined
-			? { name: state.name, avatar: state.avatar }
+			? { id: state.id ?? "", name: state.name, avatar: state.avatar }
 			: null;
 	}
 
@@ -158,7 +155,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 		const seats: RosterEntry[] = [];
 		for (const ws of this.ctx.getWebSockets()) {
 			const seat = this.seatOf(ws);
-			if (seat) seats.push({ name: seat.name, avatar: seat.avatar });
+			if (seat) seats.push(seat);
 		}
 		return seats;
 	}
@@ -218,17 +215,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
-			const avatar = pickAvatar(
-				message.avatar,
-				this.roster().map((entry) => entry.avatar),
-			);
-			if (avatar === null) {
-				this.send(ws, { type: "error", reason: "room is full" });
-				ws.close(1008, "room is full");
-				return;
-			}
+			// avatars are shareable; the connection id is the seat's identity
+			const avatar = message.avatar;
+			const id = crypto.randomUUID();
 			ws.serializeAttachment({
 				...this.stateOf(ws),
+				id,
 				name: message.name,
 				avatar,
 				...(message.sent !== undefined
@@ -238,6 +230,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			const welcomeHistory = this.events.history(undefined, this.background);
 			this.send(ws, {
 				type: "welcome",
+				id,
 				avatar,
 				background: this.background,
 				historyBackground: welcomeHistory.background,
@@ -246,7 +239,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			this.broadcast({
 				type: "joined",
-				who: { name: message.name, avatar },
+				who: { id, name: message.name, avatar },
 			});
 			if (message.from !== undefined && message.from !== this.roomName)
 				this.emit(
@@ -311,17 +304,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
-			const avatar =
-				message.avatar === seat.avatar
-					? seat.avatar
-					: (pickAvatar(
-							message.avatar,
-							this.roster()
-								.map((entry) => entry.avatar)
-								.filter((taken) => taken !== seat.avatar),
-						) ?? seat.avatar);
+			const avatar = message.avatar;
 			if (message.name === seat.name && avatar === seat.avatar) {
-				// nothing changed (e.g. a taken avatar was requested); resnap the requester's UI
+				// nothing changed; resnap the requester's UI
 				this.send(ws, { type: "profile", was: seat, who: seat });
 				return;
 			}
@@ -332,8 +317,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			this.broadcast({
 				type: "profile",
-				was: { name: seat.name, avatar: seat.avatar },
-				who: { name: message.name, avatar },
+				was: seat,
+				who: { id: seat.id, name: message.name, avatar },
 			});
 			// old nick announces the new one; the avatar line already speaks as the new nick
 			if (message.name !== seat.name)
@@ -383,7 +368,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 		if (seat) {
 			this.broadcast({
 				type: "left",
-				who: { name: seat.name, avatar: seat.avatar },
+				who: seat,
 			});
 			await this.reportPresence();
 		}

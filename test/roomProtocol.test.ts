@@ -8,7 +8,6 @@ import {
 	parseRoomEntry,
 	parseRoomListings,
 	parseServerMessage,
-	pickAvatar,
 	resolveRoomAllowlist,
 	roomNameFromPath,
 } from "../src/protocol/room.js";
@@ -96,14 +95,6 @@ describe("room wire protocol", () => {
 		expect(roomNameFromPath("/api/rooms//websocket")).toBeNull();
 		expect(roomNameFromPath("/api/rooms/a b/websocket")).toBeNull();
 		expect(roomNameFromPath("/api/rooms/lobby")).toBeNull();
-	});
-
-	it("assigns the requested cast seat or the first free one", () => {
-		expect(pickAvatar(2, [])).toBe(2);
-		expect(pickAvatar(2, [2])).toBe(1);
-		expect(pickAvatar(1, [1, 2, 3])).toBe(4);
-		const everySeat = Array.from({ length: CAST_SIZE }, (_, i) => i + 1);
-		expect(pickAvatar(1, everySeat)).toBeNull();
 	});
 
 	it("parses profile, depart, and join-from messages", () => {
@@ -273,10 +264,11 @@ describe("room wire protocol", () => {
 		).toBeNull();
 		const welcome = {
 			type: "welcome",
+			id: "seat-1",
 			avatar: 2,
 			background: "field",
 			historyBackground: "field",
-			roster: [{ name: "Anna", avatar: 2 }],
+			roster: [{ id: "seat-1", name: "Anna", avatar: 2 }],
 			history: [entry],
 		};
 		expect(parseServerMessage(JSON.stringify(welcome))).toEqual(welcome);

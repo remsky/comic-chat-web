@@ -104,7 +104,11 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
-	onIncomingChat?: (entry: ChatEntry, localAvatar: number | null) => void;
+	onIncomingChat?: (
+		entry: ChatEntry,
+		localAvatar: number | null,
+		localName: string,
+	) => void;
 }
 
 export interface JoinOptions {
@@ -186,6 +190,8 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	let watchdogTimer: number | undefined;
 	let suspectTimer: number | undefined;
 	let seatAvatar: number | null = null;
+	// the server's per-connection id; avatars are shareable, so this alone marks broadcasts as ours
+	let seatId: string | null = null;
 	// the live identity; profile changes move it, reconnects re-join with it
 	let currentName = name;
 	// announced once: the first welcome consumes it so reconnects don't re-arrive
@@ -534,6 +540,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			reconnectAttempt = 0;
 			roster = parsed.roster;
 			renderRoster(roster, deps.avatars);
+			seatId = parsed.id;
 			seatAvatar = parsed.avatar;
 			view.setLocalAvatarID(parsed.avatar);
 			announceFrom = undefined;
@@ -578,16 +585,17 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			refreshTranscript();
 			composerInput.focus();
 		} else if (parsed.type === "entry") {
-			// our own echo confirms the last send arrived, so it no longer needs restoring
+			// our own echo clears the pending restore; match name too since avatars are shareable
 			if (
 				parsed.entry.type === "chat" &&
 				parsed.entry.avatar === seatAvatar &&
+				parsed.entry.name === currentName &&
 				parsed.entry.text === lastComposerSend
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
 			if (parsed.entry.type === "chat")
-				deps.onIncomingChat?.(parsed.entry, seatAvatar);
+				deps.onIncomingChat?.(parsed.entry, seatAvatar, currentName);
 			if (parsed.entry.type === "background")
 				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {
@@ -606,31 +614,19 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			scroller.scrollTop =
 				previousTop + (scroller.scrollHeight - previousHeight);
 		} else if (parsed.type === "joined") {
-			if (
-				!roster.some(
-					(entry) =>
-						entry.avatar === parsed.who.avatar &&
-						entry.name === parsed.who.name,
-				)
-			)
+			if (!roster.some((entry) => entry.id === parsed.who.id))
 				roster.push(parsed.who);
 			renderRoster(roster, deps.avatars);
 		} else if (parsed.type === "left") {
-			const index = roster.findIndex(
-				(entry) =>
-					entry.avatar === parsed.who.avatar && entry.name === parsed.who.name,
-			);
+			const index = roster.findIndex((entry) => entry.id === parsed.who.id);
 			if (index >= 0) roster.splice(index, 1);
 			renderRoster(roster, deps.avatars);
 		} else if (parsed.type === "profile") {
-			const index = roster.findIndex(
-				(entry) =>
-					entry.avatar === parsed.was.avatar && entry.name === parsed.was.name,
-			);
+			const index = roster.findIndex((entry) => entry.id === parsed.was.id);
 			if (index >= 0) roster[index] = parsed.who;
 			renderRoster(roster, deps.avatars);
-			// seats are unique per avatar, so a matching seat means it was ours
-			if (parsed.was.avatar === seatAvatar) {
+			// the connection id is ours, so a matching seat means the change was ours
+			if (parsed.was.id === seatId) {
 				currentName = parsed.who.name;
 				seatAvatar = parsed.who.avatar;
 				view.setLocalAvatarID(seatAvatar);

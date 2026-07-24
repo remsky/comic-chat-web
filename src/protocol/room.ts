@@ -84,7 +84,9 @@ export interface AnnouncementEntry {
 
 export type RoomEntry = ChatEntry | BackgroundEntry | AnnouncementEntry;
 
+// id is the per-connection identity; avatars are shareable, so it alone marks "that seat is me"
 export interface RosterEntry {
+	id: string;
 	name: string;
 	avatar: number;
 }
@@ -113,6 +115,7 @@ export type ClientMessage =
 export type ServerMessage =
 	| {
 			type: "welcome";
+			id: string;
 			avatar: number;
 			background: string;
 			// backdrop in effect just before history[0], so replay starts where the room was
@@ -364,12 +367,13 @@ function rosterEntry(raw: unknown): RosterEntry | null {
 	const entry = raw as Record<string, unknown>;
 	const name = boundedString(entry.name, MAX_NAME_LENGTH);
 	if (
+		typeof entry.id !== "string" ||
 		name === null ||
 		typeof entry.avatar !== "number" ||
 		!Number.isInteger(entry.avatar)
 	)
 		return null;
-	return { name, avatar: entry.avatar };
+	return { id: entry.id, name, avatar: entry.avatar };
 }
 
 function entryList(raw: unknown): RoomEntry[] | null {
@@ -399,6 +403,7 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 			: null;
 		const history = entryList(message.history);
 		if (
+			typeof message.id !== "string" ||
 			typeof message.avatar !== "number" ||
 			typeof message.background !== "string" ||
 			typeof message.historyBackground !== "string" ||
@@ -409,6 +414,7 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 			return null;
 		return {
 			type: "welcome",
+			id: message.id,
 			avatar: message.avatar,
 			background: message.background,
 			historyBackground: message.historyBackground,
@@ -494,15 +500,4 @@ export function resolveRoomAllowlist(value: unknown): string[] {
 		if (ROOM_NAME_PATTERN.test(name)) names.add(name);
 	}
 	return names.size > 0 ? [...names] : [...DEFAULT_ROOMS];
-}
-
-export function pickAvatar(
-	requested: number,
-	taken: readonly number[],
-): number | null {
-	if (!taken.includes(requested)) return requested;
-	for (let avatar = 1; avatar <= CAST_SIZE; avatar++) {
-		if (!taken.includes(avatar)) return avatar;
-	}
-	return null;
 }

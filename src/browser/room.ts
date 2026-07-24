@@ -323,8 +323,14 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
-		onIncomingChat: (entry, localAvatar) => {
-			if (localAvatar !== null && entry.avatar === localAvatar) return;
+		onIncomingChat: (entry, localAvatar, localName) => {
+			// shareable avatars: only our own seat (avatar + name) suppresses the badge
+			if (
+				localAvatar !== null &&
+				entry.avatar === localAvatar &&
+				entry.name === localName
+			)
+				return;
 			tabBadge.markUnread();
 		},
 	};
