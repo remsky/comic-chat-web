@@ -7,7 +7,7 @@
 			name="description"
 			content="Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip."
 		/>
-		<title>Comic Chat Web</title>
+		<title>Comic Chat - Web Port of the 1996 Microsoft Classic</title>
 		<link rel="canonical" href="https://comics.remsky.art/" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Comic Chat Web" />
@@ -102,9 +102,11 @@
 			</defs>
 		</svg>
 		<header class="titlebar">
-			<button id="title-home" class="titlebar-text" type="button">
-				Comic Chat Web
-			</button>
+			<h1 class="titlebar-title">
+				<button id="title-home" class="titlebar-text" type="button">
+					Comic Chat Web
+				</button>
+			</h1>
 			<span id="title-room" class="titlebar-room"></span>
 		</header>
 		<main id="room" class="workspace">
@@ -346,11 +348,6 @@
 			</footer>
 		</div>
 		<section id="join" class="join-overlay" aria-label="Connect to a room">
-			<p class="join-tagline">
-				Modern port of Microsoft Comic Chat (1996) using Cloudflare Durable
-				Objects as the network layer. Live chat rendered as comic strips by a
-				validated TypeScript rewrite of the original engine.
-			</p>
 			<div class="dialog">
 				<header class="dialog-titlebar">Connect</header>
 				<form id="join-form" class="dialog-body">
@@ -386,6 +383,10 @@
 					</div>
 				</form>
 			</div>
+			<p class="join-tagline">
+				Modern port of Microsoft Comic Chat (1996), drawing live chat as comic
+				strips on Cloudflare Durable Objects.
+			</p>
 		</section>
 		<p id="status" class="status" role="status">Loading fonts and avatar art…</p>
 		<script type="module" src="/src/browser/room.ts"></script>

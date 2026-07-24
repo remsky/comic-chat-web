@@ -3,6 +3,7 @@
 import type { AvatarData } from "../engine/avatar.js";
 import {
 	CHAT_MODES,
+	type ChatEntry,
 	type ChatMode,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
@@ -103,6 +104,7 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
+	onIncomingChat?: (entry: ChatEntry, localAvatar: number | null) => void;
 }
 
 export interface JoinOptions {
@@ -584,6 +586,8 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
+			if (parsed.entry.type === "chat")
+				deps.onIncomingChat?.(parsed.entry, seatAvatar);
 			if (parsed.entry.type === "background")
 				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {

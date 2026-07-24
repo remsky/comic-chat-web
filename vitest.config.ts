@@ -3,6 +3,14 @@ import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
+		// vitest-pool-workers teardown race: rpc closes with a module resolve pending; tests are unaffected
+		onUnhandledError(error) {
+			if (
+				error.name === "EnvironmentTeardownError" &&
+				String(error.message).includes("Closing rpc while")
+			)
+				return false;
+		},
 		projects: [
 			{
 				test: {
