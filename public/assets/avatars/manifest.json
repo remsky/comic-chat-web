@@ -287,7 +287,9 @@
 				{
 					"poseID": 2,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 111,
 					"deltaXCX": -4,
@@ -298,7 +300,9 @@
 				{
 					"poseID": 3,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 93,
 					"yCX": 110,
 					"deltaXCX": -4,
@@ -309,7 +313,9 @@
 				{
 					"poseID": 4,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 113,
 					"deltaXCX": -4,
@@ -320,7 +326,9 @@
 				{
 					"poseID": 4,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 92,
 					"yCX": 113,
 					"deltaXCX": -4,
@@ -331,7 +339,9 @@
 				{
 					"poseID": 5,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 90,
 					"yCX": 111,
 					"deltaXCX": -6,
@@ -342,7 +352,9 @@
 				{
 					"poseID": 5,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 90,
 					"yCX": 111,
 					"deltaXCX": -6,
@@ -353,7 +365,9 @@
 				{
 					"poseID": 6,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 96,
 					"yCX": 116,
 					"deltaXCX": -1,
@@ -364,7 +378,9 @@
 				{
 					"poseID": 7,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 112,
 					"deltaXCX": -10,
@@ -375,7 +391,9 @@
 				{
 					"poseID": 7,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 86,
 					"yCX": 112,
 					"deltaXCX": -10,
@@ -386,7 +404,9 @@
 				{
 					"poseID": 8,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 90,
 					"yCX": 106,
 					"deltaXCX": -5,
@@ -397,7 +417,9 @@
 				{
 					"poseID": 9,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 93,
 					"yCX": 105,
 					"deltaXCX": -4,
@@ -408,7 +430,9 @@
 				{
 					"poseID": 9,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 105,
 					"deltaXCX": -4,
@@ -419,7 +443,9 @@
 				{
 					"poseID": 9,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 93,
 					"yCX": 105,
 					"deltaXCX": -4,
@@ -430,7 +456,9 @@
 				{
 					"poseID": 10,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 87,
 					"yCX": 109,
 					"deltaXCX": -1,
@@ -441,7 +469,9 @@
 				{
 					"poseID": 10,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 87,
 					"yCX": 109,
 					"deltaXCX": -1,
@@ -452,7 +482,9 @@
 				{
 					"poseID": 10,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 87,
 					"yCX": 109,
 					"deltaXCX": -1,
@@ -463,7 +495,9 @@
 				{
 					"poseID": 11,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 107,
 					"deltaXCX": -6,
@@ -474,7 +508,9 @@
 				{
 					"poseID": 12,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 88,
 					"yCX": 110,
 					"deltaXCX": -7,
@@ -487,112 +523,144 @@
 				{
 					"poseID": 13,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 26
 				},
 				{
 					"poseID": 14,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 83,
 					"yCX": 25
 				},
 				{
 					"poseID": 15,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 67,
 					"yCX": 28
 				},
 				{
 					"poseID": 15,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 67,
 					"yCX": 28
 				},
 				{
 					"poseID": 16,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 125,
 					"yCX": 30
 				},
 				{
 					"poseID": 17,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 66,
 					"yCX": 6
 				},
 				{
 					"poseID": 17,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 66,
 					"yCX": 6
 				},
 				{
 					"poseID": 18,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 77,
 					"yCX": 22
 				},
 				{
 					"poseID": 18,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 77,
 					"yCX": 22
 				},
 				{
 					"poseID": 19,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 87,
 					"yCX": 20
 				},
 				{
 					"poseID": 19,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 87,
 					"yCX": 20
 				},
 				{
 					"poseID": 19,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 87,
 					"yCX": 20
 				},
 				{
 					"poseID": 20,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 83,
 					"yCX": 33
 				},
 				{
 					"poseID": 20,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 83,
 					"yCX": 33
 				},
 				{
 					"poseID": 21,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 32
 				},
 				{
 					"poseID": 22,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 23
 				}
@@ -820,7 +888,9 @@
 				{
 					"poseID": 24,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 97,
 					"yCX": 128,
 					"deltaXCX": 2,
@@ -831,7 +901,9 @@
 				{
 					"poseID": 24,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 97,
 					"yCX": 128,
 					"deltaXCX": 2,
@@ -842,7 +914,9 @@
 				{
 					"poseID": 24,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 97,
 					"yCX": 128,
 					"deltaXCX": 2,
@@ -853,7 +927,9 @@
 				{
 					"poseID": 25,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 95,
 					"yCX": 131,
 					"deltaXCX": 3,
@@ -864,7 +940,9 @@
 				{
 					"poseID": 25,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 131,
 					"deltaXCX": 3,
@@ -875,7 +953,9 @@
 				{
 					"poseID": 26,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 135,
 					"deltaXCX": 0,
@@ -886,7 +966,9 @@
 				{
 					"poseID": 27,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 93,
 					"yCX": 126,
 					"deltaXCX": 0,
@@ -897,7 +979,9 @@
 				{
 					"poseID": 28,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 97,
 					"yCX": 123,
 					"deltaXCX": 6,
@@ -908,7 +992,9 @@
 				{
 					"poseID": 29,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 129,
 					"deltaXCX": -1,
@@ -919,7 +1005,9 @@
 				{
 					"poseID": 30,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 131,
 					"deltaXCX": 3,
@@ -930,7 +1018,9 @@
 				{
 					"poseID": 31,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 97,
 					"yCX": 128,
 					"deltaXCX": 1,
@@ -941,7 +1031,9 @@
 				{
 					"poseID": 32,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 93,
 					"yCX": 131,
 					"deltaXCX": 1,
@@ -954,77 +1046,99 @@
 				{
 					"poseID": 33,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 107,
 					"yCX": 27
 				},
 				{
 					"poseID": 34,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 36
 				},
 				{
 					"poseID": 35,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 120,
 					"yCX": 35
 				},
 				{
 					"poseID": 36,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 94,
 					"yCX": 32
 				},
 				{
 					"poseID": 36,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 94,
 					"yCX": 32
 				},
 				{
 					"poseID": 37,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 30
 				},
 				{
 					"poseID": 38,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 113,
 					"yCX": 28
 				},
 				{
 					"poseID": 38,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 113,
 					"yCX": 28
 				},
 				{
 					"poseID": 39,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 108,
 					"yCX": 30
 				},
 				{
 					"poseID": 40,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 167,
 					"yCX": 33
 				},
 				{
 					"poseID": 41,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 58
 				}
@@ -1188,105 +1302,135 @@
 				{
 					"poseID": 43,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 44,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 45,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 46,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 47,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 48,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 49,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 49,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 50,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 50,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 51,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 52,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 52,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 53,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 54,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				}
@@ -1535,7 +1679,9 @@
 				{
 					"poseID": 56,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 113,
 					"deltaXCX": 0,
@@ -1546,7 +1692,9 @@
 				{
 					"poseID": 57,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 0,
@@ -1557,7 +1705,9 @@
 				{
 					"poseID": 57,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 0,
@@ -1568,7 +1718,9 @@
 				{
 					"poseID": 58,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 0,
@@ -1579,7 +1731,9 @@
 				{
 					"poseID": 58,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 0,
@@ -1590,7 +1744,9 @@
 				{
 					"poseID": 59,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 79,
 					"yCX": 108,
 					"deltaXCX": -2,
@@ -1601,7 +1757,9 @@
 				{
 					"poseID": 59,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 79,
 					"yCX": 108,
 					"deltaXCX": -2,
@@ -1612,7 +1770,9 @@
 				{
 					"poseID": 60,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 1,
@@ -1623,7 +1783,9 @@
 				{
 					"poseID": 60,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 1,
@@ -1634,7 +1796,9 @@
 				{
 					"poseID": 61,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 1,
@@ -1645,7 +1809,9 @@
 				{
 					"poseID": 61,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 1,
@@ -1656,7 +1822,9 @@
 				{
 					"poseID": 62,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 2,
@@ -1667,7 +1835,9 @@
 				{
 					"poseID": 62,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 2,
@@ -1678,7 +1848,9 @@
 				{
 					"poseID": 63,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 0,
@@ -1689,7 +1861,9 @@
 				{
 					"poseID": 64,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 115,
 					"deltaXCX": -1,
@@ -1700,7 +1874,9 @@
 				{
 					"poseID": 65,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 73,
 					"yCX": 111,
 					"deltaXCX": -8,
@@ -1711,7 +1887,9 @@
 				{
 					"poseID": 66,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 84,
 					"yCX": 115,
 					"deltaXCX": 0,
@@ -1722,7 +1900,9 @@
 				{
 					"poseID": 67,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 84,
 					"yCX": 108,
 					"deltaXCX": 1,
@@ -1735,63 +1915,81 @@
 				{
 					"poseID": 68,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 63,
 					"yCX": 12
 				},
 				{
 					"poseID": 69,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 61,
 					"yCX": 13
 				},
 				{
 					"poseID": 70,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 85,
 					"yCX": 16
 				},
 				{
 					"poseID": 71,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 121,
 					"yCX": 39
 				},
 				{
 					"poseID": 72,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 19
 				},
 				{
 					"poseID": 72,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 95,
 					"yCX": 19
 				},
 				{
 					"poseID": 73,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 135,
 					"yCX": 14
 				},
 				{
 					"poseID": 74,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 133,
 					"yCX": 22
 				},
 				{
 					"poseID": 75,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 102,
 					"yCX": 19
 				}
@@ -2030,7 +2228,9 @@
 				{
 					"poseID": 77,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 90,
 					"yCX": 129,
 					"deltaXCX": 4,
@@ -2041,7 +2241,9 @@
 				{
 					"poseID": 78,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 82,
 					"yCX": 133,
 					"deltaXCX": -5,
@@ -2052,7 +2254,9 @@
 				{
 					"poseID": 79,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 92,
 					"yCX": 150,
 					"deltaXCX": -1,
@@ -2063,7 +2267,9 @@
 				{
 					"poseID": 80,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 136,
 					"deltaXCX": 5,
@@ -2074,7 +2280,9 @@
 				{
 					"poseID": 81,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 85,
 					"yCX": 144,
 					"deltaXCX": 6,
@@ -2085,7 +2293,9 @@
 				{
 					"poseID": 82,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 85,
 					"yCX": 134,
 					"deltaXCX": -8,
@@ -2096,7 +2306,9 @@
 				{
 					"poseID": 82,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 85,
 					"yCX": 134,
 					"deltaXCX": -8,
@@ -2107,7 +2319,9 @@
 				{
 					"poseID": 83,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 92,
 					"yCX": 130,
 					"deltaXCX": -1,
@@ -2118,7 +2332,9 @@
 				{
 					"poseID": 83,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 130,
 					"deltaXCX": -1,
@@ -2129,7 +2345,9 @@
 				{
 					"poseID": 84,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 100,
 					"yCX": 151,
 					"deltaXCX": 6,
@@ -2140,7 +2358,9 @@
 				{
 					"poseID": 85,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 103,
 					"yCX": 162,
 					"deltaXCX": 2,
@@ -2151,7 +2371,9 @@
 				{
 					"poseID": 85,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 103,
 					"yCX": 162,
 					"deltaXCX": 2,
@@ -2162,7 +2384,9 @@
 				{
 					"poseID": 86,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 92,
 					"yCX": 152,
 					"deltaXCX": 2,
@@ -2173,7 +2397,9 @@
 				{
 					"poseID": 86,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 92,
 					"yCX": 152,
 					"deltaXCX": 2,
@@ -2186,84 +2412,108 @@
 				{
 					"poseID": 87,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 127,
 					"yCX": 27
 				},
 				{
 					"poseID": 88,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 164,
 					"yCX": 29
 				},
 				{
 					"poseID": 89,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 103,
 					"yCX": 28
 				},
 				{
 					"poseID": 90,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 165,
 					"yCX": 78
 				},
 				{
 					"poseID": 90,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 165,
 					"yCX": 78
 				},
 				{
 					"poseID": 91,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 131,
 					"yCX": 36
 				},
 				{
 					"poseID": 91,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 131,
 					"yCX": 36
 				},
 				{
 					"poseID": 92,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 123,
 					"yCX": 33
 				},
 				{
 					"poseID": 92,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 123,
 					"yCX": 33
 				},
 				{
 					"poseID": 93,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 200,
 					"yCX": 22
 				},
 				{
 					"poseID": 94,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 137,
 					"yCX": 26
 				},
 				{
 					"poseID": 95,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 157,
 					"yCX": 35
 				}
@@ -2623,7 +2873,9 @@
 				{
 					"poseID": 97,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 99,
 					"yCX": 137,
 					"deltaXCX": 0,
@@ -2634,7 +2886,9 @@
 				{
 					"poseID": 98,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 93,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -2645,7 +2899,9 @@
 				{
 					"poseID": 99,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 100,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -2656,7 +2912,9 @@
 				{
 					"poseID": 100,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 105,
 					"yCX": 147,
 					"deltaXCX": 0,
@@ -2667,7 +2925,9 @@
 				{
 					"poseID": 101,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 99,
 					"yCX": 131,
 					"deltaXCX": 0,
@@ -2678,7 +2938,9 @@
 				{
 					"poseID": 102,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 86,
 					"yCX": 135,
 					"deltaXCX": 0,
@@ -2689,7 +2951,9 @@
 				{
 					"poseID": 103,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 150,
 					"deltaXCX": 0,
@@ -2700,7 +2964,9 @@
 				{
 					"poseID": 104,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 87,
 					"yCX": 129,
 					"deltaXCX": 0,
@@ -2711,7 +2977,9 @@
 				{
 					"poseID": 105,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 117,
 					"yCX": 155,
 					"deltaXCX": 0,
@@ -2722,7 +2990,9 @@
 				{
 					"poseID": 106,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 131,
 					"yCX": 153,
 					"deltaXCX": 0,
@@ -2733,7 +3003,9 @@
 				{
 					"poseID": 107,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 113,
 					"yCX": 148,
 					"deltaXCX": 0,
@@ -2744,7 +3016,9 @@
 				{
 					"poseID": 108,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 117,
 					"yCX": 155,
 					"deltaXCX": 0,
@@ -2755,7 +3029,9 @@
 				{
 					"poseID": 109,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 124,
 					"yCX": 149,
 					"deltaXCX": 0,
@@ -2766,7 +3042,9 @@
 				{
 					"poseID": 110,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 123,
 					"yCX": 153,
 					"deltaXCX": 0,
@@ -2777,7 +3055,9 @@
 				{
 					"poseID": 111,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 87,
 					"yCX": 125,
 					"deltaXCX": 0,
@@ -2788,7 +3068,9 @@
 				{
 					"poseID": 112,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 90,
 					"yCX": 125,
 					"deltaXCX": 0,
@@ -2799,7 +3081,9 @@
 				{
 					"poseID": 113,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 119,
 					"deltaXCX": 0,
@@ -2810,7 +3094,9 @@
 				{
 					"poseID": 113,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 119,
 					"deltaXCX": 0,
@@ -2821,7 +3107,9 @@
 				{
 					"poseID": 114,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 80,
 					"yCX": 130,
 					"deltaXCX": 0,
@@ -2832,7 +3120,9 @@
 				{
 					"poseID": 115,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 89,
 					"yCX": 127,
 					"deltaXCX": 0,
@@ -2845,77 +3135,99 @@
 				{
 					"poseID": 116,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 129,
 					"yCX": 10
 				},
 				{
 					"poseID": 117,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 11
 				},
 				{
 					"poseID": 118,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 99,
 					"yCX": 11
 				},
 				{
 					"poseID": 119,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 11
 				},
 				{
 					"poseID": 120,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 103,
 					"yCX": 10
 				},
 				{
 					"poseID": 121,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 90,
 					"yCX": 12
 				},
 				{
 					"poseID": 122,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 78,
 					"yCX": 10
 				},
 				{
 					"poseID": 123,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 10
 				},
 				{
 					"poseID": 124,
 					"emotion": 1005,
+					"emotionIndex": 14,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 145,
 					"yCX": 13
 				},
 				{
 					"poseID": 125,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 125,
 					"yCX": 101
 				},
 				{
 					"poseID": 126,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 91,
 					"yCX": 11
 				}
@@ -3143,7 +3455,9 @@
 				{
 					"poseID": 128,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 47,
 					"yCX": 93,
 					"deltaXCX": -2,
@@ -3154,7 +3468,9 @@
 				{
 					"poseID": 128,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 47,
 					"yCX": 93,
 					"deltaXCX": -2,
@@ -3165,7 +3481,9 @@
 				{
 					"poseID": 129,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 54,
 					"yCX": 94,
 					"deltaXCX": -1,
@@ -3176,7 +3494,9 @@
 				{
 					"poseID": 130,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 50,
 					"yCX": 102,
 					"deltaXCX": -4,
@@ -3187,7 +3507,9 @@
 				{
 					"poseID": 130,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 50,
 					"yCX": 102,
 					"deltaXCX": -4,
@@ -3198,7 +3520,9 @@
 				{
 					"poseID": 131,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 49,
 					"yCX": 96,
 					"deltaXCX": -4,
@@ -3209,7 +3533,9 @@
 				{
 					"poseID": 132,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 46,
 					"yCX": 94,
 					"deltaXCX": -3,
@@ -3220,7 +3546,9 @@
 				{
 					"poseID": 133,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 52,
 					"yCX": 91,
 					"deltaXCX": -1,
@@ -3231,7 +3559,9 @@
 				{
 					"poseID": 134,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 51,
 					"yCX": 89,
 					"deltaXCX": -2,
@@ -3242,7 +3572,9 @@
 				{
 					"poseID": 134,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 51,
 					"yCX": 89,
 					"deltaXCX": -2,
@@ -3253,7 +3585,9 @@
 				{
 					"poseID": 135,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 52,
 					"yCX": 94,
 					"deltaXCX": -1,
@@ -3264,7 +3598,9 @@
 				{
 					"poseID": 136,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 55,
 					"yCX": 98,
 					"deltaXCX": -4,
@@ -3277,77 +3613,99 @@
 				{
 					"poseID": 137,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 76,
 					"yCX": 15
 				},
 				{
 					"poseID": 138,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 12
 				},
 				{
 					"poseID": 139,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 55,
 					"yCX": 17
 				},
 				{
 					"poseID": 140,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 82,
 					"yCX": 8
 				},
 				{
 					"poseID": 140,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 82,
 					"yCX": 8
 				},
 				{
 					"poseID": 141,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 72,
 					"yCX": 16
 				},
 				{
 					"poseID": 142,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 75,
 					"yCX": 7
 				},
 				{
 					"poseID": 143,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 75,
 					"yCX": 7
 				},
 				{
 					"poseID": 143,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 75,
 					"yCX": 7
 				},
 				{
 					"poseID": 144,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 116,
 					"yCX": 9
 				},
 				{
 					"poseID": 145,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 15
 				}
@@ -3586,7 +3944,9 @@
 				{
 					"poseID": 147,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 112,
 					"deltaXCX": 1,
@@ -3597,7 +3957,9 @@
 				{
 					"poseID": 147,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 65,
 					"yCX": 112,
 					"deltaXCX": 1,
@@ -3608,7 +3970,9 @@
 				{
 					"poseID": 148,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 56,
 					"yCX": 99,
 					"deltaXCX": 0,
@@ -3619,7 +3983,9 @@
 				{
 					"poseID": 149,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 53,
 					"yCX": 106,
 					"deltaXCX": 0,
@@ -3630,7 +3996,9 @@
 				{
 					"poseID": 149,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 53,
 					"yCX": 106,
 					"deltaXCX": 0,
@@ -3641,7 +4009,9 @@
 				{
 					"poseID": 150,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 53,
 					"yCX": 103,
 					"deltaXCX": 3,
@@ -3652,7 +4022,9 @@
 				{
 					"poseID": 151,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 73,
 					"yCX": 104,
 					"deltaXCX": 3,
@@ -3663,7 +4035,9 @@
 				{
 					"poseID": 152,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 60,
 					"yCX": 103,
 					"deltaXCX": 1,
@@ -3674,7 +4048,9 @@
 				{
 					"poseID": 153,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 65,
 					"yCX": 104,
 					"deltaXCX": 4,
@@ -3685,7 +4061,9 @@
 				{
 					"poseID": 153,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 104,
 					"deltaXCX": 4,
@@ -3696,7 +4074,9 @@
 				{
 					"poseID": 154,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 60,
 					"yCX": 101,
 					"deltaXCX": 5,
@@ -3707,7 +4087,9 @@
 				{
 					"poseID": 155,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 58,
 					"yCX": 98,
 					"deltaXCX": 3,
@@ -3718,7 +4100,9 @@
 				{
 					"poseID": 156,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 101,
 					"deltaXCX": 4,
@@ -3731,91 +4115,117 @@
 				{
 					"poseID": 157,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 26
 				},
 				{
 					"poseID": 158,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 26
 				},
 				{
 					"poseID": 159,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 115,
 					"yCX": 31
 				},
 				{
 					"poseID": 159,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 115,
 					"yCX": 31
 				},
 				{
 					"poseID": 160,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 96,
 					"yCX": 20
 				},
 				{
 					"poseID": 161,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 110,
 					"yCX": 19
 				},
 				{
 					"poseID": 161,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 110,
 					"yCX": 19
 				},
 				{
 					"poseID": 162,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 84,
 					"yCX": 24
 				},
 				{
 					"poseID": 163,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 111,
 					"yCX": 25
 				},
 				{
 					"poseID": 164,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 89,
 					"yCX": 23
 				},
 				{
 					"poseID": 164,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 89,
 					"yCX": 23
 				},
 				{
 					"poseID": 164,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 23
 				},
 				{
 					"poseID": 165,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 105
 				}
@@ -4109,7 +4519,9 @@
 				{
 					"poseID": 167,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 61,
 					"yCX": 94,
 					"deltaXCX": -3,
@@ -4120,7 +4532,9 @@
 				{
 					"poseID": 168,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 57,
 					"yCX": 93,
 					"deltaXCX": -2,
@@ -4131,7 +4545,9 @@
 				{
 					"poseID": 169,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 62,
 					"yCX": 98,
 					"deltaXCX": -1,
@@ -4142,7 +4558,9 @@
 				{
 					"poseID": 170,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 56,
 					"yCX": 97,
 					"deltaXCX": -1,
@@ -4153,7 +4571,9 @@
 				{
 					"poseID": 171,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 53,
 					"yCX": 98,
 					"deltaXCX": 0,
@@ -4164,7 +4584,9 @@
 				{
 					"poseID": 172,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 50,
 					"yCX": 94,
 					"deltaXCX": -2,
@@ -4175,7 +4597,9 @@
 				{
 					"poseID": 173,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 61,
 					"yCX": 107,
 					"deltaXCX": 0,
@@ -4186,7 +4610,9 @@
 				{
 					"poseID": 174,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 48,
 					"yCX": 97,
 					"deltaXCX": -1,
@@ -4197,7 +4623,9 @@
 				{
 					"poseID": 175,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 58,
 					"yCX": 92,
 					"deltaXCX": 3,
@@ -4208,7 +4636,9 @@
 				{
 					"poseID": 176,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 59,
 					"yCX": 57,
 					"deltaXCX": 1,
@@ -4219,7 +4649,9 @@
 				{
 					"poseID": 177,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 52,
 					"yCX": 97,
 					"deltaXCX": 0,
@@ -4230,7 +4662,9 @@
 				{
 					"poseID": 178,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 53,
 					"yCX": 101,
 					"deltaXCX": 0,
@@ -4241,7 +4675,9 @@
 				{
 					"poseID": 179,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 59,
 					"yCX": 94,
 					"deltaXCX": 2,
@@ -4252,7 +4688,9 @@
 				{
 					"poseID": 180,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 59,
 					"yCX": 94,
 					"deltaXCX": 4,
@@ -4263,7 +4701,9 @@
 				{
 					"poseID": 181,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 56,
 					"yCX": 93,
 					"deltaXCX": 2,
@@ -4274,7 +4714,9 @@
 				{
 					"poseID": 182,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 56,
 					"yCX": 93,
 					"deltaXCX": 2,
@@ -4285,7 +4727,9 @@
 				{
 					"poseID": 183,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 59,
 					"yCX": 93,
 					"deltaXCX": 4,
@@ -4298,77 +4742,99 @@
 				{
 					"poseID": 184,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 102,
 					"yCX": 21
 				},
 				{
 					"poseID": 184,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 102,
 					"yCX": 21
 				},
 				{
 					"poseID": 185,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 77,
 					"yCX": 13
 				},
 				{
 					"poseID": 185,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 77,
 					"yCX": 13
 				},
 				{
 					"poseID": 186,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 30
 				},
 				{
 					"poseID": 186,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 98,
 					"yCX": 30
 				},
 				{
 					"poseID": 187,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 119,
 					"yCX": 16
 				},
 				{
 					"poseID": 188,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 96,
 					"yCX": 21
 				},
 				{
 					"poseID": 189,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 159,
 					"yCX": 17
 				},
 				{
 					"poseID": 189,
 					"emotion": 1005,
+					"emotionIndex": 14,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 159,
 					"yCX": 17
 				},
 				{
 					"poseID": 190,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 90,
 					"yCX": 16
 				}
@@ -4411,7 +4877,9 @@
 				{
 					"poseID": 192,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 152,
 					"faceY": 70
 				}
@@ -4552,98 +5020,126 @@
 				{
 					"poseID": 194,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 195,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 195,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 196,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 197,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 198,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 199,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 200,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 200,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 201,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 201,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 202,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 203,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				},
 				{
 					"poseID": 203,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"faceX": 133,
 					"faceY": 131
 				}
@@ -4870,7 +5366,9 @@
 				{
 					"poseID": 205,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 89,
 					"yCX": 129,
 					"deltaXCX": 2,
@@ -4881,7 +5379,9 @@
 				{
 					"poseID": 206,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 85,
 					"yCX": 139,
 					"deltaXCX": 3,
@@ -4892,7 +5392,9 @@
 				{
 					"poseID": 207,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 85,
 					"yCX": 137,
 					"deltaXCX": 2,
@@ -4903,7 +5405,9 @@
 				{
 					"poseID": 208,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 93,
 					"yCX": 140,
 					"deltaXCX": 2,
@@ -4914,7 +5418,9 @@
 				{
 					"poseID": 209,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 67,
 					"yCX": 124,
 					"deltaXCX": 2,
@@ -4925,7 +5431,9 @@
 				{
 					"poseID": 209,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 67,
 					"yCX": 124,
 					"deltaXCX": 2,
@@ -4936,7 +5444,9 @@
 				{
 					"poseID": 210,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 77,
 					"yCX": 125,
 					"deltaXCX": 4,
@@ -4947,7 +5457,9 @@
 				{
 					"poseID": 211,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 74,
 					"yCX": 137,
 					"deltaXCX": 4,
@@ -4958,7 +5470,9 @@
 				{
 					"poseID": 211,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 137,
 					"deltaXCX": 4,
@@ -4969,7 +5483,9 @@
 				{
 					"poseID": 212,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 83,
 					"yCX": 126,
 					"deltaXCX": 4,
@@ -4980,7 +5496,9 @@
 				{
 					"poseID": 212,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 83,
 					"yCX": 126,
 					"deltaXCX": 4,
@@ -4993,77 +5511,99 @@
 				{
 					"poseID": 213,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 16
 				},
 				{
 					"poseID": 214,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 100,
 					"yCX": 19
 				},
 				{
 					"poseID": 215,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 17
 				},
 				{
 					"poseID": 216,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 18
 				},
 				{
 					"poseID": 216,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 74,
 					"yCX": 18
 				},
 				{
 					"poseID": 217,
 					"emotion": 1005,
+					"emotionIndex": 14,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 160,
 					"yCX": 12
 				},
 				{
 					"poseID": 218,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 94,
 					"yCX": 51
 				},
 				{
 					"poseID": 219,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 132,
 					"yCX": 24
 				},
 				{
 					"poseID": 220,
 					"emotion": 1004,
+					"emotionIndex": 13,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 137,
 					"yCX": 17
 				},
 				{
 					"poseID": 221,
 					"emotion": 1008,
+					"emotionIndex": 17,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 109,
 					"yCX": 17
 				},
 				{
 					"poseID": 222,
 					"emotion": 1006,
+					"emotionIndex": 15,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 82,
 					"yCX": 7
 				}
@@ -5379,7 +5919,9 @@
 				{
 					"poseID": 224,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 69,
 					"yCX": 126,
 					"deltaXCX": 3,
@@ -5390,7 +5932,9 @@
 				{
 					"poseID": 225,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 125,
 					"deltaXCX": 1,
@@ -5401,7 +5945,9 @@
 				{
 					"poseID": 226,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 76,
 					"yCX": 115,
 					"deltaXCX": -1,
@@ -5412,7 +5958,9 @@
 				{
 					"poseID": 227,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 69,
 					"yCX": 127,
 					"deltaXCX": 3,
@@ -5423,7 +5971,9 @@
 				{
 					"poseID": 227,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 69,
 					"yCX": 127,
 					"deltaXCX": 3,
@@ -5434,7 +5984,9 @@
 				{
 					"poseID": 228,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 69,
 					"yCX": 127,
 					"deltaXCX": 4,
@@ -5445,7 +5997,9 @@
 				{
 					"poseID": 229,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 67,
 					"yCX": 121,
 					"deltaXCX": 3,
@@ -5456,7 +6010,9 @@
 				{
 					"poseID": 229,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 67,
 					"yCX": 121,
 					"deltaXCX": 3,
@@ -5467,7 +6023,9 @@
 				{
 					"poseID": 230,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 69,
 					"yCX": 128,
 					"deltaXCX": 2,
@@ -5478,7 +6036,9 @@
 				{
 					"poseID": 231,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 68,
 					"yCX": 126,
 					"deltaXCX": 2,
@@ -5489,7 +6049,9 @@
 				{
 					"poseID": 231,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 68,
 					"yCX": 126,
 					"deltaXCX": 2,
@@ -5500,7 +6062,9 @@
 				{
 					"poseID": 232,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 69,
 					"yCX": 124,
 					"deltaXCX": 3,
@@ -5511,7 +6075,9 @@
 				{
 					"poseID": 233,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 139,
 					"deltaXCX": 2,
@@ -5522,7 +6088,9 @@
 				{
 					"poseID": 234,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 68,
 					"yCX": 130,
 					"deltaXCX": 1,
@@ -5533,7 +6101,9 @@
 				{
 					"poseID": 235,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 74,
 					"yCX": 129,
 					"deltaXCX": -3,
@@ -5544,7 +6114,9 @@
 				{
 					"poseID": 236,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 66,
 					"yCX": 139,
 					"deltaXCX": 1,
@@ -5555,7 +6127,9 @@
 				{
 					"poseID": 237,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 66,
 					"yCX": 134,
 					"deltaXCX": 1,
@@ -5568,126 +6142,162 @@
 				{
 					"poseID": 238,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 101,
 					"yCX": 27
 				},
 				{
 					"poseID": 239,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 97,
 					"yCX": 97
 				},
 				{
 					"poseID": 240,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 135,
 					"yCX": 42
 				},
 				{
 					"poseID": 240,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 135,
 					"yCX": 42
 				},
 				{
 					"poseID": 241,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 105,
 					"yCX": 37
 				},
 				{
 					"poseID": 242,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 93,
 					"yCX": 29
 				},
 				{
 					"poseID": 242,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 93,
 					"yCX": 29
 				},
 				{
 					"poseID": 242,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 29
 				},
 				{
 					"poseID": 243,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 103,
 					"yCX": 26
 				},
 				{
 					"poseID": 243,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 103,
 					"yCX": 26
 				},
 				{
 					"poseID": 244,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 88,
 					"yCX": 31
 				},
 				{
 					"poseID": 245,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 94,
 					"yCX": 29
 				},
 				{
 					"poseID": 245,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 94,
 					"yCX": 29
 				},
 				{
 					"poseID": 246,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 137,
 					"yCX": 32
 				},
 				{
 					"poseID": 246,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 137,
 					"yCX": 32
 				},
 				{
 					"poseID": 247,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 136,
 					"yCX": 36
 				},
 				{
 					"poseID": 248,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 105,
 					"yCX": 33
 				},
 				{
 					"poseID": 249,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 108,
 					"yCX": 49
 				}
@@ -5981,7 +6591,9 @@
 				{
 					"poseID": 251,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 82,
 					"yCX": 118,
 					"deltaXCX": 0,
@@ -5992,7 +6604,9 @@
 				{
 					"poseID": 252,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 85,
 					"yCX": 113,
 					"deltaXCX": 4,
@@ -6003,7 +6617,9 @@
 				{
 					"poseID": 253,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 116,
 					"deltaXCX": 0,
@@ -6014,7 +6630,9 @@
 				{
 					"poseID": 254,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 73,
 					"yCX": 121,
 					"deltaXCX": 2,
@@ -6025,7 +6643,9 @@
 				{
 					"poseID": 254,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 121,
 					"deltaXCX": 2,
@@ -6036,7 +6656,9 @@
 				{
 					"poseID": 255,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 74,
 					"yCX": 121,
 					"deltaXCX": 5,
@@ -6047,7 +6669,9 @@
 				{
 					"poseID": 255,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 74,
 					"yCX": 121,
 					"deltaXCX": 5,
@@ -6058,7 +6682,9 @@
 				{
 					"poseID": 256,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 70,
 					"yCX": 112,
 					"deltaXCX": 1,
@@ -6069,7 +6695,9 @@
 				{
 					"poseID": 257,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 76,
 					"yCX": 112,
 					"deltaXCX": 0,
@@ -6080,7 +6708,9 @@
 				{
 					"poseID": 258,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 85,
 					"yCX": 117,
 					"deltaXCX": 7,
@@ -6091,7 +6721,9 @@
 				{
 					"poseID": 258,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 85,
 					"yCX": 117,
 					"deltaXCX": 7,
@@ -6102,7 +6734,9 @@
 				{
 					"poseID": 259,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 69,
 					"yCX": 112,
 					"deltaXCX": 7,
@@ -6113,7 +6747,9 @@
 				{
 					"poseID": 259,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 69,
 					"yCX": 112,
 					"deltaXCX": 7,
@@ -6124,7 +6760,9 @@
 				{
 					"poseID": 260,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 74,
 					"yCX": 110,
 					"deltaXCX": -1,
@@ -6135,7 +6773,9 @@
 				{
 					"poseID": 261,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 63,
 					"yCX": 113,
 					"deltaXCX": -6,
@@ -6146,7 +6786,9 @@
 				{
 					"poseID": 262,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 67,
 					"yCX": 110,
 					"deltaXCX": -1,
@@ -6157,7 +6799,9 @@
 				{
 					"poseID": 263,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 69,
 					"yCX": 124,
 					"deltaXCX": -5,
@@ -6168,7 +6812,9 @@
 				{
 					"poseID": 263,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 69,
 					"yCX": 124,
 					"deltaXCX": -5,
@@ -6179,7 +6825,9 @@
 				{
 					"poseID": 264,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 65,
 					"yCX": 116,
 					"deltaXCX": -5,
@@ -6190,7 +6838,9 @@
 				{
 					"poseID": 265,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 75,
 					"yCX": 116,
 					"deltaXCX": 5,
@@ -6203,91 +6853,117 @@
 				{
 					"poseID": 266,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 28
 				},
 				{
 					"poseID": 267,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 103,
 					"yCX": 19
 				},
 				{
 					"poseID": 267,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 103,
 					"yCX": 19
 				},
 				{
 					"poseID": 268,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 35
 				},
 				{
 					"poseID": 269,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 161,
 					"yCX": 24
 				},
 				{
 					"poseID": 270,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 23
 				},
 				{
 					"poseID": 270,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 95,
 					"yCX": 23
 				},
 				{
 					"poseID": 271,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 115,
 					"yCX": 20
 				},
 				{
 					"poseID": 272,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 80,
 					"yCX": 61
 				},
 				{
 					"poseID": 272,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 80,
 					"yCX": 61
 				},
 				{
 					"poseID": 273,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 107,
 					"yCX": 31
 				},
 				{
 					"poseID": 274,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 54,
 					"yCX": 30
 				},
 				{
 					"poseID": 274,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 54,
 					"yCX": 30
 				}
@@ -6493,7 +7169,9 @@
 				{
 					"poseID": 276,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 108,
 					"yCX": 149,
 					"deltaXCX": 0,
@@ -6504,7 +7182,9 @@
 				{
 					"poseID": 277,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 100,
 					"yCX": 164,
 					"deltaXCX": 2,
@@ -6515,7 +7195,9 @@
 				{
 					"poseID": 278,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 108,
 					"yCX": 153,
 					"deltaXCX": -3,
@@ -6526,7 +7208,9 @@
 				{
 					"poseID": 279,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 94,
 					"yCX": 151,
 					"deltaXCX": -3,
@@ -6537,7 +7221,9 @@
 				{
 					"poseID": 280,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 128,
 					"yCX": 148,
 					"deltaXCX": -4,
@@ -6548,7 +7234,9 @@
 				{
 					"poseID": 281,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 118,
 					"yCX": 126,
 					"deltaXCX": 1,
@@ -6559,7 +7247,9 @@
 				{
 					"poseID": 282,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 78,
 					"yCX": 169,
 					"deltaXCX": -2,
@@ -6570,7 +7260,9 @@
 				{
 					"poseID": 282,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 78,
 					"yCX": 169,
 					"deltaXCX": -2,
@@ -6581,7 +7273,9 @@
 				{
 					"poseID": 283,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 141,
 					"yCX": 153,
 					"deltaXCX": 2,
@@ -6592,7 +7286,9 @@
 				{
 					"poseID": 284,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 143,
 					"yCX": 144,
 					"deltaXCX": 0,
@@ -6605,56 +7301,72 @@
 				{
 					"poseID": 285,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 34
 				},
 				{
 					"poseID": 286,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 119,
 					"yCX": 22
 				},
 				{
 					"poseID": 286,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 119,
 					"yCX": 22
 				},
 				{
 					"poseID": 287,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 107,
 					"yCX": 21
 				},
 				{
 					"poseID": 288,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 99,
 					"yCX": 22
 				},
 				{
 					"poseID": 289,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 80,
 					"yCX": 24
 				},
 				{
 					"poseID": 290,
 					"emotion": 1005,
+					"emotionIndex": 14,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 162,
 					"yCX": 16
 				},
 				{
 					"poseID": 291,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 118,
 					"yCX": 26
 				}
@@ -6697,7 +7409,9 @@
 				{
 					"poseID": 293,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 113,
 					"faceY": 82
 				}
@@ -6739,7 +7453,9 @@
 				{
 					"poseID": 295,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 153,
 					"faceY": 149
 				}
@@ -7021,7 +7737,9 @@
 				{
 					"poseID": 297,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 64,
 					"yCX": 156,
 					"deltaXCX": -2,
@@ -7032,7 +7750,9 @@
 				{
 					"poseID": 298,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 65,
 					"yCX": 155,
 					"deltaXCX": 6,
@@ -7043,7 +7763,9 @@
 				{
 					"poseID": 298,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 155,
 					"deltaXCX": 6,
@@ -7054,7 +7776,9 @@
 				{
 					"poseID": 299,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 89,
 					"yCX": 155,
 					"deltaXCX": 7,
@@ -7065,7 +7789,9 @@
 				{
 					"poseID": 299,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 89,
 					"yCX": 155,
 					"deltaXCX": 7,
@@ -7076,7 +7802,9 @@
 				{
 					"poseID": 300,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 79,
 					"yCX": 164,
 					"deltaXCX": 10,
@@ -7087,7 +7815,9 @@
 				{
 					"poseID": 301,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 63,
 					"yCX": 150,
 					"deltaXCX": -8,
@@ -7098,7 +7828,9 @@
 				{
 					"poseID": 301,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 63,
 					"yCX": 150,
 					"deltaXCX": -8,
@@ -7109,7 +7841,9 @@
 				{
 					"poseID": 302,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 88,
 					"yCX": 157,
 					"deltaXCX": -3,
@@ -7120,7 +7854,9 @@
 				{
 					"poseID": 302,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 88,
 					"yCX": 157,
 					"deltaXCX": -3,
@@ -7131,7 +7867,9 @@
 				{
 					"poseID": 303,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 71,
 					"yCX": 156,
 					"deltaXCX": -5,
@@ -7142,7 +7880,9 @@
 				{
 					"poseID": 303,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 71,
 					"yCX": 156,
 					"deltaXCX": -5,
@@ -7153,7 +7893,9 @@
 				{
 					"poseID": 304,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 94,
 					"yCX": 161,
 					"deltaXCX": 6,
@@ -7164,7 +7906,9 @@
 				{
 					"poseID": 305,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 173,
 					"deltaXCX": -4,
@@ -7175,7 +7919,9 @@
 				{
 					"poseID": 306,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 72,
 					"yCX": 205,
 					"deltaXCX": -8,
@@ -7186,7 +7932,9 @@
 				{
 					"poseID": 307,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 78,
 					"yCX": 164,
 					"deltaXCX": -5,
@@ -7197,7 +7945,9 @@
 				{
 					"poseID": 307,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 78,
 					"yCX": 164,
 					"deltaXCX": -5,
@@ -7208,7 +7958,9 @@
 				{
 					"poseID": 308,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 66,
 					"yCX": 185,
 					"deltaXCX": -3,
@@ -7219,7 +7971,9 @@
 				{
 					"poseID": 309,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 70,
 					"yCX": 177,
 					"deltaXCX": 0,
@@ -7230,7 +7984,9 @@
 				{
 					"poseID": 310,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 87,
 					"yCX": 169,
 					"deltaXCX": 3,
@@ -7243,84 +7999,108 @@
 				{
 					"poseID": 311,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 79,
 					"yCX": 16
 				},
 				{
 					"poseID": 311,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 79,
 					"yCX": 16
 				},
 				{
 					"poseID": 312,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 40,
 					"yCX": 13
 				},
 				{
 					"poseID": 313,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 66,
 					"yCX": 32
 				},
 				{
 					"poseID": 313,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 66,
 					"yCX": 32
 				},
 				{
 					"poseID": 314,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 18
 				},
 				{
 					"poseID": 315,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 102,
 					"yCX": 10
 				},
 				{
 					"poseID": 316,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 73,
 					"yCX": 24
 				},
 				{
 					"poseID": 317,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 40,
 					"yCX": 12
 				},
 				{
 					"poseID": 318,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 94,
 					"yCX": 6
 				},
 				{
 					"poseID": 319,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 112,
 					"yCX": 27
 				},
 				{
 					"poseID": 319,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 112,
 					"yCX": 27
 				}
@@ -7559,7 +8339,9 @@
 				{
 					"poseID": 321,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 104,
 					"yCX": 171,
 					"deltaXCX": 12,
@@ -7570,7 +8352,9 @@
 				{
 					"poseID": 322,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 96,
 					"yCX": 171,
 					"deltaXCX": 7,
@@ -7581,7 +8365,9 @@
 				{
 					"poseID": 322,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 96,
 					"yCX": 171,
 					"deltaXCX": 7,
@@ -7592,7 +8378,9 @@
 				{
 					"poseID": 322,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 96,
 					"yCX": 171,
 					"deltaXCX": 7,
@@ -7603,7 +8391,9 @@
 				{
 					"poseID": 323,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 107,
 					"yCX": 170,
 					"deltaXCX": 0,
@@ -7614,7 +8404,9 @@
 				{
 					"poseID": 324,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 110,
 					"yCX": 164,
 					"deltaXCX": 10,
@@ -7625,7 +8417,9 @@
 				{
 					"poseID": 325,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 112,
 					"yCX": 167,
 					"deltaXCX": 2,
@@ -7636,7 +8430,9 @@
 				{
 					"poseID": 326,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 96,
 					"yCX": 175,
 					"deltaXCX": 1,
@@ -7647,7 +8443,9 @@
 				{
 					"poseID": 326,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 96,
 					"yCX": 175,
 					"deltaXCX": 1,
@@ -7658,7 +8456,9 @@
 				{
 					"poseID": 327,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 97,
 					"yCX": 168,
 					"deltaXCX": -4,
@@ -7669,7 +8469,9 @@
 				{
 					"poseID": 328,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 84,
 					"yCX": 175,
 					"deltaXCX": 4,
@@ -7680,7 +8482,9 @@
 				{
 					"poseID": 329,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 83,
 					"yCX": 170,
 					"deltaXCX": 4,
@@ -7691,7 +8495,9 @@
 				{
 					"poseID": 330,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 104,
 					"yCX": 173,
 					"deltaXCX": -1,
@@ -7704,91 +8510,117 @@
 				{
 					"poseID": 331,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 123,
 					"yCX": 20
 				},
 				{
 					"poseID": 331,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 123,
 					"yCX": 20
 				},
 				{
 					"poseID": 332,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 91,
 					"yCX": 25
 				},
 				{
 					"poseID": 332,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 91,
 					"yCX": 25
 				},
 				{
 					"poseID": 333,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 137,
 					"yCX": 55
 				},
 				{
 					"poseID": 334,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 144,
 					"yCX": 28
 				},
 				{
 					"poseID": 335,
 					"emotion": 1005,
+					"emotionIndex": 14,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 204,
 					"yCX": 20
 				},
 				{
 					"poseID": 336,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 102,
 					"yCX": 23
 				},
 				{
 					"poseID": 337,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 149,
 					"yCX": 39
 				},
 				{
 					"poseID": 338,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 141,
 					"yCX": 30
 				},
 				{
 					"poseID": 338,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 141,
 					"yCX": 30
 				},
 				{
 					"poseID": 339,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 119,
 					"yCX": 38
 				},
 				{
 					"poseID": 339,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 119,
 					"yCX": 38
 				}
@@ -7831,7 +8663,9 @@
 				{
 					"poseID": 341,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 104,
 					"faceY": 78
 				}
@@ -7873,7 +8707,9 @@
 				{
 					"poseID": 343,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"faceX": 158,
 					"faceY": 85
 				}
@@ -8122,7 +8958,9 @@
 				{
 					"poseID": 345,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 55,
 					"yCX": 126,
 					"deltaXCX": 0,
@@ -8133,7 +8971,9 @@
 				{
 					"poseID": 345,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 55,
 					"yCX": 126,
 					"deltaXCX": 0,
@@ -8144,7 +8984,9 @@
 				{
 					"poseID": 346,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 55,
 					"yCX": 132,
 					"deltaXCX": 0,
@@ -8155,7 +8997,9 @@
 				{
 					"poseID": 347,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 83,
 					"yCX": 114,
 					"deltaXCX": -1,
@@ -8166,7 +9010,9 @@
 				{
 					"poseID": 348,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 55,
 					"yCX": 124,
 					"deltaXCX": -4,
@@ -8177,7 +9023,9 @@
 				{
 					"poseID": 349,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 33,
 					"yCX": 116,
 					"deltaXCX": 2,
@@ -8188,7 +9036,9 @@
 				{
 					"poseID": 350,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 49,
 					"yCX": 130,
 					"deltaXCX": -3,
@@ -8199,7 +9049,9 @@
 				{
 					"poseID": 351,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 40,
 					"yCX": 122,
 					"deltaXCX": -3,
@@ -8210,7 +9062,9 @@
 				{
 					"poseID": 352,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 49,
 					"yCX": 121,
 					"deltaXCX": 1,
@@ -8221,7 +9075,9 @@
 				{
 					"poseID": 352,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 49,
 					"yCX": 121,
 					"deltaXCX": 1,
@@ -8232,7 +9088,9 @@
 				{
 					"poseID": 353,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 49,
 					"yCX": 120,
 					"deltaXCX": 0,
@@ -8243,7 +9101,9 @@
 				{
 					"poseID": 353,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 49,
 					"yCX": 120,
 					"deltaXCX": 0,
@@ -8254,7 +9114,9 @@
 				{
 					"poseID": 354,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 46,
 					"yCX": 120,
 					"deltaXCX": 0,
@@ -8267,98 +9129,126 @@
 				{
 					"poseID": 355,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 86,
 					"yCX": 29
 				},
 				{
 					"poseID": 356,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 64,
 					"yCX": 19
 				},
 				{
 					"poseID": 356,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 64,
 					"yCX": 19
 				},
 				{
 					"poseID": 357,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 72,
 					"yCX": 13
 				},
 				{
 					"poseID": 358,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 72,
 					"yCX": 25
 				},
 				{
 					"poseID": 359,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 77,
 					"yCX": 13
 				},
 				{
 					"poseID": 360,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 87,
 					"yCX": 11
 				},
 				{
 					"poseID": 361,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 12
 				},
 				{
 					"poseID": 361,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 65,
 					"yCX": 12
 				},
 				{
 					"poseID": 362,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 82,
 					"yCX": 14
 				},
 				{
 					"poseID": 363,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 38,
 					"yCX": 8
 				},
 				{
 					"poseID": 363,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 38,
 					"yCX": 8
 				},
 				{
 					"poseID": 364,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 69,
 					"yCX": 27
 				},
 				{
 					"poseID": 364,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 69,
 					"yCX": 27
 				}
@@ -8663,7 +9553,9 @@
 				{
 					"poseID": 366,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 54,
 					"yCX": 156,
 					"deltaXCX": 0,
@@ -8674,7 +9566,9 @@
 				{
 					"poseID": 367,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 50,
 					"yCX": 150,
 					"deltaXCX": 0,
@@ -8685,7 +9579,9 @@
 				{
 					"poseID": 368,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 58,
 					"yCX": 156,
 					"deltaXCX": 0,
@@ -8696,7 +9592,9 @@
 				{
 					"poseID": 369,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 50,
 					"yCX": 153,
 					"deltaXCX": 1,
@@ -8707,7 +9605,9 @@
 				{
 					"poseID": 370,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 56,
 					"yCX": 156,
 					"deltaXCX": 0,
@@ -8718,7 +9618,9 @@
 				{
 					"poseID": 371,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 56,
 					"yCX": 152,
 					"deltaXCX": 2,
@@ -8729,7 +9631,9 @@
 				{
 					"poseID": 372,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 46,
 					"yCX": 148,
 					"deltaXCX": 2,
@@ -8740,7 +9644,9 @@
 				{
 					"poseID": 373,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 154,
 					"deltaXCX": 0,
@@ -8751,7 +9657,9 @@
 				{
 					"poseID": 374,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 54,
 					"yCX": 154,
 					"deltaXCX": 1,
@@ -8762,7 +9670,9 @@
 				{
 					"poseID": 375,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 54,
 					"yCX": 160,
 					"deltaXCX": 0,
@@ -8773,7 +9683,9 @@
 				{
 					"poseID": 376,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 51,
 					"yCX": 152,
 					"deltaXCX": 0,
@@ -8784,7 +9696,9 @@
 				{
 					"poseID": 377,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 58,
 					"yCX": 149,
 					"deltaXCX": 2,
@@ -8795,7 +9709,9 @@
 				{
 					"poseID": 378,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 52,
 					"yCX": 157,
 					"deltaXCX": 2,
@@ -8806,7 +9722,9 @@
 				{
 					"poseID": 379,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 55,
 					"yCX": 157,
 					"deltaXCX": 0,
@@ -8819,91 +9737,117 @@
 				{
 					"poseID": 380,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 58,
 					"yCX": 14
 				},
 				{
 					"poseID": 381,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 14
 				},
 				{
 					"poseID": 382,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 64,
 					"yCX": 18
 				},
 				{
 					"poseID": 382,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 64,
 					"yCX": 18
 				},
 				{
 					"poseID": 383,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 26
 				},
 				{
 					"poseID": 384,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 74,
 					"yCX": 18
 				},
 				{
 					"poseID": 385,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 61,
 					"yCX": 17
 				},
 				{
 					"poseID": 385,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 61,
 					"yCX": 17
 				},
 				{
 					"poseID": 386,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 61,
 					"yCX": 17
 				},
 				{
 					"poseID": 387,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 50,
 					"yCX": 21
 				},
 				{
 					"poseID": 388,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 74,
 					"yCX": 17
 				},
 				{
 					"poseID": 389,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 60,
 					"yCX": 26
 				},
 				{
 					"poseID": 390,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 38,
 					"yCX": 23
 				}
@@ -9208,7 +10152,9 @@
 				{
 					"poseID": 392,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 30,
 					"yCX": 149,
 					"deltaXCX": 0,
@@ -9219,7 +10165,9 @@
 				{
 					"poseID": 393,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 26,
 					"yCX": 149,
 					"deltaXCX": 0,
@@ -9230,7 +10178,9 @@
 				{
 					"poseID": 394,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 27,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -9241,7 +10191,9 @@
 				{
 					"poseID": 394,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 27,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -9252,7 +10204,9 @@
 				{
 					"poseID": 395,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 28,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9263,7 +10217,9 @@
 				{
 					"poseID": 396,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 44,
 					"yCX": 132,
 					"deltaXCX": 0,
@@ -9274,7 +10230,9 @@
 				{
 					"poseID": 396,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 44,
 					"yCX": 132,
 					"deltaXCX": 0,
@@ -9285,7 +10243,9 @@
 				{
 					"poseID": 397,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 29,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9296,7 +10256,9 @@
 				{
 					"poseID": 398,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 26,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9307,7 +10269,9 @@
 				{
 					"poseID": 399,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 27,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9318,7 +10282,9 @@
 				{
 					"poseID": 400,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 29,
 					"yCX": 143,
 					"deltaXCX": 0,
@@ -9329,7 +10295,9 @@
 				{
 					"poseID": 401,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 25,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9340,7 +10308,9 @@
 				{
 					"poseID": 402,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 26,
 					"yCX": 144,
 					"deltaXCX": 0,
@@ -9351,7 +10321,9 @@
 				{
 					"poseID": 403,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 27,
 					"yCX": 142,
 					"deltaXCX": 0,
@@ -9364,98 +10336,126 @@
 				{
 					"poseID": 404,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 56,
 					"yCX": 28
 				},
 				{
 					"poseID": 405,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 56,
 					"yCX": 19
 				},
 				{
 					"poseID": 406,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 56,
 					"yCX": 18
 				},
 				{
 					"poseID": 407,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 49,
 					"yCX": 17
 				},
 				{
 					"poseID": 408,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 54,
 					"yCX": 14
 				},
 				{
 					"poseID": 408,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 54,
 					"yCX": 14
 				},
 				{
 					"poseID": 409,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 55,
 					"yCX": 82
 				},
 				{
 					"poseID": 410,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 59,
 					"yCX": 21
 				},
 				{
 					"poseID": 411,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 48,
 					"yCX": 17
 				},
 				{
 					"poseID": 412,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 23
 				},
 				{
 					"poseID": 413,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 14
 				},
 				{
 					"poseID": 414,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 56,
 					"yCX": 18
 				},
 				{
 					"poseID": 415,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 49,
 					"yCX": 21
 				},
 				{
 					"poseID": 416,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 59,
 					"yCX": 30
 				}
@@ -9771,7 +10771,9 @@
 				{
 					"poseID": 418,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 62,
 					"yCX": 145,
 					"deltaXCX": 0,
@@ -9782,7 +10784,9 @@
 				{
 					"poseID": 419,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 67,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -9793,7 +10797,9 @@
 				{
 					"poseID": 420,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 58,
 					"yCX": 136,
 					"deltaXCX": 0,
@@ -9804,7 +10810,9 @@
 				{
 					"poseID": 421,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 61,
 					"yCX": 150,
 					"deltaXCX": 0,
@@ -9815,7 +10823,9 @@
 				{
 					"poseID": 422,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 66,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -9826,7 +10836,9 @@
 				{
 					"poseID": 423,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 65,
 					"yCX": 140,
 					"deltaXCX": 0,
@@ -9837,7 +10849,9 @@
 				{
 					"poseID": 424,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 64,
 					"yCX": 143,
 					"deltaXCX": 0,
@@ -9848,7 +10862,9 @@
 				{
 					"poseID": 425,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 64,
 					"yCX": 134,
 					"deltaXCX": 0,
@@ -9859,7 +10875,9 @@
 				{
 					"poseID": 426,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 62,
 					"yCX": 144,
 					"deltaXCX": 0,
@@ -9870,7 +10888,9 @@
 				{
 					"poseID": 427,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 78,
 					"yCX": 147,
 					"deltaXCX": 0,
@@ -9881,7 +10901,9 @@
 				{
 					"poseID": 428,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 72,
 					"yCX": 150,
 					"deltaXCX": 0,
@@ -9892,7 +10914,9 @@
 				{
 					"poseID": 429,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 60,
 					"yCX": 139,
 					"deltaXCX": 0,
@@ -9905,105 +10929,135 @@
 				{
 					"poseID": 430,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 35
 				},
 				{
 					"poseID": 431,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 66,
 					"yCX": 22
 				},
 				{
 					"poseID": 432,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 62,
 					"yCX": 21
 				},
 				{
 					"poseID": 433,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 46,
 					"yCX": 35
 				},
 				{
 					"poseID": 434,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 78,
 					"yCX": 20
 				},
 				{
 					"poseID": 435,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 65,
 					"yCX": 19
 				},
 				{
 					"poseID": 436,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 45,
 					"yCX": 27
 				},
 				{
 					"poseID": 437,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 59,
 					"yCX": 24
 				},
 				{
 					"poseID": 437,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 59,
 					"yCX": 24
 				},
 				{
 					"poseID": 438,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 59,
 					"yCX": 27
 				},
 				{
 					"poseID": 439,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 73,
 					"yCX": 30
 				},
 				{
 					"poseID": 440,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 27
 				},
 				{
 					"poseID": 441,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 49,
 					"yCX": 18
 				},
 				{
 					"poseID": 442,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 23
 				},
 				{
 					"poseID": 443,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 57,
 					"yCX": 18
 				}
@@ -10220,7 +11274,9 @@
 				{
 					"poseID": 445,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 99,
 					"yCX": 116,
 					"deltaXCX": 3,
@@ -10231,7 +11287,9 @@
 				{
 					"poseID": 445,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 99,
 					"yCX": 116,
 					"deltaXCX": 3,
@@ -10242,7 +11300,9 @@
 				{
 					"poseID": 446,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 82,
 					"yCX": 133,
 					"deltaXCX": 0,
@@ -10253,7 +11313,9 @@
 				{
 					"poseID": 447,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 91,
 					"yCX": 130,
 					"deltaXCX": 3,
@@ -10264,7 +11326,9 @@
 				{
 					"poseID": 448,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 91,
 					"yCX": 119,
 					"deltaXCX": 1,
@@ -10275,7 +11339,9 @@
 				{
 					"poseID": 449,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 92,
 					"yCX": 112,
 					"deltaXCX": -1,
@@ -10286,7 +11352,9 @@
 				{
 					"poseID": 449,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 112,
 					"deltaXCX": -1,
@@ -10297,7 +11365,9 @@
 				{
 					"poseID": 450,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 83,
 					"yCX": 121,
 					"deltaXCX": 0,
@@ -10308,7 +11378,9 @@
 				{
 					"poseID": 451,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 91,
 					"yCX": 111,
 					"deltaXCX": -3,
@@ -10319,7 +11391,9 @@
 				{
 					"poseID": 451,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 91,
 					"yCX": 111,
 					"deltaXCX": -3,
@@ -10330,7 +11404,9 @@
 				{
 					"poseID": 452,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 91,
 					"yCX": 117,
 					"deltaXCX": 2,
@@ -10341,7 +11417,9 @@
 				{
 					"poseID": 452,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 91,
 					"yCX": 117,
 					"deltaXCX": 2,
@@ -10352,7 +11430,9 @@
 				{
 					"poseID": 453,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 90,
 					"yCX": 118,
 					"deltaXCX": 0,
@@ -10365,105 +11445,135 @@
 				{
 					"poseID": 454,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 78,
 					"yCX": 24
 				},
 				{
 					"poseID": 454,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 78,
 					"yCX": 24
 				},
 				{
 					"poseID": 454,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 78,
 					"yCX": 24
 				},
 				{
 					"poseID": 455,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 28
 				},
 				{
 					"poseID": 456,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 60,
 					"yCX": 23
 				},
 				{
 					"poseID": 456,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 60,
 					"yCX": 23
 				},
 				{
 					"poseID": 457,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 110,
 					"yCX": 28
 				},
 				{
 					"poseID": 457,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 110,
 					"yCX": 28
 				},
 				{
 					"poseID": 457,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 110,
 					"yCX": 28
 				},
 				{
 					"poseID": 458,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 65
 				},
 				{
 					"poseID": 458,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 65
 				},
 				{
 					"poseID": 459,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 109,
 					"yCX": 24
 				},
 				{
 					"poseID": 460,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 46,
 					"yCX": 26
 				},
 				{
 					"poseID": 460,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 46,
 					"yCX": 26
 				},
 				{
 					"poseID": 461,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 77,
 					"yCX": 29
 				}
@@ -10691,7 +11801,9 @@
 				{
 					"poseID": 463,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 108,
 					"yCX": 125,
 					"deltaXCX": -1,
@@ -10702,7 +11814,9 @@
 				{
 					"poseID": 464,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.8980392217636108,
+					"intensityTenths": 8,
 					"xCX": 108,
 					"yCX": 133,
 					"deltaXCX": 3,
@@ -10713,7 +11827,9 @@
 				{
 					"poseID": 465,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 108,
 					"yCX": 131,
 					"deltaXCX": -1,
@@ -10724,7 +11840,9 @@
 				{
 					"poseID": 465,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 108,
 					"yCX": 131,
 					"deltaXCX": -1,
@@ -10735,7 +11853,9 @@
 				{
 					"poseID": 466,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 110,
 					"yCX": 146,
 					"deltaXCX": 0,
@@ -10746,7 +11866,9 @@
 				{
 					"poseID": 467,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 108,
 					"yCX": 128,
 					"deltaXCX": -1,
@@ -10757,7 +11879,9 @@
 				{
 					"poseID": 467,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 108,
 					"yCX": 128,
 					"deltaXCX": -1,
@@ -10768,7 +11892,9 @@
 				{
 					"poseID": 468,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 108,
 					"yCX": 128,
 					"deltaXCX": -2,
@@ -10779,7 +11905,9 @@
 				{
 					"poseID": 468,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 108,
 					"yCX": 128,
 					"deltaXCX": -2,
@@ -10790,7 +11918,9 @@
 				{
 					"poseID": 469,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 108,
 					"yCX": 129,
 					"deltaXCX": 0,
@@ -10801,7 +11931,9 @@
 				{
 					"poseID": 469,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 108,
 					"yCX": 129,
 					"deltaXCX": 0,
@@ -10812,7 +11944,9 @@
 				{
 					"poseID": 470,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 101,
 					"yCX": 144,
 					"deltaXCX": -1,
@@ -10823,7 +11957,9 @@
 				{
 					"poseID": 470,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 101,
 					"yCX": 144,
 					"deltaXCX": -1,
@@ -10834,7 +11970,9 @@
 				{
 					"poseID": 471,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 108,
 					"yCX": 132,
 					"deltaXCX": -2,
@@ -10845,7 +11983,9 @@
 				{
 					"poseID": 472,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 111,
 					"yCX": 130,
 					"deltaXCX": -3,
@@ -10856,7 +11996,9 @@
 				{
 					"poseID": 472,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 111,
 					"yCX": 130,
 					"deltaXCX": -3,
@@ -10869,126 +12011,162 @@
 				{
 					"poseID": 473,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 106,
 					"yCX": 36
 				},
 				{
 					"poseID": 473,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 106,
 					"yCX": 36
 				},
 				{
 					"poseID": 473,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 106,
 					"yCX": 36
 				},
 				{
 					"poseID": 474,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 134,
 					"yCX": 37
 				},
 				{
 					"poseID": 474,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 134,
 					"yCX": 37
 				},
 				{
 					"poseID": 474,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 134,
 					"yCX": 37
 				},
 				{
 					"poseID": 474,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 134,
 					"yCX": 37
 				},
 				{
 					"poseID": 475,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 106,
 					"yCX": 37
 				},
 				{
 					"poseID": 475,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 106,
 					"yCX": 37
 				},
 				{
 					"poseID": 475,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 106,
 					"yCX": 37
 				},
 				{
 					"poseID": 475,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 106,
 					"yCX": 37
 				},
 				{
 					"poseID": 476,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 118,
 					"yCX": 45
 				},
 				{
 					"poseID": 476,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 118,
 					"yCX": 45
 				},
 				{
 					"poseID": 476,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 118,
 					"yCX": 45
 				},
 				{
 					"poseID": 477,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 107,
 					"yCX": 44
 				},
 				{
 					"poseID": 478,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 99,
 					"yCX": 93
 				},
 				{
 					"poseID": 479,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 112,
 					"yCX": 29
 				},
 				{
 					"poseID": 480,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 125,
 					"yCX": 44
 				}
@@ -11205,7 +12383,9 @@
 				{
 					"poseID": 482,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 99,
 					"deltaXCX": 0,
@@ -11216,7 +12396,9 @@
 				{
 					"poseID": 482,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 111,
 					"yCX": 99,
 					"deltaXCX": 0,
@@ -11227,7 +12409,9 @@
 				{
 					"poseID": 483,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 115,
 					"yCX": 89,
 					"deltaXCX": 3,
@@ -11238,7 +12422,9 @@
 				{
 					"poseID": 483,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 115,
 					"yCX": 89,
 					"deltaXCX": 3,
@@ -11249,7 +12435,9 @@
 				{
 					"poseID": 484,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 110,
 					"yCX": 90,
 					"deltaXCX": 11,
@@ -11260,7 +12448,9 @@
 				{
 					"poseID": 484,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 110,
 					"yCX": 90,
 					"deltaXCX": 11,
@@ -11271,7 +12461,9 @@
 				{
 					"poseID": 485,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 108,
 					"yCX": 117,
 					"deltaXCX": 2,
@@ -11282,7 +12474,9 @@
 				{
 					"poseID": 486,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 22,
 					"yCX": 86,
 					"deltaXCX": 0,
@@ -11293,7 +12487,9 @@
 				{
 					"poseID": 486,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 22,
 					"yCX": 86,
 					"deltaXCX": 0,
@@ -11304,7 +12500,9 @@
 				{
 					"poseID": 487,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 107,
 					"yCX": 126,
 					"deltaXCX": 0,
@@ -11315,7 +12513,9 @@
 				{
 					"poseID": 487,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 107,
 					"yCX": 126,
 					"deltaXCX": 0,
@@ -11326,7 +12526,9 @@
 				{
 					"poseID": 488,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 120,
 					"yCX": 72,
 					"deltaXCX": 2,
@@ -11337,7 +12539,9 @@
 				{
 					"poseID": 488,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 120,
 					"yCX": 72,
 					"deltaXCX": 2,
@@ -11348,7 +12552,9 @@
 				{
 					"poseID": 489,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 117,
 					"yCX": 97,
 					"deltaXCX": 1,
@@ -11359,7 +12565,9 @@
 				{
 					"poseID": 490,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 120,
 					"yCX": 91,
 					"deltaXCX": 2,
@@ -11372,182 +12580,234 @@
 				{
 					"poseID": 491,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 140,
 					"yCX": 32
 				},
 				{
 					"poseID": 491,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 140,
 					"yCX": 32
 				},
 				{
 					"poseID": 491,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 140,
 					"yCX": 32
 				},
 				{
 					"poseID": 492,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 136,
 					"yCX": 27
 				},
 				{
 					"poseID": 492,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 136,
 					"yCX": 27
 				},
 				{
 					"poseID": 493,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 493,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 493,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 493,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 493,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 493,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 113,
 					"yCX": 33
 				},
 				{
 					"poseID": 494,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 139,
 					"yCX": 21
 				},
 				{
 					"poseID": 495,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 98,
 					"yCX": 16
 				},
 				{
 					"poseID": 495,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 16
 				},
 				{
 					"poseID": 495,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 98,
 					"yCX": 16
 				},
 				{
 					"poseID": 495,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 98,
 					"yCX": 16
 				},
 				{
 					"poseID": 495,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 98,
 					"yCX": 16
 				},
 				{
 					"poseID": 496,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 190,
 					"yCX": 22
 				},
 				{
 					"poseID": 497,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 497,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 497,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 497,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 497,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 497,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 133,
 					"yCX": 16
 				},
 				{
 					"poseID": 498,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 148,
 					"yCX": 44
 				},
 				{
 					"poseID": 498,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 148,
 					"yCX": 44
 				}
@@ -11786,7 +13046,9 @@
 				{
 					"poseID": 500,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 118,
 					"deltaXCX": 10,
@@ -11797,7 +13059,9 @@
 				{
 					"poseID": 500,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 95,
 					"yCX": 118,
 					"deltaXCX": 10,
@@ -11808,7 +13072,9 @@
 				{
 					"poseID": 500,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 118,
 					"deltaXCX": 10,
@@ -11819,7 +13085,9 @@
 				{
 					"poseID": 501,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 95,
 					"yCX": 123,
 					"deltaXCX": 12,
@@ -11830,7 +13098,9 @@
 				{
 					"poseID": 501,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 95,
 					"yCX": 123,
 					"deltaXCX": 12,
@@ -11841,7 +13111,9 @@
 				{
 					"poseID": 501,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 95,
 					"yCX": 123,
 					"deltaXCX": 12,
@@ -11852,7 +13124,9 @@
 				{
 					"poseID": 502,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 97,
 					"yCX": 122,
 					"deltaXCX": 11,
@@ -11863,7 +13137,9 @@
 				{
 					"poseID": 502,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 97,
 					"yCX": 122,
 					"deltaXCX": 11,
@@ -11874,7 +13150,9 @@
 				{
 					"poseID": 503,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 118,
 					"deltaXCX": 12,
@@ -11885,7 +13163,9 @@
 				{
 					"poseID": 503,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 98,
 					"yCX": 118,
 					"deltaXCX": 12,
@@ -11896,7 +13176,9 @@
 				{
 					"poseID": 504,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 95,
 					"yCX": 124,
 					"deltaXCX": 8,
@@ -11907,7 +13189,9 @@
 				{
 					"poseID": 505,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 94,
 					"yCX": 124,
 					"deltaXCX": 10,
@@ -11918,7 +13202,9 @@
 				{
 					"poseID": 506,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 92,
 					"yCX": 142,
 					"deltaXCX": 8,
@@ -11929,7 +13215,9 @@
 				{
 					"poseID": 507,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 97,
 					"yCX": 130,
 					"deltaXCX": 8,
@@ -11940,7 +13228,9 @@
 				{
 					"poseID": 507,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 97,
 					"yCX": 130,
 					"deltaXCX": 8,
@@ -11951,7 +13241,9 @@
 				{
 					"poseID": 508,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 95,
 					"yCX": 121,
 					"deltaXCX": 7,
@@ -11962,7 +13254,9 @@
 				{
 					"poseID": 508,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 95,
 					"yCX": 121,
 					"deltaXCX": 7,
@@ -11973,7 +13267,9 @@
 				{
 					"poseID": 509,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 98,
 					"yCX": 121,
 					"deltaXCX": 10,
@@ -11984,7 +13280,9 @@
 				{
 					"poseID": 509,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 121,
 					"deltaXCX": 10,
@@ -11997,168 +13295,216 @@
 				{
 					"poseID": 510,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 107,
 					"yCX": 28
 				},
 				{
 					"poseID": 510,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 107,
 					"yCX": 28
 				},
 				{
 					"poseID": 510,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 107,
 					"yCX": 28
 				},
 				{
 					"poseID": 510,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 107,
 					"yCX": 28
 				},
 				{
 					"poseID": 511,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 29
 				},
 				{
 					"poseID": 511,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 86,
 					"yCX": 29
 				},
 				{
 					"poseID": 511,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 86,
 					"yCX": 29
 				},
 				{
 					"poseID": 512,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 112,
 					"yCX": 109
 				},
 				{
 					"poseID": 513,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 36
 				},
 				{
 					"poseID": 513,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 36
 				},
 				{
 					"poseID": 513,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 111,
 					"yCX": 36
 				},
 				{
 					"poseID": 514,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 89,
 					"yCX": 32
 				},
 				{
 					"poseID": 514,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 89,
 					"yCX": 32
 				},
 				{
 					"poseID": 515,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 91,
 					"yCX": 40
 				},
 				{
 					"poseID": 515,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 91,
 					"yCX": 40
 				},
 				{
 					"poseID": 515,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 91,
 					"yCX": 40
 				},
 				{
 					"poseID": 516,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 137,
 					"yCX": 33
 				},
 				{
 					"poseID": 517,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 36
 				},
 				{
 					"poseID": 517,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 93,
 					"yCX": 36
 				},
 				{
 					"poseID": 517,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 93,
 					"yCX": 36
 				},
 				{
 					"poseID": 517,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 93,
 					"yCX": 36
 				},
 				{
 					"poseID": 518,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 101,
 					"yCX": 38
 				},
 				{
 					"poseID": 518,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 101,
 					"yCX": 38
 				},
 				{
 					"poseID": 518,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 101,
 					"yCX": 38
 				}
@@ -12375,7 +13721,9 @@
 				{
 					"poseID": 520,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 131,
 					"yCX": 143,
 					"deltaXCX": 3,
@@ -12386,7 +13734,9 @@
 				{
 					"poseID": 520,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 131,
 					"yCX": 143,
 					"deltaXCX": 3,
@@ -12397,7 +13747,9 @@
 				{
 					"poseID": 520,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 131,
 					"yCX": 143,
 					"deltaXCX": 3,
@@ -12408,7 +13760,9 @@
 				{
 					"poseID": 521,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 130,
 					"yCX": 161,
 					"deltaXCX": 3,
@@ -12419,7 +13773,9 @@
 				{
 					"poseID": 522,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 131,
 					"yCX": 158,
 					"deltaXCX": 5,
@@ -12430,7 +13786,9 @@
 				{
 					"poseID": 522,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 131,
 					"yCX": 158,
 					"deltaXCX": 5,
@@ -12441,7 +13799,9 @@
 				{
 					"poseID": 523,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 130,
 					"yCX": 146,
 					"deltaXCX": 1,
@@ -12452,7 +13812,9 @@
 				{
 					"poseID": 523,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 130,
 					"yCX": 146,
 					"deltaXCX": 1,
@@ -12463,7 +13825,9 @@
 				{
 					"poseID": 524,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 131,
 					"yCX": 152,
 					"deltaXCX": 8,
@@ -12474,7 +13838,9 @@
 				{
 					"poseID": 524,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 131,
 					"yCX": 152,
 					"deltaXCX": 8,
@@ -12485,7 +13851,9 @@
 				{
 					"poseID": 524,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 131,
 					"yCX": 152,
 					"deltaXCX": 8,
@@ -12496,7 +13864,9 @@
 				{
 					"poseID": 525,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 131,
 					"yCX": 143,
 					"deltaXCX": 10,
@@ -12507,7 +13877,9 @@
 				{
 					"poseID": 525,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 131,
 					"yCX": 143,
 					"deltaXCX": 10,
@@ -12518,7 +13890,9 @@
 				{
 					"poseID": 526,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 123,
 					"yCX": 136,
 					"deltaXCX": 4,
@@ -12529,7 +13903,9 @@
 				{
 					"poseID": 526,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 123,
 					"yCX": 136,
 					"deltaXCX": 4,
@@ -12540,7 +13916,9 @@
 				{
 					"poseID": 526,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 123,
 					"yCX": 136,
 					"deltaXCX": 4,
@@ -12551,7 +13929,9 @@
 				{
 					"poseID": 527,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 129,
 					"yCX": 135,
 					"deltaXCX": 4,
@@ -12562,7 +13942,9 @@
 				{
 					"poseID": 528,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 129,
 					"yCX": 135,
 					"deltaXCX": 4,
@@ -12573,7 +13955,9 @@
 				{
 					"poseID": 528,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 129,
 					"yCX": 135,
 					"deltaXCX": 4,
@@ -12584,7 +13968,9 @@
 				{
 					"poseID": 528,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 129,
 					"yCX": 135,
 					"deltaXCX": 4,
@@ -12597,119 +13983,153 @@
 				{
 					"poseID": 529,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 90,
 					"yCX": 27
 				},
 				{
 					"poseID": 529,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 90,
 					"yCX": 27
 				},
 				{
 					"poseID": 529,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 90,
 					"yCX": 27
 				},
 				{
 					"poseID": 530,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 131,
 					"yCX": 31
 				},
 				{
 					"poseID": 530,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 131,
 					"yCX": 31
 				},
 				{
 					"poseID": 531,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 202,
 					"yCX": 27
 				},
 				{
 					"poseID": 532,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 98,
 					"yCX": 23
 				},
 				{
 					"poseID": 532,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 98,
 					"yCX": 23
 				},
 				{
 					"poseID": 532,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 98,
 					"yCX": 23
 				},
 				{
 					"poseID": 533,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 80,
 					"yCX": 28
 				},
 				{
 					"poseID": 533,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 80,
 					"yCX": 28
 				},
 				{
 					"poseID": 533,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 80,
 					"yCX": 28
 				},
 				{
 					"poseID": 534,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 85,
 					"yCX": 21
 				},
 				{
 					"poseID": 535,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 102,
 					"yCX": 31
 				},
 				{
 					"poseID": 535,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 102,
 					"yCX": 31
 				},
 				{
 					"poseID": 536,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 92,
 					"yCX": 32
 				},
 				{
 					"poseID": 536,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 92,
 					"yCX": 32
 				}
@@ -12959,7 +14379,9 @@
 				{
 					"poseID": 538,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 44,
 					"yCX": 98,
 					"deltaXCX": 0,
@@ -12970,7 +14392,9 @@
 				{
 					"poseID": 539,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 47,
 					"yCX": 91,
 					"deltaXCX": 1,
@@ -12981,7 +14405,9 @@
 				{
 					"poseID": 539,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 47,
 					"yCX": 91,
 					"deltaXCX": 1,
@@ -12992,7 +14418,9 @@
 				{
 					"poseID": 540,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.6980392336845398,
+					"intensityTenths": 6,
 					"xCX": 28,
 					"yCX": 84,
 					"deltaXCX": 3,
@@ -13003,7 +14431,9 @@
 				{
 					"poseID": 541,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 61,
 					"yCX": 96,
 					"deltaXCX": -1,
@@ -13014,7 +14444,9 @@
 				{
 					"poseID": 541,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 61,
 					"yCX": 96,
 					"deltaXCX": -1,
@@ -13025,7 +14457,9 @@
 				{
 					"poseID": 541,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 61,
 					"yCX": 96,
 					"deltaXCX": -1,
@@ -13036,7 +14470,9 @@
 				{
 					"poseID": 541,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 61,
 					"yCX": 96,
 					"deltaXCX": -1,
@@ -13047,7 +14483,9 @@
 				{
 					"poseID": 542,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 29,
 					"yCX": 83,
 					"deltaXCX": 0,
@@ -13058,7 +14496,9 @@
 				{
 					"poseID": 542,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 29,
 					"yCX": 83,
 					"deltaXCX": 0,
@@ -13069,7 +14509,9 @@
 				{
 					"poseID": 543,
 					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
 					"intensity": 0.2980392277240753,
+					"intensityTenths": 2,
 					"xCX": 19,
 					"yCX": 82,
 					"deltaXCX": 0,
@@ -13080,7 +14522,9 @@
 				{
 					"poseID": 543,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.49803921580314636,
+					"intensityTenths": 4,
 					"xCX": 19,
 					"yCX": 82,
 					"deltaXCX": 0,
@@ -13091,7 +14535,9 @@
 				{
 					"poseID": 544,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 23,
 					"yCX": 92,
 					"deltaXCX": 1,
@@ -13102,7 +14548,9 @@
 				{
 					"poseID": 544,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 23,
 					"yCX": 92,
 					"deltaXCX": 1,
@@ -13113,7 +14561,9 @@
 				{
 					"poseID": 545,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 23,
 					"yCX": 97,
 					"deltaXCX": 5,
@@ -13124,7 +14574,9 @@
 				{
 					"poseID": 545,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 0.09803921729326248,
+					"intensityTenths": 0,
 					"xCX": 23,
 					"yCX": 97,
 					"deltaXCX": 5,
@@ -13135,7 +14587,9 @@
 				{
 					"poseID": 546,
 					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 60,
 					"yCX": 95,
 					"deltaXCX": 5,
@@ -13146,7 +14600,9 @@
 				{
 					"poseID": 546,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.4000000059604645,
+					"intensityTenths": 4,
 					"xCX": 60,
 					"yCX": 95,
 					"deltaXCX": 5,
@@ -13157,7 +14613,9 @@
 				{
 					"poseID": 547,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 60,
 					"yCX": 89,
 					"deltaXCX": 2,
@@ -13168,7 +14626,9 @@
 				{
 					"poseID": 548,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 45,
 					"yCX": 95,
 					"deltaXCX": 0,
@@ -13179,7 +14639,9 @@
 				{
 					"poseID": 548,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 45,
 					"yCX": 95,
 					"deltaXCX": 0,
@@ -13190,7 +14652,9 @@
 				{
 					"poseID": 549,
 					"emotion": 0,
+					"emotionIndex": 1,
 					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
 					"xCX": 23,
 					"yCX": 88,
 					"deltaXCX": 4,
@@ -13201,7 +14665,9 @@
 				{
 					"poseID": 549,
 					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
 					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
 					"xCX": 23,
 					"yCX": 88,
 					"deltaXCX": 4,
@@ -13212,7 +14678,9 @@
 				{
 					"poseID": 549,
 					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
 					"intensity": 0.20000000298023224,
+					"intensityTenths": 2,
 					"xCX": 23,
 					"yCX": 88,
 					"deltaXCX": 4,
@@ -13225,63 +14693,81 @@
 				{
 					"poseID": 550,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 76,
 					"yCX": 22
 				},
 				{
 					"poseID": 551,
 					"emotion": 1003,
+					"emotionIndex": 12,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 102,
 					"yCX": 15
 				},
 				{
 					"poseID": 552,
 					"emotion": 1002,
+					"emotionIndex": 11,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 75,
 					"yCX": 19
 				},
 				{
 					"poseID": 553,
 					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 99,
 					"yCX": 24
 				},
 				{
 					"poseID": 553,
 					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 99,
 					"yCX": 24
 				},
 				{
 					"poseID": 554,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 123,
 					"yCX": 21
 				},
 				{
 					"poseID": 555,
 					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 128,
 					"yCX": 29
 				},
 				{
 					"poseID": 556,
 					"emotion": 1001,
+					"emotionIndex": 10,
 					"intensity": 1,
+					"intensityTenths": 10,
 					"xCX": 98,
 					"yCX": 98
 				},
 				{
 					"poseID": 557,
 					"emotion": 0,
+					"emotionIndex": 9,
 					"intensity": 0,
+					"intensityTenths": 0,
 					"xCX": 112,
 					"yCX": 24
 				}

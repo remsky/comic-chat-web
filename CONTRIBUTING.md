@@ -69,6 +69,7 @@ We use Biome for formatting and linting, and tsc for types. Please run both befo
 1.  Create a new branch for your feature or bug fix.
 2.  Make your changes, following setup, testing, and formatting guidelines above.
 3.  Please try to keep your changes inline with the current design, and modular. Large-scale changes will take longer to review and integrate, and have less chance of being approved outright.
+    - Touching room storage? It evolves through forward-only migration steps in `worker/db/migrations.ts` (never edit a shipped one), and columns derive from the `events.ts` contract. See [AGENTS.md](AGENTS.md#migrations).
 4.  Push your branch to your fork.
 5.  Open a Pull Request against the `main` branch of the main repository.
 

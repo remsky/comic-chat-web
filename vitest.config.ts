@@ -25,6 +25,15 @@ export default defineConfig({
 			// worker tests run inside workerd so Durable Object SQL storage is the real thing
 			{
 				plugins: [
+					// .sql files import as strings, mirroring the wrangler Text rule
+					{
+						name: "sql-as-text",
+						transform(code, id) {
+							return id.endsWith(".sql")
+								? { code: `export default ${JSON.stringify(code)};` }
+								: undefined;
+						},
+					},
 					cloudflareTest({
 						isolatedStorage: true,
 						wrangler: { configPath: "./wrangler.jsonc" },
@@ -32,11 +41,16 @@ export default defineConfig({
 						miniflare: {
 							bindings: {
 								ROOMS: [
+									"annotation-bounds",
+									"annotation-trip",
 									"arrive",
 									"backdrop-tags",
 									"backdrop-chunk",
+									"backdrop-prune",
 									"depart",
 									"flood",
+									"legacy-migrate",
+									"legacy-migrate-ancient",
 									"mute",
 									"name-block",
 									"profile",
@@ -44,6 +58,7 @@ export default defineConfig({
 									"profile-block",
 									"retention",
 									"roster",
+									"schema-contract",
 									"socket-cap",
 								],
 							},

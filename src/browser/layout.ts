@@ -86,6 +86,18 @@ export function wireMobilePanels(): void {
 	placeSidebar();
 }
 
+// desktop tucks the room/save/tweaks stack behind a More toggle
+export function wireSidebarMore(): void {
+	const button = element<HTMLButtonElement>("sidebar-more");
+	const sidebar = document.querySelector<HTMLElement>(".sidebar");
+	if (!sidebar) return;
+	button.addEventListener("click", () => {
+		const open = sidebar.classList.toggle("sidebar-more-open");
+		button.setAttribute("aria-expanded", String(open));
+		button.textContent = open ? "Less…" : "More…";
+	});
+}
+
 // desktop only: drag the divider to trade strip space for sidebar space
 export function wireSidebarResize(): void {
 	const resizer = element("sidebar-resizer");

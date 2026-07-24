@@ -2,13 +2,15 @@
 
 import type { AvatarData } from "../engine/avatar.js";
 import {
-	BACKGROUND_MODE,
+	CHAT_MODES,
 	type ChatEntry,
+	type ChatMode,
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
 	parseServerMessage,
 	RATE_LIMIT_REASON,
+	type RoomEntry,
 	type RosterEntry,
 } from "../protocol/room.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
@@ -40,6 +42,52 @@ const HEARTBEAT_MS = 10_000;
 const SUSPECT_MS = 1_200;
 const RESPONSE_TIMEOUT_MS = 4_000;
 
+// Save Strip popup: pick how much of the history goes into the PNG
+const SAVE_CHOICES = [8, 24];
+function openSaveMenu(
+	button: HTMLButtonElement,
+	total: number,
+	save: (limit?: number) => void,
+): void {
+	if (total <= (SAVE_CHOICES[0] ?? 0)) {
+		save();
+		return;
+	}
+	const menu = document.createElement("menu");
+	menu.className = "bodycam-menu";
+	const close = (): void => {
+		document.removeEventListener("pointerdown", dismiss, true);
+		document.removeEventListener("keydown", onEscape, true);
+		menu.remove();
+	};
+	const dismiss = (event: Event): void => {
+		if (event.target instanceof Node && menu.contains(event.target)) return;
+		close();
+	};
+	const onEscape = (event: KeyboardEvent): void => {
+		if (event.key === "Escape") close();
+	};
+	const add = (label: string, limit?: number): void => {
+		const item = document.createElement("li");
+		item.textContent = label;
+		item.addEventListener("click", () => {
+			close();
+			save(limit);
+		});
+		menu.append(item);
+	};
+	for (const choice of SAVE_CHOICES)
+		if (choice < total) add(`Last ${choice} panels`, choice);
+	add(`All ${total} panels`);
+	document.body.append(menu);
+	const anchor = button.getBoundingClientRect();
+	const size = menu.getBoundingClientRect();
+	menu.style.left = `${Math.max(0, Math.min(anchor.left, window.innerWidth - size.width))}px`;
+	menu.style.top = `${Math.max(0, anchor.top - size.height - 2)}px`;
+	document.addEventListener("pointerdown", dismiss, true);
+	document.addEventListener("keydown", onEscape, true);
+}
+
 // filled in by the live session so the shell's pickers and back handling reach it
 export interface SessionHooks {
 	applyProfile: ((name: string, avatar: number) => void) | null;
@@ -69,7 +117,7 @@ export interface JoinOptions {
 
 function renderTranscript(
 	list: HTMLOListElement,
-	entries: readonly ChatEntry[],
+	entries: readonly RoomEntry[],
 	avatarName: (avatarID: number) => string,
 ): void {
 	const items: HTMLLIElement[] = [];
@@ -92,6 +140,7 @@ function renderTranscript(
 
 function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 	const list = element<HTMLUListElement>("roster");
+	document.body.classList.toggle("room-alone", roster.length <= 1);
 	const items = roster.map((entry) => {
 		const cast = avatars.find((avatar) => avatar.avatarID === entry.avatar);
 		const item = document.createElement("li");
@@ -246,17 +295,18 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		{ signal },
 	);
 
-	// cui.Say: run the presend hook, then transmit text plus pose indices
-	const sendChat = (text: string, mode: number): boolean => {
+	// cui.Say: run the presend hook, then transmit text plus the resolved annotation
+	const sendChat = (text: string, mode: ChatMode): boolean => {
 		if (socket?.readyState !== WebSocket.OPEN) return false;
-		const pose = view.prepareOutgoing(text);
+		const annotation = view.prepareOutgoing(text, roster);
+		if (!annotation) return false;
 		return wsSend(
 			JSON.stringify({
 				type: "chat",
 				text,
 				mode,
+				annotation,
 				sent: Date.now(),
-				...(pose && { pose }),
 			}),
 		);
 	};
@@ -343,19 +393,21 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		{ signal },
 	);
 
-	element<HTMLButtonElement>("save-strip").addEventListener(
+	const savePng = async (limit?: number): Promise<void> => {
+		const blob = await view.exportPng(limit);
+		if (!blob) return;
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement("a");
+		anchor.href = url;
+		const stamp = new Date().toISOString().slice(0, 16).replace(":", "-");
+		anchor.download = `comic-chat-${room}-${stamp}.png`;
+		anchor.click();
+		URL.revokeObjectURL(url);
+	};
+	const saveButton = element<HTMLButtonElement>("save-strip");
+	saveButton.addEventListener(
 		"click",
-		async () => {
-			const blob = await view.exportPng();
-			if (!blob) return;
-			const url = URL.createObjectURL(blob);
-			const anchor = document.createElement("a");
-			anchor.href = url;
-			const stamp = new Date().toISOString().slice(0, 16).replace(":", "-");
-			anchor.download = `comic-chat-${room}-${stamp}.png`;
-			anchor.click();
-			URL.revokeObjectURL(url);
-		},
+		() => openSaveMenu(saveButton, view.panelCount(), savePng),
 		{ signal },
 	);
 
@@ -371,11 +423,10 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		element("bodycam").hidden = false;
 		bodycam = new BodyCamWidget({
 			canvas: element<HTMLCanvasElement>("bodycam-canvas"),
+			lockButton: element<HTMLButtonElement>("bodycam-lock"),
+			sendButton: element<HTMLButtonElement>("bodycam-send"),
 			atlases: deps.atlases,
 			getAvatar: () => view.localAvatar(),
-			setStatus: (text) => {
-				element("bodycam-status").textContent = text ?? "";
-			},
 			sendExpression: () => sendChat("<Chr>", 1),
 			forwardTyping: (key) => {
 				composerInput.value += key;
@@ -500,7 +551,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				oldestSeq = firstSeq ?? null;
 				historyDone = parsed.history.length < HISTORY_CHUNK;
 			} else {
-				// missed entries resume the stream; any mode-6 among them brings the backdrop forward
+				// missed entries resume the stream; any background entry among them brings the backdrop forward
 				for (const entry of parsed.history)
 					if (entry.seq > previousNewestSeq) view.compose(entry);
 				if (oldestSeq === null) {
@@ -513,6 +564,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			if (hasWelcomed && lastComposerSend !== null) {
 				const arrived = parsed.history.some(
 					(entry) =>
+						entry.type === "chat" &&
 						entry.seq > previousNewestSeq &&
 						entry.avatar === previousSeat &&
 						entry.text === lastComposerSend,
@@ -525,17 +577,19 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			hasWelcomed = true;
 			refreshTranscript();
 			composerInput.focus();
-		} else if (parsed.type === "chat") {
+		} else if (parsed.type === "entry") {
 			// our own echo confirms the last send arrived, so it no longer needs restoring
 			if (
+				parsed.entry.type === "chat" &&
 				parsed.entry.avatar === seatAvatar &&
 				parsed.entry.text === lastComposerSend
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
-			deps.onIncomingChat?.(parsed.entry, seatAvatar);
-			if (parsed.entry.mode === BACKGROUND_MODE)
-				deps.syncBackground(parsed.entry.text);
+			if (parsed.entry.type === "chat")
+				deps.onIncomingChat?.(parsed.entry, seatAvatar);
+			if (parsed.entry.type === "background")
+				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {
 			const previousHeight = scroller.scrollHeight;
 			const previousTop = scroller.scrollTop;
@@ -697,6 +751,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		(sendEvent) => {
 			sendEvent.preventDefault();
 			const mode = Number(element<HTMLSelectElement>("composer-mode").value);
+			if (!(CHAT_MODES as readonly number[]).includes(mode)) return;
 			if (!composerInput.value.trim()) return;
 			// single flight: the previous send must echo back or fail before the next leaves
 			if (lastComposerSend !== null) return;
@@ -706,7 +761,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				flashNotice("Slow down a moment.");
 				return;
 			}
-			if (sendChat(composerInput.value, mode)) {
+			if (sendChat(composerInput.value, mode as ChatMode)) {
 				lastComposerSend = composerInput.value;
 				composerInput.value = "";
 			}

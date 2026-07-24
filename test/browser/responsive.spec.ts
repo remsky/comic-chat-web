@@ -26,8 +26,6 @@ async function stageJoinedRoom(page: import("@playwright/test").Page) {
 		}
 		for (const id of ["bodycam", "background-picker"])
 			document.getElementById(id)?.removeAttribute("hidden");
-		const status = document.querySelector("#bodycam-status");
-		if (status) status.textContent = "Neutral";
 		const panels = document.querySelector("#panels");
 		if (panels) {
 			for (let index = 0; index < 8; index++) {
@@ -99,15 +97,23 @@ for (const viewport of [
 			await expect(page.locator("#avatar-edit")).toBeVisible();
 			await expect(page.locator("#modern-toggle")).toBeVisible();
 			await expect(page.locator(".tweaks-hint")).toBeInViewport();
+			await expect(page.locator("#bodycam-lock")).toBeHidden();
 			await page.locator('.toolbar-button[data-panel="pose"]').click();
 			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+			await expect(page.locator("#bodycam-lock")).toBeVisible();
+			await expect(page.locator("#bodycam-send")).toBeVisible();
 		} else {
+			// desktop parks room/save/tweaks behind the More toggle
+			await expect(page.locator("#save-strip")).toBeHidden();
+			await page.locator("#sidebar-more").click();
 			await page.locator(".tweaks-hint").scrollIntoViewIfNeeded();
 			await expect(page.locator(".tweaks-hint")).toBeInViewport();
 			await expect(page.locator("#save-strip")).toBeVisible();
 			await expect(page.locator("#leave-room")).toBeVisible();
 			await expect(page.locator("#modern-toggle")).toBeVisible();
 			await expect(page.locator("#bodycam-canvas")).toBeVisible();
+			await expect(page.locator("#bodycam-lock")).toBeVisible();
+			await expect(page.locator("#bodycam-send")).toBeVisible();
 		}
 
 		await page.screenshot({

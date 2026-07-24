@@ -1,13 +1,6 @@
 // Plain-text view line formatting (CTextView::TextLine, textview.cpp:271-357).
 
-import {
-	ARRIVE_MODE,
-	AVATAR_MODE,
-	BACKGROUND_MODE,
-	type ChatEntry,
-	DEPART_MODE,
-	NICK_MODE,
-} from "../protocol/room.js";
+import type { RoomEntry } from "../protocol/room.js";
 
 export interface TranscriptLine {
 	kind: "say" | "think" | "whisper" | "action" | "system";
@@ -24,29 +17,31 @@ export function transcriptHeader(line: TranscriptLine): string {
 
 // <Chr> pose-change lines are skipped in text mode (textview.cpp:274-275)
 export function transcriptLine(
-	entry: ChatEntry,
+	entry: RoomEntry,
 	avatarName?: (avatarID: number) => string,
 ): TranscriptLine | null {
+	if (entry.type === "background")
+		return {
+			kind: "system",
+			name: entry.by,
+			body: `set the background to ${entry.name || "none"}`,
+		};
+	if (entry.type === "announce") {
+		const { name, detail } = entry;
+		if (entry.kind === "nick")
+			return { kind: "system", name, body: `is now ${detail}` };
+		if (entry.kind === "avatar")
+			return {
+				kind: "system",
+				name,
+				body: `changed avatar to ${avatarName?.(Number(detail)) ?? detail}`,
+			};
+		if (entry.kind === "depart")
+			return { kind: "system", name, body: `left and went to ${detail}` };
+		return { kind: "system", name, body: `is back from ${detail}` };
+	}
 	if (entry.text === "<Chr>") return null;
 	const { name, text } = entry;
-	if (entry.mode === BACKGROUND_MODE)
-		return {
-			kind: "system",
-			name,
-			body: `set the background to ${text || "none"}`,
-		};
-	if (entry.mode === NICK_MODE)
-		return { kind: "system", name, body: `is now ${text}` };
-	if (entry.mode === AVATAR_MODE)
-		return {
-			kind: "system",
-			name,
-			body: `changed avatar to ${avatarName?.(Number(text)) ?? text}`,
-		};
-	if (entry.mode === DEPART_MODE)
-		return { kind: "system", name, body: `left and went to ${text}` };
-	if (entry.mode === ARRIVE_MODE)
-		return { kind: "system", name, body: `is back from ${text}` };
 	if (entry.mode === 3) return { kind: "think", name, body: text };
 	if (entry.mode === 2) return { kind: "whisper", name, body: text };
 	if (entry.mode === 5) return { kind: "action", name, body: text };

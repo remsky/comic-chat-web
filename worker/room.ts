@@ -2,28 +2,23 @@
 
 import { DurableObject } from "cloudflare:workers";
 import {
-	ARRIVE_MODE,
-	AVATAR_MODE,
-	BACKGROUND_MODE,
-	type ChatEntry,
+	annotationInBounds,
 	DEFAULT_BACKGROUND,
-	DEPART_MODE,
-	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
-	NICK_MODE,
-	type PoseIndices,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
+	type RoomEntry,
 	type RosterEntry,
 	roomNameFromPath,
 	type ServerMessage,
 } from "../src/protocol/room.js";
+import { EventStore } from "./db/events.js";
+import { applyMigrations } from "./db/migrations.js";
 import { isProhibited } from "./moderation.js";
 
-// server policy: bound per-room storage, connections, and per-socket send rate
-const HISTORY_RETENTION = 500;
+// server policy: bound connections and per-socket send rate
 const SOCKET_LIMIT = 12;
 const RATE_BURST = 5;
 const RATE_REFILL_MS = 1000;
@@ -60,6 +55,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 	private reportedAt = 0;
 	// mirrors the stored background so tagging each insert costs no storage read
 	private background = DEFAULT_BACKGROUND;
+	private readonly events = new EventStore(this.ctx.storage.sql);
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
@@ -68,43 +64,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			new WebSocketRequestResponsePair("ping", "pong"),
 		);
 		ctx.blockConcurrencyWhile(async () => {
-			this.ctx.storage.sql.exec(`
-				CREATE TABLE IF NOT EXISTS messages (
-					seq INTEGER PRIMARY KEY AUTOINCREMENT,
-					avatar INTEGER NOT NULL,
-					name TEXT NOT NULL,
-					text TEXT NOT NULL,
-					mode INTEGER NOT NULL,
-					at INTEGER NOT NULL,
-					expr INTEGER,
-					gest INTEGER,
-					req INTEGER,
-					bg TEXT
-				)
-			`);
-			const columns = this.ctx.storage.sql
-				.exec<{ name: string }>("PRAGMA table_info(messages)")
-				.toArray()
-				.map((column) => column.name);
-			for (const column of ["expr", "gest", "req"]) {
-				if (!columns.includes(column))
-					this.ctx.storage.sql.exec(
-						`ALTER TABLE messages ADD COLUMN ${column} INTEGER`,
-					);
-			}
-			// every row carries the backdrop in effect when it landed, so a chunk replays without reading room state
-			if (!columns.includes("bg")) {
-				this.ctx.storage.sql.exec("ALTER TABLE messages ADD COLUMN bg TEXT");
-				this.ctx.storage.sql.exec(
-					`UPDATE messages SET bg = COALESCE(
-						(SELECT prior.text FROM messages AS prior
-							WHERE prior.mode = ? AND prior.seq <= messages.seq
-							ORDER BY prior.seq DESC LIMIT 1),
-						?)`,
-					BACKGROUND_MODE,
-					DEFAULT_BACKGROUND,
-				);
-			}
+			applyMigrations(this.ctx.storage);
 			this.background =
 				(await this.ctx.storage.get<string>("background")) ??
 				DEFAULT_BACKGROUND;
@@ -222,38 +182,6 @@ export class ChatRoomDO extends DurableObject<Env> {
 		ws.send(JSON.stringify(message));
 	}
 
-	// append one entry to the persisted stream and broadcast it to every seat
-	private record(
-		avatar: number,
-		name: string,
-		text: string,
-		mode: number,
-		pose?: PoseIndices,
-	): void {
-		const result = this.ctx.storage.sql.exec<{ seq: number }>(
-			"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq",
-			avatar,
-			name,
-			text,
-			mode,
-			Date.now(),
-			pose?.expr ?? null,
-			pose?.gest ?? null,
-			pose?.req ?? null,
-			this.background,
-		);
-		const seq = result.one().seq;
-		if (seq > HISTORY_RETENTION)
-			this.ctx.storage.sql.exec(
-				"DELETE FROM messages WHERE seq <= ?",
-				seq - HISTORY_RETENTION,
-			);
-		this.broadcast({
-			type: "chat",
-			entry: { seq, avatar, name, text, mode, ...(pose ? { pose } : {}) },
-		});
-	}
-
 	private broadcast(message: ServerMessage): void {
 		const raw = JSON.stringify(message);
 		for (const ws of this.ctx.getWebSockets()) {
@@ -261,48 +189,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 	}
 
-	// background is the chunk's replay seed; an empty chunk falls back to where the room stands now
-	private history(before?: number): {
-		entries: ChatEntry[];
-		background: string;
-	} {
-		type Row = {
-			seq: number;
-			avatar: number;
-			name: string;
-			text: string;
-			mode: number;
-			expr: number | null;
-			gest: number | null;
-			req: number | null;
-			bg: string | null;
-		};
-		const columns = "seq, avatar, name, text, mode, expr, gest, req, bg";
-		const rows =
-			before === undefined
-				? this.ctx.storage.sql
-						.exec<Row>(
-							`SELECT ${columns} FROM messages ORDER BY seq DESC LIMIT ?`,
-							HISTORY_CHUNK,
-						)
-						.toArray()
-				: this.ctx.storage.sql
-						.exec<Row>(
-							`SELECT ${columns} FROM messages WHERE seq < ? ORDER BY seq DESC LIMIT ?`,
-							before,
-							HISTORY_CHUNK,
-						)
-						.toArray();
-		rows.reverse();
-		const background = rows[0]?.bg ?? this.background;
-		return {
-			entries: rows.map(({ expr, gest, req, bg: _bg, ...entry }) =>
-				expr !== null && gest !== null && req !== null
-					? { ...entry, pose: { expr, gest, req } }
-					: entry,
-			),
-			background,
-		};
+	private emit(entry: RoomEntry | null): void {
+		if (entry) this.broadcast({ type: "entry", entry });
 	}
 
 	async webSocketMessage(
@@ -347,7 +235,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 					? { skew: Date.now() - message.sent }
 					: {}),
 			});
-			const welcomeHistory = this.history();
+			const welcomeHistory = this.events.history(undefined, this.background);
 			this.send(ws, {
 				type: "welcome",
 				avatar,
@@ -361,7 +249,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 				who: { name: message.name, avatar },
 			});
 			if (message.from !== undefined && message.from !== this.roomName)
-				this.record(avatar, message.name, message.from, ARRIVE_MODE);
+				this.emit(
+					this.events.appendAnnounce(
+						"arrive",
+						avatar,
+						message.name,
+						message.from,
+					),
+				);
 			await this.reportPresence();
 			return;
 		}
@@ -370,7 +265,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "history") {
-			const chunk = this.history(message.before);
+			const chunk = this.events.history(message.before, this.background);
 			this.send(ws, {
 				type: "history",
 				entries: chunk.entries,
@@ -401,7 +296,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "depart") {
-			this.record(seat.avatar, seat.name, message.to, DEPART_MODE);
+			this.emit(
+				this.events.appendAnnounce(
+					"depart",
+					seat.avatar,
+					seat.name,
+					message.to,
+				),
+			);
 			return;
 		}
 		if (message.type === "profile") {
@@ -435,20 +337,42 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			// old nick announces the new one; the avatar line already speaks as the new nick
 			if (message.name !== seat.name)
-				this.record(avatar, seat.name, message.name, NICK_MODE);
+				this.emit(
+					this.events.appendAnnounce("nick", avatar, seat.name, message.name),
+				);
 			if (avatar !== seat.avatar)
-				this.record(avatar, message.name, String(avatar), AVATAR_MODE);
+				this.emit(
+					this.events.appendAnnounce(
+						"avatar",
+						avatar,
+						message.name,
+						String(avatar),
+					),
+				);
 			return;
 		}
-		// background changes ride the message stream so replay recomposes identically everywhere
-		const text = message.type === "background" ? message.name : message.text;
-		const mode = message.type === "background" ? BACKGROUND_MODE : message.mode;
-		const pose = message.type === "background" ? undefined : message.pose;
 		if (message.type === "background") {
 			this.background = message.name;
 			await this.ctx.storage.put("background", message.name);
+			this.emit(
+				this.events.appendBackground(seat.avatar, seat.name, message.name),
+			);
+		} else {
+			// reject indexes the sender's own avatar cannot render before they reach storage
+			if (!annotationInBounds(message.annotation, seat.avatar)) {
+				this.send(ws, { type: "error", reason: "malformed message" });
+				return;
+			}
+			this.emit(
+				this.events.appendChat(
+					seat.avatar,
+					seat.name,
+					message.text,
+					message.mode,
+					message.annotation,
+				),
+			);
 		}
-		this.record(seat.avatar, seat.name, text, mode, pose);
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
 			await this.reportPresence();
 	}

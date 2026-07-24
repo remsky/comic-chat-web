@@ -3,7 +3,5 @@ dist/
 playwright-report/
 test-results/
 .wrangler/
-IRC_STYLE_ANNOTATIONS.md
 .dev.vars
-.claude/commands/*
-comic-script.md
+IRC_STYLE_ANNOTATIONS.md

@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { AvatarAtlasCache } from "../src/browser/avatarAssets.js";
 import type { AvatarData } from "../src/engine/avatar.js";
+import { oracleEmotion } from "../tools/avb/fixtures.ts";
 
 const manifest = JSON.parse(
 	readFileSync(
@@ -45,6 +46,22 @@ describe("avatar web atlases", () => {
 		}
 		expect(atlasUrls.size).toBe(manifest.avatars.length);
 		expect(poseCount).toBe(manifest.poseCount);
+	});
+
+	it("keeps the original AVB emotion table index and wire intensity tenths", () => {
+		for (const avatar of manifest.avatars) {
+			for (const rec of [...avatar.faces, ...avatar.torsos, ...avatar.bodies]) {
+				expect(Number.isInteger(rec.emotionIndex)).toBe(true);
+				expect(rec.emotionIndex).toBeGreaterThanOrEqual(0);
+				expect(rec.emotionIndex).toBeLessThanOrEqual(17);
+				expect(oracleEmotion(rec.emotionIndex)).toBe(rec.emotion);
+
+				const expectedTenths = Math.trunc(Math.fround(rec.intensity) * 10);
+				expect(rec.intensityTenths).toBe(expectedTenths);
+				expect(rec.intensityTenths).toBeGreaterThanOrEqual(0);
+				expect(rec.intensityTenths).toBeLessThanOrEqual(10);
+			}
+		}
 	});
 
 	it("retries a failed decode instead of caching the rejection", async () => {

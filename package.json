@@ -27,6 +27,7 @@
 		"deploy": "npm run build && wrangler deploy",
 		"preview:worker": "npm run build && wrangler dev",
 		"fixtures:avatars": "node tools/avb/generate-fixtures.ts",
+		"fixtures:cast-bounds": "node tools/avb/generate-cast-bounds.ts",
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"assets:backgrounds": "node tools/avb/generate-bg-assets.ts",
 		"format": "biome format --write .",

@@ -1,7 +1,6 @@
 // Live room client entry: boots assets, wires the shell, and hands joins to the session.
 
 import type { AvatarData } from "../engine/avatar.js";
-import { BACKGROUND_MODE } from "../protocol/room.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
 import { BackdropCache } from "./backdropAssets.js";
 import { loadCanvasFonts } from "./canvasText.js";
@@ -9,6 +8,7 @@ import { checkRadios, displayName, element } from "./dom.js";
 import {
 	trackVisibleViewport,
 	wireMobilePanels,
+	wireSidebarMore,
 	wireSidebarResize,
 } from "./layout.js";
 import {
@@ -239,6 +239,7 @@ async function main(): Promise<void> {
 	const tabBadge = wireTabUnreadBadge();
 	trackVisibleViewport();
 	wireMobilePanels();
+	wireSidebarMore();
 	wireSidebarResize();
 	await loadCanvasFonts();
 	const response = await fetch("/assets/avatars/manifest.json");
@@ -324,7 +325,6 @@ async function main(): Promise<void> {
 		syncBackground,
 		onIncomingChat: (entry, localAvatar) => {
 			if (localAvatar !== null && entry.avatar === localAvatar) return;
-			if (entry.mode === BACKGROUND_MODE || entry.text === "<Chr>") return;
 			tabBadge.markUnread();
 		},
 	};
