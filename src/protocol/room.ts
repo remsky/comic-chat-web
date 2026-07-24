@@ -5,6 +5,7 @@ import { CAST_BOUNDS } from "./castBounds.js";
 export const MAX_NAME_LENGTH = 24;
 export const MAX_TEXT_LENGTH = 1000;
 export const CAST_SIZE = 31;
+export const MAX_USER_ID_LENGTH = 64;
 // room names share one charset across the websocket route, the allowlist, and the join field
 export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
 // the bounded default room set for a demo deploy; override with the worker ROOMS var
@@ -54,6 +55,8 @@ export interface ComicAnnotation {
 export interface ChatEntry {
 	type: "chat";
 	seq: number;
+	// "" for history predating the sender_id column
+	userId: string;
 	avatar: number;
 	name: string;
 	text: string;
@@ -77,6 +80,7 @@ export interface AnnouncementEntry {
 	type: "announce";
 	kind: AnnounceKind;
 	seq: number;
+	userId: string;
 	avatar: number;
 	name: string;
 	detail: string;
@@ -84,9 +88,10 @@ export interface AnnouncementEntry {
 
 export type RoomEntry = ChatEntry | BackgroundEntry | AnnouncementEntry;
 
-// id is the per-connection identity; avatars are shareable, so it alone marks "that seat is me"
+// id is the seat (one per connection); userId is the person, shared across a user's tabs
 export interface RosterEntry {
 	id: string;
+	userId: string;
 	name: string;
 	avatar: number;
 }
@@ -99,7 +104,15 @@ export interface RoomListing {
 }
 
 export type ClientMessage =
-	| { type: "join"; name: string; avatar: number; from?: string; sent?: number }
+	| {
+			type: "join";
+			name: string;
+			avatar: number;
+			// client-claimed; the server mints a fallback when absent or malformed
+			userId?: string;
+			from?: string;
+			sent?: number;
+	  }
 	| {
 			type: "chat";
 			text: string;
@@ -116,6 +129,7 @@ export type ServerMessage =
 	| {
 			type: "welcome";
 			id: string;
+			userId: string;
 			avatar: number;
 			background: string;
 			// backdrop in effect just before history[0], so replay starts where the room was
@@ -248,10 +262,12 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 				? message.from
 				: undefined;
 		const sent = sentStamp(message.sent);
+		const userId = userIdClaim(message.userId);
 		return {
 			type: "join",
 			name,
 			avatar,
+			...(userId !== undefined ? { userId } : {}),
 			...(from !== undefined ? { from } : {}),
 			...(sent !== undefined ? { sent } : {}),
 		};
@@ -296,6 +312,14 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 	return null;
 }
 
+function userIdClaim(value: unknown): string | undefined {
+	return typeof value === "string" &&
+		value.length >= 1 &&
+		value.length <= MAX_USER_ID_LENGTH
+		? value
+		: undefined;
+}
+
 // the sender's clock stamp on joins and chats; malformed stamps are dropped, not fatal
 function sentStamp(value: unknown): number | undefined {
 	return typeof value === "number" && Number.isFinite(value) && value >= 1
@@ -333,7 +357,8 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 			? entry.avatar
 			: null;
 	const name = boundedString(entry.name, MAX_NAME_LENGTH);
-	if (avatar === null || name === null) return null;
+	const userId = boundedString(entry.userId, MAX_USER_ID_LENGTH);
+	if (avatar === null || name === null || userId === null) return null;
 	if (entry.type === "announce") {
 		if (
 			typeof entry.kind !== "string" ||
@@ -346,6 +371,7 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 			type: "announce",
 			kind: entry.kind as AnnounceKind,
 			seq,
+			userId,
 			avatar,
 			name,
 			detail,
@@ -357,7 +383,7 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 		const annotation = parseAnnotation(entry.annotation);
 		if (text === null || text.length === 0 || mode === null || !annotation)
 			return null;
-		return { type: "chat", seq, avatar, name, text, mode, annotation };
+		return { type: "chat", seq, userId, avatar, name, text, mode, annotation };
 	}
 	return null;
 }
@@ -366,14 +392,16 @@ function rosterEntry(raw: unknown): RosterEntry | null {
 	if (typeof raw !== "object" || raw === null) return null;
 	const entry = raw as Record<string, unknown>;
 	const name = boundedString(entry.name, MAX_NAME_LENGTH);
+	const userId = boundedString(entry.userId, MAX_USER_ID_LENGTH);
 	if (
 		typeof entry.id !== "string" ||
+		userId === null ||
 		name === null ||
 		typeof entry.avatar !== "number" ||
 		!Number.isInteger(entry.avatar)
 	)
 		return null;
-	return { id: entry.id, name, avatar: entry.avatar };
+	return { id: entry.id, userId, name, avatar: entry.avatar };
 }
 
 function entryList(raw: unknown): RoomEntry[] | null {
@@ -404,6 +432,7 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 		const history = entryList(message.history);
 		if (
 			typeof message.id !== "string" ||
+			typeof message.userId !== "string" ||
 			typeof message.avatar !== "number" ||
 			typeof message.background !== "string" ||
 			typeof message.historyBackground !== "string" ||
@@ -415,6 +444,7 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 		return {
 			type: "welcome",
 			id: message.id,
+			userId: message.userId,
 			avatar: message.avatar,
 			background: message.background,
 			historyBackground: message.historyBackground,

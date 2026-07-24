@@ -16,6 +16,7 @@ const HISTORY_RETENTION = 500;
 const EVENT_SCHEMA = {
 	seq: "int",
 	event_type: "text",
+	sender_id: "text?",
 	avatar: "int?",
 	name: "text",
 	text: "text?",
@@ -85,6 +86,7 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 		return {
 			type: "chat",
 			seq: row.seq,
+			userId: row.sender_id ?? "",
 			avatar: row.avatar,
 			name: row.name,
 			text: row.text,
@@ -105,6 +107,7 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 		type: "announce",
 		kind: row.event_type as AnnounceKind,
 		seq: row.seq,
+		userId: row.sender_id ?? "",
 		avatar: row.avatar,
 		name: row.name,
 		detail: row.text ?? "",
@@ -113,11 +116,13 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 
 function emptyRow(
 	event_type: string,
+	sender_id: string,
 	avatar: number | null,
 	name: string,
 ): Omit<EventRow, "seq"> {
 	return {
 		event_type,
+		sender_id,
 		avatar,
 		name,
 		text: null,
@@ -139,6 +144,7 @@ export class EventStore {
 	constructor(private readonly sql: SqlStorage) {}
 
 	appendChat(
+		userId: string,
 		avatar: number,
 		name: string,
 		text: string,
@@ -146,7 +152,7 @@ export class EventStore {
 		annotation: ComicAnnotation,
 	): RoomEntry | null {
 		return this.append({
-			...emptyRow("chat", avatar, name),
+			...emptyRow("chat", userId, avatar, name),
 			text,
 			mode,
 			face_index: annotation.faceIndex,
@@ -161,23 +167,28 @@ export class EventStore {
 	}
 
 	appendBackground(
+		userId: string,
 		avatar: number,
 		name: string,
 		background: string,
 	): RoomEntry | null {
 		return this.append({
-			...emptyRow("background", avatar, name),
+			...emptyRow("background", userId, avatar, name),
 			background_name: background,
 		});
 	}
 
 	appendAnnounce(
 		kind: AnnounceKind,
+		userId: string,
 		avatar: number,
 		name: string,
 		detail: string,
 	): RoomEntry | null {
-		return this.append({ ...emptyRow(kind, avatar, name), text: detail });
+		return this.append({
+			...emptyRow(kind, userId, avatar, name),
+			text: detail,
+		});
 	}
 
 	// the chunk's replay seed is the newest background event at or before its oldest row; none surviving means the room was still on the default

@@ -32,6 +32,8 @@ import {
 } from "./canvasText.js";
 import { nearBottom } from "./dom.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
+import { SeatBook, seatKey } from "./seatBook.js";
+import type { Features } from "./storage.js";
 
 // square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
 const CLASSIC_UNIT = 3000;
@@ -48,8 +50,12 @@ interface Composition {
 	registry: AvatarRegistry;
 	emotions: EmotionEngine;
 	page: PanelPage;
-	// nickname -> avatarID, accumulated as entries replay so addressee facing recomputes identically
+	// nickname -> slot id, accumulated as entries replay so addressee facing recomputes identically
 	speakers: Map<string, number>;
+	// slot id -> its latest nick, for the collision chip and addressee resolution
+	seatNick: Map<number, string>;
+	// present only when shared-avatar co-occupancy is on; null keeps the classic sprite-id slotting
+	seats: SeatBook | null;
 }
 
 export class RoomView {
@@ -59,9 +65,14 @@ export class RoomView {
 		CanvasTextMeasurer["styleResolver"]
 	>;
 	private composition: Composition;
+	private features: Features;
 	private unit: number;
-	private localAvatarID: number | null = null;
+	private localUserId = "";
+	private localSprite: number | null = null;
 	private baseBackdrop = "";
+	private showAllNames = false;
+	// off: the "Show nametags" toggle is the sole control; flip to restore auto-chips for co-occupying bodies only
+	private readonly autoCollisionChips = false;
 
 	private autoScroll = true;
 	onComposed?: () => void;
@@ -73,19 +84,26 @@ export class RoomView {
 		private readonly avatars: AvatarData[],
 		private readonly container: HTMLElement,
 		private readonly scroller: HTMLElement,
-		modernTweaks: boolean,
+		features: Features,
 	) {
 		scroller.addEventListener("scroll", () => {
 			this.autoScroll = nearBottom(scroller);
 		});
 		const measurer = new CanvasTextMeasurer(createCanvasMeasureContext());
 		this.resolveStyle = measurer.styleResolver();
-		this.unit = modernTweaks ? MODERN_UNIT : CLASSIC_UNIT;
+		this.features = features;
+		this.unit = features.modernSizing ? MODERN_UNIT : CLASSIC_UNIT;
 		this.composition = this.createComposition();
 	}
 
 	private createComposition(): Composition {
-		const registry = new AvatarRegistry(this.avatars);
+		// shared mode starts with an empty cast and grows a seat per person; classic keeps the fixed 1:1 sprite cast
+		const registry = new AvatarRegistry(
+			this.features.sharedAvatars ? [] : this.avatars,
+		);
+		const seats = this.features.sharedAvatars
+			? new SeatBook(registry, this.avatars)
+			: null;
 		const unit = this.unit;
 		const layoutOptions = {
 			unitWidth: unit,
@@ -110,7 +128,17 @@ export class RoomView {
 			emotions: new EmotionEngine(),
 			page,
 			speakers: new Map(),
+			seatNick: new Map(),
+			seats,
 		};
+	}
+
+	// classic slots on the sprite id; shared resolves a per-person seat so same-avatar users co-exist
+	private slotFor(userId: string, avatar: number): number {
+		const { seats } = this.composition;
+		return seats
+			? seats.resolve(seatKey(userId, avatar), userId, avatar)
+			: avatar;
 	}
 
 	// the backdrop a replayed chunk starts from; changes within it replay through feed
@@ -120,30 +148,50 @@ export class RoomView {
 	}
 
 	private feed(entry: RoomEntry): void {
-		const { registry, page, speakers } = this.composition;
+		const { registry, page, speakers, seatNick } = this.composition;
 		if (entry.type === "background") {
 			page.backdrop = entry.name;
 			return;
 		}
 		if (entry.type === "announce") {
 			// a rename teaches addressee facing the new nickname
-			if (entry.kind === "nick")
-				speakers.set(toLowerAscii(entry.detail), entry.avatar);
+			if (entry.kind === "nick") {
+				const slot = this.slotFor(entry.userId, entry.avatar);
+				speakers.set(toLowerAscii(entry.detail), slot);
+				seatNick.set(slot, entry.detail);
+			}
 			return;
 		}
-		const avatar = registry.get(entry.avatar);
+		const slot = this.slotFor(entry.userId, entry.avatar);
+		const avatar = registry.get(slot);
 		if (!avatar) return;
 		avatar.talkTo = entry.annotation.talkTos
 			.map((nick) => speakers.get(toLowerAscii(nick)))
-			.filter((id): id is number => id !== undefined && id !== entry.avatar);
-		speakers.set(toLowerAscii(entry.name), entry.avatar);
+			.filter((id): id is number => id !== undefined && id !== slot);
+		speakers.set(toLowerAscii(entry.name), slot);
+		seatNick.set(slot, entry.name);
 		// SayEntry::Execute applies the sender's resolved indexes verbatim (histent.cpp:94-106); no receiver inference
 		avatar.setIndices(
 			entry.annotation.faceIndex,
 			entry.annotation.torsoIndex,
 			entry.annotation.requested ? 1 : 0,
 		);
-		page.addLine(entry.avatar, entry.text, entry.mode);
+		// a person's new avatar is a new seat id; force a fresh panel so they never share one with their own prior avatar
+		if (this.lastPanelHasOtherSeatOf(entry.userId, slot)) page.startNewPanel();
+		page.addLine(slot, entry.text, entry.mode);
+	}
+
+	// per-avatar seats split one person across ids, so the engine's same-speaker merge can't see the duplication; catch it here
+	private lastPanelHasOtherSeatOf(userId: string, slot: number): boolean {
+		const { seats, page } = this.composition;
+		if (!seats || userId === "") return false;
+		const last = page.panels.at(-1);
+		return (
+			last?.bodies.some(
+				(body) =>
+					body.avatarID !== slot && seats.userIdOf(body.avatarID) === userId,
+			) ?? false
+		);
 	}
 
 	compose(entry: RoomEntry): void {
@@ -174,8 +222,18 @@ export class RoomView {
 		this.onRebuilt?.();
 	}
 
+	setLocalUserId(userId: string): void {
+		this.localUserId = userId;
+	}
+
 	setLocalAvatarID(avatarID: number): void {
-		this.localAvatarID = avatarID;
+		this.localSprite = avatarID;
+	}
+
+	// the local person's slot; in shared mode this creates their seat eagerly so prepareOutgoing and the bodycam have it
+	private localSlot(): number | null {
+		if (this.localSprite === null) return null;
+		return this.slotFor(this.localUserId, this.localSprite);
 	}
 
 	entriesView(): readonly RoomEntry[] {
@@ -218,8 +276,9 @@ export class RoomView {
 	}
 
 	localAvatar(): Avatar | undefined {
-		if (this.localAvatarID === null) return undefined;
-		return this.composition.registry.get(this.localAvatarID);
+		const slot = this.localSlot();
+		if (slot === null) return undefined;
+		return this.composition.registry.get(slot);
 	}
 
 	// ChatPreSendText (textpose.cpp:115-125) then GetIndices/GetEmotions for the wire (protsupp.cpp:3040-3041)
@@ -238,10 +297,14 @@ export class RoomView {
 		const indices = avatar.getIndices();
 		const requested = indices.requested !== 0;
 		const talkTos: string[] = [];
-		if (this.localAvatarID !== null) {
-			const { speakers } = this.composition;
-			for (const id of parseAddressees(text, speakers, this.localAvatarID)) {
-				const nick = roster.find((seat) => seat.avatar === id)?.name;
+		const localSlot = this.localSlot();
+		if (localSlot !== null) {
+			const { speakers, seatNick, seats } = this.composition;
+			for (const id of parseAddressees(text, speakers, localSlot)) {
+				// shared slots resolve to the seat's own nick; classic ones to the sprite's current wearer
+				const nick = seats
+					? seatNick.get(id)
+					: roster.find((seat) => seat.avatar === id)?.name;
 				if (nick !== undefined) talkTos.push(nick);
 				if (talkTos.length >= MAX_TALK_TOS) break;
 			}
@@ -275,10 +338,14 @@ export class RoomView {
 	}
 
 	// rebuilds with fresh registry/emotion/rand state and replays history, so the result matches a fresh join in that mode
-	setModernTweaks(on: boolean): void {
-		const unit = on ? MODERN_UNIT : CLASSIC_UNIT;
-		if (unit === this.unit) return;
-		this.unit = unit;
+	setFeatures(features: Features): void {
+		if (
+			features.modernSizing === this.features.modernSizing &&
+			features.sharedAvatars === this.features.sharedAvatars
+		)
+			return;
+		this.features = features;
+		this.unit = features.modernSizing ? MODERN_UNIT : CLASSIC_UNIT;
 		this.composition = this.createComposition();
 		for (const entry of this.entries) this.feed(entry);
 		this.reconcile();
@@ -294,8 +361,12 @@ export class RoomView {
 		const transcript = document.createElement("ol");
 		transcript.className = "sr-only";
 		card.append(canvas, transcript);
-		syncPanelAccessibility(canvas, transcript, panel, this.avatars);
-		const { registry } = this.composition;
+		const { registry, seats } = this.composition;
+		// seat avatars carry the sprite's character name, so accessibility labels resolve in either mode
+		const names = seats ? registry.avatars.map((a) => a.data) : this.avatars;
+		syncPanelAccessibility(canvas, transcript, panel, names);
+		const tags = this.nameChips(panel);
+		if (tags) card.append(tags);
 		const unit = this.unit;
 		let renderer: CanvasPanelRenderer | undefined;
 		const surface = new CanvasSurface(canvas, unit, unit, (context) => {
@@ -312,6 +383,66 @@ export class RoomView {
 			renderer.render(panel);
 		});
 		return { panel, card, surface };
+	}
+
+	// nick chips hung below the panel, one per labelled body, aligned to its arrowX; not on the canvas, so absent from PNG export
+	private nameChips(panel: UnitPanel): HTMLElement | null {
+		const labels = this.chipLabels(panel);
+		if (!labels) return null;
+		const tags = document.createElement("div");
+		tags.className = "panel-nametags";
+		for (const body of panel.bodies) {
+			const label = labels.get(body.avatarID);
+			if (label === undefined) continue;
+			const tag = document.createElement("span");
+			tag.className = "panel-nametag";
+			tag.textContent = label;
+			// clamp the centre off the extreme edges so a chip never spills past the panel
+			const x = Math.min(0.94, Math.max(0.06, body.arrowX / this.unit));
+			tag.style.left = `${x * 100}%`;
+			tags.append(tag);
+		}
+		return tags.childElementCount > 0 ? tags : null;
+	}
+
+	// re-label existing panels without recomposing; nametags are a render-time choice, not a layout one
+	setShowAllNames(on: boolean): void {
+		if (on === this.showAllNames) return;
+		this.showAllNames = on;
+		for (const rendered of this.rendered) {
+			rendered.surface.dispose();
+			rendered.card.remove();
+		}
+		this.rendered.length = 0;
+		this.reconcile();
+	}
+
+	// nick chips: all bodies when the toggle is on; else the gated-off co-occupancy-only path
+	private chipLabels(panel: UnitPanel): Map<number, string> | undefined {
+		const { seats, seatNick } = this.composition;
+		if (this.showAllNames) {
+			const labels = new Map<number, string>();
+			for (const body of panel.bodies) {
+				const nick = seatNick.get(body.avatarID);
+				if (nick !== undefined) labels.set(body.avatarID, nick);
+			}
+			return labels.size > 0 ? labels : undefined;
+		}
+		if (!this.autoCollisionChips || !seats) return undefined;
+		const spriteCount = new Map<number, number>();
+		for (const body of panel.bodies) {
+			const sprite = seats.spriteOf(body.avatarID);
+			if (sprite !== undefined)
+				spriteCount.set(sprite, (spriteCount.get(sprite) ?? 0) + 1);
+		}
+		const labels = new Map<number, string>();
+		for (const body of panel.bodies) {
+			const sprite = seats.spriteOf(body.avatarID);
+			if (sprite === undefined || (spriteCount.get(sprite) ?? 0) < 2) continue;
+			const nick = seatNick.get(body.avatarID);
+			if (nick !== undefined) labels.set(body.avatarID, nick);
+		}
+		return labels.size > 0 ? labels : undefined;
 	}
 
 	private reconcile(): void {

@@ -139,6 +139,33 @@
 	margin: 0;
 }
 
+/* thin nick tags hanging under the panel, each centred on its character's arrowX */
+.panel-nametags {
+	position: relative;
+	/* shorter than the chip so it overhangs into the gap, tightening the space to the next row */
+	height: 0.6rem;
+}
+
+.panel-nametag {
+	position: absolute;
+	top: 0;
+	transform: translateX(-50%);
+	max-width: 96%;
+	overflow: hidden;
+	padding: 0 0.3rem;
+	/* border keeps the white chip legible against the white strip */
+	border: 1px solid #000;
+	border-radius: 0 0 3px 3px;
+	background: #fff;
+	color: #000;
+	font-size: 0.6rem;
+	font-weight: 400;
+	line-height: 1rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	pointer-events: none;
+}
+
 .panel canvas {
 	display: block;
 	width: 100%;
@@ -182,8 +209,6 @@
 	display: flex;
 	flex: 1;
 	flex-direction: column;
-	/* keep several roster rows visible even when the "You" preview is tall */
-	min-height: 7rem;
 }
 
 .sidebar-self {
@@ -319,9 +344,16 @@
 	white-space: pre;
 }
 
-.bodycam-menu li:hover {
+.bodycam-menu li:hover,
+.bodycam-menu li.active {
 	background: #000080;
 	color: #fff;
+}
+
+.mention-menu {
+	min-width: 8rem;
+	max-height: 12rem;
+	overflow-y: auto;
 }
 
 .tweaks-toggle {
@@ -336,6 +368,11 @@
 	margin: 0.2rem 0 0;
 	color: #555;
 	font-size: 0.7rem;
+}
+
+/* purely visual nesting under Modern tweaks; the toggle stays functionally independent */
+.tweaks-toggle--nested {
+	margin-left: 0.9rem;
 }
 
 .dock {
@@ -496,6 +533,14 @@
 	font-size: 0.75rem;
 }
 
+/* IRC nick-highlight band; li in the selector so the padding beats `.transcript li` and cancels the negative margin */
+.transcript li.transcript-mention {
+	margin: 0 -0.75rem;
+	padding: 0.1rem 0.75rem;
+	background: #e4e4e4;
+	box-shadow: inset 3px 0 0 #000;
+}
+
 .app:not(.text-view) .transcript {
 	display: none;
 }
@@ -534,6 +579,8 @@
 }
 
 #sidebar-more {
+	/* a flex child of the sidebar column; don't inherit .strip-button's flex:1 and balloon to fill free space */
+	flex: 0 0 auto;
 	margin-top: 0.35rem;
 	padding: 0.1rem 0.5rem;
 	font-size: 0.7rem;
@@ -620,7 +667,8 @@ body:not(.modern-tweaks) .background-picker-grid {
 .background-thumb {
 	display: block;
 	width: 100%;
-	height: 2.4rem;
+	/* cropped short (cover keeps the center band) so every backdrop fits without a scroller; the name label disambiguates */
+	height: 1.2rem;
 	background: #000;
 	object-fit: cover;
 	image-rendering: pixelated;
@@ -848,6 +896,13 @@ body:not(.modern-tweaks) .background-picker-grid {
 /* the sidebar background grid reuses the character tile look; base tile box is scoped to the dialog */
 .background-picker-grid .character-options {
 	grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+}
+
+/* in the sidebar these grids flow into the one sidebar scroller; the dialog copies keep their own cap */
+.profile-picker-grid .character-options,
+.background-picker-grid .character-options {
+	max-height: none;
+	overflow-y: visible;
 }
 
 .background-picker-grid .character-option,
@@ -1156,5 +1211,10 @@ body:not(.modern-tweaks) .background-picker-grid {
 	.mobile-sheet[data-panel="more"] .profile-picker,
 	.mobile-sheet[data-panel="more"] .tweaks-hint {
 		grid-column: 1 / -1;
+	}
+
+	/* the desktop indent reads as an orphaned cell in the mobile grid; sit flush instead */
+	.mobile-sheet[data-panel="more"] .tweaks-toggle--nested {
+		margin-left: 0;
 	}
 }

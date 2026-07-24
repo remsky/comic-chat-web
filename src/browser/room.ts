@@ -25,21 +25,25 @@ import {
 import { RoomView } from "./roomView.js";
 import {
 	clearStoredProfile,
+	loadFeatures,
 	loadStoredProfile,
 	MODERN_TWEAKS_KEY,
+	NAMETAGS_KEY,
 	saveStoredProfile,
 	TEXT_VIEW_KEY,
 	takeRoomSwitch,
 } from "./storage.js";
 
 interface TabBadgeController {
-	markUnread: () => void;
+	markUnread: (mentioned: boolean) => void;
 	clearUnread: () => void;
 }
 
 function wireTabUnreadBadge(): TabBadgeController {
 	const baseTitle = document.title;
 	let unreadCount = 0;
+	// set once any unread line named the local user; adds a '*' to the title until cleared
+	let mentionPending = false;
 	const badgeHrefByCount = new Map<number, Promise<string>>();
 	const dynamicFavicon = document.createElement("link");
 	dynamicFavicon.rel = "icon";
@@ -78,13 +82,14 @@ function wireTabUnreadBadge(): TabBadgeController {
 
 	const clearUnread = (): void => {
 		unreadCount = 0;
+		mentionPending = false;
 		document.title = baseTitle;
 		dynamicFavicon.remove();
 	};
 
 	const renderUnread = (): void => {
 		if (unreadCount < 1 || !document.hidden) return;
-		document.title = `(${unreadCount}) ${baseTitle}`;
+		document.title = `(${unreadCount}${mentionPending ? "*" : ""}) ${baseTitle}`;
 		if (!badgeHrefByCount.has(unreadCount))
 			badgeHrefByCount.set(unreadCount, buildBadgeHref(unreadCount));
 		const badgeHrefPromise = badgeHrefByCount.get(unreadCount);
@@ -107,9 +112,10 @@ function wireTabUnreadBadge(): TabBadgeController {
 	window.addEventListener("focus", clearUnread);
 
 	return {
-		markUnread: () => {
+		markUnread: (mentioned: boolean) => {
 			if (!document.hidden) return;
 			unreadCount += 1;
+			if (mentioned) mentionPending = true;
 			renderUnread();
 		},
 		clearUnread,
@@ -290,7 +296,7 @@ async function main(): Promise<void> {
 		manifest.avatars,
 		element("panels"),
 		element("strip"),
-		tweaks.checked,
+		loadFeatures(),
 	);
 	tweaks.addEventListener("change", () => {
 		localStorage.setItem(MODERN_TWEAKS_KEY, tweaks.checked ? "on" : "off");
@@ -298,7 +304,15 @@ async function main(): Promise<void> {
 		// the grid may have missed a dropdown-driven change while it was hidden
 		if (tweaks.checked)
 			syncBackground(element<HTMLSelectElement>("background-select").value);
-		view.setModernTweaks(tweaks.checked);
+		view.setFeatures(loadFeatures());
+	});
+
+	const nameToggle = element<HTMLInputElement>("name-toggle");
+	nameToggle.checked = localStorage.getItem(NAMETAGS_KEY) === "on";
+	view.setShowAllNames(nameToggle.checked);
+	nameToggle.addEventListener("change", () => {
+		localStorage.setItem(NAMETAGS_KEY, nameToggle.checked ? "on" : "off");
+		view.setShowAllNames(nameToggle.checked);
 	});
 
 	// ID_VIEW_COMICS / ID_VIEW_TEXT: one strip pane, two renderings
@@ -323,15 +337,9 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
-		onIncomingChat: (entry, localAvatar, localName) => {
-			// shareable avatars: only our own seat (avatar + name) suppresses the badge
-			if (
-				localAvatar !== null &&
-				entry.avatar === localAvatar &&
-				entry.name === localName
-			)
-				return;
-			tabBadge.markUnread();
+		onIncomingChat: (entry, localUserId, mentioned) => {
+			if (entry.userId === localUserId) return;
+			tabBadge.markUnread(mentioned);
 		},
 	};
 

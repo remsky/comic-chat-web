@@ -33,8 +33,9 @@ const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 const STALE_SEND_MS = 5_000;
 
 interface SocketState {
-	// per-connection identity; avatars are shareable, so this alone tells seats apart
+	// id is the seat (one per connection); userId is the person, stable across reconnects
 	id?: string;
+	userId?: string;
 	name?: string;
 	avatar?: number;
 	tokens?: number;
@@ -89,6 +90,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 		const state = attachment as Record<string, unknown>;
 		return {
 			...(typeof state.id === "string" ? { id: state.id } : {}),
+			...(typeof state.userId === "string" ? { userId: state.userId } : {}),
 			...(typeof state.name === "string" ? { name: state.name } : {}),
 			...(typeof state.avatar === "number" ? { avatar: state.avatar } : {}),
 			...(typeof state.tokens === "number" ? { tokens: state.tokens } : {}),
@@ -129,7 +131,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 	private seatOf(ws: WebSocket): RosterEntry | null {
 		const state = this.stateOf(ws);
 		return state.name !== undefined && state.avatar !== undefined
-			? { id: state.id ?? "", name: state.name, avatar: state.avatar }
+			? {
+					id: state.id ?? "",
+					userId: state.userId ?? "",
+					name: state.name,
+					avatar: state.avatar,
+				}
 			: null;
 	}
 
@@ -215,12 +222,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
-			// avatars are shareable; the connection id is the seat's identity
 			const avatar = message.avatar;
 			const id = crypto.randomUUID();
+			// trust the client's claim while anonymous; mint one when it is absent
+			const userId = message.userId ?? crypto.randomUUID();
 			ws.serializeAttachment({
 				...this.stateOf(ws),
 				id,
+				userId,
 				name: message.name,
 				avatar,
 				...(message.sent !== undefined
@@ -231,6 +240,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.send(ws, {
 				type: "welcome",
 				id,
+				userId,
 				avatar,
 				background: this.background,
 				historyBackground: welcomeHistory.background,
@@ -239,12 +249,13 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			this.broadcast({
 				type: "joined",
-				who: { id, name: message.name, avatar },
+				who: { id, userId, name: message.name, avatar },
 			});
 			if (message.from !== undefined && message.from !== this.roomName)
 				this.emit(
 					this.events.appendAnnounce(
 						"arrive",
+						userId,
 						avatar,
 						message.name,
 						message.from,
@@ -292,6 +303,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.emit(
 				this.events.appendAnnounce(
 					"depart",
+					seat.userId,
 					seat.avatar,
 					seat.name,
 					message.to,
@@ -318,17 +330,24 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.broadcast({
 				type: "profile",
 				was: seat,
-				who: { id: seat.id, name: message.name, avatar },
+				who: { id: seat.id, userId: seat.userId, name: message.name, avatar },
 			});
 			// old nick announces the new one; the avatar line already speaks as the new nick
 			if (message.name !== seat.name)
 				this.emit(
-					this.events.appendAnnounce("nick", avatar, seat.name, message.name),
+					this.events.appendAnnounce(
+						"nick",
+						seat.userId,
+						avatar,
+						seat.name,
+						message.name,
+					),
 				);
 			if (avatar !== seat.avatar)
 				this.emit(
 					this.events.appendAnnounce(
 						"avatar",
+						seat.userId,
 						avatar,
 						message.name,
 						String(avatar),
@@ -340,7 +359,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 			this.background = message.name;
 			await this.ctx.storage.put("background", message.name);
 			this.emit(
-				this.events.appendBackground(seat.avatar, seat.name, message.name),
+				this.events.appendBackground(
+					seat.userId,
+					seat.avatar,
+					seat.name,
+					message.name,
+				),
 			);
 		} else {
 			// reject indexes the sender's own avatar cannot render before they reach storage
@@ -350,6 +374,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			}
 			this.emit(
 				this.events.appendChat(
+					seat.userId,
 					seat.avatar,
 					seat.name,
 					message.text,

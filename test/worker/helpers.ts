@@ -66,10 +66,17 @@ export async function join(
 	name: string,
 	avatar: number,
 	from?: string,
+	userId = `u-${name}`,
 ) {
 	const { socket, inbox } = await connect(room);
 	socket.send(
-		JSON.stringify({ type: "join", name, avatar, ...(from ? { from } : {}) }),
+		JSON.stringify({
+			type: "join",
+			name,
+			avatar,
+			userId,
+			...(from ? { from } : {}),
+		}),
 	);
 	const welcome = await inbox.next("welcome");
 	if (welcome.type !== "welcome") throw new Error("expected a welcome");

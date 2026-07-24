@@ -16,6 +16,11 @@ function mentionsName(lowerText: string, lowerName: string): boolean {
 	return false;
 }
 
+// IRC-style highlight test: does the text name this nick at a word boundary (the same rule facing uses)
+export function mentionsNick(text: string, name: string): boolean {
+	return mentionsName(toLowerAscii(text), toLowerAscii(name));
+}
+
 // avatarIDs the speaker addresses by name, minus themselves, in speaker-map order
 export function parseAddressees(
 	text: string,

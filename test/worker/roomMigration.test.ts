@@ -72,6 +72,7 @@ describe("legacy history migration", () => {
 			{
 				type: "chat",
 				seq: 2,
+				userId: "",
 				avatar: 18,
 				name: "remsky",
 				text: "Oh wow",
@@ -90,6 +91,7 @@ describe("legacy history migration", () => {
 			{
 				type: "chat",
 				seq: 3,
+				userId: "",
 				avatar: 18,
 				name: "remsky",
 				text: "time*",
@@ -109,6 +111,7 @@ describe("legacy history migration", () => {
 				type: "announce",
 				kind: "avatar",
 				seq: 4,
+				userId: "",
 				avatar: 18,
 				name: "remsky",
 				detail: "18",
@@ -117,6 +120,7 @@ describe("legacy history migration", () => {
 				type: "announce",
 				kind: "depart",
 				seq: 5,
+				userId: "",
 				avatar: 2,
 				name: "Tim",
 				detail: "pen-pals",
@@ -125,6 +129,7 @@ describe("legacy history migration", () => {
 				type: "announce",
 				kind: "arrive",
 				seq: 6,
+				userId: "",
 				avatar: 2,
 				name: "Tim",
 				detail: "dial-up",
@@ -163,6 +168,7 @@ describe("legacy history migration", () => {
 			{
 				type: "chat",
 				seq: 1,
+				userId: "",
 				avatar: 7,
 				name: "old-timer",
 				text: "hello from 1996",
