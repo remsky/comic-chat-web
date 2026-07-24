@@ -1,5 +1,6 @@
 import { env, runInDurableObject } from "cloudflare:test";
 import { describe, expect, it } from "vitest";
+import { applyMigrations } from "../../worker/db/migrations.js";
 import { join } from "./helpers.js";
 
 const LEGACY_TABLE = `CREATE TABLE messages (
@@ -18,20 +19,13 @@ const LEGACY_TABLE = `CREATE TABLE messages (
 const LEGACY_INSERT =
 	"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-function migrate(room: string): Promise<void> {
-	const stub = env.CHAT_ROOM.getByName(room);
-	return runInDurableObject(stub, (instance) => {
-		(
-			instance as unknown as { migrateLegacyMessages(): void }
-		).migrateLegacyMessages();
-	});
-}
-
 describe("legacy history migration", () => {
 	it("carries messages rows into events with poses intact", async () => {
 		const room = "legacy-migrate";
 		const stub = env.CHAT_ROOM.getByName(room);
+		// rewind the migrated state so the room looks like a legacy deploy mid-upgrade
 		await runInDurableObject(stub, (_instance, state) => {
+			state.storage.sql.exec("DROP TABLE events; DELETE FROM _migrations;");
 			state.storage.sql.exec(LEGACY_TABLE);
 			const rows: [
 				number,
@@ -62,8 +56,15 @@ describe("legacy history migration", () => {
 					req,
 					"volcano",
 				);
+			applyMigrations(state.storage);
+			// the source table is gone once its rows live in events
+			const tables = state.storage.sql
+				.exec<{ name: string }>(
+					"SELECT name FROM sqlite_master WHERE name = 'messages'",
+				)
+				.toArray();
+			expect(tables).toEqual([]);
 		});
-		await migrate(room);
 		const { welcome, socket } = await join(room, "ann", 1);
 		expect(welcome.historyBackground).toBe("volcano");
 		expect(welcome.history).toEqual([
@@ -129,22 +130,15 @@ describe("legacy history migration", () => {
 				detail: "dial-up",
 			},
 		]);
-		// the source table is gone once its rows live in events
-		await runInDurableObject(stub, (_instance, state) => {
-			const tables = state.storage.sql
-				.exec<{ name: string }>(
-					"SELECT name FROM sqlite_master WHERE name = 'messages'",
-				)
-				.toArray();
-			expect(tables).toEqual([]);
-		});
 		socket.close();
 	});
 
-	it("migrates rooms predating the pose and bg columns", async () => {
+	it("migrates rooms predating the pose columns", async () => {
 		const room = "legacy-migrate-ancient";
 		const stub = env.CHAT_ROOM.getByName(room);
 		await runInDurableObject(stub, (_instance, state) => {
+			state.storage.sql.exec("DROP TABLE events; DELETE FROM _migrations;");
+			// a room last woken before expr/gest/req existed: the reconcile step adds them
 			state.storage.sql.exec(`CREATE TABLE messages (
 				seq INTEGER PRIMARY KEY AUTOINCREMENT,
 				avatar INTEGER NOT NULL,
@@ -161,8 +155,8 @@ describe("legacy history migration", () => {
 				1,
 				Date.now(),
 			);
+			applyMigrations(state.storage);
 		});
-		await migrate(room);
 		const { welcome, socket } = await join(room, "ann", 1);
 		expect(welcome.historyBackground).toBe("field");
 		expect(welcome.history).toEqual([

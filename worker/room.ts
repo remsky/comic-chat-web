@@ -2,15 +2,10 @@
 
 import { DurableObject } from "cloudflare:workers";
 import {
-	type AnnounceKind,
 	annotationInBounds,
-	type ChatMode,
-	type ComicAnnotation,
 	DEFAULT_BACKGROUND,
-	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
-	NEUTRAL_EMOTION_INDEX,
 	parseClientMessage,
 	pickAvatar,
 	RATE_LIMIT_REASON,
@@ -19,10 +14,11 @@ import {
 	roomNameFromPath,
 	type ServerMessage,
 } from "../src/protocol/room.js";
+import { EventStore } from "./db/events.js";
+import { applyMigrations } from "./db/migrations.js";
 import { isProhibited } from "./moderation.js";
 
-// server policy: bound per-room storage, connections, and per-socket send rate
-const HISTORY_RETENTION = 500;
+// server policy: bound connections and per-socket send rate
 const SOCKET_LIMIT = 12;
 const RATE_BURST = 5;
 const RATE_REFILL_MS = 1000;
@@ -53,162 +49,13 @@ interface SocketState {
 	skew?: number;
 }
 
-// type alias, not interface: sql.exec's Record constraint needs the implicit index signature
-type EventRow = {
-	seq: number;
-	event_type: string;
-	avatar: number | null;
-	name: string;
-	text: string | null;
-	mode: number | null;
-	face_index: number | null;
-	face_emotion_index: number | null;
-	face_intensity_tenths: number | null;
-	torso_index: number | null;
-	torso_emotion_index: number | null;
-	torso_intensity_tenths: number | null;
-	requested: number | null;
-	talk_tos_json: string | null;
-	background_name: string | null;
-	bg: string | null;
-};
-
-const EVENT_COLUMNS =
-	"seq, event_type, avatar, name, text, mode, face_index, face_emotion_index, face_intensity_tenths, torso_index, torso_emotion_index, torso_intensity_tenths, requested, talk_tos_json, background_name, bg";
-
-// strict read-back; a malformed stored list drops to no addressees rather than crashing replay
-function talkTosFromJson(raw: string | null): string[] {
-	if (raw === null) return [];
-	try {
-		const parsed = JSON.parse(raw) as unknown;
-		return Array.isArray(parsed)
-			? parsed.filter((item): item is string => typeof item === "string")
-			: [];
-	} catch {
-		return [];
-	}
-}
-
-function entryFromRow(row: EventRow): RoomEntry | null {
-	if (row.event_type === "background")
-		return {
-			type: "background",
-			seq: row.seq,
-			name: row.background_name ?? "",
-			by: row.name,
-		};
-	if (row.avatar === null) return null;
-	if (row.event_type === "chat") {
-		if (
-			row.text === null ||
-			row.mode === null ||
-			row.face_index === null ||
-			row.face_emotion_index === null ||
-			row.face_intensity_tenths === null ||
-			row.torso_index === null ||
-			row.torso_emotion_index === null ||
-			row.torso_intensity_tenths === null ||
-			row.requested === null
-		)
-			return null;
-		return {
-			type: "chat",
-			seq: row.seq,
-			avatar: row.avatar,
-			name: row.name,
-			text: row.text,
-			mode: row.mode as ChatMode,
-			annotation: {
-				faceIndex: row.face_index,
-				faceEmotionIndex: row.face_emotion_index,
-				faceIntensity: row.face_intensity_tenths / 10,
-				torsoIndex: row.torso_index,
-				torsoEmotionIndex: row.torso_emotion_index,
-				torsoIntensity: row.torso_intensity_tenths / 10,
-				requested: row.requested !== 0,
-				talkTos: talkTosFromJson(row.talk_tos_json),
-			},
-		};
-	}
-	return {
-		type: "announce",
-		kind: row.event_type as AnnounceKind,
-		seq: row.seq,
-		avatar: row.avatar,
-		name: row.name,
-		detail: row.text ?? "",
-	};
-}
-
-type LegacyMessageRow = {
-	seq: number;
-	avatar: number;
-	name: string;
-	text: string;
-	mode: number;
-	at: number;
-	expr: number | null;
-	gest: number | null;
-	req: number | null;
-	bg: string | null;
-};
-
-const LEGACY_BACKGROUND_MODE = 6;
-const LEGACY_ANNOUNCE_KINDS: Record<number, AnnounceKind> = {
-	7: "nick",
-	8: "avatar",
-	9: "depart",
-	10: "arrive",
-};
-
-// poses copy over verbatim; emotion metadata was never stored, so chat rows read as neutral
-function eventFromLegacyRow(row: LegacyMessageRow): EventRow & { at: number } {
-	const event: EventRow & { at: number } = {
-		seq: row.seq,
-		event_type: "chat",
-		avatar: row.avatar,
-		name: row.name,
-		text: row.text,
-		mode: null,
-		face_index: null,
-		face_emotion_index: null,
-		face_intensity_tenths: null,
-		torso_index: null,
-		torso_emotion_index: null,
-		torso_intensity_tenths: null,
-		requested: null,
-		talk_tos_json: null,
-		background_name: null,
-		bg: row.bg ?? DEFAULT_BACKGROUND,
-		at: row.at,
-	};
-	const announce = LEGACY_ANNOUNCE_KINDS[row.mode];
-	if (row.mode === LEGACY_BACKGROUND_MODE) {
-		event.event_type = "background";
-		event.background_name = row.text;
-		event.text = null;
-	} else if (announce !== undefined) {
-		event.event_type = announce;
-	} else {
-		event.mode = row.mode;
-		event.face_index = row.expr ?? 0;
-		event.face_emotion_index = NEUTRAL_EMOTION_INDEX;
-		event.face_intensity_tenths = 0;
-		event.torso_index = row.gest ?? 0;
-		event.torso_emotion_index = 0;
-		event.torso_intensity_tenths = 0;
-		event.requested = row.req ? 1 : 0;
-		event.talk_tos_json = "[]";
-	}
-	return event;
-}
-
 export class ChatRoomDO extends DurableObject<Env> {
 	// ctx.id.name is unavailable after a hibernation wake, so the name is persisted on connect
 	private roomName: string | null = null;
 	private reportedAt = 0;
 	// mirrors the stored background so tagging each insert costs no storage read
 	private background = DEFAULT_BACKGROUND;
+	private readonly events = new EventStore(this.ctx.storage.sql);
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
@@ -217,60 +64,10 @@ export class ChatRoomDO extends DurableObject<Env> {
 			new WebSocketRequestResponsePair("ping", "pong"),
 		);
 		ctx.blockConcurrencyWhile(async () => {
-			this.ctx.storage.sql.exec(`
-				CREATE TABLE IF NOT EXISTS events (
-					seq INTEGER PRIMARY KEY AUTOINCREMENT,
-					event_type TEXT NOT NULL,
-					avatar INTEGER,
-					name TEXT NOT NULL,
-					text TEXT,
-					mode INTEGER,
-					face_index INTEGER,
-					face_emotion_index INTEGER,
-					face_intensity_tenths INTEGER,
-					torso_index INTEGER,
-					torso_emotion_index INTEGER,
-					torso_intensity_tenths INTEGER,
-					requested INTEGER,
-					talk_tos_json TEXT,
-					background_name TEXT,
-					at INTEGER NOT NULL,
-					bg TEXT NOT NULL
-				)
-			`);
-			this.migrateLegacyMessages();
+			applyMigrations(this.ctx.storage);
 			this.background =
 				(await this.ctx.storage.get<string>("background")) ??
 				DEFAULT_BACKGROUND;
-		});
-	}
-
-	// legacy messages rows keep their expr/gest/req poses; modes 6-10 become announce events
-	private migrateLegacyMessages(): void {
-		const sql = this.ctx.storage.sql;
-		const legacy = sql
-			.exec<{ name: string }>(
-				"SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'messages'",
-			)
-			.toArray();
-		if (legacy.length === 0) return;
-		if (sql.exec<{ n: number }>("SELECT COUNT(*) AS n FROM events").one().n > 0)
-			return;
-		const fields = `${EVENT_COLUMNS}, at`.split(", ") as (
-			| keyof EventRow
-			| "at"
-		)[];
-		const insert = `INSERT INTO events (${EVENT_COLUMNS}, at) VALUES (${fields.map(() => "?").join(", ")})`;
-		this.ctx.storage.transactionSync(() => {
-			// SELECT * tolerates ancient rooms that predate the pose and bg columns
-			const rows = sql
-				.exec<LegacyMessageRow>("SELECT * FROM messages ORDER BY seq")
-				.toArray();
-			for (const row of rows) {
-				const event = eventFromLegacyRow(row);
-				sql.exec(insert, ...fields.map((field) => event[field]));
-			}
-			sql.exec("DROP TABLE messages");
 		});
 	}
 
@@ -385,98 +182,6 @@ export class ChatRoomDO extends DurableObject<Env> {
 		ws.send(JSON.stringify(message));
 	}
 
-	// append one event row to the persisted stream and broadcast the hydrated entry
-	private record(fields: Omit<EventRow, "seq" | "bg">): void {
-		const result = this.ctx.storage.sql.exec<{ seq: number }>(
-			`INSERT INTO events (event_type, avatar, name, text, mode, face_index, face_emotion_index, face_intensity_tenths, torso_index, torso_emotion_index, torso_intensity_tenths, requested, talk_tos_json, background_name, at, bg)
-				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING seq`,
-			fields.event_type,
-			fields.avatar,
-			fields.name,
-			fields.text,
-			fields.mode,
-			fields.face_index,
-			fields.face_emotion_index,
-			fields.face_intensity_tenths,
-			fields.torso_index,
-			fields.torso_emotion_index,
-			fields.torso_intensity_tenths,
-			fields.requested,
-			fields.talk_tos_json,
-			fields.background_name,
-			Date.now(),
-			this.background,
-		);
-		const seq = result.one().seq;
-		if (seq > HISTORY_RETENTION)
-			this.ctx.storage.sql.exec(
-				"DELETE FROM events WHERE seq <= ?",
-				seq - HISTORY_RETENTION,
-			);
-		const entry = entryFromRow({ ...fields, seq, bg: this.background });
-		if (entry) this.broadcast({ type: "entry", entry });
-	}
-
-	private emptyEvent(
-		event_type: string,
-		avatar: number | null,
-		name: string,
-	): Omit<EventRow, "seq" | "bg"> {
-		return {
-			event_type,
-			avatar,
-			name,
-			text: null,
-			mode: null,
-			face_index: null,
-			face_emotion_index: null,
-			face_intensity_tenths: null,
-			torso_index: null,
-			torso_emotion_index: null,
-			torso_intensity_tenths: null,
-			requested: null,
-			talk_tos_json: null,
-			background_name: null,
-		};
-	}
-
-	private recordChat(
-		seat: SocketSeat,
-		text: string,
-		mode: ChatMode,
-		annotation: ComicAnnotation,
-	): void {
-		this.record({
-			...this.emptyEvent("chat", seat.avatar, seat.name),
-			text,
-			mode,
-			face_index: annotation.faceIndex,
-			face_emotion_index: annotation.faceEmotionIndex,
-			face_intensity_tenths: Math.round(annotation.faceIntensity * 10),
-			torso_index: annotation.torsoIndex,
-			torso_emotion_index: annotation.torsoEmotionIndex,
-			torso_intensity_tenths: Math.round(annotation.torsoIntensity * 10),
-			requested: annotation.requested ? 1 : 0,
-			talk_tos_json: JSON.stringify(annotation.talkTos),
-		});
-	}
-
-	private recordBackground(seat: SocketSeat, name: string): void {
-		this.record({
-			...this.emptyEvent("background", seat.avatar, seat.name),
-			background_name: name,
-		});
-	}
-
-	private recordAnnounce(
-		kind: AnnounceKind,
-		avatar: number,
-		name: string,
-		detail: string,
-	): void {
-		this.record({ ...this.emptyEvent(kind, avatar, name), text: detail });
-	}
-
 	private broadcast(message: ServerMessage): void {
 		const raw = JSON.stringify(message);
 		for (const ws of this.ctx.getWebSockets()) {
@@ -484,34 +189,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 	}
 
-	// background is the chunk's replay seed; an empty chunk falls back to where the room stands now
-	private history(before?: number): {
-		entries: RoomEntry[];
-		background: string;
-	} {
-		const rows =
-			before === undefined
-				? this.ctx.storage.sql
-						.exec<EventRow>(
-							`SELECT ${EVENT_COLUMNS} FROM events ORDER BY seq DESC LIMIT ?`,
-							HISTORY_CHUNK,
-						)
-						.toArray()
-				: this.ctx.storage.sql
-						.exec<EventRow>(
-							`SELECT ${EVENT_COLUMNS} FROM events WHERE seq < ? ORDER BY seq DESC LIMIT ?`,
-							before,
-							HISTORY_CHUNK,
-						)
-						.toArray();
-		rows.reverse();
-		const background = rows[0]?.bg ?? this.background;
-		return {
-			entries: rows
-				.map(entryFromRow)
-				.filter((entry): entry is RoomEntry => entry !== null),
-			background,
-		};
+	private emit(entry: RoomEntry | null): void {
+		if (entry) this.broadcast({ type: "entry", entry });
 	}
 
 	async webSocketMessage(
@@ -556,7 +235,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 					? { skew: Date.now() - message.sent }
 					: {}),
 			});
-			const welcomeHistory = this.history();
+			const welcomeHistory = this.events.history(undefined, this.background);
 			this.send(ws, {
 				type: "welcome",
 				avatar,
@@ -570,7 +249,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 				who: { name: message.name, avatar },
 			});
 			if (message.from !== undefined && message.from !== this.roomName)
-				this.recordAnnounce("arrive", avatar, message.name, message.from);
+				this.emit(
+					this.events.appendAnnounce(
+						"arrive",
+						avatar,
+						message.name,
+						message.from,
+					),
+				);
 			await this.reportPresence();
 			return;
 		}
@@ -579,7 +265,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "history") {
-			const chunk = this.history(message.before);
+			const chunk = this.events.history(message.before, this.background);
 			this.send(ws, {
 				type: "history",
 				entries: chunk.entries,
@@ -610,7 +296,14 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "depart") {
-			this.recordAnnounce("depart", seat.avatar, seat.name, message.to);
+			this.emit(
+				this.events.appendAnnounce(
+					"depart",
+					seat.avatar,
+					seat.name,
+					message.to,
+				),
+			);
 			return;
 		}
 		if (message.type === "profile") {
@@ -644,22 +337,41 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			// old nick announces the new one; the avatar line already speaks as the new nick
 			if (message.name !== seat.name)
-				this.recordAnnounce("nick", avatar, seat.name, message.name);
+				this.emit(
+					this.events.appendAnnounce("nick", avatar, seat.name, message.name),
+				);
 			if (avatar !== seat.avatar)
-				this.recordAnnounce("avatar", avatar, message.name, String(avatar));
+				this.emit(
+					this.events.appendAnnounce(
+						"avatar",
+						avatar,
+						message.name,
+						String(avatar),
+					),
+				);
 			return;
 		}
 		if (message.type === "background") {
 			this.background = message.name;
 			await this.ctx.storage.put("background", message.name);
-			this.recordBackground(seat, message.name);
+			this.emit(
+				this.events.appendBackground(seat.avatar, seat.name, message.name),
+			);
 		} else {
 			// reject indexes the sender's own avatar cannot render before they reach storage
 			if (!annotationInBounds(message.annotation, seat.avatar)) {
 				this.send(ws, { type: "error", reason: "malformed message" });
 				return;
 			}
-			this.recordChat(seat, message.text, message.mode, message.annotation);
+			this.emit(
+				this.events.appendChat(
+					seat.avatar,
+					seat.name,
+					message.text,
+					message.mode,
+					message.annotation,
+				),
+			);
 		}
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
 			await this.reportPresence();

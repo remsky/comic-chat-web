@@ -3,6 +3,8 @@
 	"name": "comic-chat-web",
 	"main": "worker/index.ts",
 	"compatibility_date": "2026-07-01",
+	// per-room schema files under worker/do_migrations import as strings
+	"rules": [{ "type": "Text", "globs": ["**/*.sql"] }],
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",

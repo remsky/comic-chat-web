@@ -10,5 +10,9 @@
 		"types": ["@cloudflare/vitest-pool-workers/types"],
 		"lib": ["ES2022"]
 	},
-	"include": ["./**/*.ts", "../../worker-configuration.d.ts"]
+	"include": [
+		"./**/*.ts",
+		"../../worker-configuration.d.ts",
+		"../../worker/sql-modules.d.ts"
+	]
 }

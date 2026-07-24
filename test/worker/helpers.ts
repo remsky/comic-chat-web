@@ -77,16 +77,12 @@ export async function join(
 }
 
 // backfills old lines straight through SQL: the rate limit makes a >50-entry log unsendable over the wire
-export async function seedLines(
-	room: string,
-	count: number,
-	bg: string,
-): Promise<void> {
+export async function seedLines(room: string, count: number): Promise<void> {
 	const stub = env.CHAT_ROOM.getByName(room);
 	await runInDurableObject(stub, (_instance, state) => {
 		for (let index = 0; index < count; index++)
 			state.storage.sql.exec(
-				"INSERT INTO events (event_type, avatar, name, text, mode, face_index, face_emotion_index, face_intensity_tenths, torso_index, torso_emotion_index, torso_intensity_tenths, requested, talk_tos_json, background_name, at, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO events (event_type, avatar, name, text, mode, face_index, face_emotion_index, face_intensity_tenths, torso_index, torso_emotion_index, torso_intensity_tenths, requested, talk_tos_json, background_name, at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				"chat",
 				1,
 				"seed",
@@ -102,7 +98,6 @@ export async function seedLines(
 				"[]",
 				null,
 				Date.now(),
-				bg,
 			);
 	});
 }

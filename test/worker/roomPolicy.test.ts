@@ -91,7 +91,7 @@ describe("room policy", () => {
 
 	it("prunes history beyond the 500-row retention", async () => {
 		const room = "retention";
-		await seedLines(room, 505, "field");
+		await seedLines(room, 505);
 		const { socket, inbox } = await join(room, "cass", 3);
 		socket.send(chatMessage("newest", 3));
 		await inbox.next("entry");
