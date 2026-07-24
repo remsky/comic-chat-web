@@ -9,9 +9,9 @@ import {
 // seat ids start well past the sprite ids (1..CAST_SIZE) so the two id spaces never collide
 export const SEAT_BASE = 1000;
 
-// groups a person's entries onto one seat; unattributed history (userId "") falls back to per-sprite, matching classic
+// one seat per person per avatar, so replayed panels keep the art they were drawn with; unattributed history (userId "") already keys per-sprite
 export function seatKey(userId: string, avatar: number): string {
-	return userId !== "" ? `u:${userId}` : `s:${avatar}`;
+	return userId !== "" ? `u:${userId}:${avatar}` : `s:${avatar}`;
 }
 
 // One engine avatar per person, so two people wearing the same character share a panel instead of splitting it.
@@ -53,7 +53,7 @@ export class SeatBook {
 		return this.seats.get(id)?.sprite;
 	}
 
-	// swap a seat's sprite art in place; changing avatar mid-conversation resets its pose (fresh Avatar)
+	// build the seat's avatar from its sprite art (once per seat; a seat's sprite is now fixed)
 	private rebuild(id: number, sprite: number): void {
 		const src = this.sprites.find((data) => data.avatarID === sprite);
 		if (!src) return;

@@ -176,7 +176,22 @@ export class RoomView {
 			entry.annotation.torsoIndex,
 			entry.annotation.requested ? 1 : 0,
 		);
+		// a person's new avatar is a new seat id; force a fresh panel so they never share one with their own prior avatar
+		if (this.lastPanelHasOtherSeatOf(entry.userId, slot)) page.startNewPanel();
 		page.addLine(slot, entry.text, entry.mode);
+	}
+
+	// per-avatar seats split one person across ids, so the engine's same-speaker merge can't see the duplication; catch it here
+	private lastPanelHasOtherSeatOf(userId: string, slot: number): boolean {
+		const { seats, page } = this.composition;
+		if (!seats || userId === "") return false;
+		const last = page.panels.at(-1);
+		return (
+			last?.bodies.some(
+				(body) =>
+					body.avatarID !== slot && seats.userIdOf(body.avatarID) === userId,
+			) ?? false
+		);
 	}
 
 	compose(entry: RoomEntry): void {

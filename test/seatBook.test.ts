@@ -38,8 +38,9 @@ function panels(page: PanelPage): UnitPanel[] {
 }
 
 describe("seat book", () => {
-	it("keys a person's seat by userId, falling back to sprite for unattributed history", () => {
-		expect(seatKey("u-alice", 1)).toBe("u:u-alice");
+	it("keys a person's seat by userId and avatar, falling back to sprite for unattributed history", () => {
+		expect(seatKey("u-alice", 1)).toBe("u:u-alice:1");
+		expect(seatKey("u-alice", 2)).toBe("u:u-alice:2");
 		expect(seatKey("", 5)).toBe("s:5");
 	});
 
@@ -78,13 +79,16 @@ describe("seat book", () => {
 		}
 	});
 
-	it("swaps a seat's art under the same id when the person changes avatar", () => {
+	it("gives a person a distinct seat per avatar so replayed panels keep their original art", () => {
 		const { registry, seats } = sharedPage();
-		const seat = seats.resolve(seatKey("u-alice", 1), "u-alice", 1);
-		expect(registry.get(seat)?.data.name).toBe("anna");
-		const same = seats.resolve(seatKey("u-alice", 2), "u-alice", 2);
-		expect(same).toBe(seat);
-		expect(seats.spriteOf(seat)).toBe(2);
-		expect(registry.get(seat)?.data.name).toBe("bolo");
+		const first = seats.resolve(seatKey("u-alice", 1), "u-alice", 1);
+		expect(registry.get(first)?.data.name).toBe("anna");
+		const second = seats.resolve(seatKey("u-alice", 2), "u-alice", 2);
+		expect(second).not.toBe(first);
+		expect(seats.spriteOf(first)).toBe(1);
+		expect(seats.spriteOf(second)).toBe(2);
+		// the earlier avatar's seat is untouched, so a panel composed against it still renders
+		expect(registry.get(first)?.data.name).toBe("anna");
+		expect(registry.get(second)?.data.name).toBe("bolo");
 	});
 });
