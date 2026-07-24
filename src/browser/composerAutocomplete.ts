@@ -1,27 +1,37 @@
-// Composer mention completion: `@` only summons the menu; it inserts the bare nick (IRC-style, no sigil) over the bare-name addressing model (addressing.ts).
+// Composer completion: a sigil under the caret summons a menu; each source owns what it lists and what it inserts.
 
-export interface MentionAutocompleteOptions {
-	input: HTMLInputElement;
-	getNames: () => string[];
+export interface CompletionSource {
+	sigil: string;
+	// a command opens the line, so its sigil only completes at the head of the input
+	lineStartOnly?: boolean;
+	// the sigil is part of a command but not part of a nick, so only some menus show it
+	showSigil?: boolean;
 	isEnabled: () => boolean;
+	list: () => string[];
+	// accept() replaces the sigil too, so anything the inserted text still needs must be spelled out here
+	insert: (item: string, head: string) => string;
+}
+
+export interface ComposerAutocompleteOptions {
+	input: HTMLInputElement;
+	sources: readonly CompletionSource[];
 	signal?: AbortSignal;
 }
 
-const MAX_SUGGESTIONS = 6;
+const MAX_SUGGESTIONS = 8;
 
-export class MentionAutocomplete {
+export class ComposerAutocomplete {
 	private readonly input: HTMLInputElement;
-	private readonly getNames: () => string[];
-	private readonly isEnabled: () => boolean;
+	private readonly sources: readonly CompletionSource[];
 	private menu: HTMLUListElement | null = null;
 	private items: string[] = [];
+	private source: CompletionSource | null = null;
 	private active = 0;
 	private tokenStart = -1;
 
-	constructor(options: MentionAutocompleteOptions) {
+	constructor(options: ComposerAutocompleteOptions) {
 		this.input = options.input;
-		this.getNames = options.getNames;
-		this.isEnabled = options.isEnabled;
+		this.sources = options.sources;
 		const listen = { signal: options.signal };
 		this.input.addEventListener("input", () => this.refresh(), listen);
 		this.input.addEventListener(
@@ -32,41 +42,40 @@ export class MentionAutocomplete {
 		this.input.addEventListener("blur", () => this.close(), listen);
 	}
 
-	// the @token under the caret: @ at a word boundary, then the non-space run up to the caret
-	private tokenAtCaret(): { start: number; query: string } | null {
+	// the token under the caret: a sigil at a word boundary, then the non-space run up to the caret
+	private tokenAtCaret(
+		source: CompletionSource,
+	): { start: number; query: string } | null {
 		const caret = this.input.selectionStart;
 		if (caret === null || caret !== this.input.selectionEnd) return null;
 		const value = this.input.value;
 		let i = caret - 1;
-		while (i >= 0 && value[i] !== "@" && value[i] !== " ") i--;
-		if (i < 0 || value[i] !== "@") return null;
+		while (i >= 0 && value[i] !== source.sigil && value[i] !== " ") i--;
+		if (i < 0 || value[i] !== source.sigil) return null;
 		const before = i === 0 ? "" : value[i - 1];
 		if (before !== "" && before !== " ") return null;
+		if (source.lineStartOnly && value.slice(0, i).trim() !== "") return null;
 		return { start: i, query: value.slice(i + 1, caret) };
 	}
 
 	private refresh(): void {
-		if (!this.isEnabled()) {
-			this.close();
+		for (const source of this.sources) {
+			if (!source.isEnabled()) continue;
+			const token = this.tokenAtCaret(source);
+			if (!token) continue;
+			const query = token.query.toLowerCase();
+			const matches = source
+				.list()
+				.filter((item) => item.toLowerCase().startsWith(query));
+			if (matches.length === 0) continue;
+			this.items = matches.slice(0, MAX_SUGGESTIONS);
+			this.source = source;
+			this.tokenStart = token.start;
+			this.active = 0;
+			this.paint();
 			return;
 		}
-		const token = this.tokenAtCaret();
-		if (!token) {
-			this.close();
-			return;
-		}
-		const query = token.query.toLowerCase();
-		const matches = this.getNames().filter((name) =>
-			name.toLowerCase().startsWith(query),
-		);
-		if (matches.length === 0) {
-			this.close();
-			return;
-		}
-		this.items = matches.slice(0, MAX_SUGGESTIONS);
-		this.tokenStart = token.start;
-		this.active = 0;
-		this.paint();
+		this.close();
 	}
 
 	private onKeydown(event: KeyboardEvent): void {
@@ -89,14 +98,13 @@ export class MentionAutocomplete {
 		}
 	}
 
-	private accept(name: string | undefined): void {
-		if (name === undefined) return;
+	private accept(item: string | undefined): void {
+		if (item === undefined || !this.source) return;
 		const value = this.input.value;
 		const caret = this.input.selectionStart ?? value.length;
 		const head = value.slice(0, this.tokenStart);
 		const tail = value.slice(caret);
-		// IRC address form: 'nick:' at line start, bare 'nick' elsewhere (facing keys off the name either way)
-		const insert = head.trim() === "" ? `${name}: ` : `${name} `;
+		const insert = this.source.insert(item, head);
 		this.input.value = head + insert + tail;
 		const pos = head.length + insert.length;
 		this.input.setSelectionRange(pos, pos);
@@ -107,20 +115,21 @@ export class MentionAutocomplete {
 	private paint(): void {
 		if (!this.menu) {
 			this.menu = document.createElement("ul");
-			this.menu.className = "bodycam-menu mention-menu";
+			this.menu.className = "bodycam-menu completion-menu";
 			document.body.append(this.menu);
 		}
+		const sigil = this.source?.showSigil ? this.source.sigil : "";
 		this.menu.replaceChildren(
-			...this.items.map((name, index) => {
-				const item = document.createElement("li");
-				item.textContent = name;
-				if (index === this.active) item.classList.add("active");
+			...this.items.map((item, index) => {
+				const entry = document.createElement("li");
+				entry.textContent = sigil + item;
+				if (index === this.active) entry.classList.add("active");
 				// mousedown, not click: fire before the input's blur so focus and the caret survive
-				item.addEventListener("mousedown", (event) => {
+				entry.addEventListener("mousedown", (event) => {
 					event.preventDefault();
-					this.accept(name);
+					this.accept(item);
 				});
-				return item;
+				return entry;
 			}),
 		);
 		const rect = this.input.getBoundingClientRect();
@@ -133,6 +142,7 @@ export class MentionAutocomplete {
 		this.menu?.remove();
 		this.menu = null;
 		this.items = [];
+		this.source = null;
 		this.tokenStart = -1;
 	}
 }

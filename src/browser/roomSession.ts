@@ -16,8 +16,14 @@ import {
 import { mentionsNick } from "./addressing.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
+import { ComposerAutocomplete } from "./composerAutocomplete.js";
 import { displayName, element, nearBottom } from "./dom.js";
-import { MentionAutocomplete } from "./mentionAutocomplete.js";
+import {
+	availableGestures,
+	gestureInsert,
+	hasGesture,
+	parseGesture,
+} from "./gestures.js";
 import { buildRoomOption } from "./pickerTiles.js";
 import { fetchRoomListings } from "./roomDirectory.js";
 import { isJoinedEntry, JOINED_STATE } from "./roomHistory.js";
@@ -171,6 +177,8 @@ function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 
 // a refused join hands the form back for a resubmit; aborting drops the dead session's listeners
 let sessionAbort: AbortController | null = null;
+// captured before the first join edits it, so a resubmit rebuilds the hint instead of stacking another
+let basePlaceholder: string | null = null;
 
 export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	const { view, hooks } = deps;
@@ -208,7 +216,8 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	let joinFailed = false;
 	let noticeTimer: number | undefined;
 	let filterTimer: number | undefined;
-	let lastComposerSend: string | null = null;
+	// a /gesture makes the wire text differ from the typed text; the echo needs one, a restore the other
+	let lastComposerSend: { sent: string; raw: string } | null = null;
 	let roster: RosterEntry[] = [];
 	const scroller = element("strip");
 	const composer = element<HTMLFormElement>("composer");
@@ -222,14 +231,36 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	};
 	setComposerEnabled(false);
 
-	// @-mention completion off the live roster, gated with the rest of the modern tweaks
-	new MentionAutocomplete({
+	new ComposerAutocomplete({
 		input: composerInput,
-		getNames: () =>
-			roster.map((seat) => seat.name).filter((n) => n !== currentName),
-		isEnabled: () => loadFeatures().mentionAutocomplete,
+		sources: [
+			// @-mention completion off the live roster
+			{
+				sigil: "@",
+				isEnabled: () => loadFeatures().mentionAutocomplete,
+				list: () =>
+					roster.map((seat) => seat.name).filter((n) => n !== currentName),
+				// IRC address form: 'nick:' at line start, bare 'nick' elsewhere (facing keys off the name either way)
+				insert: (name, head) => (head.trim() === "" ? `${name}: ` : `${name} `),
+			},
+			// /gesture completion off the worn avatar's own pose art
+			{
+				sigil: "/",
+				lineStartOnly: true,
+				showSigil: true,
+				isEnabled: () => loadFeatures().gestureCommands,
+				list: () => availableGestures(view.localAvatar()?.data),
+				insert: gestureInsert,
+			},
+		],
 		signal,
 	});
+
+	// only advertise the commands classic mode would honour
+	basePlaceholder ??= composerInput.placeholder;
+	composerInput.placeholder = loadFeatures().gestureCommands
+		? `${basePlaceholder}, or /wave`
+		: basePlaceholder;
 
 	// the composer doubles as the connection indicator: greyed with a hint while sends are unconfirmed
 	const composerPlaceholder = composerInput.placeholder;
@@ -318,11 +349,22 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		{ signal },
 	);
 
-	// cui.Say: run the presend hook, then transmit text plus the resolved annotation
-	const sendChat = (text: string, mode: ChatMode): boolean => {
-		if (socket?.readyState !== WebSocket.OPEN) return false;
-		const annotation = view.prepareOutgoing(text, roster);
-		if (!annotation) return false;
+	// cui.Say: run the presend hook, then transmit text plus the resolved annotation; returns what went on the wire
+	const sendChat = (input: string, mode: ChatMode): string | null => {
+		if (socket?.readyState !== WebSocket.OPEN) return null;
+		// classic mode never reached gesture art at all (CheckStarts is #if 0), so a slash there is just text
+		const gesture = loadFeatures().gestureCommands ? parseGesture(input) : null;
+		if (gesture) {
+			const avatar = view.localAvatar();
+			if (!avatar || !hasGesture(avatar.data, gesture.emotion)) {
+				flashNotice(`This character has no /${gesture.command} pose.`);
+				return null;
+			}
+		}
+		// a gesture with nothing to say is the balloonless reaction panel Send Expression already posts
+		const text = gesture ? gesture.text || "<Chr>" : input;
+		const annotation = view.prepareOutgoing(text, roster, gesture?.emotion);
+		if (!annotation) return null;
 		return wsSend(
 			JSON.stringify({
 				type: "chat",
@@ -331,7 +373,9 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				annotation,
 				sent: Date.now(),
 			}),
-		);
+		)
+			? text
+			: null;
 	};
 
 	const backgroundSelect = element<HTMLSelectElement>("background-select");
@@ -459,7 +503,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			sendButton: element<HTMLButtonElement>("bodycam-send"),
 			atlases: deps.atlases,
 			getAvatar: () => view.localAvatar(),
-			sendExpression: () => sendChat("<Chr>", 1),
+			sendExpression: () => sendChat("<Chr>", 1) !== null,
 			forwardTyping: (key) => {
 				composerInput.value += key;
 				composerInput.focus();
@@ -490,7 +534,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	// the server dropped the message: put the text back for a resend
 	const notifyRateLimited = (): void => {
 		if (lastComposerSend !== null && !composerInput.value)
-			composerInput.value = lastComposerSend;
+			composerInput.value = lastComposerSend.raw;
 		lastComposerSend = null;
 		flashNotice("Sending too fast; the last message was dropped.");
 	};
@@ -498,7 +542,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	// the content filter rejected the message: lock the composer and count the mute down inline
 	const notifyBlocked = (retryAfter: number | undefined): void => {
 		if (lastComposerSend !== null && !composerInput.value)
-			composerInput.value = lastComposerSend;
+			composerInput.value = lastComposerSend.raw;
 		lastComposerSend = null;
 		const notice = element("filter-notice");
 		if (noticeTimer !== undefined) {
@@ -594,15 +638,15 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			historyPending = false;
 			// a send that died with the old socket either arrived (it is in the replay) or goes back in the box
 			if (hasWelcomed && lastComposerSend !== null) {
+				const pending = lastComposerSend;
 				const arrived = parsed.history.some(
 					(entry) =>
 						entry.type === "chat" &&
 						entry.seq > previousNewestSeq &&
 						entry.userId === userId &&
-						entry.text === lastComposerSend,
+						entry.text === pending.sent,
 				);
-				if (!arrived && !composerInput.value)
-					composerInput.value = lastComposerSend;
+				if (!arrived && !composerInput.value) composerInput.value = pending.raw;
 				lastComposerSend = null;
 			}
 			if (!bodycam) mountBodycam();
@@ -614,7 +658,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			if (
 				parsed.entry.type === "chat" &&
 				parsed.entry.userId === userId &&
-				parsed.entry.text === lastComposerSend
+				parsed.entry.text === lastComposerSend?.sent
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
@@ -786,8 +830,9 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				flashNotice("Slow down a moment.");
 				return;
 			}
-			if (sendChat(composerInput.value, mode as ChatMode)) {
-				lastComposerSend = composerInput.value;
+			const sent = sendChat(composerInput.value, mode as ChatMode);
+			if (sent !== null) {
+				lastComposerSend = { sent, raw: composerInput.value };
 				composerInput.value = "";
 			}
 		},

@@ -7,7 +7,7 @@ import {
 	AvatarRegistry,
 } from "../engine/avatar.js";
 import { toLowerAscii } from "../engine/ctype.js";
-import { EmotionEngine } from "../engine/emotion.js";
+import { EmotionEngine, EmotionOpts } from "../engine/emotion.js";
 import { PanelPage, type UnitPanel } from "../engine/panel.js";
 import {
 	layoutPanelBalloons,
@@ -21,7 +21,7 @@ import {
 	type RoomEntry,
 	type RosterEntry,
 } from "../protocol/room.js";
-import { parseAddressees } from "./addressing.js";
+import { parseAddressees, stripAddressPrefix } from "./addressing.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import type { BackdropCache } from "./backdropAssets.js";
 import { CanvasPanelRenderer } from "./canvasRenderer.js";
@@ -39,6 +39,7 @@ import type { Features } from "./storage.js";
 const CLASSIC_UNIT = 3000;
 // larger unit shrinks text relative to the panel (~32 chars/line, 5-line balloons) so messages split less
 const MODERN_UNIT = 5200;
+const PIN_FRAMES = 3;
 
 interface RenderedPanel {
 	panel: UnitPanel;
@@ -75,6 +76,8 @@ export class RoomView {
 	private readonly autoCollisionChips = false;
 
 	private autoScroll = true;
+	// frames left in a pin; scroll events it causes must not read as the user leaving the bottom
+	private pinning = 0;
 	onComposed?: () => void;
 	onRebuilt?: () => void;
 
@@ -87,7 +90,11 @@ export class RoomView {
 		features: Features,
 	) {
 		scroller.addEventListener("scroll", () => {
-			this.autoScroll = nearBottom(scroller);
+			if (this.pinning === 0) this.autoScroll = nearBottom(scroller);
+		});
+		// the iOS keyboard resizes the viewport out from under the strip
+		window.visualViewport?.addEventListener("resize", () => {
+			if (this.autoScroll) this.pinToBottom();
 		});
 		const measurer = new CanvasTextMeasurer(createCanvasMeasureContext());
 		this.resolveStyle = measurer.styleResolver();
@@ -285,15 +292,28 @@ export class RoomView {
 	prepareOutgoing(
 		text: string,
 		roster: readonly RosterEntry[],
+		gesture?: number,
 	): ComicAnnotation | undefined {
 		const avatar = this.localAvatar();
 		if (!avatar) return undefined;
-		if (avatar.freeze === AF_UNFROZEN)
-			avatar.updateBody(
-				avatar.getBodyFromOptions(
-					this.composition.emotions.getEmotionsFromString(text),
-				),
-			);
+		// freeze locks the rules engine out, not the user, so an explicit gesture still lands
+		const frozen = avatar.freeze !== AF_UNFROZEN;
+		if (!frozen || gesture !== undefined) {
+			const opts = frozen
+				? new EmotionOpts()
+				: this.composition.emotions.getEmotionsFromString(
+						this.features.addressedGestures
+							? stripAddressPrefix(text, this.composition.speakers)
+							: text,
+					);
+			// above every rule strength, so the requested torso wins and the text still picks the face
+			if (gesture !== undefined) opts.add(gesture, 1.0, 255);
+			const body = avatar.getBodyFromOptions(opts);
+			// a gesture only carries a torso, so a frozen face keeps the one the wheel set
+			if (frozen && body.kind === "complex")
+				body.faceIndex = avatar.getIndices().faceIndex;
+			avatar.updateBody(body);
+		}
 		const indices = avatar.getIndices();
 		const requested = indices.requested !== 0;
 		const talkTos: string[] = [];
@@ -470,6 +490,21 @@ export class RoomView {
 			extra.card.remove();
 		}
 		this.rendered.length = panels.length;
-		if (this.autoScroll) this.scroller.scrollTop = this.scroller.scrollHeight;
+		if (this.autoScroll) this.pinToBottom();
+	}
+
+	// panel rows resize a frame or two after they land (container query, canvas backing store), so hold the bottom until the height settles
+	private pinToBottom(): void {
+		this.scroller.scrollTop = this.scroller.scrollHeight;
+		const scheduled = this.pinning > 0;
+		this.pinning = PIN_FRAMES;
+		if (scheduled) return;
+		const step = (): void => {
+			this.pinning--;
+			if (this.pinning === 0) return;
+			this.scroller.scrollTop = this.scroller.scrollHeight;
+			requestAnimationFrame(step);
+		};
+		requestAnimationFrame(step);
 	}
 }

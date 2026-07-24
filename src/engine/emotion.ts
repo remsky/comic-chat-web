@@ -21,9 +21,15 @@ export const EM_ANGRY = Math.fround((5 * 2 * PI) / 8);
 export const EM_SHOUT = Math.fround((6 * 2 * PI) / 8);
 export const EM_LAUGH = Math.fround((7 * 2 * PI) / 8);
 export const EM_NEUTRAL = 0;
+// gesture codes sit above the 0..2pi ring, so GetBodyFromEmotion's emotion > 7 skip keeps them off the wheel
 export const EM_WAVE = 1001;
 export const EM_POINTOTHER = 1002;
 export const EM_POINTSELF = 1003;
+export const EM_DOUBLEPOINT = 1004;
+export const EM_SHRUG = 1005;
+export const EM_3QRWALK = 1006;
+export const EM_SIDEWALK = 1007;
+export const EM_3QFWALK = 1008;
 
 export const MAXEMOPTS = 10;
 export const OVERRIDEBYPRIORITY = 1;
