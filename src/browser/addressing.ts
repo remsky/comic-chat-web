@@ -1,6 +1,12 @@
 // Web stand-in for CAvatarX::SelectTalkTo (avatar.cpp:756): derive each speaker's addressees from message text so every client faces alike without an extra wire field.
 
 import { isAlnum, toLowerAscii } from "../engine/ctype.js";
+import { MAX_NAME_LENGTH } from "../protocol/room.js";
+
+// nicks may hold spaces, so the name runs to the separator
+const ADDRESS_PREFIX = new RegExp(
+	`^\\s*([^:,]{1,${MAX_NAME_LENGTH}}?)\\s*[:,]\\s*`,
+);
 
 function mentionsName(lowerText: string, lowerName: string): boolean {
 	if (lowerName.length < 2) return false;
@@ -19,6 +25,16 @@ function mentionsName(lowerText: string, lowerName: string): boolean {
 // IRC-style highlight test: does the text name this nick at a word boundary (the same rule facing uses)
 export function mentionsNick(text: string, name: string): boolean {
 	return mentionsName(toLowerAscii(text), toLowerAscii(name));
+}
+
+// CheckStart only ever tests the very start of the line (textpose.cpp:306), so "jo: bye" greets nobody; dropping a known nick's prefix hands the rules the message itself
+export function stripAddressPrefix(
+	text: string,
+	speakers: ReadonlyMap<string, number>,
+): string {
+	const match = ADDRESS_PREFIX.exec(text);
+	if (!match?.[1] || !speakers.has(toLowerAscii(match[1]))) return text;
+	return text.slice(match[0].length);
 }
 
 // avatarIDs the speaker addresses by name, minus themselves, in speaker-map order

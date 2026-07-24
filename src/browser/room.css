@@ -118,6 +118,8 @@
 	overflow-y: auto;
 	scrollbar-gutter: stable;
 	overscroll-behavior: contain;
+	/* prepend() adjusts scrollTop itself; anchoring would correct the same shift twice */
+	overflow-anchor: none;
 	border: 1px solid;
 	border-color: #808080 #dfdfdf #dfdfdf #808080;
 	box-shadow: inset 1px 1px 0 #000;
@@ -350,7 +352,7 @@
 	color: #fff;
 }
 
-.mention-menu {
+.completion-menu {
 	min-width: 8rem;
 	max-height: 12rem;
 	overflow-y: auto;
@@ -463,6 +465,7 @@
 		3.5rem
 	);
 	overflow-y: auto;
+	scroll-padding-bottom: 2.75rem;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
 	box-shadow:
@@ -922,10 +925,19 @@ body:not(.modern-tweaks) .background-picker-grid {
 }
 
 .dialog-buttons {
+	position: sticky;
+	bottom: 0;
+	z-index: 1;
 	display: flex;
 	gap: 0.6rem;
 	align-items: center;
 	justify-content: space-between;
+	margin: 0.1rem -0.75rem -0.6rem;
+	padding: 0.45rem 0.75rem 0.6rem;
+	background: #c0c0c0;
+	box-shadow:
+		0 -1px 0 #fff,
+		0 -2px 0 #808080;
 }
 
 .legal-footer {

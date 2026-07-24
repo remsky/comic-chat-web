@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { parseAddressees } from "../src/browser/addressing.js";
+import {
+	parseAddressees,
+	stripAddressPrefix,
+} from "../src/browser/addressing.js";
+import { EM_WAVE, EmotionEngine } from "../src/engine/emotion.js";
 
 const speakers = new Map([
 	["anna", 1],
@@ -26,5 +30,38 @@ describe("parseAddressees", () => {
 
 	it("ignores names embedded inside longer words", () => {
 		expect(parseAddressees("crossing the annals", speakers, 2)).toEqual([]);
+	});
+});
+
+describe("stripAddressPrefix", () => {
+	it("drops a known nick's address prefix", () => {
+		expect(stripAddressPrefix("anna: bye", speakers)).toBe("bye");
+		expect(stripAddressPrefix("BOLO , hello there", speakers)).toBe(
+			"hello there",
+		);
+	});
+
+	it("drops a prefix for a nick holding spaces, which the server allows", () => {
+		const spaced = new Map([...speakers, ["mary jane", 4]]);
+		expect(stripAddressPrefix("Mary Jane: bye", spaced)).toBe("bye");
+	});
+
+	it("leaves unknown nicks and mid-sentence colons alone", () => {
+		expect(stripAddressPrefix("jo: bye", speakers)).toBe("jo: bye");
+		expect(stripAddressPrefix("the deal is: bye", speakers)).toBe(
+			"the deal is: bye",
+		);
+		expect(stripAddressPrefix("bye anna", speakers)).toBe("bye anna");
+	});
+
+	it("hands the greeting rules a message CheckStart would otherwise miss", () => {
+		const engine = new EmotionEngine();
+		expect(engine.getEmotionsFromString("anna: bye").opts).toEqual([]);
+		expect(
+			engine.getEmotionsFromString(stripAddressPrefix("anna: bye", speakers))
+				.opts,
+		).toContainEqual(
+			expect.objectContaining({ emotion: EM_WAVE, priority: 3 }),
+		);
 	});
 });

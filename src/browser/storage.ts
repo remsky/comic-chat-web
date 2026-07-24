@@ -20,6 +20,8 @@ export interface Features {
 	modernSizing: boolean;
 	sharedAvatars: boolean;
 	mentionAutocomplete: boolean;
+	addressedGestures: boolean;
+	gestureCommands: boolean;
 }
 
 export function loadFeatures(): Features {
@@ -28,6 +30,8 @@ export function loadFeatures(): Features {
 		modernSizing: modern,
 		sharedAvatars: modern,
 		mentionAutocomplete: modern,
+		addressedGestures: modern,
+		gestureCommands: modern,
 	};
 }
 

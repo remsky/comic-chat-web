@@ -6,7 +6,7 @@ If using an agentic assistant; repo layout, common commands, and conventions, se
 
 ## Development Setup
 
-Node 22.12+ and npm. The worker side runs locally through `wrangler` (installed as a dev dependency; no Cloudflare account needed until deploy).
+Node 22.13+ and npm. The worker side runs locally through `wrangler` (installed as a dev dependency; no Cloudflare account needed until deploy).
 
 1.  **Clone the repository:**
     ```bash

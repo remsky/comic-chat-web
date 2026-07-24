@@ -47,3 +47,4 @@ The general instructions must also still be followed, same as any contributor, a
 
 - Asset regeneration (`assets:*`, `fixtures:avatars`) reads a sibling checkout at `../comic-chat` that CI and most machines don't have. The committed PNGs and fixtures are canonical; the build never needs the sibling.
 - `vite preview` inherits the dev `/api` proxy, so a running `wrangler dev` leaks into browser tests. Playwright specs must stub `/api` routes to stay hermetic.
+- DOM tests opt in per file with `// @vitest-environment jsdom`. jsdom has no 2D canvas context and serves `import.meta.url` over http, so `outgoingPose.test.ts` stubs `OffscreenCanvas` for the text measurer and loads fixtures from `process.cwd()`.
