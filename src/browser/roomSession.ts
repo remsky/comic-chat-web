@@ -13,6 +13,7 @@ import {
 	type RoomEntry,
 	type RosterEntry,
 } from "../protocol/room.js";
+import { mentionsNick } from "./addressing.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
 import { displayName, element, nearBottom } from "./dom.js";
@@ -107,7 +108,11 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
-	onIncomingChat?: (entry: ChatEntry, localUserId: string) => void;
+	onIncomingChat?: (
+		entry: ChatEntry,
+		localUserId: string,
+		mentioned: boolean,
+	) => void;
 }
 
 export interface JoinOptions {
@@ -122,6 +127,7 @@ function renderTranscript(
 	list: HTMLOListElement,
 	entries: readonly RoomEntry[],
 	avatarName: (avatarID: number) => string,
+	isMention: (entry: RoomEntry) => boolean,
 ): void {
 	const items: HTMLLIElement[] = [];
 	for (const entry of entries) {
@@ -129,6 +135,7 @@ function renderTranscript(
 		if (!line) continue;
 		const item = document.createElement("li");
 		item.className = `transcript-${line.kind}`;
+		if (isMention(entry)) item.classList.add("transcript-mention");
 		if (line.kind === "system") {
 			item.textContent = `${line.name} ${line.body}`;
 		} else {
@@ -430,7 +437,16 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	const transcript = element<HTMLOListElement>("transcript");
 	const refreshTranscript = (): void => {
 		const atBottom = nearBottom(scroller);
-		renderTranscript(transcript, view.entriesView(), deps.avatarDisplayName);
+		renderTranscript(
+			transcript,
+			view.entriesView(),
+			deps.avatarDisplayName,
+			// IRC nick-highlight: someone else's line that names me
+			(entry) =>
+				entry.type === "chat" &&
+				entry.userId !== userId &&
+				mentionsNick(entry.text, currentName),
+		);
 		if (atBottom) scroller.scrollTop = scroller.scrollHeight;
 	};
 
@@ -603,7 +619,11 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				lastComposerSend = null;
 			view.compose(parsed.entry);
 			if (parsed.entry.type === "chat")
-				deps.onIncomingChat?.(parsed.entry, userId);
+				deps.onIncomingChat?.(
+					parsed.entry,
+					userId,
+					mentionsNick(parsed.entry.text, currentName),
+				);
 			if (parsed.entry.type === "background")
 				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {

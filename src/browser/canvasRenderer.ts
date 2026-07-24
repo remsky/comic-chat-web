@@ -279,8 +279,6 @@ export interface CanvasPanelRendererOptions {
 	normalFont?: string;
 	whisperFont?: string;
 	resolveBackdrop?: (name: string) => CanvasImageSource | undefined;
-	// avatarID -> nick chip, drawn above bodies that share a sprite with another in the panel
-	labels?: Map<number, string>;
 }
 
 export class CanvasPanelRenderer {
@@ -445,35 +443,6 @@ export class CanvasPanelRenderer {
 		this.context.restore();
 	}
 
-	// a filled tag with the nick above a shared-avatar body, so two of the same character read apart
-	private drawChip(body: AvatarBody, label: string): void {
-		const context = this.context;
-		const fontSize = Math.round(BALLOON_FONT_SIZE * 0.82);
-		context.save();
-		context.font = gdiCellFont(context, "700", fontSize);
-		context.textBaseline = "top";
-		const padX = Math.round(fontSize * 0.42);
-		const padY = Math.round(fontSize * 0.26);
-		const boxWidth = context.measureText(label).width + padX * 2;
-		const boxHeight = fontSize + padY * 2;
-		const left = body.arrowX - boxWidth / 2;
-		// sit just above the head; screen y is negated like every other draw here
-		const top = -(body.bbox.top + Math.round(boxHeight * 1.15));
-		context.beginPath();
-		context.roundRect(
-			left,
-			top,
-			boxWidth,
-			boxHeight,
-			Math.round(fontSize * 0.3),
-		);
-		context.fillStyle = this.options.foreground ?? "#000";
-		context.fill();
-		context.fillStyle = this.options.background ?? "#fff";
-		context.fillText(label, left + padX, top + padY);
-		context.restore();
-	}
-
 	render(panel: UnitPanel): void {
 		const context = this.context;
 		context.save();
@@ -498,11 +467,6 @@ export class CanvasPanelRenderer {
 			const balloon = panel.balloons[i];
 			if (balloon) this.drawBalloon(balloon);
 		}
-		if (this.options.labels)
-			for (const body of panel.bodies) {
-				const label = this.options.labels.get(body.avatarID);
-				if (label !== undefined) this.drawChip(body, label);
-			}
 		if (panel.hasBorder) {
 			context.strokeStyle = this.options.foreground ?? "#000";
 			// panel.cpp:1252 strokes a 2*60-wide pen on the panel edge path; the outer half clips away

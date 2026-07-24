@@ -35,13 +35,15 @@ import {
 } from "./storage.js";
 
 interface TabBadgeController {
-	markUnread: () => void;
+	markUnread: (mentioned: boolean) => void;
 	clearUnread: () => void;
 }
 
 function wireTabUnreadBadge(): TabBadgeController {
 	const baseTitle = document.title;
 	let unreadCount = 0;
+	// set once any unread line named the local user; adds a '*' to the title until cleared
+	let mentionPending = false;
 	const badgeHrefByCount = new Map<number, Promise<string>>();
 	const dynamicFavicon = document.createElement("link");
 	dynamicFavicon.rel = "icon";
@@ -80,13 +82,14 @@ function wireTabUnreadBadge(): TabBadgeController {
 
 	const clearUnread = (): void => {
 		unreadCount = 0;
+		mentionPending = false;
 		document.title = baseTitle;
 		dynamicFavicon.remove();
 	};
 
 	const renderUnread = (): void => {
 		if (unreadCount < 1 || !document.hidden) return;
-		document.title = `(${unreadCount}) ${baseTitle}`;
+		document.title = `(${unreadCount}${mentionPending ? "*" : ""}) ${baseTitle}`;
 		if (!badgeHrefByCount.has(unreadCount))
 			badgeHrefByCount.set(unreadCount, buildBadgeHref(unreadCount));
 		const badgeHrefPromise = badgeHrefByCount.get(unreadCount);
@@ -109,9 +112,10 @@ function wireTabUnreadBadge(): TabBadgeController {
 	window.addEventListener("focus", clearUnread);
 
 	return {
-		markUnread: () => {
+		markUnread: (mentioned: boolean) => {
 			if (!document.hidden) return;
 			unreadCount += 1;
+			if (mentioned) mentionPending = true;
 			renderUnread();
 		},
 		clearUnread,
@@ -333,9 +337,9 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
-		onIncomingChat: (entry, localUserId) => {
+		onIncomingChat: (entry, localUserId, mentioned) => {
 			if (entry.userId === localUserId) return;
-			tabBadge.markUnread();
+			tabBadge.markUnread(mentioned);
 		},
 	};
 

@@ -1,4 +1,4 @@
-// Composer @-mention completion: a modern-tweaks affordance over the bare-name addressing model (addressing.ts).
+// Composer mention completion: `@` only summons the menu; it inserts the bare nick (IRC-style, no sigil) over the bare-name addressing model (addressing.ts).
 
 export interface MentionAutocompleteOptions {
 	input: HTMLInputElement;
@@ -95,7 +95,8 @@ export class MentionAutocomplete {
 		const caret = this.input.selectionStart ?? value.length;
 		const head = value.slice(0, this.tokenStart);
 		const tail = value.slice(caret);
-		const insert = `@${name} `;
+		// IRC address form: 'nick:' at line start, bare 'nick' elsewhere (facing keys off the name either way)
+		const insert = head.trim() === "" ? `${name}: ` : `${name} `;
 		this.input.value = head + insert + tail;
 		const pos = head.length + insert.length;
 		this.input.setSelectionRange(pos, pos);

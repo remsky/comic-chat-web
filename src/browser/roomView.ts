@@ -350,7 +350,8 @@ export class RoomView {
 		// seat avatars carry the sprite's character name, so accessibility labels resolve in either mode
 		const names = seats ? registry.avatars.map((a) => a.data) : this.avatars;
 		syncPanelAccessibility(canvas, transcript, panel, names);
-		const labels = this.chipLabels(panel);
+		const tags = this.nameChips(panel);
+		if (tags) card.append(tags);
 		const unit = this.unit;
 		let renderer: CanvasPanelRenderer | undefined;
 		const surface = new CanvasSurface(canvas, unit, unit, (context) => {
@@ -362,12 +363,31 @@ export class RoomView {
 					unitWidth: unit,
 					unitHeight: unit,
 					resolveBackdrop: (name) => this.backdrops.get(name),
-					...(labels ? { labels } : {}),
 				},
 			);
 			renderer.render(panel);
 		});
 		return { panel, card, surface };
+	}
+
+	// nick chips hung below the panel, one per labelled body, aligned to its arrowX; not on the canvas, so absent from PNG export
+	private nameChips(panel: UnitPanel): HTMLElement | null {
+		const labels = this.chipLabels(panel);
+		if (!labels) return null;
+		const tags = document.createElement("div");
+		tags.className = "panel-nametags";
+		for (const body of panel.bodies) {
+			const label = labels.get(body.avatarID);
+			if (label === undefined) continue;
+			const tag = document.createElement("span");
+			tag.className = "panel-nametag";
+			tag.textContent = label;
+			// clamp the centre off the extreme edges so a chip never spills past the panel
+			const x = Math.min(0.94, Math.max(0.06, body.arrowX / this.unit));
+			tag.style.left = `${x * 100}%`;
+			tags.append(tag);
+		}
+		return tags.childElementCount > 0 ? tags : null;
 	}
 
 	// re-label existing panels without recomposing; nametags are a render-time choice, not a layout one
