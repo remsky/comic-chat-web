@@ -109,39 +109,41 @@ describe("room policy", () => {
 		socket.close();
 	});
 
-	it("broadcasts joins and leaves and resolves avatar collisions", async () => {
+	it("broadcasts joins and leaves and lets seats share an avatar", async () => {
 		const room = "roster";
 		const ann = await join(room, "ann", 1);
-		expect(ann.welcome.roster).toEqual([{ name: "ann", avatar: 1 }]);
+		expect(ann.welcome.roster).toMatchObject([{ name: "ann", avatar: 1 }]);
 
-		// bob asks for ann's avatar and lands on the next free seat
+		// bob asks for ann's avatar and gets it; the id tells the seats apart
 		const bob = await join(room, "bob", 1);
-		expect(bob.welcome.avatar).toBe(2);
+		expect(bob.welcome.avatar).toBe(1);
+		expect(bob.welcome.id).not.toBe(ann.welcome.id);
 		expect(bob.welcome.roster).toHaveLength(2);
 		expect(bob.welcome.roster).toEqual(
 			expect.arrayContaining([
-				{ name: "ann", avatar: 1 },
-				{ name: "bob", avatar: 2 },
+				expect.objectContaining({ name: "ann", avatar: 1 }),
+				expect.objectContaining({ name: "bob", avatar: 1 }),
 			]),
 		);
 
 		// the join broadcast reaches every seated socket, the joiner's own included
 		const echo = await ann.inbox.next("joined");
-		expect(echo.type === "joined" && echo.who).toEqual({
+		expect(echo.type === "joined" && echo.who).toMatchObject({
 			name: "ann",
 			avatar: 1,
 		});
 		const joined = await ann.inbox.next("joined");
-		expect(joined.type === "joined" && joined.who).toEqual({
+		expect(joined.type === "joined" && joined.who).toMatchObject({
 			name: "bob",
-			avatar: 2,
+			avatar: 1,
 		});
 		bob.socket.close();
 		const left = await ann.inbox.next("left");
-		expect(left.type === "left" && left.who).toEqual({
+		expect(left.type === "left" && left.who).toMatchObject({
 			name: "bob",
-			avatar: 2,
+			avatar: 1,
 		});
+		expect(left.type === "left" && left.who.id).toBe(bob.welcome.id);
 		ann.socket.close();
 	});
 
