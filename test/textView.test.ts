@@ -20,6 +20,7 @@ const annotation: ComicAnnotation = {
 const chat = (mode: ChatMode, text: string) => ({
 	type: "chat" as const,
 	seq: 1,
+	userId: "u-anna",
 	avatar: 1,
 	name: "Anna",
 	text,
@@ -31,6 +32,7 @@ const announce = (kind: AnnounceKind, detail: string) => ({
 	type: "announce" as const,
 	kind,
 	seq: 1,
+	userId: "u-anna",
 	avatar: 1,
 	name: "Anna",
 	detail,

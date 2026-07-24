@@ -319,9 +319,16 @@
 	white-space: pre;
 }
 
-.bodycam-menu li:hover {
+.bodycam-menu li:hover,
+.bodycam-menu li.active {
 	background: #000080;
 	color: #fff;
+}
+
+.mention-menu {
+	min-width: 8rem;
+	max-height: 12rem;
+	overflow-y: auto;
 }
 
 .tweaks-toggle {

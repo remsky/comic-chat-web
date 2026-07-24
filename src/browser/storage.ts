@@ -1,13 +1,35 @@
 // Browser-keyed persistence: identity, the room-switch breadcrumb, and UI preferences.
 
+import { MAX_USER_ID_LENGTH } from "../protocol/room.js";
+
 export const MODERN_TWEAKS_KEY = "comic-chat.modern-tweaks";
+// the stable anonymous identity; unlike the profile it survives Disconnect, standing in for an account id
+export const USER_ID_KEY = "comic-chat.user-id";
 export const TEXT_VIEW_KEY = "comic-chat.text-view";
+// draw a nick chip over every body, not just co-occupying ones; a busy-room readability aid
+export const NAMETAGS_KEY = "comic-chat.nametags";
 // opt-in identity, kept only while "Remember me" is on; Disconnect wipes it
 export const PROFILE_KEY = "comic-chat.profile";
 // one-shot breadcrumb across the room-switch reload; carries the origin for the arrival announcement
 export const SWITCH_KEY = "comic-chat.switch";
 // a UI preference, not identity; leaving a room keeps it
 export const SIDEBAR_WIDTH_KEY = "comic-chat.sidebar-width";
+
+// named capabilities; each derives from modern-tweaks today, ready to split onto its own key later
+export interface Features {
+	modernSizing: boolean;
+	sharedAvatars: boolean;
+	mentionAutocomplete: boolean;
+}
+
+export function loadFeatures(): Features {
+	const modern = localStorage.getItem(MODERN_TWEAKS_KEY) !== "off";
+	return {
+		modernSizing: modern,
+		sharedAvatars: modern,
+		mentionAutocomplete: modern,
+	};
+}
 
 export interface StoredProfile {
 	name: string;
@@ -42,6 +64,19 @@ export function saveStoredProfile(profile: StoredProfile): void {
 
 export function clearStoredProfile(): void {
 	localStorage.removeItem(PROFILE_KEY);
+}
+
+export function loadUserId(): string {
+	const stored = localStorage.getItem(USER_ID_KEY);
+	if (
+		stored !== null &&
+		stored.length > 0 &&
+		stored.length <= MAX_USER_ID_LENGTH
+	)
+		return stored;
+	const minted = crypto.randomUUID();
+	localStorage.setItem(USER_ID_KEY, minted);
+	return minted;
 }
 
 export interface RoomSwitch extends StoredProfile {

@@ -25,8 +25,10 @@ import {
 import { RoomView } from "./roomView.js";
 import {
 	clearStoredProfile,
+	loadFeatures,
 	loadStoredProfile,
 	MODERN_TWEAKS_KEY,
+	NAMETAGS_KEY,
 	saveStoredProfile,
 	TEXT_VIEW_KEY,
 	takeRoomSwitch,
@@ -290,7 +292,7 @@ async function main(): Promise<void> {
 		manifest.avatars,
 		element("panels"),
 		element("strip"),
-		tweaks.checked,
+		loadFeatures(),
 	);
 	tweaks.addEventListener("change", () => {
 		localStorage.setItem(MODERN_TWEAKS_KEY, tweaks.checked ? "on" : "off");
@@ -298,7 +300,15 @@ async function main(): Promise<void> {
 		// the grid may have missed a dropdown-driven change while it was hidden
 		if (tweaks.checked)
 			syncBackground(element<HTMLSelectElement>("background-select").value);
-		view.setModernTweaks(tweaks.checked);
+		view.setFeatures(loadFeatures());
+	});
+
+	const nameToggle = element<HTMLInputElement>("name-toggle");
+	nameToggle.checked = localStorage.getItem(NAMETAGS_KEY) === "on";
+	view.setShowAllNames(nameToggle.checked);
+	nameToggle.addEventListener("change", () => {
+		localStorage.setItem(NAMETAGS_KEY, nameToggle.checked ? "on" : "off");
+		view.setShowAllNames(nameToggle.checked);
 	});
 
 	// ID_VIEW_COMICS / ID_VIEW_TEXT: one strip pane, two renderings
@@ -323,14 +333,8 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
-		onIncomingChat: (entry, localAvatar, localName) => {
-			// shareable avatars: only our own seat (avatar + name) suppresses the badge
-			if (
-				localAvatar !== null &&
-				entry.avatar === localAvatar &&
-				entry.name === localName
-			)
-				return;
+		onIncomingChat: (entry, localUserId) => {
+			if (entry.userId === localUserId) return;
 			tabBadge.markUnread();
 		},
 	};

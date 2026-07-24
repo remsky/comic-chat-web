@@ -24,6 +24,7 @@ describe("chat annotations", () => {
 		expect(live.type === "entry" && live.entry).toEqual({
 			type: "chat",
 			seq: 1,
+			userId: "u-ann",
 			avatar: 1,
 			name: "ann",
 			text: "hi bob",

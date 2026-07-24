@@ -2,6 +2,7 @@
 
 import events from "../do_migrations/0001_events.sql";
 import legacyBackfill from "../do_migrations/0002_legacy_backfill.sql";
+import senderId from "../do_migrations/0003_sender_id.sql";
 
 type Migration = string | ((storage: DurableObjectStorage) => void);
 
@@ -33,6 +34,7 @@ const MIGRATIONS: Migration[] = [
 			req: "INTEGER",
 		}),
 	legacyBackfill,
+	senderId,
 ];
 
 // WATCH: cloudflare/actors SQLSchemaMigrations is this same pattern; adopt if it stabilizes and we want its framework.

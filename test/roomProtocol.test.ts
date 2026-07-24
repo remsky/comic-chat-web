@@ -203,6 +203,7 @@ describe("room wire protocol", () => {
 		const chatEntry = {
 			type: "chat",
 			seq: 1,
+			userId: "u-anna",
 			avatar: 2,
 			name: "Anna",
 			text: "hi",
@@ -223,6 +224,7 @@ describe("room wire protocol", () => {
 				type: "announce",
 				kind: "nick",
 				seq: 3,
+				userId: "u-anna",
 				avatar: 2,
 				name: "Anna",
 				detail: "Bea",
@@ -250,6 +252,7 @@ describe("room wire protocol", () => {
 		const entry = {
 			type: "chat",
 			seq: 1,
+			userId: "u-anna",
 			avatar: 2,
 			name: "Anna",
 			text: "hi",
@@ -265,10 +268,11 @@ describe("room wire protocol", () => {
 		const welcome = {
 			type: "welcome",
 			id: "seat-1",
+			userId: "u-anna",
 			avatar: 2,
 			background: "field",
 			historyBackground: "field",
-			roster: [{ id: "seat-1", name: "Anna", avatar: 2 }],
+			roster: [{ id: "seat-1", userId: "u-anna", name: "Anna", avatar: 2 }],
 			history: [entry],
 		};
 		expect(parseServerMessage(JSON.stringify(welcome))).toEqual(welcome);

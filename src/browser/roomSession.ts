@@ -16,6 +16,7 @@ import {
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
 import { displayName, element, nearBottom } from "./dom.js";
+import { MentionAutocomplete } from "./mentionAutocomplete.js";
 import { buildRoomOption } from "./pickerTiles.js";
 import { fetchRoomListings } from "./roomDirectory.js";
 import { isJoinedEntry, JOINED_STATE } from "./roomHistory.js";
@@ -23,6 +24,8 @@ import type { RoomView } from "./roomView.js";
 import {
 	clearRoomSwitch,
 	clearStoredProfile,
+	loadFeatures,
+	loadUserId,
 	saveStoredProfile,
 	storeRoomSwitch,
 } from "./storage.js";
@@ -104,11 +107,7 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
-	onIncomingChat?: (
-		entry: ChatEntry,
-		localAvatar: number | null,
-		localName: string,
-	) => void;
+	onIncomingChat?: (entry: ChatEntry, localUserId: string) => void;
 }
 
 export interface JoinOptions {
@@ -190,8 +189,10 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	let watchdogTimer: number | undefined;
 	let suspectTimer: number | undefined;
 	let seatAvatar: number | null = null;
-	// the server's per-connection id; avatars are shareable, so this alone marks broadcasts as ours
+	// seatId is this connection (used for roster and profile-of-my-seat); userId is the person
 	let seatId: string | null = null;
+	const userId = loadUserId();
+	view.setLocalUserId(userId);
 	// the live identity; profile changes move it, reconnects re-join with it
 	let currentName = name;
 	// announced once: the first welcome consumes it so reconnects don't re-arrive
@@ -213,6 +214,15 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			control.disabled = !enabled;
 	};
 	setComposerEnabled(false);
+
+	// @-mention completion off the live roster, gated with the rest of the modern tweaks
+	new MentionAutocomplete({
+		input: composerInput,
+		getNames: () =>
+			roster.map((seat) => seat.name).filter((n) => n !== currentName),
+		isEnabled: () => loadFeatures().mentionAutocomplete,
+		signal,
+	});
 
 	// the composer doubles as the connection indicator: greyed with a hint while sends are unconfirmed
 	const composerPlaceholder = composerInput.placeholder;
@@ -526,7 +536,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		if (!parsed) return;
 		if (parsed.type === "welcome") {
 			const previousNewestSeq = view.entriesView().at(-1)?.seq ?? 0;
-			const previousSeat = seatAvatar;
 			document.body.classList.add("joined");
 			element("title-room").textContent = `- ${room}`;
 			status.textContent = "Connected.";
@@ -573,7 +582,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 					(entry) =>
 						entry.type === "chat" &&
 						entry.seq > previousNewestSeq &&
-						entry.avatar === previousSeat &&
+						entry.userId === userId &&
 						entry.text === lastComposerSend,
 				);
 				if (!arrived && !composerInput.value)
@@ -585,17 +594,16 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			refreshTranscript();
 			composerInput.focus();
 		} else if (parsed.type === "entry") {
-			// our own echo clears the pending restore; match name too since avatars are shareable
+			// our own echo clears the pending restore
 			if (
 				parsed.entry.type === "chat" &&
-				parsed.entry.avatar === seatAvatar &&
-				parsed.entry.name === currentName &&
+				parsed.entry.userId === userId &&
 				parsed.entry.text === lastComposerSend
 			)
 				lastComposerSend = null;
 			view.compose(parsed.entry);
 			if (parsed.entry.type === "chat")
-				deps.onIncomingChat?.(parsed.entry, seatAvatar, currentName);
+				deps.onIncomingChat?.(parsed.entry, userId);
 			if (parsed.entry.type === "background")
 				deps.syncBackground(parsed.entry.name);
 		} else if (parsed.type === "history") {
@@ -672,6 +680,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 					type: "join",
 					name: currentName,
 					avatar: seatAvatar ?? avatar,
+					userId,
 					...(announceFrom !== undefined ? { from: announceFrom } : {}),
 					sent: Date.now(),
 				}),
