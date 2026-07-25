@@ -108,8 +108,8 @@ Two vars configure a deploy, in `wrangler.jsonc` or the dashboard:
 
 | Var | Default | Effect |
 | --- | --- | --- |
-| `ROOMS` | `lobby`, `pen-pals`, `dial-up`, `crack-a-joke` | Only these rooms accept connections, bounding how many Durable Objects a public deploy can create. Extendable to create-on-join. |
-| `MODERATION` | `on` | `off` drops the profanity screen from chat nicknames and messages, and takes `/api/moderate`, the studio's screen, down to a 404. Any other value, unset included, leaves it on. |
+| `ROOMS` | `lobby`, `tech-news`, `weather-chat` | Only these rooms accept connections, bounding how many Durable Objects a public deploy can create. Extendable to create-on-join. |
+| `MODERATION` | `on` | `off` drops the profanity screen from chat nicknames and messages, dropping `/api/moderate` to a 404. Any other value, unset included, leaves it on. |
 
 Everything else is a source constant, tuned as a safety rail rather than a preference:
 

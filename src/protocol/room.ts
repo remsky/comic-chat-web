@@ -9,12 +9,7 @@ export const MAX_USER_ID_LENGTH = 64;
 // room names share one charset across the websocket route, the allowlist, and the join field
 export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
 // the bounded default room set for a demo deploy; override with the worker ROOMS var
-export const DEFAULT_ROOMS = [
-	"lobby",
-	"pen-pals",
-	"dial-up",
-	"crack-a-joke",
-] as const;
+export const DEFAULT_ROOMS = ["lobby", "tech-news", "weather-chat"] as const;
 // SM_SAY/SM_WHISPER/SM_THINK/SM_ACTION (defines.h:57-61); SM_SHOUT=4 exists but nothing emits it (protsupp.cpp:1022-1034)
 export const CHAT_MODES = [1, 2, 3, 5] as const;
 export type ChatMode = (typeof CHAT_MODES)[number];

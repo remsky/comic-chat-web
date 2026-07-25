@@ -13,7 +13,7 @@
 	},
 	// bounded default room set: only these rooms accept connections; keep it small to cap how many DOs a public deploy can create
 	"vars": {
-		"ROOMS": ["lobby", "pen-pals", "dial-up", "crack-a-joke"],
+		"ROOMS": ["lobby", "tech-news", "weather-chat"],
 		// "off" drops the profanity screen from the chat room and the studio alike
 		"MODERATION": "on"
 	},
