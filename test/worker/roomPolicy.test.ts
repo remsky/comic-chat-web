@@ -54,7 +54,7 @@ describe("room policy", () => {
 	it("mutes a blocked message and keeps it out of the log", async () => {
 		const room = "mute";
 		const { socket, inbox } = await join(room, "bob", 2);
-		socket.send(chatMessage("fuck this", 2));
+		socket.send(chatMessage("4rse this", 2));
 		const blocked = await inbox.next("error");
 		expect(blocked.type === "error" && blocked.reason).toBe(
 			MESSAGE_BLOCKED_REASON,
@@ -79,9 +79,26 @@ describe("room policy", () => {
 		socket.close();
 	});
 
+	it("lets the same line through when the deploy turned moderation off", async () => {
+		const room = "mute-off";
+		const was = env.MODERATION;
+		env.MODERATION = "off" as typeof was;
+		try {
+			const { socket, inbox } = await join(room, "bob", 2);
+			socket.send(chatMessage("4rse this", 2));
+			const entry = await inbox.next("entry");
+			if (entry.type !== "entry" || !("text" in entry.entry))
+				throw new Error("expected a chat entry");
+			expect(entry.entry.text).toBe("4rse this");
+			socket.close();
+		} finally {
+			env.MODERATION = was;
+		}
+	});
+
 	it("rejects a prohibited nickname at join", async () => {
 		const { socket, inbox } = await connect("name-block");
-		socket.send(JSON.stringify({ type: "join", name: "fucker", avatar: 3 }));
+		socket.send(JSON.stringify({ type: "join", name: "4rseface", avatar: 3 }));
 		const rejected = await inbox.next("error");
 		expect(rejected.type === "error" && rejected.reason).toBe(
 			NAME_BLOCKED_REASON,

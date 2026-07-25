@@ -62,10 +62,11 @@
 	background: #c0c0c0;
 }
 
+/* centered, since the caption buttons make the bar taller than its text */
 .titlebar {
 	display: flex;
 	gap: 0.5rem;
-	align-items: baseline;
+	align-items: center;
 	min-width: 0;
 	padding: 0.25rem 0.5rem;
 	background: linear-gradient(90deg, #000080, #1084d0);
@@ -107,13 +108,13 @@
 .titlebar-actions {
 	display: flex;
 	gap: 0.2rem;
-	align-self: center;
 	margin-left: auto;
 }
 
 /* raised like the Win95 caption buttons that sit in this corner */
 .titlebar-button {
 	display: flex;
+	align-items: center;
 	padding: 3px 5px;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
@@ -122,6 +123,8 @@
 		inset -1px -1px 0 #808080;
 	background: #c0c0c0;
 	color: #000;
+	font: inherit;
+	text-decoration: none;
 }
 
 .titlebar-button:active {

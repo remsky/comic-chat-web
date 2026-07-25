@@ -93,6 +93,7 @@ export function permuteFilters(
 	fontI: FontMetrics,
 	lFilters: Filter[],
 	rFilters: Filter[],
+	topPad = 0,
 ): number {
 	let baseY = 0;
 	let lastX = LARGEINTEGER;
@@ -100,7 +101,7 @@ export function permuteFilters(
 		const f = lFilters[i];
 		if (!f) break;
 		f.x -= XBORDER;
-		if (i === 0) f.y = baseY + TOPBORDER + YBORDER;
+		if (i === 0) f.y = baseY + TOPBORDER + YBORDER + topPad;
 		else if (f.x < lastX) f.y = baseY + YBORDER;
 		else f.y = baseY - YBORDER - fontI.baseAdd;
 		baseY -= (f.end - f.start + 1) * fontI.lineHeight;
@@ -117,6 +118,8 @@ export function permuteFilters(
 		if (i === 0) f.y = baseY + TOPBORDER + YBORDER;
 		if (f.x > lastX) f.y = baseY + YBORDER;
 		else f.y = baseY - YBORDER - fontI.baseAdd;
+		// after the overwrite, so the top edge keeps its slope
+		if (i === 0) f.y += topPad;
 		baseY -= (f.end - f.start + 1) * fontI.lineHeight;
 		lastX = f.x;
 	}
@@ -157,9 +160,10 @@ export function addWavies(
 export function createBalloonSpline(
 	fInfo: FormatInfo,
 	fontI: FontMetrics,
+	topPad = 0,
 ): SplinePoints {
 	const { left, right } = getFilters(fInfo);
-	const finalY = permuteFilters(fontI, left, right);
+	const finalY = permuteFilters(fontI, left, right, topPad);
 	let lastY = finalY;
 	const pts: Point[] = [];
 

@@ -28,13 +28,15 @@ Validated against traces from an instrumented C++ client of the original to accu
 
 ### Slash Commands/Gestures:
 
-Typing `/` will list gestures the character you are wearing has art for: most carry three or four, some none. The command text itself is stripped from messages. `/wave Heya` becomes `Heya` with the body swapped in. 
+Typing `/` will list gestures the character you are wearing has art for: most carry three or four, some none. 
 
 ```markdown
-`/wave` `/shrug`, `/point` `/pointself` `/doublepoint`, `/walk` `/walkup` `/walkaway`
+/wave /shrug 
+/point /pointself /doublepoint
+/walk /walkup /walkaway
 ```
 
-Gesture commands reach pose art found in the files that did not otherwise seem accessible. The original stores these under codes above the emotion ring and looks skipped by `GetBodyFromEmotion`; an `#if 0` around `CheckStarts` in `textpose.cpp` also seems to stop any typed text from reaching them either, but have enabled them here
+The command text itself is stripped from messages. Gesture commands reach pose art found in the files that did not otherwise seem accessible. The original stores these under codes above the emotion ring which appears skipped by `GetBodyFromEmotion`. 
 
 
 ### Defaults
@@ -51,36 +53,80 @@ These are by default and control some quality-of-life changes not in the 1996 cl
 
 Naming someone points your avatar at them, and being named highlights that line and adds an `*` to the tab title. Both work off the bare name, with or without the `@`. Anyone can wear any character, so some composition rules were adjusted to key by nickname and avatar. Optional nametags can be enabled if it feels confusing. 
 
+</details>
+
+## Studio
+
+`/studio` is an integrated editor allowing you to build a strip panel by panel on your own. The result is exportable as PNG, or import/export as its JSON definition document.
+
+Emotion strength in the UI is enumerated per character range. `Happy 1` and `Happy 2` for example are two different poses, generated via a nearest band on the `intensity` parameter in the JSON.
+
+The  `MODERATION` variable acts here as it does in chat, but with a warning and a pause on rendering. See [Deployment](#deployment--self-hosting).
+
+<details>
+<summary>Sample JSON and Screenshots</summary>
+
+<p>
+  <img src="assets/studio-screenshot.png" alt="Comic Chat Studio showing a three-panel strip, the panel constructor with character controls, and the JSON pane" width="40%" border="1">
+</p>
+
+```json
+{
+  "version": 1,
+  "panels": [
+    {
+      "background": "volcano",
+      "camera": "wide",
+      "actors": [
+        { "avatar": "anna", "text": "Hey look at that", "gesture": "wave" },
+        { "avatar": "tiki", "text": "A studio", "emotion": "happy", "facing": "left" }
+      ]
+    }
+  ]
+}
+```
+
 
 </details>
+
+
 
 ## Deployment / Self-Hosting
 
 > [!NOTE]
-> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. 
-> 
-> Deploy usage defaults are intentionally bounded by the fixed room list, but can be extended to create-on-join. If deploying publically; add Cloudflare rate-limiting rules (demo settings described below).
+> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public deployments want a Cloudflare rate-limiting rule. Both are covered below.
 
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
-
 
 
 <details>
 <summary>Deployment Details</summary>
 
-- For Cloudflare Workers Builds, use `npm run build` as the build command and `npx wrangler deploy` as the deploy command.
+For Cloudflare Workers Builds, build with `npm run build` and deploy with `npx wrangler deploy`.
 
-Suggested settings (set as defaults), and best-effort config against roving bots, bad actors, connection disruptions are described below:
+Two vars configure a deploy, in `wrangler.jsonc` or the dashboard:
 
-- Live rooms operate over Cloudflare Durable Object WebSockets
-    - Bounded, chunked message history with per-socket abuse limit
-    -   New joins receive the latest 50 messages and load older history in 50-message chunks. 
-    -   Each room retains up to 500 messages, dropping earliest history after that point. 
-- Each room caps active sockets (12) and per-socket send rate.
-- One chat message in flight at a time per client: a next send requires the server's echo to return. 
-- Liveness failure greys the composer and reconnects; the unechoed message recovers to the send box.
-- Only the rooms in the `ROOMS` var (`wrangler.jsonc`, or the dashboard) accept connections, bounding how many Durable Objects a public deploy can create.
-- For a public deployment, add a Cloudflare rate-limiting rule on `/api/*` and a usage notification: worker invocations could scale with heavy automated abuse.
+| Var | Default | Effect |
+| --- | --- | --- |
+| `ROOMS` | `lobby`, `pen-pals`, `dial-up`, `crack-a-joke` | Only these rooms accept connections, bounding how many Durable Objects a public deploy can create. Extendable to create-on-join. |
+| `MODERATION` | `on` | `off` drops the profanity screen from chat nicknames and messages, and takes `/api/moderate`, the studio's screen, down to a 404. Any other value, unset included, leaves it on. |
+
+Everything else is a source constant, tuned as a safety rail rather than a preference:
+
+| Limit | Value | Source |
+| --- | --- | --- |
+| Sockets per room | 12 | `worker/room.ts` |
+| Send rate | 5 burst, 1/s refill | `worker/room.ts` |
+| Flood disconnect | 20 straight drops | `worker/room.ts` |
+| Mute after a blocked message | 15s, times the strike count | `worker/room.ts` |
+| Disconnect after blocked messages | 5 | `worker/room.ts` |
+| History chunk | 50 messages | `src/protocol/room.ts` |
+| History retention | 500 messages per room | `worker/db/events.ts` |
+| Screen batch | 200 texts, 2000 chars each | `worker/index.ts` |
+
+Live rooms run over Durable Object WebSockets, one message in flight per client: the next send waits on the server's echo. A liveness failure greys the composer and reconnects, and the unechoed message returns to the send box.
+
+For a public deployment, add a Cloudflare rate-limiting rule on `/api/*` and a usage notification. Worker invocations scale with automated abuse.
 
 </details>
 

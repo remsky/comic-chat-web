@@ -55,6 +55,7 @@ export default defineConfig({
 									"legacy-migrate",
 									"legacy-migrate-ancient",
 									"mute",
+									"mute-off",
 									"name-block",
 									"profile",
 									"profile-avatar",

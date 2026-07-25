@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isProhibited } from "../worker/moderation.js";
+import { isProhibited, screeningEnabled } from "../worker/moderation.js";
 
 describe("profanity screen", () => {
 	it("passes ordinary chat, including Scunthorpe-style false positives", () => {
@@ -9,8 +9,15 @@ describe("profanity screen", () => {
 	});
 
 	it("blocks profanity and its leetspeak variants", () => {
-		expect(isProhibited("fuck off")).toBe(true);
-		expect(isProhibited("sh1t")).toBe(true);
-		expect(isProhibited("a55hole")).toBe(true);
+		expect(isProhibited("4rse off")).toBe(true);
+		expect(isProhibited("4rs3")).toBe(true);
+		expect(isProhibited("ärse")).toBe(true);
+	});
+
+	it("stays on unless a deploy opts out by name", () => {
+		expect(screeningEnabled({})).toBe(true);
+		expect(screeningEnabled({ MODERATION: "on" })).toBe(true);
+		expect(screeningEnabled({ MODERATION: "" })).toBe(true);
+		expect(screeningEnabled({ MODERATION: "off" })).toBe(false);
 	});
 });

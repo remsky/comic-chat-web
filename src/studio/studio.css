@@ -1,0 +1,647 @@
+/* Standalone studio shell. Shares the room's Win95 palette but none of its state. */
+
+@font-face {
+	font-family: "Comic Neue";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("/assets/fonts/comic-neue-400.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Comic Neue";
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url("/assets/fonts/comic-neue-400-italic.woff2") format("woff2");
+}
+
+:root {
+	--face: #c0c0c0;
+	--face-sunk: #cdcdcd;
+	--light: #fff;
+	--shade: #808080;
+	--edge: #dfdfdf;
+	--ink: #000;
+	--sel: #000080;
+	--sel-lit: #1084d0;
+	--paper: #fff;
+	--gap: 0.375rem;
+	/* both overridden on #studio-panels: the slider sets the tile width, the strip sets the count */
+	--card: 230px;
+	--columns: 4;
+	color-scheme: light;
+	font-synthesis: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.studio {
+	display: grid;
+	grid-template-rows: auto minmax(0, 1fr);
+	height: 100dvh;
+	margin: 0;
+	background: var(--face);
+	color: var(--ink);
+	font:
+		0.8125rem / 1.4 Tahoma,
+		"Segoe UI",
+		system-ui,
+		sans-serif;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+:where(button, select, input, textarea, summary):focus-visible {
+	outline: 1px dotted var(--ink);
+	outline-offset: 1px;
+}
+
+input[type="range"] {
+	accent-color: var(--sel);
+}
+
+select,
+input[type="text"],
+input[type="number"],
+textarea {
+	min-width: 0;
+	padding: 1px 2px;
+	border: 1px solid;
+	border-color: var(--shade) var(--edge) var(--edge) var(--shade);
+	box-shadow: inset 1px 1px 0 var(--ink);
+	background: var(--paper);
+	color: var(--ink);
+	font: inherit;
+	font-size: 0.75rem;
+}
+
+/* titlebar */
+
+.titlebar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+	padding: 0.25rem 0.5rem;
+	background: linear-gradient(90deg, var(--sel), var(--sel-lit));
+	color: var(--light);
+}
+
+.titlebar-title {
+	margin: 0;
+	font: inherit;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.titlebar-beta {
+	padding: 0 0.4em;
+	border: 1px solid;
+	border-radius: 999px;
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	opacity: 0.8;
+}
+
+.titlebar-status {
+	font-size: 0.75rem;
+	opacity: 0.85;
+}
+
+.titlebar-actions {
+	display: flex;
+	gap: 0.2rem;
+	margin-left: auto;
+}
+
+.titlebar-button {
+	display: flex;
+	align-items: center;
+	padding: 2px 8px;
+	border: 1px solid;
+	border-color: var(--edge) var(--ink) var(--ink) var(--edge);
+	box-shadow:
+		inset 1px 1px 0 var(--light),
+		inset -1px -1px 0 var(--shade);
+	background: var(--face);
+	color: var(--ink);
+	font: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.titlebar-button:active {
+	border-color: var(--ink) var(--edge) var(--edge) var(--ink);
+	box-shadow:
+		inset -1px -1px 0 var(--light),
+		inset 1px 1px 0 var(--shade);
+}
+
+/* two independently scrolling panes: the strip, and the constructor for the open panel */
+
+.app {
+	display: grid;
+	grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.85fr);
+	gap: var(--gap);
+	min-height: 0;
+	padding: var(--gap);
+}
+
+@media (width < 62rem) {
+	.app {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: minmax(8rem, 38dvh) minmax(0, 1fr);
+	}
+}
+
+.strip {
+	display: grid;
+	grid-template-rows: auto minmax(0, 1fr);
+	min-width: 0;
+	min-height: 0;
+}
+
+.strip-bar {
+	display: flex;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.2rem 0.4rem;
+	border: 1px solid;
+	border-color: var(--edge) var(--shade) var(--shade) var(--edge);
+	background: var(--face);
+}
+
+.strip-count {
+	font-size: 0.6875rem;
+	color: #303030;
+}
+
+.strip-columns {
+	width: 3.5rem;
+	margin-left: auto;
+}
+
+.strip-size {
+	width: 6rem;
+}
+
+.strip-scroll {
+	overflow: auto;
+	overscroll-behavior: contain;
+	scrollbar-gutter: stable;
+	border: 1px solid;
+	border-color: var(--shade) var(--edge) var(--edge) var(--shade);
+	box-shadow: inset 1px 1px 0 var(--ink);
+	background: var(--paper);
+}
+
+.strip-page {
+	display: grid;
+	/* fixed count so the rows break where the sheet does; tiles shrink instead of overflowing */
+	grid-template-columns: repeat(var(--columns), minmax(0, var(--card)));
+	gap: 0.5rem;
+	align-content: start;
+	justify-content: start;
+	padding: 0.5rem;
+}
+
+.spanel {
+	position: relative;
+	min-width: 0;
+	margin: 0;
+	border: 1px solid var(--ink);
+	background: var(--paper);
+	outline-offset: 1px;
+	cursor: pointer;
+}
+
+.spanel canvas {
+	display: block;
+}
+
+.spanel--selected {
+	outline: 2px solid var(--sel);
+}
+
+.spanel--flagged {
+	outline: 2px solid #a00;
+}
+
+.spanel.is-dragging {
+	opacity: 0.4;
+}
+
+.spanel.is-drop,
+.pedit.is-drop {
+	outline: 2px dashed var(--sel);
+	outline-offset: 2px;
+}
+
+/* bottom left, where balloon text never reaches */
+.spanel-index {
+	position: absolute;
+	z-index: 1;
+	bottom: 2px;
+	left: 2px;
+	padding: 0 0.25rem;
+	border: 1px solid var(--shade);
+	background: #fffb;
+	font-size: 0.6875rem;
+}
+
+.spanel-add {
+	display: grid;
+	place-items: center;
+	min-height: 5rem;
+	border: 2px dashed #b0b0b0;
+	background: none;
+	color: var(--shade);
+	font: inherit;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.spanel-add:hover {
+	border-color: var(--sel);
+	color: var(--sel);
+}
+
+/* constructor */
+
+.inspector {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	min-height: 0;
+	overflow: auto;
+	overscroll-behavior: contain;
+	scrollbar-gutter: stable;
+	padding-right: 2px;
+}
+
+/* stays put while the constructor scrolls, so export is always one click away */
+.editor-bar {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.2rem;
+	align-items: center;
+	padding: 0.2rem 0.4rem;
+	border: 1px solid;
+	border-color: var(--edge) var(--shade) var(--shade) var(--edge);
+	background: var(--face);
+}
+
+.editor-bar-end {
+	margin-left: auto;
+}
+
+.editor-bar-seed {
+	width: 4.5rem;
+}
+
+.smenu {
+	position: relative;
+}
+
+.smenu > summary {
+	display: inline-block;
+	list-style: none;
+}
+
+.smenu > summary::-webkit-details-marker {
+	display: none;
+}
+
+.smenu-pop {
+	position: absolute;
+	z-index: 2;
+	margin: 1px 0 0;
+	padding: 2px;
+	border: 1px solid;
+	border-color: var(--edge) var(--ink) var(--ink) var(--edge);
+	box-shadow:
+		inset 1px 1px 0 var(--light),
+		inset -1px -1px 0 var(--shade),
+		0.2rem 0.2rem 0 rgb(0 0 0 / 35%);
+	background: var(--face);
+	list-style: none;
+}
+
+.smenu-item {
+	width: 100%;
+	padding: 0.25rem 1.25rem 0.25rem 0.5rem;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	white-space: nowrap;
+	cursor: default;
+}
+
+.smenu-item:hover,
+.smenu-item:focus-visible {
+	background: var(--sel);
+	color: var(--light);
+}
+
+.editor {
+	display: flex;
+	flex-direction: column;
+	/* room for the open card's 2px ring, which would otherwise clip on the pane edge */
+	gap: 6px;
+	padding: 2px;
+}
+
+.pedit {
+	border: 1px solid;
+	border-color: var(--edge) var(--shade) var(--shade) var(--edge);
+	background: var(--face);
+}
+
+.pedit-head {
+	display: flex;
+	gap: 2px;
+	align-items: center;
+	padding: 2px;
+}
+
+/* the open card carries the selection all the way round, not just across its title */
+.pedit--open {
+	border-color: var(--sel);
+	box-shadow: 0 0 0 2px var(--sel);
+}
+
+.pedit--open > .pedit-head {
+	background: linear-gradient(90deg, var(--sel), var(--sel-lit));
+	color: var(--light);
+}
+
+.pedit-toggle {
+	display: flex;
+	flex: 1;
+	gap: 0.4rem;
+	align-items: center;
+	min-width: 0;
+	padding: 2px 4px;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+}
+
+.pedit-num {
+	min-width: 1.25rem;
+	padding: 0 0.2rem;
+	border: 1px solid var(--shade);
+	background: var(--paper);
+	color: var(--ink);
+	font-size: 0.6875rem;
+	text-align: center;
+}
+
+.pedit-cast {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.pedit-actions {
+	display: flex;
+	gap: 2px;
+}
+
+.pedit-grip {
+	cursor: grab;
+	touch-action: none;
+}
+
+.pedit-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	padding: 0.4rem;
+	border-top: 1px solid var(--shade);
+}
+
+.pedit--open > .pedit-body {
+	border-top-color: var(--sel);
+}
+
+.pedit.has-error > .pedit-head {
+	box-shadow: inset 0 0 0 1px #a00;
+}
+
+.pedit-settings {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.3rem;
+	align-items: center;
+}
+
+.pedit-settings select {
+	max-width: 9rem;
+}
+
+.pedit-actors {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* who and how across the top, what they say beneath, remove pinned to the right of both */
+.actor {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.25rem;
+	padding: 0.3rem;
+	border: 1px solid;
+	border-color: var(--edge) var(--shade) var(--shade) var(--edge);
+	background: var(--face-sunk);
+}
+
+.actor.has-error {
+	box-shadow: inset 0 0 0 1px #a00;
+}
+
+.actor.has-warning {
+	box-shadow: inset 0 0 0 1px #b8860b;
+}
+
+.actor-meta {
+	display: flex;
+	grid-area: 1 / 1;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	align-items: center;
+}
+
+.actor-text {
+	grid-area: 2 / 1;
+}
+
+.actor-meta select {
+	max-width: 7rem;
+	font-size: 0.6875rem;
+}
+
+.actor-meta .actor-who {
+	max-width: 8rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+.actor-drop {
+	grid-area: 1 / 2 / 3 / 3;
+	align-self: center;
+}
+
+/* controls */
+
+.srange {
+	display: flex;
+	gap: 0.2rem;
+	align-items: center;
+	font-size: 0.6875rem;
+}
+
+.srange input[type="range"] {
+	width: 4.5rem;
+}
+
+.sbutton,
+.sicon {
+	padding: 2px 8px;
+	border: 1px solid;
+	border-color: var(--edge) var(--ink) var(--ink) var(--edge);
+	box-shadow:
+		inset 1px 1px 0 var(--light),
+		inset -1px -1px 0 var(--shade);
+	background: var(--face);
+	color: var(--ink);
+	font: inherit;
+	cursor: pointer;
+}
+
+.sicon {
+	min-width: 1.5rem;
+	padding: 1px 4px;
+	line-height: 1;
+}
+
+.sbutton:active,
+.sicon:active,
+.stoggle[aria-pressed="true"],
+.seg-option[aria-pressed="true"] {
+	border-color: var(--ink) var(--edge) var(--edge) var(--ink);
+	box-shadow:
+		inset -1px -1px 0 var(--light),
+		inset 1px 1px 0 var(--shade);
+}
+
+.seg-option[aria-pressed="true"] {
+	background: #b0b0b0;
+}
+
+.sbutton:disabled,
+.sicon:disabled {
+	color: var(--shade);
+	text-shadow: 1px 1px 0 var(--light);
+	cursor: default;
+}
+
+/* full width so it lines up with the panel cards above it */
+.sbutton--add {
+	align-self: stretch;
+	padding: 3px 14px;
+}
+
+.seg {
+	display: inline-flex;
+}
+
+.seg-option {
+	padding: 2px 10px;
+	font-size: 0.75rem;
+}
+
+.seg-option + .seg-option {
+	margin-left: -1px;
+}
+
+/* issues and drawers */
+
+.sissues {
+	margin: 0;
+	padding: 0.35rem 0.5rem 0.35rem 1.5rem;
+	border: 1px solid var(--shade);
+	background: #ffffe1;
+	font-size: 0.75rem;
+}
+
+.sissue--error {
+	color: #a00;
+}
+
+.sissue--warning {
+	color: #6b4b00;
+}
+
+.drawer {
+	border: 1px solid;
+	border-color: var(--edge) var(--shade) var(--shade) var(--edge);
+	background: var(--face);
+}
+
+.drawer summary {
+	padding: 0.2rem 0.4rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.drawer-body {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: end;
+	padding: 0.4rem;
+	border-top: 1px solid var(--shade);
+}
+
+.drawer-body--stack {
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0.35rem;
+}
+
+.jsonpane-text {
+	display: block;
+	width: 100%;
+	height: 14rem;
+	font:
+		0.75rem / 1.4 Consolas,
+		"Courier New",
+		monospace;
+	resize: vertical;
+}

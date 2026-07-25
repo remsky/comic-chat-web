@@ -6,9 +6,39 @@ import {
 	roomNameFromPath,
 } from "../src/protocol/room.js";
 import { RoomDirectoryDO } from "./directory.js";
+import { isProhibited, screeningEnabled } from "./moderation.js";
 import { ChatRoomDO } from "./room.js";
 
 export { ChatRoomDO, RoomDirectoryDO };
+
+const MAX_SCREEN_TEXTS = 200;
+const MAX_SCREEN_CHARS = 2000;
+
+// the studio's profanity screen; the wordlist stays here so it never ships to a browser
+async function moderate(request: Request, env: Env): Promise<Response> {
+	// a deploy that turned the screen off has no such route to offer
+	if (!screeningEnabled(env))
+		return Response.json({ error: "moderation is off" }, { status: 404 });
+	if (request.method !== "POST")
+		return Response.json({ error: "method not allowed" }, { status: 405 });
+	let body: unknown;
+	try {
+		body = await request.json();
+	} catch {
+		return Response.json({ error: "invalid json" }, { status: 400 });
+	}
+	const texts = (body as { texts?: unknown }).texts;
+	if (!Array.isArray(texts))
+		return Response.json({ error: "texts must be an array" }, { status: 400 });
+	if (texts.length > MAX_SCREEN_TEXTS)
+		return Response.json({ error: "too many texts" }, { status: 413 });
+	const flagged: number[] = [];
+	texts.forEach((text, index) => {
+		if (typeof text !== "string") return;
+		if (isProhibited(text.slice(0, MAX_SCREEN_CHARS))) flagged.push(index);
+	});
+	return Response.json({ flagged });
+}
 
 // the connect screen's room list: every allowed room, always shown, annotated with live member counts
 async function roomDirectory(
@@ -27,6 +57,7 @@ export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
 		if (url.pathname.startsWith("/api/")) {
+			if (url.pathname === "/api/moderate") return moderate(request, env);
 			const allowed = resolveRoomAllowlist(env.ROOMS);
 			if (url.pathname === "/api/rooms")
 				return Response.json({ rooms: await roomDirectory(env, allowed) });
