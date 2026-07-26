@@ -15,7 +15,8 @@ The general instructions must also still be followed, same as any contributor, a
 ## Layout
 
 - `src/engine/` - the composition engine, ported function-by-function from the original '96-'99 C++ (panels, balloons, poses, emotion wheel). Deterministic and trace-validated.
-- `src/browser/` - client UI. `room.ts` is the app entry; canvas renderers, widgets, and reconnect logic live alongside it.
+- `src/browser/` - client UI. `room.ts` is the app entry; canvas renderers and widgets live alongside it. `roomSession.ts` drives one live session's DOM and consumes a transport.
+- `src/transports/` - network transports behind the `RoomTransport` seam (`types.ts`). `do/` owns the WebSocket, reconnect loop, heartbeat, and liveness watchdog. Imports only `src/protocol/`; enforced by `test/transportIsolation.test.ts`.
 - `src/studio/` - the standalone strip editor served at `/studio`, sharing the engine and canvas renderers but none of the room's state. `script.ts` is the JSON strip format and its validator, `compose.ts` turns one into panels directly (explicit cast, order, facing, and camera; no auto panel breaking), `studio.ts` is the page entry.
 - `src/protocol/room.ts` - wire protocol, room defaults, and error-reason constants shared by client and worker.
 - `worker/` - Cloudflare Worker. `room.ts` is the chat room Durable Object, `directory.ts` the room directory DO, `moderation.ts` the content filter.
