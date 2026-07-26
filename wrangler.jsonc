@@ -39,7 +39,11 @@
 			"new_sqlite_classes": ["RoomDirectoryDO"]
 		}
 	],
+	// invocation logs record a client IP per connection into this account; kept off by default, console output and exceptions still land
 	"observability": {
-		"enabled": true
+		"enabled": true,
+		"logs": {
+			"invocation_logs": false
+		}
 	}
 }
