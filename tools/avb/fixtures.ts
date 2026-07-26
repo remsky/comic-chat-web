@@ -162,7 +162,7 @@ export function formatAvatarFixtureSet(fixtures: AvatarFixtureSet): string {
 	const json = JSON.stringify(fixtures, null, "\t");
 	// Match Biome: inline the array only when it fits the 80-col line (tab counts as width 2).
 	const body =
-		compactCast.replace("\t", "  ").length <= 80
+		compactCast.replaceAll("\t", "  ").length <= 80
 			? json.replace(expandedCast, compactCast)
 			: json;
 	return `${body}\n`;
