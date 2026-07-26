@@ -6,7 +6,7 @@ import {
 	RegExpMatcher,
 } from "obscenity";
 
-// recommended transformers fold leetspeak and spacing so "n1gg3r" and "f u c k" still match
+// recommended transformers fold leetspeak and accents, so "4rse" still matches; spacing is not folded
 const matcher = new RegExpMatcher({
 	...englishDataset.build(),
 	...englishRecommendedTransformers,
@@ -14,4 +14,9 @@ const matcher = new RegExpMatcher({
 
 export function isProhibited(text: string): boolean {
 	return matcher.hasMatch(text);
+}
+
+// on unless a self-hosted deploy sets MODERATION=off, so a fresh clone still screens
+export function screeningEnabled(env: { MODERATION?: string }): boolean {
+	return env.MODERATION !== "off";
 }

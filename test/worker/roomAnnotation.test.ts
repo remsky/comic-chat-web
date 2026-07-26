@@ -25,6 +25,7 @@ describe("chat annotations", () => {
 			type: "chat",
 			seq: 1,
 			userId: "u-ann",
+			at: expect.any(Number),
 			avatar: 1,
 			name: "ann",
 			text: "hi bob",

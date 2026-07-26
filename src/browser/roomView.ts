@@ -32,13 +32,10 @@ import {
 } from "./canvasText.js";
 import { nearBottom } from "./dom.js";
 import { syncPanelAccessibility } from "./panelAccessibility.js";
+import { CLASSIC_UNIT, MODERN_UNIT } from "./panelUnits.js";
 import { SeatBook, seatKey } from "./seatBook.js";
 import type { Features } from "./storage.js";
 
-// square twips panels like SetPanelsWide; 3000 is what the original computed for a maximized 1024x768 window (traces pin the 2300 floor)
-const CLASSIC_UNIT = 3000;
-// larger unit shrinks text relative to the panel (~32 chars/line, 5-line balloons) so messages split less
-const MODERN_UNIT = 5200;
 const PIN_FRAMES = 3;
 
 interface RenderedPanel {

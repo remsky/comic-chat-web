@@ -53,6 +53,14 @@ describe("createBalloonSpline", () => {
 		expect(spline.cps[0]?.y).toBe(20);
 		expect(spline.cps[3]?.y).toBe(40);
 	});
+
+	it("raises both top corners by the pad and leaves the floor where it was", () => {
+		const spline = createBalloonSpline(fInfoOf([[5, 100, 0]], 100), fontI, 40);
+		expect(spline.cps[0]?.y).toBe(60);
+		expect(spline.cps[3]?.y).toBe(80);
+		expect(spline.cps[1]?.y).toBe(-407);
+		expect(spline.cps[2]?.y).toBe(-407);
+	});
 });
 
 const traceNames = readdirSync(new URL("../traces/", import.meta.url))

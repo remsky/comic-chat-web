@@ -13,7 +13,7 @@ import {
 	EM_WAVE,
 } from "../engine/emotion.js";
 
-const GESTURE_EMOTIONS = new Map<string, number>([
+export const GESTURE_EMOTIONS = new Map<string, number>([
 	["wave", EM_WAVE],
 	["point", EM_POINTOTHER],
 	["pointself", EM_POINTSELF],

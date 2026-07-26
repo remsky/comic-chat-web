@@ -5,6 +5,7 @@ import {
 	NAME_BLOCKED_REASON,
 	RATE_LIMIT_REASON,
 } from "../../src/protocol/room.js";
+import { HISTORY_RETENTION } from "../../worker/db/events.js";
 import { chatMessage, connect, join, seedLines } from "./helpers.js";
 
 describe("room policy", () => {
@@ -54,7 +55,7 @@ describe("room policy", () => {
 	it("mutes a blocked message and keeps it out of the log", async () => {
 		const room = "mute";
 		const { socket, inbox } = await join(room, "bob", 2);
-		socket.send(chatMessage("fuck this", 2));
+		socket.send(chatMessage("4rse this", 2));
 		const blocked = await inbox.next("error");
 		expect(blocked.type === "error" && blocked.reason).toBe(
 			MESSAGE_BLOCKED_REASON,
@@ -79,9 +80,26 @@ describe("room policy", () => {
 		socket.close();
 	});
 
+	it("lets the same line through when the deploy turned moderation off", async () => {
+		const room = "mute-off";
+		const was = env.MODERATION;
+		env.MODERATION = "off" as typeof was;
+		try {
+			const { socket, inbox } = await join(room, "bob", 2);
+			socket.send(chatMessage("4rse this", 2));
+			const entry = await inbox.next("entry");
+			if (entry.type !== "entry" || !("text" in entry.entry))
+				throw new Error("expected a chat entry");
+			expect(entry.entry.text).toBe("4rse this");
+			socket.close();
+		} finally {
+			env.MODERATION = was;
+		}
+	});
+
 	it("rejects a prohibited nickname at join", async () => {
 		const { socket, inbox } = await connect("name-block");
-		socket.send(JSON.stringify({ type: "join", name: "fucker", avatar: 3 }));
+		socket.send(JSON.stringify({ type: "join", name: "4rseface", avatar: 3 }));
 		const rejected = await inbox.next("error");
 		expect(rejected.type === "error" && rejected.reason).toBe(
 			NAME_BLOCKED_REASON,
@@ -89,9 +107,11 @@ describe("room policy", () => {
 		socket.close();
 	});
 
-	it("prunes history beyond the 500-row retention", async () => {
+	it("prunes history beyond the retention window", async () => {
 		const room = "retention";
-		await seedLines(room, 505);
+		// one past the window plus the live send, so the oldest survivor is a seeded line
+		const seeded = HISTORY_RETENTION + 5;
+		await seedLines(room, seeded);
 		const { socket, inbox } = await join(room, "cass", 3);
 		socket.send(chatMessage("newest", 3));
 		await inbox.next("entry");
@@ -104,8 +124,9 @@ describe("room policy", () => {
 				)
 				.one(),
 		);
-		expect(summary.total).toBe(500);
-		expect(summary.oldest).toBe("line 6");
+		expect(summary.total).toBe(HISTORY_RETENTION);
+		// seq n holds "line n-1", and the live send lands at seq seeded+1
+		expect(summary.oldest).toBe(`line ${seeded + 1 - HISTORY_RETENTION}`);
 		socket.close();
 	});
 

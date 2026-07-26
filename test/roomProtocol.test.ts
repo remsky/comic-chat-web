@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
 	CAST_SIZE,
 	type ComicAnnotation,
-	DEFAULT_ROOMS,
 	MAX_TEXT_LENGTH,
 	parseClientMessage,
 	parseRoomEntry,
@@ -192,11 +191,11 @@ describe("room wire protocol", () => {
 		).toEqual(["ok"]);
 	});
 
-	it("falls back to the default room set when the allowlist is empty or unusable", () => {
-		expect(resolveRoomAllowlist(undefined)).toEqual([...DEFAULT_ROOMS]);
-		expect(resolveRoomAllowlist([])).toEqual([...DEFAULT_ROOMS]);
-		expect(resolveRoomAllowlist("!!! ///")).toEqual([...DEFAULT_ROOMS]);
-		expect(resolveRoomAllowlist(42)).toEqual([...DEFAULT_ROOMS]);
+	it("closes the deploy when the allowlist is empty or unusable", () => {
+		expect(resolveRoomAllowlist(undefined)).toEqual([]);
+		expect(resolveRoomAllowlist([])).toEqual([]);
+		expect(resolveRoomAllowlist("!!! ///")).toEqual([]);
+		expect(resolveRoomAllowlist(42)).toEqual([]);
 	});
 
 	it("parses typed room entries and rejects malformed ones", () => {

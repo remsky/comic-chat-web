@@ -1,5 +1,6 @@
 import { env, runInDurableObject } from "cloudflare:test";
 import { describe, expect, it } from "vitest";
+import { HISTORY_RETENTION } from "../../worker/db/events.js";
 import { chatMessage, join, seedLines } from "./helpers.js";
 
 describe("room backdrop replay", () => {
@@ -80,7 +81,7 @@ describe("room backdrop replay", () => {
 		author.socket.send(JSON.stringify({ type: "background", name: "den" }));
 		await author.inbox.next("entry");
 		author.socket.close();
-		await seedLines(room, 505);
+		await seedLines(room, HISTORY_RETENTION + 5);
 		const late = await join(room, "finn", 6);
 		late.socket.send(chatMessage("newest", 6));
 		await late.inbox.next("entry");
@@ -94,7 +95,11 @@ describe("room backdrop replay", () => {
 				)
 				.one(),
 		);
-		expect(summary).toEqual({ total: 501, oldest_type: "background" });
+		// the window plus the horizon marker itself
+		expect(summary).toEqual({
+			total: HISTORY_RETENTION + 1,
+			oldest_type: "background",
+		});
 
 		const reader = await join(room, "gale", 7);
 		expect(reader.welcome.historyBackground).toBe("den");

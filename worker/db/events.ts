@@ -10,7 +10,7 @@ import {
 } from "../../src/protocol/room.js";
 
 // storage policy: rows older than this are pruned as newer ones land
-const HISTORY_RETENTION = 500;
+export const HISTORY_RETENTION = 100;
 
 // single source of truth: column name -> storage type; EventRow and the column list both derive from it
 const EVENT_SCHEMA = {
@@ -30,6 +30,7 @@ const EVENT_SCHEMA = {
 	requested: "int?",
 	talk_tos_json: "text?",
 	background_name: "text?",
+	at: "int",
 } as const satisfies Record<string, "int" | "int?" | "text" | "text?">;
 
 type Stored<C> = C extends "int"
@@ -66,6 +67,7 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 		return {
 			type: "background",
 			seq: row.seq,
+			at: row.at,
 			name: row.background_name ?? "",
 			by: row.name,
 		};
@@ -87,6 +89,7 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 			type: "chat",
 			seq: row.seq,
 			userId: row.sender_id ?? "",
+			at: row.at,
 			avatar: row.avatar,
 			name: row.name,
 			text: row.text,
@@ -108,6 +111,7 @@ export function entryFromRow(row: EventRow): RoomEntry | null {
 		kind: row.event_type as AnnounceKind,
 		seq: row.seq,
 		userId: row.sender_id ?? "",
+		at: row.at,
 		avatar: row.avatar,
 		name: row.name,
 		detail: row.text ?? "",
@@ -119,7 +123,7 @@ function emptyRow(
 	sender_id: string,
 	avatar: number | null,
 	name: string,
-): Omit<EventRow, "seq"> {
+): Omit<EventRow, "seq" | "at"> {
 	return {
 		event_type,
 		sender_id,
@@ -228,13 +232,13 @@ export class EventStore {
 	}
 
 	// append one row to the stream, prune past retention, hydrate the entry to broadcast
-	private append(fields: Omit<EventRow, "seq">): RoomEntry | null {
-		const values = INSERT_FIELDS.map((field) => fields[field]);
+	private append(fields: Omit<EventRow, "seq" | "at">): RoomEntry | null {
+		const row = { ...fields, at: Date.now() };
+		const values = INSERT_FIELDS.map((field) => row[field]);
 		const seq = this.sql
 			.exec<{ seq: number }>(
-				`INSERT INTO events (${INSERT_FIELDS.join(", ")}, at) VALUES (${INSERT_FIELDS.map(() => "?").join(", ")}, ?) RETURNING seq`,
+				`INSERT INTO events (${INSERT_FIELDS.join(", ")}) VALUES (${INSERT_FIELDS.map(() => "?").join(", ")}) RETURNING seq`,
 				...values,
-				Date.now(),
 			)
 			.one().seq;
 		// the prune spares the newest old background event so chunk seeds can always find their backdrop
@@ -244,6 +248,6 @@ export class EventStore {
 				seq - HISTORY_RETENTION,
 				seq - HISTORY_RETENTION,
 			);
-		return entryFromRow({ ...fields, seq } as EventRow);
+		return entryFromRow({ ...row, seq });
 	}
 }

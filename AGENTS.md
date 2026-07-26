@@ -16,6 +16,7 @@ The general instructions must also still be followed, same as any contributor, a
 
 - `src/engine/` - the composition engine, ported function-by-function from the original '96-'99 C++ (panels, balloons, poses, emotion wheel). Deterministic and trace-validated.
 - `src/browser/` - client UI. `room.ts` is the app entry; canvas renderers, widgets, and reconnect logic live alongside it.
+- `src/studio/` - the standalone strip editor served at `/studio`, sharing the engine and canvas renderers but none of the room's state. `script.ts` is the JSON strip format and its validator, `compose.ts` turns one into panels directly (explicit cast, order, facing, and camera; no auto panel breaking), `studio.ts` is the page entry.
 - `src/protocol/room.ts` - wire protocol, room defaults, and error-reason constants shared by client and worker.
 - `worker/` - Cloudflare Worker. `room.ts` is the chat room Durable Object, `directory.ts` the room directory DO, `moderation.ts` the content filter.
 - `worker/db/` - the room's SQL layer, kept out of `room.ts`. `events.ts` is the append-only IRC-style event log (chat, backgrounds, join/part/topic announces) behind a derived row contract; `migrations.ts` the per-room schema runner. DDL steps live as `.sql` in `worker/do_migrations/`.
@@ -47,4 +48,5 @@ The general instructions must also still be followed, same as any contributor, a
 
 - Asset regeneration (`assets:*`, `fixtures:avatars`) reads a sibling checkout at `../comic-chat` that CI and most machines don't have. The committed PNGs and fixtures are canonical; the build never needs the sibling.
 - `vite preview` inherits the dev `/api` proxy, so a running `wrangler dev` leaks into browser tests. Playwright specs must stub `/api` routes to stay hermetic.
+- The build has two entries (`index.html`, `studio.html`); Cloudflare Assets serves `studio.html` at `/studio`. Studio specs load `/studio.html` because `vite preview` has no such rewrite.
 - DOM tests opt in per file with `// @vitest-environment jsdom`. jsdom has no 2D canvas context and serves `import.meta.url` over http, so `outgoingPose.test.ts` stubs `OffscreenCanvas` for the text measurer and loads fixtures from `process.cwd()`.

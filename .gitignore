@@ -4,5 +4,9 @@ playwright-report/
 test-results/
 .wrangler/
 .dev.vars
+.env
+.env.*
+!.env.example
 IRC_STYLE_ANNOTATIONS.md
 .claude/commands/codex-review.md
+RISK_ASSESSMENT.md

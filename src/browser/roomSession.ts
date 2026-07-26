@@ -25,6 +25,7 @@ import {
 	parseGesture,
 } from "./gestures.js";
 import { buildRoomOption } from "./pickerTiles.js";
+import { reportTranscript, stashReport } from "./report.js";
 import { fetchRoomListings } from "./roomDirectory.js";
 import { isJoinedEntry, JOINED_STATE } from "./roomHistory.js";
 import type { RoomView } from "./roomView.js";
@@ -477,6 +478,27 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		() => openSaveMenu(saveButton, view.panelCount(), savePng),
 		{ signal },
 	);
+
+	const reportButton = element<HTMLButtonElement>("report-room");
+	// the snapshot crosses in session storage; the report page reads it once and clears it
+	const fileReport = (): void => {
+		stashReport(
+			sessionStorage,
+			reportTranscript(
+				room,
+				view.entriesView(),
+				deps.avatarDisplayName,
+				new Date().toISOString(),
+				{
+					site: reportButton.dataset.site,
+					contact: reportButton.dataset.contact,
+					jurisdiction: reportButton.dataset.jurisdiction,
+				},
+			),
+		);
+		window.location.assign("/report.html");
+	};
+	reportButton.addEventListener("click", fileReport, { signal });
 
 	const transcript = element<HTMLOListElement>("transcript");
 	const refreshTranscript = (): void => {

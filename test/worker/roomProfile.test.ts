@@ -71,7 +71,7 @@ describe("profile changes and room-switch announcements", () => {
 		const room = "profile-block";
 		const ann = await join(room, "ann", 1);
 		ann.socket.send(
-			JSON.stringify({ type: "profile", name: "fucker", avatar: 1 }),
+			JSON.stringify({ type: "profile", name: "4rseface", avatar: 1 }),
 		);
 		const rejected = await ann.inbox.next("error");
 		expect(rejected.type === "error" && rejected.reason).toBe(

@@ -15,7 +15,7 @@ import {
 } from "../src/protocol/room.js";
 import { EventStore } from "./db/events.js";
 import { applyMigrations } from "./db/migrations.js";
-import { isProhibited } from "./moderation.js";
+import { isProhibited, screeningEnabled } from "./moderation.js";
 
 // server policy: bound connections and per-socket send rate
 const SOCKET_LIMIT = 12;
@@ -66,6 +66,11 @@ export class ChatRoomDO extends DurableObject<Env> {
 				(await this.ctx.storage.get<string>("background")) ??
 				DEFAULT_BACKGROUND;
 		});
+	}
+
+	// read per call, so flipping the flag needs no DO restart
+	private blocked(text: string): boolean {
+		return screeningEnabled(this.env) && isProhibited(text);
 	}
 
 	async fetch(request: Request): Promise<Response> {
@@ -218,7 +223,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				this.send(ws, { type: "error", reason: "already joined" });
 				return;
 			}
-			if (isProhibited(message.name)) {
+			if (this.blocked(message.name)) {
 				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
@@ -295,7 +300,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			});
 			return;
 		}
-		if (message.type === "chat" && isProhibited(message.text)) {
+		if (message.type === "chat" && this.blocked(message.text)) {
 			this.penalize(ws);
 			return;
 		}
@@ -312,7 +317,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 			return;
 		}
 		if (message.type === "profile") {
-			if (isProhibited(message.name)) {
+			if (this.blocked(message.name)) {
 				this.send(ws, { type: "error", reason: NAME_BLOCKED_REASON });
 				return;
 			}
