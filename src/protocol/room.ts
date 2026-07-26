@@ -8,8 +8,7 @@ export const CAST_SIZE = 31;
 export const MAX_USER_ID_LENGTH = 64;
 // room names share one charset across the websocket route, the allowlist, and the join field
 export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
-// the bounded default room set for a demo deploy; override with the worker ROOMS var
-export const DEFAULT_ROOMS = ["lobby", "tech-news", "weather-chat"] as const;
+// the room set lives in wrangler.jsonc under the ROOMS var; there is no default here
 // SM_SAY/SM_WHISPER/SM_THINK/SM_ACTION (defines.h:57-61); SM_SHOUT=4 exists but nothing emits it (protsupp.cpp:1022-1034)
 export const CHAT_MODES = [1, 2, 3, 5] as const;
 export type ChatMode = (typeof CHAT_MODES)[number];
@@ -511,7 +510,7 @@ export function roomNameFromPath(pathname: string): string | null {
 	return match?.[1] ?? null;
 }
 
-// The one aggregate bound on a deploy: only these rooms spin up a DO. Reads the ROOMS var (array or comma/space string), validates and de-dupes, falls back to DEFAULT_ROOMS so a room always exists.
+// The one aggregate bound on a deploy: only these rooms spin up a DO. Reads the ROOMS var (array or comma/space string), validates and de-dupes. No valid name means no room accepts a connection, which is how a deploy is closed.
 export function resolveRoomAllowlist(value: unknown): string[] {
 	const raw = Array.isArray(value)
 		? value
@@ -524,5 +523,5 @@ export function resolveRoomAllowlist(value: unknown): string[] {
 		const name = item.trim();
 		if (ROOM_NAME_PATTERN.test(name)) names.add(name);
 	}
-	return names.size > 0 ? [...names] : [...DEFAULT_ROOMS];
+	return [...names];
 }
