@@ -10,7 +10,7 @@ import {
 } from "../../src/protocol/room.js";
 
 // storage policy: rows older than this are pruned as newer ones land
-const HISTORY_RETENTION = 500;
+export const HISTORY_RETENTION = 100;
 
 // single source of truth: column name -> storage type; EventRow and the column list both derive from it
 const EVENT_SCHEMA = {

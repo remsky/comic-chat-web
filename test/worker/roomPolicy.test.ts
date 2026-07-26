@@ -5,6 +5,7 @@ import {
 	NAME_BLOCKED_REASON,
 	RATE_LIMIT_REASON,
 } from "../../src/protocol/room.js";
+import { HISTORY_RETENTION } from "../../worker/db/events.js";
 import { chatMessage, connect, join, seedLines } from "./helpers.js";
 
 describe("room policy", () => {
@@ -106,9 +107,11 @@ describe("room policy", () => {
 		socket.close();
 	});
 
-	it("prunes history beyond the 500-row retention", async () => {
+	it("prunes history beyond the retention window", async () => {
 		const room = "retention";
-		await seedLines(room, 505);
+		// one past the window plus the live send, so the oldest survivor is a seeded line
+		const seeded = HISTORY_RETENTION + 5;
+		await seedLines(room, seeded);
 		const { socket, inbox } = await join(room, "cass", 3);
 		socket.send(chatMessage("newest", 3));
 		await inbox.next("entry");
@@ -121,8 +124,9 @@ describe("room policy", () => {
 				)
 				.one(),
 		);
-		expect(summary.total).toBe(500);
-		expect(summary.oldest).toBe("line 6");
+		expect(summary.total).toBe(HISTORY_RETENTION);
+		// seq n holds "line n-1", and the live send lands at seq seeded+1
+		expect(summary.oldest).toBe(`line ${seeded + 1 - HISTORY_RETENTION}`);
 		socket.close();
 	});
 
