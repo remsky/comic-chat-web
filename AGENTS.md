@@ -16,7 +16,7 @@ The general instructions must also still be followed, same as any contributor, a
 
 - `src/engine/` - the composition engine, ported function-by-function from the original '96-'99 C++ (panels, balloons, poses, emotion wheel). Deterministic and trace-validated.
 - `src/browser/` - client UI. `room.ts` is the app entry; canvas renderers, widgets, and reconnect logic live alongside it.
-- `src/studio/` - the standalone strip editor served at `/studio`, sharing the engine and canvas renderers but none of the room's state. `script.ts` is the JSON strip format and its validator, `compose.ts` turns one into panels directly (explicit cast, order, facing, and camera; no auto panel breaking), `studio.ts` is the page entry.
+- `src/studio/` - the standalone strip editor served at `/studio`, sharing the engine and canvas renderers but none of the room's state. `script.ts` is the JSON strip format and its validator, `compose.ts` turns one into panels directly (explicit cast, order, facing, and camera; no auto panel breaking), `art.ts` probes every drawing a character owns and names it, `catalogJson.ts` publishes those names as `/assets/catalog.json` at build time, `studio.ts` is the page entry.
 - `src/protocol/room.ts` - wire protocol, room defaults, and error-reason constants shared by client and worker.
 - `worker/` - Cloudflare Worker. `room.ts` is the chat room Durable Object, `directory.ts` the room directory DO, `moderation.ts` the content filter.
 - `worker/db/` - the room's SQL layer, kept out of `room.ts`. `events.ts` is the append-only IRC-style event log (chat, backgrounds, join/part/topic announces) behind a derived row contract; `migrations.ts` the per-room schema runner. DDL steps live as `.sql` in `worker/do_migrations/`.

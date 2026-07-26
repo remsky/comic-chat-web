@@ -1,6 +1,7 @@
 // The constructor: one collapsible card per panel, one row per character in it.
 
 import { displayName, revealWithin } from "../browser/dom.js";
+import { type AvatarArt, emptyArt, splitArtName } from "./art.js";
 import { attachReorder, moveItem } from "./reorder.js";
 import {
 	emptyPanel,
@@ -34,9 +35,10 @@ function selectOf(
 	values: readonly string[],
 	current: string,
 	blank = "None",
+	label = displayName,
 ): HTMLSelectElement {
 	const select = document.createElement("select");
-	fillOptions(select, values, blank);
+	fillOptions(select, values, blank, label);
 	select.value = current;
 	return select;
 }
@@ -45,58 +47,52 @@ function fillOptions(
 	select: HTMLSelectElement,
 	values: readonly string[],
 	blank: string,
+	label = displayName,
 ): void {
 	select.replaceChildren();
 	for (const value of values) {
 		const option = document.createElement("option");
 		option.value = value;
-		option.textContent = value === "" ? blank : displayName(value);
+		option.textContent = value === "" ? blank : label(value);
 		select.append(option);
 	}
 }
 
-type Degrees = Record<string, readonly number[]>;
-
-function nearestDegree(steps: readonly number[], intensity: number): number {
-	let best = 0;
-	steps.forEach((value, index) => {
-		if (Math.abs(value - intensity) < Math.abs((steps[best] ?? 1) - intensity))
-			best = index;
-	});
-	return best;
+// "neutral_2" carries the underscore over the wire and reads as "Neutral 2" here
+function artLabel(name: string): string {
+	const { base, index } = splitArtName(name);
+	return index === undefined
+		? displayName(base)
+		: `${displayName(base)} ${index}`;
 }
 
-// emotion and degree in one list, holding only what this character has distinct art for
+// every face this character draws, neutral first, under the same names the strip format takes
 function fillEmotions(
 	select: HTMLSelectElement,
 	emotions: readonly string[],
-	degrees: Degrees,
+	art: AvatarArt,
 ): void {
 	select.replaceChildren();
-	const neutral = document.createElement("option");
-	neutral.value = NEUTRAL_KEY;
-	neutral.textContent = displayName(NEUTRAL_KEY);
-	select.append(neutral);
-	for (const key of emotions) {
-		const steps = degrees[key];
-		if (!steps || steps.length === 0) continue;
-		steps.forEach((_, degree) => {
+	const keys = [NEUTRAL_KEY, ...emotions.filter((key) => key !== NEUTRAL_KEY)];
+	for (const key of keys) {
+		const count = art.counts[key] ?? 0;
+		for (let nth = 1; nth <= count; nth++) {
 			const option = document.createElement("option");
-			option.value = `${key}:${degree}`;
-			option.textContent =
-				steps.length === 1
-					? displayName(key)
-					: `${displayName(key)} ${degree + 1}`;
+			option.value = count === 1 ? key : `${key}_${nth}`;
+			option.textContent = artLabel(option.value);
 			select.append(option);
-		});
+		}
 	}
 }
 
-function emotionValue(actor: StripActor, degrees: Degrees): string {
-	const key = actor.emotion ?? NEUTRAL_KEY;
-	const steps = degrees[key];
-	if (!steps || steps.length === 0) return NEUTRAL_KEY;
-	return `${key}:${nearestDegree(steps, actor.intensity ?? 1)}`;
+function emotionValue(actor: StripActor, art: AvatarArt): string {
+	const { base, index } = splitArtName(actor.emotion ?? NEUTRAL_KEY);
+	const count = art.counts[base] ?? 0;
+	if (count === 0) return NEUTRAL_KEY;
+	if (count === 1) return base;
+	// bare names whichever the engine reaches unasked: the first of the neutrals, the strongest of the rest
+	const nth = index ?? (base === NEUTRAL_KEY ? 1 : count);
+	return `${base}_${Math.min(Math.max(nth, 1), count)}`;
 }
 
 function iconButton(glyph: string, title: string): HTMLButtonElement {
@@ -368,14 +364,15 @@ export class PanelEditor {
 				["", ...this.gesturesFor(actor.avatar)],
 				actor.gesture ?? "",
 				"No gesture",
+				artLabel,
 			),
 			"Gesture",
 		);
 
-		let degrees = this.degreesFor(actor.avatar);
+		let art = this.artFor(actor.avatar);
 		const emotion = named(document.createElement("select"), "Emotion");
-		fillEmotions(emotion, this.options.catalog.emotions, degrees);
-		emotion.value = emotionValue(actor, degrees);
+		fillEmotions(emotion, this.options.catalog.emotions, art);
+		emotion.value = emotionValue(actor, art);
 
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
@@ -383,18 +380,19 @@ export class PanelEditor {
 			const available = this.gesturesFor(actor.avatar);
 			if (actor.gesture && !available.includes(actor.gesture))
 				delete actor.gesture;
-			fillOptions(gesture, ["", ...available], "No gesture");
+			fillOptions(gesture, ["", ...available], "No gesture", artLabel);
 			gesture.value = actor.gesture ?? "";
-			// likewise the emotion degrees: another character poses a different number of steps
-			degrees = this.degreesFor(actor.avatar);
-			fillEmotions(emotion, this.options.catalog.emotions, degrees);
-			const steps = actor.emotion ? degrees[actor.emotion] : undefined;
-			const snapped = steps?.[nearestDegree(steps, actor.intensity ?? 1)];
-			if (snapped === undefined) {
-				delete actor.emotion;
-				delete actor.intensity;
-			} else actor.intensity = snapped;
-			emotion.value = emotionValue(actor, degrees);
+			// likewise the faces: another character draws a different number of them, or none
+			art = this.artFor(actor.avatar);
+			fillEmotions(emotion, this.options.catalog.emotions, art);
+			if (actor.emotion !== undefined) {
+				const { base, index } = splitArtName(actor.emotion);
+				const count = art.counts[base] ?? 0;
+				if (count === 0) delete actor.emotion;
+				else if (index !== undefined && index > count)
+					actor.emotion = `${base}_${count}`;
+			}
+			emotion.value = emotionValue(actor, art);
 			this.resummarize(panelIndex);
 			this.options.onEdit();
 		});
@@ -404,10 +402,10 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 		emotion.addEventListener("change", () => {
-			const [key, degree] = emotion.value.split(":");
-			actor.emotion = key ?? NEUTRAL_KEY;
-			if (degree === undefined) delete actor.intensity;
-			else actor.intensity = degrees[actor.emotion]?.[Number(degree)] ?? 1;
+			// the resting face is what an absent emotion already means, so it stays out of the JSON
+			if (emotion.value === NEUTRAL_KEY || emotion.value === `${NEUTRAL_KEY}_1`)
+				delete actor.emotion;
+			else actor.emotion = emotion.value;
 			this.options.onEdit();
 		});
 
@@ -470,10 +468,10 @@ export class PanelEditor {
 		return row;
 	}
 
-	private degreesFor(avatarName: string): Degrees {
+	private artFor(avatarName: string): AvatarArt {
 		return (
 			this.options.catalog.avatars.find((entry) => entry.name === avatarName)
-				?.degrees ?? {}
+				?.art ?? emptyArt()
 		);
 	}
 

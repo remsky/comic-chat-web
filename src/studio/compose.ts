@@ -1,10 +1,8 @@
 // Builds panels straight from a strip script: explicit cast, order, facing, and camera, with no auto panel breaking.
 
-import { GESTURE_EMOTIONS } from "../browser/gestures.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "../browser/panelUnits.js";
 import type { Avatar, AvatarBody, AvatarData } from "../engine/avatar.js";
 import { AvatarRegistry } from "../engine/avatar.js";
-import { EmotionOpts } from "../engine/emotion.js";
 import {
 	layoutAvatarGeometry,
 	type PlacedAvatar,
@@ -16,8 +14,9 @@ import {
 	makeRuntimeBalloon,
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
+import { type AvatarArt, avatarArtCache, NEUTRAL_KEY } from "./art.js";
 import {
-	emotionVector,
+	emotionAngles,
 	MODE_CODES,
 	type Strip,
 	type StripActor,
@@ -44,26 +43,28 @@ export interface ComposeResult {
 export interface ComposeOptions {
 	avatars: readonly AvatarData[];
 	resolveStyle: BalloonStyleResolver;
+	// pass the catalog's, so the studio probes each character once instead of once per render
+	artFor?: (name: string) => AvatarArt;
 }
 
-function bodyForActor(avatar: Avatar, actor: StripActor): AvatarBody {
-	const wheel = emotionVector(actor.emotion ?? "neutral", actor.intensity);
-	const gesture = actor.gesture
-		? GESTURE_EMOTIONS.get(actor.gesture)
-		: undefined;
-	let body: AvatarBody;
-	if (gesture === undefined) {
-		body = avatar.getBodyFromEmotion(
-			wheel?.emotion ?? 0,
-			wheel?.intensity ?? 0,
-		);
-	} else {
-		// a gesture only carries a torso, so the wheel emotion still gets to pick the face
-		const opts = new EmotionOpts();
-		opts.add(gesture, 1, 255);
-		if (wheel && wheel.intensity > 0)
-			opts.add(wheel.emotion, wheel.intensity, 128);
-		body = avatar.getBodyFromOptions(opts);
+function bodyForActor(
+	avatar: Avatar,
+	actor: StripActor,
+	art: AvatarArt,
+): AvatarBody {
+	const named =
+		art.faces[actor.emotion ?? NEUTRAL_KEY] ?? art.faces[NEUTRAL_KEY];
+	// a gesture only ever swaps the torso; asking for one the character lacks leaves it standing neutral
+	const gesture =
+		actor.gesture === undefined
+			? undefined
+			: (art.torsos[actor.gesture] ?? art.torsos[NEUTRAL_KEY]);
+	// the wheel builds the record, then the name it landed under says which drawing goes in it
+	const body = avatar.getBodyFromEmotion(0, 0);
+	if (body.kind === "simple") body.bodyIndex = gesture ?? named?.torso ?? 0;
+	else {
+		body.faceIndex = named?.face ?? body.faceIndex;
+		body.torsoIndex = gesture ?? named?.torso ?? body.torsoIndex;
 	}
 	body.flip = actor.facing === "left";
 	body.requested = true;
@@ -99,6 +100,7 @@ function composePanel(
 	rand: MsvcRand,
 	unit: number,
 	resolveStyle: BalloonStyleResolver,
+	artFor: (name: string) => AvatarArt,
 ): ComposedPanel {
 	const issues: StripIssue[] = [];
 	const panel: UnitPanel = {
@@ -124,7 +126,7 @@ function composePanel(
 			});
 			return;
 		}
-		const body = bodyForActor(avatar, actor);
+		const body = bodyForActor(avatar, actor, artFor(actor.avatar));
 		panel.bodies.push(body);
 		placed.push({ avatar, body });
 		if (actor.text) speakers.push({ actor, body });
@@ -181,6 +183,8 @@ export function composeStrip(
 	const unit = strip.size === "classic" ? CLASSIC_UNIT : MODERN_UNIT;
 	// a fresh registry per pass, and no recordBody, so a panel's poses depend only on its own actors
 	const registry = new AvatarRegistry(options.avatars);
+	const probed = avatarArtCache(options.avatars, emotionAngles());
+	const artFor = options.artFor ?? probed;
 	const seed = strip.seed ?? DEFAULT_SEED;
 	// padded here alone, so chat panels stay pinned to the traces
 	const resolveStyle: BalloonStyleResolver = (text, mode) => ({
@@ -195,6 +199,7 @@ export function composeStrip(
 			new MsvcRand(seed + index),
 			unit,
 			resolveStyle,
+			artFor,
 		),
 	);
 	return {

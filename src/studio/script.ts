@@ -1,6 +1,6 @@
 // The studio strip format: an explicit panel list, validated against the loaded cast.
 
-import { availableGestures, GESTURE_EMOTIONS } from "../browser/gestures.js";
+import { GESTURE_EMOTIONS } from "../browser/gestures.js";
 import type { AvatarData } from "../engine/avatar.js";
 import { EMOTION_NAMES } from "../engine/bodycam.js";
 import {
@@ -14,9 +14,20 @@ import {
 	EM_SHOUT,
 } from "../engine/emotion.js";
 import { SM_ACTION, SM_SAY, SM_THINK, SM_WHISPER } from "../engine/panel.js";
-import { type EmotionDegrees, emotionDegreeCache } from "./degrees.js";
+import {
+	type AvatarArt,
+	avatarArtCache,
+	emptyArt,
+	NEUTRAL_KEY,
+	nearestArtName,
+	splitArtName,
+} from "./art.js";
 
-export const STRIP_VERSION = 1;
+export { NEUTRAL_KEY };
+
+// 2 names its art where 1 carried a raw intensity, which the parser still reads
+export const STRIP_VERSION = 2;
+const READABLE_VERSIONS: readonly number[] = [1, STRIP_VERSION];
 
 // CUnitPanelPage caps both at 5 (panel.cpp:421, 438)
 export const MAX_ACTORS = 5;
@@ -53,8 +64,6 @@ const EMOTION_ANGLES: readonly number[] = [
 	EM_LAUGH,
 ];
 
-export const NEUTRAL_KEY = "neutral";
-
 export const MODE_CODES: Record<StripMode, number> = {
 	say: SM_SAY,
 	think: SM_THINK,
@@ -69,8 +78,9 @@ export interface StripActor {
 	avatar: string;
 	text?: string;
 	mode?: StripMode;
+	// a name from the character's catalogue entry: "happy_2", or bare "happy" for the one it reaches unasked
 	emotion?: string;
-	intensity?: number;
+	// a gesture command, or "<emotion>_<n>" for a torso the wheel never picks
 	gesture?: string;
 	facing?: StripFacing;
 }
@@ -103,9 +113,32 @@ export interface StripCatalogAvatar {
 	name: string;
 	avatarID: number;
 	type: AvatarData["type"];
+	// every torso this character owns: gesture commands plus "<emotion>_<n>"
 	gestures: string[];
-	// the intensities that reach distinct art on this character, probed on first read
-	degrees: EmotionDegrees;
+	// probed on first read, so casting three characters never poses the other twenty-eight
+	art: AvatarArt;
+}
+
+// the names worth publishing, commands in the engine's order then stances in the emotion list's; the bare ones only ever repeat "_1"
+export function torsoNames(art: AvatarArt): string[] {
+	const commands = [...GESTURE_EMOTIONS.keys()];
+	const stances = [
+		NEUTRAL_KEY,
+		...EMOTION_KEYS.filter((key) => key !== NEUTRAL_KEY),
+	];
+	const rank = (name: string): [number, number] => {
+		const command = commands.indexOf(name);
+		if (command >= 0) return [command, 0];
+		const { base, index } = splitArtName(name);
+		return [commands.length + stances.indexOf(base), index ?? 0];
+	};
+	return Object.keys(art.torsos)
+		.filter((name) => commands.includes(name) || /_\d+$/.test(name))
+		.sort((a, b) => {
+			const [groupA, indexA] = rank(a);
+			const [groupB, indexB] = rank(b);
+			return groupA - groupB || indexA - indexB;
+		});
 }
 
 export interface StripCatalog {
@@ -132,15 +165,17 @@ export function buildCatalog(
 	avatars: readonly AvatarData[],
 	backgrounds: readonly string[],
 ): StripCatalog {
-	const degreesOf = emotionDegreeCache(avatars, emotionAngles());
+	const artOf = avatarArtCache(avatars, emotionAngles());
 	return {
 		avatars: avatars.map((data) => ({
 			name: data.name,
 			avatarID: data.avatarID,
 			type: data.type,
-			gestures: availableGestures(data),
-			get degrees() {
-				return degreesOf(data.name);
+			get gestures() {
+				return torsoNames(artOf(data.name));
+			},
+			get art() {
+				return artOf(data.name);
 			},
 		})),
 		backgrounds: [...backgrounds],
@@ -187,7 +222,8 @@ function readString(value: unknown): string | undefined {
 interface ParseContext {
 	issues: StripIssue[];
 	avatarNames: Set<string>;
-	gesturesByAvatar: Map<string, Set<string>>;
+	// read through the catalog's lazy getter, so parsing only probes the characters a strip actually casts
+	artOf: (avatar: string) => AvatarArt;
 	backgrounds: Set<string>;
 }
 
@@ -230,28 +266,67 @@ function parseActor(
 	}
 
 	if (raw.emotion !== undefined) {
-		const emotion = readString(raw.emotion)?.toLowerCase();
-		if (!emotion || !EMOTION_KEYS.includes(emotion))
+		const emotion = readString(raw.emotion)?.toLowerCase() ?? "";
+		const { base, index } = splitArtName(emotion);
+		const count = context.artOf(avatar).counts[base] ?? 0;
+		if (!EMOTION_KEYS.includes(base))
 			fail(
 				context,
 				`${path}.emotion`,
 				`unknown emotion "${String(raw.emotion)}"`,
 			);
+		else if (count === 0) {
+			actor.emotion = base;
+			warn(
+				context,
+				`${path}.emotion`,
+				`${avatar} has no art for "${base}"; it will pose neutral`,
+			);
+		} else if (index !== undefined && (index < 1 || index > count))
+			fail(
+				context,
+				`${path}.emotion`,
+				count === 1
+					? `${avatar} draws one "${base}" face, so only "${base}" or "${base}_1"`
+					: `${avatar} draws ${count} "${base}" faces, so "${base}_1" to "${base}_${count}"`,
+			);
 		else actor.emotion = emotion;
 	}
 
+	// v0.7 strips carry a raw intensity where a name now goes; keep opening them
 	if (raw.intensity !== undefined) {
 		const intensity = raw.intensity;
-		if (typeof intensity !== "number" || !Number.isFinite(intensity))
-			fail(context, `${path}.intensity`, "intensity must be a number");
-		else if (intensity < 0 || intensity > 1)
-			fail(context, `${path}.intensity`, "intensity must be between 0 and 1");
-		else actor.intensity = intensity;
+		const named = actor.emotion;
+		if (
+			typeof intensity !== "number" ||
+			!Number.isFinite(intensity) ||
+			intensity < 0 ||
+			intensity > 1
+		)
+			fail(context, `${path}.intensity`, "intensity must be 0 to 1");
+		else if (named === undefined || splitArtName(named).index !== undefined)
+			warn(context, `${path}.intensity`, "intensity is retired; ignoring it");
+		else {
+			// the torso comes over too where the wheel wore an odd one at that intensity; an explicit gesture below still wins
+			const names = nearestArtName(context.artOf(avatar), named, intensity);
+			actor.emotion = names.emotion;
+			if (names.gesture !== undefined) actor.gesture = names.gesture;
+			warn(
+				context,
+				`${path}.intensity`,
+				names.gesture === undefined
+					? `intensity is retired; reading it as "${names.emotion}"`
+					: `intensity is retired; reading it as "${names.emotion}" on "${names.gesture}"`,
+			);
+		}
 	}
 
 	if (raw.gesture !== undefined && raw.gesture !== null && raw.gesture !== "") {
-		const gesture = readString(raw.gesture)?.toLowerCase();
-		if (!gesture || !GESTURE_EMOTIONS.has(gesture))
+		const gesture = readString(raw.gesture)?.toLowerCase() ?? "";
+		const named =
+			GESTURE_EMOTIONS.has(gesture) ||
+			EMOTION_KEYS.includes(splitArtName(gesture).base);
+		if (!named)
 			fail(
 				context,
 				`${path}.gesture`,
@@ -259,7 +334,7 @@ function parseActor(
 			);
 		else {
 			actor.gesture = gesture;
-			if (!context.gesturesByAvatar.get(avatar)?.has(gesture))
+			if (context.artOf(avatar).torsos[gesture] === undefined)
 				warn(
 					context,
 					`${path}.gesture`,
@@ -357,12 +432,11 @@ export interface ParseResult {
 }
 
 export function parseStrip(raw: unknown, catalog: StripCatalog): ParseResult {
+	const byName = new Map(catalog.avatars.map((entry) => [entry.name, entry]));
 	const context: ParseContext = {
 		issues: [],
 		avatarNames: new Set(catalog.avatars.map((entry) => entry.name)),
-		gesturesByAvatar: new Map(
-			catalog.avatars.map((entry) => [entry.name, new Set(entry.gestures)]),
-		),
+		artOf: (avatar) => byName.get(avatar)?.art ?? emptyArt(),
 		backgrounds: new Set(catalog.backgrounds),
 	};
 	const strip = emptyStrip();
@@ -370,7 +444,12 @@ export function parseStrip(raw: unknown, catalog: StripCatalog): ParseResult {
 		fail(context, "", "strip must be a JSON object");
 		return { strip, issues: context.issues };
 	}
-	if (raw.version !== undefined && raw.version !== STRIP_VERSION)
+	if (
+		raw.version !== undefined &&
+		!(
+			typeof raw.version === "number" && READABLE_VERSIONS.includes(raw.version)
+		)
+	)
 		warn(context, "version", `expected version ${STRIP_VERSION}`);
 
 	if (raw.size !== undefined) {
@@ -452,9 +531,6 @@ export function stripToJson(strip: Strip): string {
 			...(actor.mode && actor.mode !== "say" ? { mode: actor.mode } : {}),
 			...(actor.emotion && actor.emotion !== NEUTRAL_KEY
 				? { emotion: actor.emotion }
-				: {}),
-			...(actor.intensity !== undefined && actor.intensity !== 1
-				? { intensity: actor.intensity }
 				: {}),
 			...(actor.gesture ? { gesture: actor.gesture } : {}),
 			...(actor.facing && actor.facing !== "right"

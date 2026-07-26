@@ -6,12 +6,17 @@ import {
 	WHISPER_FONT_METRICS,
 } from "../src/browser/canvasText.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "../src/browser/panelUnits.js";
-import type { AvatarData } from "../src/engine/avatar.js";
+import { type AvatarData, createAvatar } from "../src/engine/avatar.js";
 import { EM_WAVE } from "../src/engine/emotion.js";
 import { SM_WHISPER } from "../src/engine/panel.js";
 import type { BalloonStyleResolver } from "../src/engine/panelBalloon.js";
 import { composeStrip } from "../src/studio/compose.js";
-import { buildCatalog, parseStrip, type Strip } from "../src/studio/script.js";
+import {
+	buildCatalog,
+	emotionAngles,
+	parseStrip,
+	type Strip,
+} from "../src/studio/script.js";
 
 const { avatars } = JSON.parse(
 	readFileSync(resolve(process.cwd(), "test/fixtures/avatars.json"), "utf8"),
@@ -50,7 +55,7 @@ function anna(extra: Record<string, unknown> = {}) {
 describe("composeStrip", () => {
 	it("emits one panel per spec entry, in order, with the given cast", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [
 				{ actors: [anna({ text: "one" })] },
 				{ actors: [anna(), { avatar: "bolo", text: "two" }] },
@@ -64,14 +69,14 @@ describe("composeStrip", () => {
 	});
 
 	it("keeps a bodiless panel when no actor speaks", () => {
-		const result = compose({ version: 1, panels: [{ actors: [anna()] }] });
+		const result = compose({ version: 2, panels: [{ actors: [anna()] }] });
 		expect(result.panels[0]?.panel.balloons).toHaveLength(0);
 		expect(result.panels[0]?.panel.bodies).toHaveLength(1);
 	});
 
 	it("applies facing directly instead of inferring it", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [
 				{ actors: [anna({ facing: "left" }), anna({ facing: "right" })] },
 			],
@@ -82,9 +87,9 @@ describe("composeStrip", () => {
 	});
 
 	it("picks a different face for a wheel emotion than for neutral", () => {
-		const neutral = compose({ version: 1, panels: [{ actors: [anna()] }] });
+		const neutral = compose({ version: 2, panels: [{ actors: [anna()] }] });
 		const angry = compose({
-			version: 1,
+			version: 2,
 			panels: [{ actors: [anna({ emotion: "angry" })] }],
 		});
 		const first = neutral.panels[0]?.panel.bodies[0];
@@ -95,9 +100,110 @@ describe("composeStrip", () => {
 		expect(second.faceIndex).not.toBe(first.faceIndex);
 	});
 
+	const faceOf = (extra: Record<string, unknown>): number => {
+		const body = compose({
+			version: 2,
+			panels: [{ actors: [anna(extra)] }],
+		}).panels[0]?.panel.bodies[0];
+		if (body?.kind !== "complex") throw new Error("expected a complex body");
+		return body.faceIndex;
+	};
+
+	it("draws a different face per name, and reads a bare one as the strongest", () => {
+		const mild = faceOf({ emotion: "happy_1" });
+		const strong = faceOf({ emotion: "happy_2" });
+		expect(mild).not.toBe(strong);
+		expect(faceOf({ emotion: "happy" })).toBe(strong);
+	});
+
+	it("reaches a face the wheel never picks", () => {
+		const susan = (extra: Record<string, unknown>): number => {
+			const body = compose({
+				version: 2,
+				panels: [{ actors: [{ avatar: "susan", ...extra }] }],
+			}).panels[0]?.panel.bodies[0];
+			if (body?.kind !== "complex") throw new Error("expected a complex body");
+			return body.faceIndex;
+		};
+		// susan draws five faces at the wheel's centre; only the first wins the tie there
+		const drawn = [1, 2, 3, 4, 5].map((n) =>
+			susan({ emotion: `neutral_${n}` }),
+		);
+		expect(new Set(drawn).size).toBe(5);
+		expect(susan({ emotion: "neutral" })).toBe(drawn[0]);
+	});
+
+	// the whole slider, every angle: a strip written before the names existed has to draw what it drew
+	it("draws a retired intensity exactly as the wheel drew it", () => {
+		const data = avatars.find((entry) => entry.name === "susan") as AvatarData;
+		const avatar = createAvatar(data);
+		if (data.type !== "complex") throw new Error("expected a complex fixture");
+		const cases = emotionAngles().flatMap(([emotion, angle]) =>
+			Array.from({ length: 21 }, (_, step) => ({
+				emotion,
+				angle,
+				intensity: step / 20,
+			})),
+		);
+		const composed = compose({
+			version: 1,
+			panels: cases.map(({ emotion, intensity }) => ({
+				actors: [{ avatar: "susan", emotion, intensity }],
+			})),
+		});
+		// pose ids, not record indices: two records holding the same drawing are the same drawing
+		const drawing = (body: { faceIndex: number; torsoIndex: number }) => [
+			data.faces[body.faceIndex]?.poseID,
+			data.torsos[body.torsoIndex]?.poseID,
+		];
+		const mismatches = cases.flatMap(({ emotion, angle, intensity }, index) => {
+			const drawn = composed.panels[index]?.panel.bodies[0];
+			const wheel = avatar.getBodyFromEmotion(angle, intensity);
+			if (drawn?.kind !== "complex" || wheel.kind !== "complex")
+				throw new Error("expected complex bodies");
+			const label = `${emotion} ${intensity}`;
+			return JSON.stringify(drawing(drawn)) === JSON.stringify(drawing(wheel))
+				? []
+				: [`${label}: drew ${drawing(drawn)}, wheel drew ${drawing(wheel)}`];
+		});
+		expect(mismatches).toEqual([]);
+	});
+
+	it("reaches one on a simple avatar, whose face is the whole body", () => {
+		const connor = (extra: Record<string, unknown>): number => {
+			const body = compose({
+				version: 2,
+				panels: [{ actors: [{ avatar: "connor", ...extra }] }],
+			}).panels[0]?.panel.bodies[0];
+			if (body?.kind !== "simple") throw new Error("expected a simple body");
+			return body.bodyIndex;
+		};
+		expect(connor({ emotion: "neutral_2" })).not.toBe(
+			connor({ emotion: "neutral_1" }),
+		);
+		expect(connor({ emotion: "neutral" })).toBe(
+			connor({ emotion: "neutral_1" }),
+		);
+	});
+
+	it("swaps in a torso the wheel never picks, leaving the face alone", () => {
+		const bodyOf = (extra: Record<string, unknown>) => {
+			const body = compose({
+				version: 2,
+				panels: [{ actors: [{ avatar: "susan", ...extra }] }],
+			}).panels[0]?.panel.bodies[0];
+			if (body?.kind !== "complex") throw new Error("expected a complex body");
+			return body;
+		};
+		const plain = bodyOf({ emotion: "happy_1" });
+		const posed = bodyOf({ emotion: "happy_1", gesture: "neutral_4" });
+		expect(posed.faceIndex).toBe(plain.faceIndex);
+		expect(posed.torsoIndex).not.toBe(plain.torsoIndex);
+	});
+
 	it("selects the gesture torso and still lets the emotion pick the face", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [{ actors: [anna({ gesture: "wave", emotion: "happy" })] }],
 		});
 		const body = result.panels[0]?.panel.bodies[0];
@@ -111,11 +217,11 @@ describe("composeStrip", () => {
 
 	it("draws a closer shot than a wide one", () => {
 		const wide = compose({
-			version: 1,
+			version: 2,
 			panels: [{ camera: "wide", actors: [anna()] }],
 		});
 		const close = compose({
-			version: 1,
+			version: 2,
 			panels: [{ camera: "close", actors: [anna()] }],
 		});
 		const wideBox = wide.panels[0]?.panel.bodies[0]?.bbox;
@@ -128,9 +234,9 @@ describe("composeStrip", () => {
 	});
 
 	it("scales a zoomed panel about the panel floor", () => {
-		const plain = compose({ version: 1, panels: [{ actors: [anna()] }] });
+		const plain = compose({ version: 2, panels: [{ actors: [anna()] }] });
 		const zoomed = compose({
-			version: 1,
+			version: 2,
 			panels: [{ zoom: 2, actors: [anna()] }],
 		});
 		const before = plain.panels[0]?.panel.bodies[0]?.bbox;
@@ -145,7 +251,7 @@ describe("composeStrip", () => {
 
 	it("lays balloons out over their speakers", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [
 				{
 					actors: [
@@ -168,7 +274,7 @@ describe("composeStrip", () => {
 
 	it("upper-cases balloon text the way the engine does", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [{ actors: [anna({ text: "hello" })] }],
 		});
 		expect(result.panels[0]?.panel.balloons[0]?.text).toBe("HELLO");
@@ -176,7 +282,7 @@ describe("composeStrip", () => {
 
 	it("carries the background and border onto the panel", () => {
 		const result = compose({
-			version: 1,
+			version: 2,
 			panels: [{ background: "volcano", border: false, actors: [anna()] }],
 		});
 		expect(result.panels[0]?.panel.backdrop).toBe("volcano");
@@ -185,13 +291,13 @@ describe("composeStrip", () => {
 
 	it("honours the size choice", () => {
 		expect(
-			composeStrip({ version: 1, size: "classic", panels: [] } as Strip, {
+			composeStrip({ version: 2, size: "classic", panels: [] } as Strip, {
 				avatars,
 				resolveStyle,
 			}).unit,
 		).toBe(CLASSIC_UNIT);
 		expect(
-			composeStrip({ version: 1, panels: [] } as Strip, {
+			composeStrip({ version: 2, panels: [] } as Strip, {
 				avatars,
 				resolveStyle,
 			}).unit,
@@ -200,14 +306,14 @@ describe("composeStrip", () => {
 
 	it("is deterministic and panel-local, so editing one panel leaves the others alone", () => {
 		const base = {
-			version: 1,
+			version: 2,
 			panels: [
 				{ actors: [anna({ text: "first panel line" })] },
 				{ actors: [{ avatar: "bolo", text: "second panel line" }] },
 			],
 		};
 		const edited = {
-			version: 1,
+			version: 2,
 			panels: [
 				{ actors: [anna({ text: "a much longer first panel line here" })] },
 				{ actors: [{ avatar: "bolo", text: "second panel line" }] },
@@ -221,7 +327,7 @@ describe("composeStrip", () => {
 	it("reports an unknown avatar and skips it", () => {
 		const result = composeStrip(
 			{
-				version: 1,
+				version: 2,
 				panels: [{ actors: [{ avatar: "ghost" }, { avatar: "anna" }] }],
 			} as Strip,
 			{ avatars, resolveStyle },

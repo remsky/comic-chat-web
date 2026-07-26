@@ -74,8 +74,10 @@ Naming someone points your avatar at them, and being named highlights that line 
 The result is exportable as PNG, or import/export as its JSON definition document. It provides significant control and customization compared to faking a chat (sizing, direction, gestures, etc), and it's pretty fun to tool around with. 
 
 - The `MODERATION` variable acts similarly to how it does in chat, putting a pause on rendering. See [DEPLOYMENT.md](DEPLOYMENT.md).
-- Emotion selection in the UI is enumerated per available character range. 
-  - e.g. "Happy 1" and "Happy 2" are generated via a nearest band on the "intensity" parameter.
+- Every drawing a character owns answers to a name, probed off the art itself and published at `/assets/catalog.json`.
+  - `emotion` takes `happy_1` through `happy_5`, or a bare `happy` for whichever the engine reaches unasked.
+  - The wheel picks one drawing per coordinate, so art tied out of reach there is named `neutral_2` and up.
+  - `gesture` takes a slash command or `<emotion>_<n>`, reaching every torso including the ones the wheel skips.
 
 
 <details open>
@@ -94,7 +96,7 @@ The result is exportable as PNG, or import/export as its JSON definition documen
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "columns": 5,
   "panels": [
     {
@@ -104,8 +106,7 @@ The result is exportable as PNG, or import/export as its JSON definition documen
         {
           "avatar": "kevin",
           "text": "It's not the worst studio",
-          "emotion": "shout",
-          "intensity": 0.43
+          "emotion": "shout"
         },
         {
           "avatar": "denise",
@@ -122,15 +123,13 @@ The result is exportable as PNG, or import/export as its JSON definition documen
           "avatar": "kevin",
           "text": "Wait. We're also over there?!",
           "emotion": "shout",
-          "intensity": 0.43,
           "gesture": "pointself",
           "facing": "left"
         },
         {
           "avatar": "denise",
           "text": "Don't worry about it",
-          "emotion": "laugh",
-          "intensity": 0.88,
+          "emotion": "laugh_1",
           "gesture": "wave",
           "facing": "left"
         }

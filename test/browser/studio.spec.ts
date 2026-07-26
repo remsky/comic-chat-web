@@ -115,7 +115,7 @@ test("studio loads a strip from the url and exports it as a png", async ({
 	page,
 }) => {
 	const script = {
-		version: 1,
+		version: 2,
 		panels: [
 			{ actors: [{ avatar: "anna", text: "from the url", emotion: "happy" }] },
 		],
@@ -156,7 +156,7 @@ test("panels per row shapes both the preview rows and the sheet", async ({
 		"true",
 	);
 	const script = {
-		version: 1,
+		version: 2,
 		columns: 2,
 		panels: Array.from({ length: 4 }, () => ({
 			actors: [{ avatar: "anna", text: "row test" }],
@@ -303,7 +303,7 @@ test("studio keeps an oversized shot inside its panel on the sheet", async ({
 	page,
 }) => {
 	const script = {
-		version: 1,
+		version: 2,
 		panels: [
 			{
 				camera: "close",
@@ -370,7 +370,7 @@ test("studio reports a bad script instead of rendering it", async ({
 			}
 		).__studio;
 		return studio.load({
-			version: 1,
+			version: 2,
 			panels: [{ actors: [{ avatar: "nobody", text: "hi" }] }],
 		});
 	});

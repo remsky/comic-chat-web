@@ -9,6 +9,7 @@ import {
 } from "../browser/canvasText.js";
 import { element } from "../browser/dom.js";
 import type { AvatarData } from "../engine/avatar.js";
+import { emptyArt } from "./art.js";
 import { composeStrip } from "./compose.js";
 import { PanelEditor } from "./editor.js";
 import { StripScreen } from "./moderation.js";
@@ -20,6 +21,7 @@ import {
 	COLUMNS_MIN,
 	parseStrip,
 	parseStripJson,
+	STRIP_VERSION,
 	type Strip,
 	type StripCatalog,
 	type StripIssue,
@@ -30,7 +32,7 @@ import {
 const RENDER_DELAY_MS = 120;
 
 const DEMO: unknown = {
-	version: 1,
+	version: 2,
 	panels: [
 		{
 			camera: "wide",
@@ -93,6 +95,9 @@ async function main(): Promise<void> {
 		manifest.avatars,
 		backdrops.backdrops.map((info) => info.name),
 	);
+	// the catalog probes each character once; compose reads that same memo instead of keeping its own
+	const catalogByName = new Map(catalog.avatars.map((e) => [e.name, e]));
+	const artFor = (name: string) => catalogByName.get(name)?.art ?? emptyArt();
 	const measurer = new CanvasTextMeasurer(createCanvasMeasureContext());
 	const resolveStyle = measurer.styleResolver();
 	const stage = element("studio-stage");
@@ -156,6 +161,7 @@ async function main(): Promise<void> {
 		const composed = composeStrip(screen.drawable(strip), {
 			avatars: manifest.avatars,
 			resolveStyle,
+			artFor,
 		});
 		preview.columns = strip.columns ?? COLUMNS_DEFAULT;
 		panels.style.setProperty("--columns", String(preview.columns));
@@ -247,7 +253,7 @@ async function main(): Promise<void> {
 	});
 
 	element("studio-new").addEventListener("click", () => {
-		replace(parseStrip({ version: 1, panels: [] }, catalog).strip);
+		replace(parseStrip({ version: STRIP_VERSION, panels: [] }, catalog).strip);
 	});
 
 	const saveMenu = element<HTMLDetailsElement>("studio-save");
