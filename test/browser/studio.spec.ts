@@ -9,6 +9,10 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	});
 	page.on("pageerror", (error) => errors.push(error.message));
 
+	// vite preview serves no worker, so an unstubbed screen 502s into the error list
+	await page.route("**/api/moderate", (route) =>
+		route.fulfill({ json: { flagged: [] } }),
+	);
 	await page.goto("/studio.html");
 	await expect(page.locator("body")).toHaveAttribute(
 		"data-studio-ready",
