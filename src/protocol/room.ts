@@ -51,6 +51,8 @@ export interface ChatEntry {
 	seq: number;
 	// "" for history predating the sender_id column
 	userId: string;
+	// epoch ms the room stored the event; absent on history predating the column
+	at?: number;
 	avatar: number;
 	name: string;
 	text: string;
@@ -62,6 +64,7 @@ export interface ChatEntry {
 export interface BackgroundEntry {
 	type: "background";
 	seq: number;
+	at?: number;
 	name: string;
 	by: string;
 }
@@ -75,6 +78,7 @@ export interface AnnouncementEntry {
 	kind: AnnounceKind;
 	seq: number;
 	userId: string;
+	at?: number;
 	avatar: number;
 	name: string;
 	detail: string;
@@ -255,7 +259,7 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 			typeof message.from === "string" && ROOM_NAME_PATTERN.test(message.from)
 				? message.from
 				: undefined;
-		const sent = sentStamp(message.sent);
+		const sent = stamp(message.sent);
 		const userId = userIdClaim(message.userId);
 		return {
 			type: "join",
@@ -281,7 +285,7 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		if ("pose" in message) return null;
 		const annotation = parseAnnotation(message.annotation);
 		if (annotation === null) return null;
-		const sent = sentStamp(message.sent);
+		const sent = stamp(message.sent);
 		return {
 			type: "chat",
 			text,
@@ -314,8 +318,8 @@ function userIdClaim(value: unknown): string | undefined {
 		: undefined;
 }
 
-// the sender's clock stamp on joins and chats; malformed stamps are dropped, not fatal
-function sentStamp(value: unknown): number | undefined {
+// an epoch stamp claimed by a sender or carried on a stored entry; malformed stamps are dropped, not fatal
+function stamp(value: unknown): number | undefined {
 	return typeof value === "number" && Number.isFinite(value) && value >= 1
 		? Math.trunc(value)
 		: undefined;
@@ -336,12 +340,13 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 	const entry = raw as Record<string, unknown>;
 	const seq = seqNumber(entry.seq);
 	if (seq === null) return null;
+	const at = stamp(entry.at);
 	if (entry.type === "background") {
 		const name = boundedString(entry.name, 32);
 		const by = boundedString(entry.by, MAX_NAME_LENGTH);
 		if (name === null || by === null) return null;
 		if (name !== "" && !BACKGROUND_NAME_PATTERN.test(name)) return null;
-		return { type: "background", seq, name, by };
+		return { type: "background", seq, at, name, by };
 	}
 	const avatar =
 		typeof entry.avatar === "number" &&
@@ -366,6 +371,7 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 			kind: entry.kind as AnnounceKind,
 			seq,
 			userId,
+			at,
 			avatar,
 			name,
 			detail,
@@ -377,7 +383,17 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 		const annotation = parseAnnotation(entry.annotation);
 		if (text === null || text.length === 0 || mode === null || !annotation)
 			return null;
-		return { type: "chat", seq, userId, avatar, name, text, mode, annotation };
+		return {
+			type: "chat",
+			seq,
+			userId,
+			at,
+			avatar,
+			name,
+			text,
+			mode,
+			annotation,
+		};
 	}
 	return null;
 }

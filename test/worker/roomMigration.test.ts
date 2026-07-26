@@ -19,6 +19,9 @@ const LEGACY_TABLE = `CREATE TABLE messages (
 const LEGACY_INSERT =
 	"INSERT INTO messages (avatar, name, text, mode, at, expr, gest, req, bg) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+// fixed so the assertions can prove the original send times survive the move into events
+const LEGACY_AT = 1_700_000_000_000;
+
 describe("legacy history migration", () => {
 	it("carries messages rows into events with poses intact", async () => {
 		const room = "legacy-migrate";
@@ -43,14 +46,17 @@ describe("legacy history migration", () => {
 				[2, "Tim", "pen-pals", 9, null, null, null],
 				[2, "Tim", "dial-up", 10, null, null, null],
 			];
-			for (const [avatar, name, text, mode, expr, gest, req] of rows)
+			for (const [
+				index,
+				[avatar, name, text, mode, expr, gest, req],
+			] of rows.entries())
 				state.storage.sql.exec(
 					LEGACY_INSERT,
 					avatar,
 					name,
 					text,
 					mode,
-					Date.now(),
+					LEGACY_AT + index,
 					expr,
 					gest,
 					req,
@@ -68,11 +74,18 @@ describe("legacy history migration", () => {
 		const { welcome, socket } = await join(room, "ann", 1);
 		expect(welcome.historyBackground).toBe("volcano");
 		expect(welcome.history).toEqual([
-			{ type: "background", seq: 1, name: "volcano", by: "remsky" },
+			{
+				type: "background",
+				seq: 1,
+				at: LEGACY_AT,
+				name: "volcano",
+				by: "remsky",
+			},
 			{
 				type: "chat",
 				seq: 2,
 				userId: "",
+				at: LEGACY_AT + 1,
 				avatar: 18,
 				name: "remsky",
 				text: "Oh wow",
@@ -92,6 +105,7 @@ describe("legacy history migration", () => {
 				type: "chat",
 				seq: 3,
 				userId: "",
+				at: LEGACY_AT + 2,
 				avatar: 18,
 				name: "remsky",
 				text: "time*",
@@ -112,6 +126,7 @@ describe("legacy history migration", () => {
 				kind: "avatar",
 				seq: 4,
 				userId: "",
+				at: LEGACY_AT + 3,
 				avatar: 18,
 				name: "remsky",
 				detail: "18",
@@ -121,6 +136,7 @@ describe("legacy history migration", () => {
 				kind: "depart",
 				seq: 5,
 				userId: "",
+				at: LEGACY_AT + 4,
 				avatar: 2,
 				name: "Tim",
 				detail: "pen-pals",
@@ -130,6 +146,7 @@ describe("legacy history migration", () => {
 				kind: "arrive",
 				seq: 6,
 				userId: "",
+				at: LEGACY_AT + 5,
 				avatar: 2,
 				name: "Tim",
 				detail: "dial-up",
@@ -158,7 +175,7 @@ describe("legacy history migration", () => {
 				"old-timer",
 				"hello from 1996",
 				1,
-				Date.now(),
+				LEGACY_AT,
 			);
 			applyMigrations(state.storage);
 		});
@@ -169,6 +186,7 @@ describe("legacy history migration", () => {
 				type: "chat",
 				seq: 1,
 				userId: "",
+				at: LEGACY_AT,
 				avatar: 7,
 				name: "old-timer",
 				text: "hello from 1996",
