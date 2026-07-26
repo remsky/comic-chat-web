@@ -1,0 +1,893 @@
+{
+	"version": 2,
+	"art": "f77409fc",
+	"emotions": [
+		"happy",
+		"coy",
+		"bored",
+		"scared",
+		"sad",
+		"angry",
+		"shout",
+		"laugh",
+		"neutral"
+	],
+	"gestures": [
+		"wave",
+		"point",
+		"pointself",
+		"doublepoint",
+		"shrug",
+		"walkaway",
+		"walk",
+		"walkup"
+	],
+	"modes": ["say", "think", "whisper", "action"],
+	"cameras": ["wide", "close"],
+	"facings": ["left", "right"],
+	"sizes": ["classic", "modern"],
+	"backgrounds": [
+		"buckroom",
+		"clouds",
+		"den",
+		"field",
+		"pastoral",
+		"room",
+		"space",
+		"volcano",
+		"yellow"
+	],
+	"limits": {
+		"actors": 5,
+		"balloons": 5,
+		"zoom": [0.5, 2],
+		"columns": [1, 8]
+	},
+	"avatars": [
+		{
+			"name": "anna",
+			"emotions": {
+				"happy": 2,
+				"coy": 2,
+				"bored": 1,
+				"scared": 2,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 3
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"neutral_5",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"angry_1",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "bolo",
+			"emotions": {
+				"happy": 2,
+				"coy": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 1
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"bored_1",
+				"sad_1",
+				"angry_1",
+				"angry_2"
+			]
+		},
+		{
+			"name": "connor",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"bored": 2,
+				"sad": 2,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"aliases": {
+				"shout": "angry"
+			},
+			"gestures": [
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"happy_1",
+				"happy_2",
+				"happy_3",
+				"coy_1",
+				"bored_1",
+				"bored_2",
+				"sad_1",
+				"sad_2",
+				"angry_1",
+				"shout_1",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "denise",
+			"emotions": {
+				"happy": 3,
+				"coy": 4,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 2,
+				"neutral": 1
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"coy_1",
+				"bored_1",
+				"angry_1",
+				"angry_2"
+			]
+		},
+		{
+			"name": "hugh",
+			"emotions": {
+				"happy": 2,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"angry_1",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "susan",
+			"emotions": {
+				"happy": 5,
+				"coy": 2,
+				"bored": 2,
+				"scared": 1,
+				"sad": 1,
+				"angry": 3,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 5
+			},
+			"aliases": {
+				"bored": "coy"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"shrug",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"neutral_5",
+				"scared_1",
+				"angry_1"
+			]
+		},
+		{
+			"name": "armando",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 2,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"aliases": {
+				"angry": "sad"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"angry_1"
+			]
+		},
+		{
+			"name": "cro",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 2,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"scared_1",
+				"scared_2",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "dan",
+			"emotions": {
+				"happy": 3,
+				"coy": 3,
+				"bored": 1,
+				"scared": 1,
+				"sad": 2,
+				"angry": 2,
+				"shout": 2,
+				"laugh": 1,
+				"neutral": 4
+			},
+			"aliases": {
+				"angry": "sad"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"shrug",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"bored_1",
+				"angry_1",
+				"angry_2",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "glenda",
+			"emotions": {
+				"neutral": 1
+			},
+			"gestures": ["neutral_1"]
+		},
+		{
+			"name": "jordan",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 4
+			},
+			"aliases": {
+				"scared": "happy",
+				"shout": "sad"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"happy_1",
+				"coy_1",
+				"bored_1",
+				"scared_1",
+				"sad_1",
+				"angry_1",
+				"shout_1",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "lance",
+			"emotions": {
+				"coy": 2,
+				"bored": 2,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"neutral": 1
+			},
+			"aliases": {
+				"shout": "angry"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"doublepoint",
+				"shrug",
+				"walkaway",
+				"walkup",
+				"neutral_1",
+				"neutral_2",
+				"angry_1",
+				"angry_2"
+			]
+		},
+		{
+			"name": "lynnea",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 2,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 3
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"neutral_5",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"bored_2",
+				"sad_1",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"shout_1",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "margaret",
+			"emotions": {
+				"happy": 2,
+				"coy": 3,
+				"bored": 1,
+				"scared": 2,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 3
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "mike",
+			"emotions": {
+				"happy": 2,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"aliases": {
+				"bored": "coy",
+				"sad": "scared"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"shrug",
+				"neutral_1",
+				"neutral_2",
+				"coy_1",
+				"angry_1"
+			]
+		},
+		{
+			"name": "pedagog",
+			"emotions": {
+				"neutral": 1
+			},
+			"gestures": ["neutral_1"]
+		},
+		{
+			"name": "rainbow",
+			"emotions": {
+				"neutral": 1
+			},
+			"gestures": ["neutral_1"]
+		},
+		{
+			"name": "tiki",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"bored": 1,
+				"scared": 2,
+				"sad": 3,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"shout_1",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "tongtyed",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 3,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"aliases": {
+				"bored": "coy",
+				"sad": "scared"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"shrug",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"coy_1",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"angry_4"
+			]
+		},
+		{
+			"name": "tux",
+			"emotions": {
+				"neutral": 1
+			},
+			"gestures": ["neutral_1"]
+		},
+		{
+			"name": "waf",
+			"emotions": {
+				"neutral": 1
+			},
+			"gestures": ["neutral_1"]
+		},
+		{
+			"name": "xeno",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 2
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"neutral_5",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"angry_1",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "buck",
+			"emotions": {
+				"happy": 2,
+				"coy": 1,
+				"bored": 1,
+				"scared": 2,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 3
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"happy_1",
+				"coy_1",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"sad_1",
+				"angry_1",
+				"shout_1",
+				"laugh_1"
+			]
+		},
+		{
+			"name": "kirby",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 2,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 2,
+				"neutral": 3
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"happy_1",
+				"coy_1",
+				"bored_1",
+				"scared_1",
+				"sad_1",
+				"angry_1",
+				"shout_1",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "veronica",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 3,
+				"neutral": 2
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"happy_1",
+				"happy_2",
+				"coy_1",
+				"bored_1",
+				"scared_1",
+				"sad_1",
+				"angry_1",
+				"shout_1",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "kevin",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 1
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"bored_1",
+				"scared_1",
+				"angry_1",
+				"angry_2",
+				"shout_1",
+				"shout_2",
+				"laugh_1",
+				"laugh_2",
+				"laugh_3"
+			]
+		},
+		{
+			"name": "kwensa",
+			"emotions": {
+				"happy": 2,
+				"coy": 2,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 1
+			},
+			"aliases": {
+				"sad": "scared"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"scared_1",
+				"scared_2",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"shout_1",
+				"laugh_1",
+				"laugh_2",
+				"laugh_3"
+			]
+		},
+		{
+			"name": "maynard",
+			"emotions": {
+				"happy": 2,
+				"coy": 1,
+				"scared": 2,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 2,
+				"neutral": 2
+			},
+			"aliases": {
+				"shout": "angry"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"happy_1",
+				"happy_2",
+				"happy_3",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"scared_2",
+				"sad_1",
+				"sad_2",
+				"sad_3",
+				"angry_1",
+				"angry_2",
+				"shout_1",
+				"shout_2",
+				"laugh_1",
+				"laugh_2",
+				"laugh_3"
+			]
+		},
+		{
+			"name": "rebecca",
+			"emotions": {
+				"happy": 3,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 3,
+				"shout": 1,
+				"laugh": 2,
+				"neutral": 1
+			},
+			"aliases": {
+				"sad": "bored",
+				"shout": "scared"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"happy_1",
+				"happy_2",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"bored_2",
+				"scared_1",
+				"scared_2",
+				"angry_1",
+				"angry_2",
+				"angry_3",
+				"angry_4",
+				"shout_1",
+				"shout_2",
+				"shout_3",
+				"laugh_1",
+				"laugh_2",
+				"laugh_3"
+			]
+		},
+		{
+			"name": "sage",
+			"emotions": {
+				"happy": 3,
+				"coy": 2,
+				"bored": 1,
+				"scared": 2,
+				"sad": 1,
+				"angry": 2,
+				"shout": 1,
+				"laugh": 2,
+				"neutral": 1
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"neutral_4",
+				"happy_1",
+				"coy_1",
+				"coy_2",
+				"bored_1",
+				"scared_1",
+				"scared_2",
+				"angry_1",
+				"angry_2",
+				"laugh_1",
+				"laugh_2"
+			]
+		},
+		{
+			"name": "scotty",
+			"emotions": {
+				"happy": 2,
+				"coy": 2,
+				"bored": 1,
+				"scared": 3,
+				"sad": 2,
+				"angry": 4,
+				"shout": 2,
+				"laugh": 3,
+				"neutral": 1
+			},
+			"aliases": {
+				"coy": "happy"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"neutral_1",
+				"neutral_2",
+				"neutral_3",
+				"bored_1",
+				"scared_1",
+				"angry_1"
+			]
+		}
+	]
+}
