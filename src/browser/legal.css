@@ -1,0 +1,191 @@
+/* Standalone Win95 sheet for the terms and privacy page; shares the palette with room.css but none of its layout. */
+
+:root {
+	color-scheme: light;
+	font-synthesis: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body.legal {
+	margin: 0;
+	background: #c0c0c0;
+	color: #000;
+	font:
+		0.875rem / 1.6 Tahoma,
+		"Segoe UI",
+		system-ui,
+		sans-serif;
+}
+
+.titlebar {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	padding: 0.25rem 0.5rem;
+	background: linear-gradient(90deg, #000080, #1084d0);
+	color: #fff;
+}
+
+.titlebar-title {
+	margin: 0;
+	font-size: 0.8125rem;
+}
+
+.titlebar-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.titlebar-actions {
+	margin-left: auto;
+}
+
+.titlebar-button {
+	padding: 0.15rem 0.6rem;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	color: #000;
+	font-size: 0.75rem;
+	text-decoration: none;
+}
+
+.sheet {
+	max-width: 46rem;
+	margin: 1rem auto 3rem;
+	padding: 1.25rem 1.5rem 2rem;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+}
+
+.sheet h1 {
+	margin: 0 0 0.25rem;
+	font-size: 1.25rem;
+}
+
+.sheet h2 {
+	margin: 2rem 0 0.5rem;
+	padding-bottom: 0.25rem;
+	border-bottom: 1px solid #808080;
+	font-size: 1.05rem;
+}
+
+.sheet h3 {
+	margin: 1.25rem 0 0.35rem;
+	font-size: 0.9375rem;
+}
+
+.sheet a {
+	color: #000080;
+}
+
+.stamp {
+	margin: 0 0 1rem;
+	color: #333;
+	font-size: 0.8125rem;
+}
+
+/* the plain-language read, sunk into the page so it does not read as part of the terms */
+.summary {
+	margin: 0 0 1rem;
+	padding: 0.75rem 1rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	background: #fff;
+}
+
+.summary p:first-child {
+	margin-top: 0;
+}
+
+.summary p:last-child {
+	margin-bottom: 0;
+}
+
+.jump {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 0 0 1.5rem;
+	padding: 0;
+	list-style: none;
+	font-size: 0.8125rem;
+}
+
+.sheet ul {
+	padding-left: 1.25rem;
+}
+
+.sheet li {
+	margin: 0.3rem 0;
+}
+
+.sheet table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0.75rem 0;
+	background: #fff;
+	font-size: 0.8125rem;
+}
+
+.sheet th,
+.sheet td {
+	padding: 0.35rem 0.5rem;
+	border: 1px solid #808080;
+	text-align: left;
+	vertical-align: top;
+}
+
+.sheet code {
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 0.8125rem;
+}
+
+/* sunk field matching .summary, so the snapshot reads as data rather than page copy */
+.report-text {
+	display: block;
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	background: #fff;
+	color: #000;
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	resize: vertical;
+}
+
+.report-actions {
+	margin: 0.6rem 0 0;
+}
+
+.report-actions .titlebar-button {
+	padding: 0.3rem 0.9rem;
+	font-size: 0.8125rem;
+	cursor: pointer;
+}
+
+.legal-footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.2rem 0.5rem;
+	justify-content: center;
+	margin-top: 2rem;
+	color: #333;
+	font-size: 0.75rem;
+}
+
+.legal-footer a {
+	color: #000080;
+}

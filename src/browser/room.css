@@ -584,6 +584,7 @@
 
 .strip-actions {
 	display: flex;
+	flex-wrap: wrap;
 	gap: 0.4rem;
 }
 
@@ -609,6 +610,11 @@
 
 .strip-button--leave {
 	color: #7f1010;
+}
+
+/* a basis lets the third button wrap out of a narrow sidebar instead of crushing the row */
+.strip-actions .strip-button {
+	flex: 1 1 7ch;
 }
 
 #sidebar-more {
@@ -954,12 +960,26 @@ body:not(.modern-tweaks) .background-picker-grid {
 	font-size: 0.7rem;
 }
 
+/* rides the sticky row on its own line, so the character grid cannot scroll it away */
+.join-consent {
+	flex: 1 0 100%;
+	margin: 0;
+	color: #333;
+	font-size: 0.7rem;
+	line-height: 1.4;
+}
+
+.join-consent a {
+	color: #000080;
+}
+
 .dialog-buttons {
 	position: sticky;
 	bottom: 0;
 	z-index: 1;
 	display: flex;
-	gap: 0.6rem;
+	flex-wrap: wrap;
+	gap: 0.35rem 0.6rem;
 	align-items: center;
 	justify-content: space-between;
 	margin: 0.1rem -0.75rem -0.6rem;

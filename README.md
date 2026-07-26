@@ -6,7 +6,7 @@
 **Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
-  <img src="https://img.shields.io/badge/tests-260%20passing-forestgreen" alt="260 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-345%20passing-forestgreen" alt="345 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
@@ -14,13 +14,25 @@ Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
 
 ## Features
 
-The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) by David Kurlander, Tim Skelly, and David Salesin. 
+The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) and original works: ([credits](#license-and-attributions)). 
 
 Validated against traces from an instrumented C++ client of the original to accurately reproduce the original engine including:
 
 - 31-character cast, automatic panel layout
 - Emotion detection, speech balloon splines
 - Avatar posing, reactive angles and camera
+
+<details open>
+<summary>Screenshots</summary>
+
+<table>
+  <tr>
+    <td width="41%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
+    <td width="21.5%"><img src="assets/wip-mobile-screenshot.png" alt="Comic Chat Web mobile view showing a three-panel conversation with the mobile toolbar" width="100%" border="1"></td>
+    <td width="29.5%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
+  </tr>
+</table>
+</details>
 
 <details>
 <summary>Modern tweaks and commands</summary>
@@ -57,33 +69,76 @@ Naming someone points your avatar at them, and being named highlights that line 
 
 ## Studio
 
-`/studio` is an integrated editor allowing you to build a strip panel by panel on your own. The result is exportable as PNG, or import/export as its JSON definition document.
+`studio` is an integrated editor allowing you to build a strip panel by panel on your own. 
 
-Emotion strength in the UI is enumerated per character range. `Happy 1` and `Happy 2` for example are two different poses, generated via a nearest band on the `intensity` parameter in the JSON.
+The result is exportable as PNG, or import/export as its JSON definition document. It provides significant control and customization compared to faking a chat (sizing, direction, gestures, etc), and it's pretty fun to tool around with. 
 
-The  `MODERATION` variable acts here as it does in chat, but with a warning and a pause on rendering. See [Deployment](#deployment--self-hosting).
+- The `MODERATION` variable acts similarly to how it does in chat, putting a pause on rendering. See [DEPLOYMENT.md](DEPLOYMENT.md).
+- Emotion selection in the UI is enumerated per available character range. 
+  - e.g. "Happy 1" and "Happy 2" are generated via a nearest band on the "intensity" parameter.
+
+
+<details open>
+<summary>Screenshots</summary>
+
+<table>
+  <tr>
+    <td width="35%"><img src="assets/studio-screenshot.png" alt="Comic Chat Studio panel list with the Save menu open and the JSON pane below the panel constructor" width="100%" border="1"></td>
+    <td width="65%"><img src="assets/studio-screenshot-2.png" alt="Comic Chat Studio showing a rendered five-panel strip above the panel list and character controls" width="100%" border="1"></td>
+  </tr>
+</table>
+</details>
 
 <details>
-<summary>Sample JSON and Screenshots</summary>
-
-<p>
-  <img src="assets/studio-screenshot.png" alt="Comic Chat Studio showing a three-panel strip, the panel constructor with character controls, and the JSON pane" width="40%" border="1">
-</p>
+<summary>Sample JSON</summary>
 
 ```json
 {
   "version": 1,
+  "columns": 5,
   "panels": [
     {
       "background": "volcano",
-      "camera": "wide",
+      "camera": "close",
       "actors": [
-        { "avatar": "anna", "text": "Hey look at that", "gesture": "wave" },
-        { "avatar": "tiki", "text": "A studio", "emotion": "happy", "facing": "left" }
+        {
+          "avatar": "kevin",
+          "text": "It's not the worst studio",
+          "emotion": "shout",
+          "intensity": 0.43
+        },
+        {
+          "avatar": "denise",
+          "text": "Pretty decent options",
+          "facing": "left"
+        }
+      ]
+    },
+    {
+      "background": "volcano",
+      "zoom": 1.3,
+      "actors": [
+        {
+          "avatar": "kevin",
+          "text": "Wait. We're also over there?!",
+          "emotion": "shout",
+          "intensity": 0.43,
+          "gesture": "pointself",
+          "facing": "left"
+        },
+        {
+          "avatar": "denise",
+          "text": "Don't worry about it",
+          "emotion": "laugh",
+          "intensity": 0.88,
+          "gesture": "wave",
+          "facing": "left"
+        }
       ]
     }
   ]
 }
+
 ```
 
 
@@ -94,39 +149,31 @@ The  `MODERATION` variable acts here as it does in chat, but with a warning and 
 ## Deployment / Self-Hosting
 
 > [!NOTE]
-> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public deployments want a Cloudflare rate-limiting rule. Both are covered below.
+> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public deployments want a Cloudflare rate-limiting rule. Both are covered in [DEPLOYMENT.md](DEPLOYMENT.md).
 
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
 
 
-<details>
-<summary>Deployment Details</summary>
+See [DEPLOYMENT.md](DEPLOYMENT.md) before deploying to understand the parameters available: `ROOMS` and `MODERATION` vars, the source constants behind the rate limits and retention, the build variables that name an operator on the terms page, and what a fork inherits.
 
-For Cloudflare Workers Builds, build with `npm run build` and deploy with `npx wrangler deploy`.
+## Reception
 
-Two vars configure a deploy, in `wrangler.jsonc` or the dashboard:
+Sampled from the live rooms as rendered; without attributions
 
-| Var | Default | Effect |
-| --- | --- | --- |
-| `ROOMS` | `lobby`, `tech-news`, `weather-chat` | Only these rooms accept connections, bounding how many Durable Objects a public deploy can create. Extendable to create-on-join. |
-| `MODERATION` | `on` | `off` drops the profanity screen from chat nicknames and messages, dropping `/api/moderate` to a 404. Any other value, unset included, leaves it on. |
+<details open>
+<summary>Screenshots</summary>
 
-Everything else is a source constant, tuned as a safety rail rather than a preference:
-
-| Limit | Value | Source |
-| --- | --- | --- |
-| Sockets per room | 12 | `worker/room.ts` |
-| Send rate | 5 burst, 1/s refill | `worker/room.ts` |
-| Flood disconnect | 20 straight drops | `worker/room.ts` |
-| Mute after a blocked message | 15s, times the strike count | `worker/room.ts` |
-| Disconnect after blocked messages | 5 | `worker/room.ts` |
-| History chunk | 50 messages | `src/protocol/room.ts` |
-| History retention | 500 messages per room | `worker/db/events.ts` |
-| Screen batch | 200 texts, 2000 chars each | `worker/index.ts` |
-
-Live rooms run over Durable Object WebSockets, one message in flight per client: the next send waits on the server's echo. A liveness failure greys the composer and reconnects, and the unechoed message returns to the send box.
-
-For a public deployment, add a Cloudflare rate-limiting rule on `/api/*` and a usage notification. Worker invocations scale with automated abuse.
+<table align="center" width="72%">
+  <tr>
+    <td><img src="assets/reviews-1.png" alt="Four-panel strip: dude this is cool, this brings back memories, how cool is this, on a scale from 1 to 10? 47!, is teleported back to 1996" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="assets/reviews-2.png" alt="Four-panel strip: aliens greeting each other, one testing a very long message across two panels, and a reply that they have not thought about Comic Chat in decades" width="100%"></td>
+  </tr>
+  <tr>
+    <td><img src="assets/reviews-3.png" alt="Four-panel strip: does the world know it exists, how does this work, waouh, this is so based, they have the internet on computers now" width="100%"></td>
+  </tr>
+</table>
 
 </details>
 
@@ -154,7 +201,7 @@ npm run preview:worker
 npm ci
 npm run dev          # Vite dev server at localhost:5173
 npm test             # both vitest projects: node + worker
-npm run test:browser # Playwright desktop + mobile smoke
+npm run test:browser # Playwright desktop + mobile smoke; wants `npm run dev:api` up for the studio's screen call
 npm run check        # biome + strict tsc over src, worker, test, and tools
 ```
 
@@ -198,17 +245,7 @@ All steps are deterministic and byte-reproducible, sourced from a sibling checko
 </details>
 
 
-<details open>
-<summary>Screenshots</summary>
 
-<table>
-  <tr>
-    <td width="41%"><img src="assets/wip-screenshot.png" alt="Comic Chat Web interface showing a three-panel conversation, member list, avatar, and emotion wheel" width="100%" border="1"></td>
-    <td width="21.5%"><img src="assets/wip-mobile-screenshot.png" alt="Comic Chat Web mobile view showing a three-panel conversation with the mobile toolbar" width="100%" border="1"></td>
-    <td width="29.5%"><img src="assets/wip-select.png" alt="Comic Chat Web connection screen with room, nickname, and character selection controls" width="100%" border="1"></td>
-  </tr>
-</table>
-</details>
 
 
 ## Related projects to check out
@@ -220,6 +257,14 @@ All steps are deterministic and byte-reproducible, sourced from a sibling checko
 - [gyng/comicchat](https://github.com/gyng/comicchat) (archived): quick and dirty web client and node.js server based on Comic Chat
 
 ## License and attributions
+
+This unofficial port builds on the original Microsoft Comic Chat client and the efforts of those who preserved it.
+
+- **Jim Woodring**: created the original character cast, poses, and backgrounds
+- **Vincent Connare**: designed Comic Sans, the typography of Comic Chat's speech balloons
+- **David Kurlander**: original creator and lead developer of the Microsoft Comic Chat engine (1995)
+- **Tim Skelly and David Salesin**: co-authors, with Kurlander, of the SIGGRAPH '96 [Comic Chat paper](https://kurlander.net/DJ/Pubs/SIGGRAPH96.pdf) defining the panel layout, balloon placement, and avatar composition algorithms reproduced in this port
+- **Robert Standefer and Scott Hanselman**: facilitated the 2026 open-source release of the original Microsoft repository
 
 Except for the third-party material identified below, this project is licensed under the [GNU Affero General Public License v3.0 only](LICENSE). If you operate a modified version over a network, the AGPL requires you to offer its corresponding source to the people using it.
 

@@ -8,15 +8,18 @@
 			content="Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip."
 		/>
 		<title>Comic Chat - Web Port of the 1996 Microsoft Classic</title>
-		<link rel="canonical" href="https://comics.remsky.art/" />
+		<!--if:SITE_ORIGIN-->
+		<link rel="canonical" href="%SITE_ORIGIN%/" />
+		<!--/if-->
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Comic Chat Web" />
 		<meta
 			property="og:description"
 			content="Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip."
 		/>
-		<meta property="og:url" content="https://comics.remsky.art/" />
-		<meta property="og:image" content="https://comics.remsky.art/og.jpg" />
+		<!--if:SITE_ORIGIN-->
+		<meta property="og:url" content="%SITE_ORIGIN%/" />
+		<meta property="og:image" content="%SITE_ORIGIN%/og.jpg" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="600" />
 		<meta
@@ -29,13 +32,14 @@
 				"@context": "https://schema.org",
 				"@type": "WebApplication",
 				"name": "Comic Chat Web",
-				"url": "https://comics.remsky.art/",
+				"url": "%SITE_ORIGIN%/",
 				"description": "Modern Microsoft Comic Chat port running live rooms on Cloudflare Durable Objects. Validated & built against the original 1996+ engine to render conversation as a comic strip.",
 				"applicationCategory": "CommunicationApplication",
 				"operatingSystem": "Any",
-				"image": "https://comics.remsky.art/og.jpg"
+				"image": "%SITE_ORIGIN%/og.jpg"
 			}
 		</script>
+		<!--/if-->
 		<link rel="stylesheet" href="/src/browser/room.css" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -109,10 +113,11 @@
 			</h1>
 			<span id="title-room" class="titlebar-room"></span>
 			<span class="titlebar-actions">
+				<!--if:SUPPORT_URL-->
 				<a
-				class="titlebar-button"
-				href="https://buymeacoffee.com/remsky"
-				target="_blank"
+					class="titlebar-button"
+					href="%SUPPORT_URL%"
+					target="_blank"
 					rel="noreferrer"
 					aria-label="Buy me a coffee"
 					title="Buy me a coffee"
@@ -138,6 +143,7 @@
 						/>
 					</svg>
 				</a>
+				<!--/if-->
 				<a
 					class="titlebar-button"
 					href="https://github.com/remsky/comic-chat-web"
@@ -302,6 +308,17 @@
 						<button id="save-strip" class="strip-button" type="button">
 							Save Strip…
 						</button>
+						<!-- the build stamps the operator details the report draft names -->
+						<button
+							id="report-room"
+							class="strip-button"
+							type="button"
+							data-site="%SITE_ORIGIN%"
+							data-contact="%OPERATOR_CONTACT%"
+							data-jurisdiction="%OPERATOR_JURISDICTION%"
+						>
+							Report…
+						</button>
 						<button
 							id="leave-room"
 							class="strip-button strip-button--leave"
@@ -389,6 +406,10 @@
 				<a href="https://github.com/remsky/comic-chat-web/blob/main/LICENSE"
 					>AGPL-3.0</a
 				>
+				<span aria-hidden="true">·</span>
+				<a href="/legal.html#terms">Terms</a>
+				<span aria-hidden="true">·</span>
+				<a href="/legal.html#privacy">Privacy</a>
 			</footer>
 		</div>
 		<section id="join" class="join-overlay" aria-label="Connect to a room">
@@ -419,6 +440,11 @@
 						</p>
 					</fieldset>
 					<div class="dialog-buttons">
+						<p class="join-consent">
+							Rooms are public. By connecting you confirm you are 18 or older and
+							accept the <a href="/legal.html#terms">Terms</a> and
+							<a href="/legal.html#privacy">Privacy Policy</a>.
+						</p>
 						<label class="remember-toggle">
 							<input id="join-remember" type="checkbox" />
 							Remember me

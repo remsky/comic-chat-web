@@ -40,7 +40,7 @@
 
 .studio {
 	display: grid;
-	grid-template-rows: auto minmax(0, 1fr);
+	grid-template-rows: auto minmax(0, 1fr) auto;
 	height: 100dvh;
 	margin: 0;
 	background: var(--face);
@@ -50,6 +50,18 @@
 		"Segoe UI",
 		system-ui,
 		sans-serif;
+}
+
+.legal-footer {
+	display: flex;
+	gap: 0.5rem;
+	justify-content: center;
+	padding: 0.2rem 0.5rem 0.3rem;
+	font-size: 0.7rem;
+}
+
+.legal-footer a {
+	color: #000080;
 }
 
 .sr-only {

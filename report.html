@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<meta
+			name="description"
+			content="File a report about something seen in a Comic Chat Web room: where to send it, and the transcript captured from your own screen."
+		/>
+		<title>Report - Comic Chat Web</title>
+		<link rel="stylesheet" href="/src/browser/legal.css" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+	<body class="legal">
+		<header class="titlebar">
+			<h1 class="titlebar-title"><a href="/">Comic Chat Web</a></h1>
+			<span class="titlebar-actions">
+				<a class="titlebar-button" href="/">Back to chat</a>
+			</span>
+		</header>
+
+		<main class="sheet">
+			<h1>Report something</h1>
+
+			<div class="summary">
+				<p>
+					<strong>Read this first.</strong> Rooms keep only the last 100 events,
+					so whatever you saw is already being deleted and will be gone shortly
+					whether or not anyone acts. There are no accounts here, and we keep no
+					record of who anyone is. The connection records that could identify a
+					sender are held by our host, not by us. For anything serious, the people
+					below can act and we cannot.
+				</p>
+			</div>
+
+			<h2>Where to send it</h2>
+			<p>
+				If what you saw was criminal, or someone appears to be in danger, your
+				local police or your country's reporting hotline is the place for it.
+				They can investigate and we cannot, so send it to them directly rather
+				than waiting on us. This site runs on Cloudflare, and Cloudflare holds the
+				connection records that could identify a sender, so a request to trace one
+				goes through Cloudflare's legal process rather than through us. The room
+				name and the message times in the transcript below are what an
+				investigator needs to ask for the right window.
+			</p>
+			<p>
+				A message here can only ever be text. If it linked to something hosted
+				elsewhere, the site holding that material is the only party who can take
+				it down.
+			</p>
+			<!-- the %TOKEN% names the operator of this deployment, not the codebase; the build fills it in -->
+			<p>
+				If a room is being used for abuse right now, tell %LEGAL_CONTACT%. That
+				is the one case where we have a lever: rooms can be closed. Include the
+				room name and the transcript below. It reaches one person who reads it
+				when they can, so anything urgent belongs with the police above. For
+				bugs and everything else, the
+				<a href="https://github.com/remsky/comic-chat-web/issues"
+					>GitHub issue tracker</a
+				>
+				is the better place.
+			</p>
+
+			<h2>The transcript</h2>
+			<p id="report-status" class="stamp">
+				Captured from your screen when you pressed Report. It has not been sent
+				anywhere.
+			</p>
+			<textarea id="report-text" class="report-text" rows="16" readonly></textarea>
+			<p class="report-actions">
+				<button id="report-copy" class="titlebar-button" type="button">
+					Copy transcript
+				</button>
+			</p>
+
+			<footer class="legal-footer">
+				<span>© 2026 Comic Chat Web contributors</span>
+				<a href="/legal.html">Terms and Privacy</a>
+			</footer>
+		</main>
+		<script type="module" src="/src/browser/reportPage.ts"></script>
+	</body>
+</html>

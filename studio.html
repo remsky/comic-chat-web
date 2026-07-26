@@ -8,7 +8,9 @@
 			content="Build a Comic Chat strip panel by panel: pick the cast, poses, gestures, balloons, background, and camera, then export PNG or JSON."
 		/>
 		<title>Comic Chat Studio - Build a strip panel by panel</title>
-		<link rel="canonical" href="https://comics.remsky.art/studio" />
+		<!--if:SITE_ORIGIN-->
+		<link rel="canonical" href="%SITE_ORIGIN%/studio" />
+		<!--/if-->
 		<meta name="robots" content="index, follow" />
 		<link rel="stylesheet" href="/src/studio/studio.css" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
@@ -22,9 +24,10 @@
 			<span class="titlebar-beta">Beta</span>
 			<span id="studio-status" class="titlebar-status" role="status"></span>
 			<span class="titlebar-actions">
+				<!--if:SUPPORT_URL-->
 				<a
 					class="titlebar-button"
-					href="https://buymeacoffee.com/remsky"
+					href="%SUPPORT_URL%"
 					target="_blank"
 					rel="noreferrer"
 					aria-label="Buy me a coffee"
@@ -51,6 +54,7 @@
 						/>
 					</svg>
 				</a>
+				<!--/if-->
 				<a
 					class="titlebar-button"
 					href="https://github.com/remsky/comic-chat-web"
@@ -164,6 +168,12 @@
 				</details>
 			</aside>
 		</main>
+
+		<footer class="legal-footer">
+			<a href="/legal.html#terms">Terms</a>
+			<span aria-hidden="true">·</span>
+			<a href="/legal.html#privacy">Privacy</a>
+		</footer>
 
 		<script type="module" src="/src/studio/studio.ts"></script>
 	</body>
