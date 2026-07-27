@@ -315,6 +315,15 @@ async function main(): Promise<void> {
 			});
 	});
 
+	element("studio-export-png-square").addEventListener("click", () => {
+		saveMenu.open = false;
+		void cleared()
+			.then((ok) => (ok ? preview.exportPng({ square: true }) : null))
+			.then((blob) => {
+				if (blob) download(blob, "strip-square.png");
+			});
+	});
+
 	const importInput = element<HTMLInputElement>("studio-import");
 	importInput.addEventListener("change", () => {
 		const file = importInput.files?.[0];

@@ -155,7 +155,7 @@ export class StripPreview {
 	}
 
 	// redrawn at a fixed size rather than copied off the cards, so the sheet ignores the preview zoom
-	async exportPng(): Promise<Blob | null> {
+	async exportPng(options?: { square?: boolean }): Promise<Blob | null> {
 		const panels = this.cards.filter((card) => card.panel && card.unit);
 		const unit = panels[0]?.unit;
 		if (unit === undefined) return null;
@@ -202,6 +202,25 @@ export class StripPreview {
 			context.restore();
 		});
 		drawStripMark(context, sheet.width, sheet.height, EXPORT_GAP);
-		return new Promise((resolve) => sheet.toBlob(resolve, "image/png"));
+		const out = options?.square ? squarePad(sheet) : sheet;
+		return new Promise((resolve) => out.toBlob(resolve, "image/png"));
 	}
+}
+
+// white square canvas with the sheet centered, for feed-friendly mobile shares
+function squarePad(sheet: HTMLCanvasElement): HTMLCanvasElement {
+	const side = Math.max(sheet.width, sheet.height);
+	const square = document.createElement("canvas");
+	square.width = side;
+	square.height = side;
+	const context = square.getContext("2d");
+	if (!context) return sheet;
+	context.fillStyle = "#fff";
+	context.fillRect(0, 0, side, side);
+	context.drawImage(
+		sheet,
+		Math.floor((side - sheet.width) / 2),
+		Math.floor((side - sheet.height) / 2),
+	);
+	return square;
 }
