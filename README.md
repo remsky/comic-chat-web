@@ -12,12 +12,14 @@
 
 ### Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
 
-#### Create a custom comic strip via the [studio](https://comics.remsky.art/)
-To create with AI assistance add this repo as a plugin marketplace, or add skill via:
+### Create a custom comic strip @ [comics.remsky.art/studio](https://comics.remsky.art/studio)
+
+To create with AI assistance, add skill:
 
 ```bash
 npx skills add remsky/comic-chat-web 
 ```
+Alternate skill usage methods are in the [Studio](#studio) section.
 
 ## Features
 
@@ -86,9 +88,18 @@ The result is exportable as PNG, or import/export as its JSON definition documen
 
 For assistance from an AI agent to spin up some strips, a skill is available. It has understanding of the poses, backgrounds, characters, limitations, and can generate a condensed link that will prefill the editor page for review/adjustments/download. 
 
+<details>
+<summary>npx skills</summary>
 ```bash
 npx skills add remsky/comic-chat-web 
 ```
+</details>
+
+<details>
+<summary>Zipped .skill file</summary>
+
+Download [comic-strip.skill](https://github.com/remsky/comic-chat-web/releases/latest/download/comic-strip.skill) from the [latest release](https://github.com/remsky/comic-chat-web/releases/latest) and drop it into a chat on ChatGPT or claude.ai as a custom skill.
+</details>
 
 <details>
 <summary>Claude Code Plugin</summary>
@@ -106,8 +117,9 @@ npx skills add remsky/comic-chat-web
 codex plugin marketplace add remsky/comic-chat-web
 codex plugin add comic-strip@comic-chat-web
 ```
-</details>
 
+</details>
+<br>
 <details open>
 <summary>Screenshots</summary>
 
