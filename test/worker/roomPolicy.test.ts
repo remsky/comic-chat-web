@@ -8,6 +8,22 @@ import {
 import { HISTORY_RETENTION } from "../../worker/db/events.js";
 import { chatMessage, connect, join, seedLines } from "./helpers.js";
 
+// both cooldowns are wall-clock stamps on the socket attachment; rewriting them reaches the next strike without a real wait
+async function skipCooldowns(room: string): Promise<void> {
+	const stub = env.CHAT_ROOM.getByName(room);
+	await runInDurableObject(stub, (_instance, state) => {
+		for (const ws of state.getWebSockets()) {
+			const attached = ws.deserializeAttachment() as Record<string, unknown>;
+			ws.serializeAttachment({
+				...attached,
+				mutedUntil: 0,
+				tokens: 5,
+				at: Date.now(),
+			});
+		}
+	});
+}
+
 describe("room policy", () => {
 	it("drops sends past the burst and closes a sustained flood", async () => {
 		const room = "flood";
@@ -77,6 +93,47 @@ describe("room policy", () => {
 				.one(),
 		);
 		expect(count.total).toBe(0);
+		socket.close();
+	});
+
+	it("stretches the mute with every strike, then closes at the ceiling", async () => {
+		const room = "mute-escalate";
+		const { socket, inbox } = await join(room, "cal", 3);
+		const closed = new Promise<{ code: number; reason: string }>((resolve) =>
+			socket.addEventListener("close", (event) =>
+				resolve({ code: event.code, reason: event.reason }),
+			),
+		);
+		// four strikes wait 15s, 30s, 45s, 60s; the fifth is shown the door instead
+		for (const strike of [1, 2, 3, 4]) {
+			socket.send(chatMessage("4rse this", 3));
+			const blocked = await inbox.next("error");
+			expect(blocked.type === "error" && blocked.reason).toBe(
+				MESSAGE_BLOCKED_REASON,
+			);
+			expect(blocked.type === "error" && blocked.retryAfter).toBe(
+				strike * 15_000,
+			);
+			await skipCooldowns(room);
+		}
+		socket.send(chatMessage("4rse this", 3));
+		const close = await closed;
+		expect(close.code).toBe(1008);
+		expect(close.reason).toBe(MESSAGE_BLOCKED_REASON);
+	});
+
+	it("lets a clean line through once the mute runs out", async () => {
+		const room = "mute-expire";
+		const { socket, inbox } = await join(room, "dee", 4);
+		socket.send(chatMessage("4rs3", 4));
+		await inbox.next("error");
+		await skipCooldowns(room);
+
+		socket.send(chatMessage("sorry about that", 4));
+		const entry = await inbox.next("entry");
+		if (entry.type !== "entry" || entry.entry.type !== "chat")
+			throw new Error("expected a chat entry");
+		expect(entry.entry.text).toBe("sorry about that");
 		socket.close();
 	});
 
