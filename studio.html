@@ -76,7 +76,7 @@
 			</span>
 		</header>
 
-		<main class="app">
+		<main id="studio-app" class="app">
 			<section class="strip" aria-label="Strip preview">
 				<div class="strip-bar">
 					<span id="studio-count" class="strip-count"></span>
@@ -95,18 +95,25 @@
 						id="studio-cardsize"
 						class="strip-size"
 						type="range"
-						min="150"
-						max="460"
+						min="60"
+						max="900"
 						step="10"
 						value="230"
-						aria-label="Preview size"
-						title="Preview size"
+						aria-label="Zoom"
+						title="Zoom, also Ctrl+scroll or pinch on the strip"
 					/>
 				</div>
 				<div id="studio-stage" class="strip-scroll">
 					<div id="studio-panels" class="strip-page"></div>
 				</div>
 			</section>
+
+			<div
+				id="studio-divider"
+				class="split-divider"
+				aria-hidden="true"
+				title="Drag to resize, double-click to reset"
+			></div>
 
 			<aside id="studio-inspector" class="inspector" aria-label="Constructor">
 				<div class="editor-bar">

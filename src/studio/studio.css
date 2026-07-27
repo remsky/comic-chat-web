@@ -165,16 +165,36 @@ textarea {
 
 .app {
 	display: grid;
-	grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 0.85fr);
+	grid-template-columns: minmax(0, 1.35fr) auto var(
+			--split-x,
+			minmax(20rem, 0.85fr)
+		);
 	gap: var(--gap);
 	min-height: 0;
 	padding: var(--gap);
 }
 
+.split-divider {
+	width: 0.3rem;
+	cursor: col-resize;
+	touch-action: none;
+}
+
+.split-divider:hover,
+.split-divider:active {
+	background: var(--shade);
+}
+
 @media (width < 62rem) {
 	.app {
 		grid-template-columns: minmax(0, 1fr);
-		grid-template-rows: minmax(8rem, 38dvh) minmax(0, 1fr);
+		grid-template-rows: var(--split-y, minmax(8rem, 38dvh)) auto minmax(0, 1fr);
+	}
+
+	.split-divider {
+		width: auto;
+		height: 0.5rem;
+		cursor: row-resize;
 	}
 }
 
@@ -211,6 +231,8 @@ textarea {
 
 .strip-scroll {
 	overflow: auto;
+	/* pans stay native, two fingers pinch our zoom instead of the page's */
+	touch-action: pan-x pan-y;
 	overscroll-behavior: contain;
 	scrollbar-gutter: stable;
 	border: 1px solid;
@@ -221,8 +243,8 @@ textarea {
 
 .strip-page {
 	display: grid;
-	/* fixed count so the rows break where the sheet does; tiles shrink instead of overflowing */
-	grid-template-columns: repeat(var(--columns), minmax(0, var(--card)));
+	/* fixed count so the rows break where the sheet does; zoom scrolls instead of clamping */
+	grid-template-columns: repeat(var(--columns), var(--card));
 	gap: 0.5rem;
 	align-content: start;
 	justify-content: start;

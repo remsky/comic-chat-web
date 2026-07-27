@@ -29,6 +29,7 @@ import {
 	type StripSize,
 	stripToJson,
 } from "./script.js";
+import { wireSplit, wireZoom } from "./viewport.js";
 
 const RENDER_DELAY_MS = 120;
 
@@ -235,8 +236,12 @@ async function main(): Promise<void> {
 	preview.onAdd = () => editor.addPanel();
 	preview.onReorder = (from, to) => editor.move(from, to);
 
-	cardSize.addEventListener("input", () => {
-		panels.style.setProperty("--card", `${cardSize.value}px`);
+	wireSplit(element("studio-app"), element("studio-divider"));
+	const zoom = wireZoom({
+		stage,
+		panels,
+		slider: cardSize,
+		columns: () => preview.columns,
 	});
 
 	sizeSelect.addEventListener("change", () => {
@@ -316,6 +321,7 @@ async function main(): Promise<void> {
 	columnsInput.value = String(initial.strip.columns ?? COLUMNS_DEFAULT);
 	editor.rebuild();
 	render();
+	zoom.fit();
 	if (initial.issues.length > 0) showIssues(initial.issues);
 
 	// automation hook: drive the page from a script without touching the controls
