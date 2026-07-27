@@ -1,0 +1,20 @@
+{
+	"name": "comic-chat-web",
+	"interface": {
+		"displayName": "Comic Chat"
+	},
+	"plugins": [
+		{
+			"name": "comic-strip",
+			"source": {
+				"source": "local",
+				"path": "./plugins/comic-strip"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_USE"
+			},
+			"category": "Creativity"
+		}
+	]
+}

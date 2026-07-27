@@ -1,0 +1,18 @@
+{
+	"name": "comic-chat-web",
+	"owner": {
+		"name": "remsky",
+		"url": "https://github.com/remsky/comic-chat-web"
+	},
+	"metadata": {
+		"description": "Agent tooling for the Comic Chat studio.",
+		"version": "0.1.0"
+	},
+	"plugins": [
+		{
+			"name": "comic-strip",
+			"source": "./plugins/comic-strip",
+			"description": "Write a comic strip in the studio format and return a link that opens it, rendered, in the editor."
+		}
+	]
+}

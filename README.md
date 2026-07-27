@@ -6,7 +6,7 @@
 **Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
 <p>
-  <img src="https://img.shields.io/badge/tests-345%20passing-forestgreen" alt="345 tests passing" height="20">
+  <img src="https://img.shields.io/badge/tests-397%20passing-forestgreen" alt="397 tests passing" height="20">
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
@@ -69,14 +69,37 @@ Naming someone points your avatar at them, and being named highlights that line 
 
 ## Studio
 
-`studio` is an integrated editor allowing you to build a strip panel by panel on your own. 
+An integrated editor allowing you to create strips (panel by panel) on your own is available at [/studio](https://comics.remsky.art/studio)
 
-The result is exportable as PNG, or import/export as its JSON definition document. It provides significant control and customization compared to faking a chat (sizing, direction, gestures, etc), and it's pretty fun to tool around with. 
+The result is exportable as PNG, or import/export as its JSON definition document. It's pretty fun to tool around with. 
 
+- Available art per character is generated as an asset list in `catalog.json`.
+- Includes art, combinations, and control not reachable in normal chat (sizing, direction, gestures, etc).
 - The `MODERATION` variable acts similarly to how it does in chat, putting a pause on rendering. See [DEPLOYMENT.md](DEPLOYMENT.md).
-- Emotion selection in the UI is enumerated per available character range. 
-  - e.g. "Happy 1" and "Happy 2" are generated via a nearest band on the "intensity" parameter.
 
+For assistance from an AI agent to spin up some strips, a skill is available. It has understanding of the poses, backgrounds, characters, limitations, and can generate a condensed link that will prefill the editor page for review/adjustments/download. 
+
+```bash
+npx skills add remsky/comic-chat-web 
+```
+
+<details>
+<summary>Claude Code Plugin</summary>
+
+```bash
+/plugin marketplace add remsky/comic-chat-web
+/plugin install comic-strip@comic-chat-web
+```
+</details>
+
+<details>
+<summary>OpenAI Codex Plugin</summary>
+
+```bash
+codex plugin marketplace add remsky/comic-chat-web
+codex plugin add comic-strip@comic-chat-web
+```
+</details>
 
 <details open>
 <summary>Screenshots</summary>
@@ -94,7 +117,7 @@ The result is exportable as PNG, or import/export as its JSON definition documen
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "columns": 5,
   "panels": [
     {
@@ -104,8 +127,7 @@ The result is exportable as PNG, or import/export as its JSON definition documen
         {
           "avatar": "kevin",
           "text": "It's not the worst studio",
-          "emotion": "shout",
-          "intensity": 0.43
+          "emotion": "shout"
         },
         {
           "avatar": "denise",
@@ -122,15 +144,13 @@ The result is exportable as PNG, or import/export as its JSON definition documen
           "avatar": "kevin",
           "text": "Wait. We're also over there?!",
           "emotion": "shout",
-          "intensity": 0.43,
           "gesture": "pointself",
           "facing": "left"
         },
         {
           "avatar": "denise",
           "text": "Don't worry about it",
-          "emotion": "laugh",
-          "intensity": 0.88,
+          "emotion": "laugh_1",
           "gesture": "wave",
           "facing": "left"
         }
@@ -144,12 +164,10 @@ The result is exportable as PNG, or import/export as its JSON definition documen
 
 </details>
 
-
-
 ## Deployment / Self-Hosting
 
 > [!NOTE]
-> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public deployments want a Cloudflare rate-limiting rule. Both are covered in [DEPLOYMENT.md](DEPLOYMENT.md).
+> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public billed deployments must determine and set Cloudflare rate-limiting rules and usage alerts to avoid any suprising bills. On Free Tier, it will simply stop running until end of day if limits are reached. For reference, the traffic on this repo's demo sits comfortably under 10% of daily Free Tier usage. 
 
   <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
 

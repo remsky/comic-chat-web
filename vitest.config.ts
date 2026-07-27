@@ -55,6 +55,8 @@ export default defineConfig({
 									"legacy-migrate",
 									"legacy-migrate-ancient",
 									"mute",
+									"mute-escalate",
+									"mute-expire",
 									"mute-off",
 									"name-block",
 									"profile",

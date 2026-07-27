@@ -65,13 +65,21 @@ describe("shiftLines", () => {
 });
 
 describe("widestWord", () => {
+	const byLength = (text: string) => ({ cx: text.length, cy: 1 });
+
 	it("scans printable runs, since C isprint includes space, and measures the trailing NUL", () => {
 		const seen: string[] = [];
 		widestWord((text) => {
 			seen.push(text);
-			return { cx: text.length, cy: 1 };
+			return byLength(text);
 		}, "AB\nCDE");
 		expect(seen).toEqual(["AB\n", `CDE${String.fromCharCode(0)}`]);
+	});
+
+	// widest last, then widest first: a min, a first-wins, or a last-wins aggregation each miss one
+	it("returns the widest run, wherever it falls", () => {
+		expect(widestWord(byLength, "AB\nCDE")).toBe(4);
+		expect(widestWord(byLength, "ABC\nDE")).toBe(4);
 	});
 });
 
