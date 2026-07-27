@@ -1,4 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { stripMarkGrowth } from "../../src/browser/stripMark.js";
+
+// the sheet geometry preview.ts exports at, which the assertions below rebuild
+const EXPORT_GAP = 31;
+const CARD_PIXELS = 600;
 
 test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	page,
@@ -191,7 +196,10 @@ test("panels per row shapes both the preview rows and the sheet", async ({
 		});
 	await expect(page.locator("#studio-json")).toHaveValue(/"columns": 2/);
 	const square = await shape();
-	expect(square.width).toBe(square.height);
+	// square across the panel grid; the credit band under the last row is the only thing on top of it
+	expect(square.height - stripMarkGrowth(square.width, EXPORT_GAP)).toBe(
+		square.width,
+	);
 
 	// back to the default, which the document leaves out again
 	await page.locator("#studio-columns").fill("4");
@@ -326,33 +334,40 @@ test("studio keeps an oversized shot inside its panel on the sheet", async ({
 	await expect(page.locator("#studio-panels .spanel")).toHaveCount(1);
 
 	// the gutter around the panel must stay blank, however far the body runs past the frame
-	const bled = await page.evaluate(async () => {
-		const gap = 31;
-		const studio = (
-			window as unknown as { __studio: { png(): Promise<Blob | null> } }
-		).__studio;
-		const blob = await studio.png();
-		if (!blob) return -1;
-		const bitmap = await createImageBitmap(blob);
-		const sheet = new OffscreenCanvas(bitmap.width, bitmap.height);
-		const context = sheet.getContext("2d");
-		if (!context) return -1;
-		context.drawImage(bitmap, 0, 0);
-		const { data } = context.getImageData(0, 0, bitmap.width, bitmap.height);
-		let count = 0;
-		for (let y = 0; y < bitmap.height; y++)
-			for (let x = 0; x < bitmap.width; x++) {
-				const inside =
-					x >= gap &&
-					x < bitmap.width - gap &&
-					y >= gap &&
-					y < bitmap.height - gap;
-				if (inside) continue;
-				if ((data[(y * bitmap.width + x) * 4] ?? 255) < 250) count++;
-			}
-		return count;
-	});
-	expect(bled).toBe(0);
+	const sheet = await page.evaluate(
+		async ({ gap, card }) => {
+			const studio = (
+				window as unknown as { __studio: { png(): Promise<Blob | null> } }
+			).__studio;
+			const blob = await studio.png();
+			if (!blob) return null;
+			const bitmap = await createImageBitmap(blob);
+			const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+			const context = canvas.getContext("2d");
+			if (!context) return null;
+			context.drawImage(bitmap, 0, 0);
+			const { data } = context.getImageData(0, 0, bitmap.width, bitmap.height);
+			let bled = 0;
+			// the band under the last row carries the credit mark, so the scan stops at the panel's bottom edge
+			for (let y = 0; y < gap + card; y++)
+				for (let x = 0; x < bitmap.width; x++) {
+					if (x >= gap && x < bitmap.width - gap && y >= gap) continue;
+					if ((data[(y * bitmap.width + x) * 4] ?? 255) < 250) bled++;
+				}
+			return { width: bitmap.width, height: bitmap.height, bled };
+		},
+		{ gap: EXPORT_GAP, card: CARD_PIXELS },
+	);
+	if (!sheet) throw new Error("no sheet");
+	// pinned, so the scan floor above stays on the panel edge if the band ever grows
+	expect(sheet.width).toBe(EXPORT_GAP + CARD_PIXELS + EXPORT_GAP);
+	expect(sheet.height).toBe(
+		EXPORT_GAP +
+			CARD_PIXELS +
+			EXPORT_GAP +
+			stripMarkGrowth(sheet.width, EXPORT_GAP),
+	);
+	expect(sheet.bled).toBe(0);
 });
 
 test("studio reports a bad script instead of rendering it", async ({
