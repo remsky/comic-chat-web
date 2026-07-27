@@ -26,9 +26,6 @@ import {
 
 export const DEFAULT_SEED = 1515;
 
-// twips of air over the first line, which the original balloon gave half of what it gave the other edges
-const TEXT_TOP_PAD = 40;
-
 export interface ComposedPanel {
 	panel: UnitPanel;
 	issues: StripIssue[];
@@ -186,11 +183,6 @@ export function composeStrip(
 	const probed = avatarArtCache(options.avatars, emotionAngles());
 	const artFor = options.artFor ?? probed;
 	const seed = strip.seed ?? DEFAULT_SEED;
-	// padded here alone, so chat panels stay pinned to the traces
-	const resolveStyle: BalloonStyleResolver = (text, mode) => ({
-		...options.resolveStyle(text, mode),
-		topPad: TEXT_TOP_PAD,
-	});
 	const panels = strip.panels.map((spec, index) =>
 		composePanel(
 			spec,
@@ -198,7 +190,7 @@ export function composeStrip(
 			registry,
 			new MsvcRand(seed + index),
 			unit,
-			resolveStyle,
+			options.resolveStyle,
 			artFor,
 		),
 	);

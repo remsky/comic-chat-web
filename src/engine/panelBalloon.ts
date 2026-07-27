@@ -47,8 +47,6 @@ export interface BalloonStyle {
 	measure: TextMeasure;
 	widestMeasure?: TextMeasure;
 	font: FontMetrics;
-	// twips of extra air over the first line; the 1996 balloon left none
-	topPad?: number;
 }
 
 export type BalloonStyleResolver = (text: string, mode: number) => BalloonStyle;
@@ -114,11 +112,7 @@ export class BalloonRuntime implements CloneableBalloonRuntime {
 				top: this.fInfo.fbox.top + YBOXDELTA,
 			};
 		} else {
-			this.spline = createBalloonSpline(
-				this.fInfo,
-				this.style.font,
-				this.style.topPad ?? 0,
-			);
+			this.spline = createBalloonSpline(this.fInfo, this.style.font);
 			makeEmptyShort(this.trueBox);
 			for (const point of this.spline.cps)
 				includePtInBboxShort(point, this.trueBox);
