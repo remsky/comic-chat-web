@@ -8,7 +8,7 @@ import {
 	loadCanvasFonts,
 } from "../browser/canvasText.js";
 import { element } from "../browser/dom.js";
-import { avatarIconCanvas } from "../browser/pickerTiles.js";
+import { avatarIconUrl } from "../browser/pickerTiles.js";
 import type { AvatarData } from "../engine/avatar.js";
 import { emptyArt } from "./art.js";
 import { composeStrip } from "./compose.js";
@@ -135,7 +135,13 @@ async function main(): Promise<void> {
 		catalog,
 		icon: (name) => {
 			const data = manifest.avatars.find((entry) => entry.name === name);
-			return data ? avatarIconCanvas(data, atlases) : null;
+			if (!data) return null;
+			const img = document.createElement("img");
+			img.src = avatarIconUrl(data, atlases);
+			img.alt = "";
+			img.width = 40;
+			img.height = 40;
+			return img;
 		},
 		onEdit: () => schedule(),
 		onSelect: (index) => {

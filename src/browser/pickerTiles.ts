@@ -36,12 +36,11 @@ function chip(tone: string, text: string): HTMLSpanElement {
 	return badge;
 }
 
-export function buildCharacterTile(
+// the 40x40 icon pose every atlas carries in its top-left corner
+export function avatarIconCanvas(
 	avatar: AvatarData,
 	atlases: AvatarAtlasCache,
-	group: string,
-): HTMLLabelElement {
-	const label = radioTile("character-option", group, String(avatar.avatarID));
+): HTMLCanvasElement {
 	const canvas = document.createElement("canvas");
 	canvas.width = 40;
 	canvas.height = 40;
@@ -61,6 +60,31 @@ export function buildCharacterTile(
 				40,
 				40,
 			);
+	return canvas;
+}
+
+// data URLs so the icon survives selectedcontent's cloning, which blanks a canvas
+const iconUrls = new Map<string, string>();
+
+export function avatarIconUrl(
+	avatar: AvatarData,
+	atlases: AvatarAtlasCache,
+): string {
+	let url = iconUrls.get(avatar.name);
+	if (url === undefined) {
+		url = avatarIconCanvas(avatar, atlases).toDataURL();
+		iconUrls.set(avatar.name, url);
+	}
+	return url;
+}
+
+export function buildCharacterTile(
+	avatar: AvatarData,
+	atlases: AvatarAtlasCache,
+	group: string,
+): HTMLLabelElement {
+	const label = radioTile("character-option", group, String(avatar.avatarID));
+	const canvas = avatarIconCanvas(avatar, atlases);
 	const name = document.createElement("span");
 	name.className = "character-option-name";
 	name.textContent = displayName(avatar.name);

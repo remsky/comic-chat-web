@@ -24,7 +24,7 @@ import {
 	hasGesture,
 	parseGesture,
 } from "./gestures.js";
-import { buildRoomOption } from "./pickerTiles.js";
+import { avatarIconCanvas, buildRoomOption } from "./pickerTiles.js";
 import { reportTranscript, stashReport } from "./report.js";
 import { fetchRoomListings } from "./roomDirectory.js";
 import { isJoinedEntry, JOINED_STATE } from "./roomHistory.js";
@@ -155,7 +155,11 @@ function renderTranscript(
 	list.replaceChildren(...items);
 }
 
-function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
+function renderRoster(
+	roster: RosterEntry[],
+	avatars: AvatarData[],
+	atlases: AvatarAtlasCache,
+): void {
 	const list = element<HTMLUListElement>("roster");
 	document.body.classList.toggle("room-alone", roster.length <= 1);
 	const items = roster.map((entry) => {
@@ -165,6 +169,11 @@ function renderRoster(roster: RosterEntry[], avatars: AvatarData[]): void {
 		name.textContent = entry.name;
 		const character = document.createElement("span");
 		character.textContent = ` ${displayName(cast?.name ?? "?")}`;
+		if (cast) {
+			const icon = avatarIconCanvas(cast, atlases);
+			icon.className = "roster-icon";
+			item.append(icon);
+		}
 		item.append(name, character);
 		return item;
 	});
@@ -630,7 +639,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			unlockComposer();
 			reconnectAttempt = 0;
 			roster = parsed.roster;
-			renderRoster(roster, deps.avatars);
+			renderRoster(roster, deps.avatars, deps.atlases);
 			seatId = parsed.id;
 			seatAvatar = parsed.avatar;
 			view.setLocalAvatarID(parsed.avatar);
@@ -710,15 +719,15 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		} else if (parsed.type === "joined") {
 			if (!roster.some((entry) => entry.id === parsed.who.id))
 				roster.push(parsed.who);
-			renderRoster(roster, deps.avatars);
+			renderRoster(roster, deps.avatars, deps.atlases);
 		} else if (parsed.type === "left") {
 			const index = roster.findIndex((entry) => entry.id === parsed.who.id);
 			if (index >= 0) roster.splice(index, 1);
-			renderRoster(roster, deps.avatars);
+			renderRoster(roster, deps.avatars, deps.atlases);
 		} else if (parsed.type === "profile") {
 			const index = roster.findIndex((entry) => entry.id === parsed.was.id);
 			if (index >= 0) roster[index] = parsed.who;
-			renderRoster(roster, deps.avatars);
+			renderRoster(roster, deps.avatars, deps.atlases);
 			// the connection id is ours, so a matching seat means the change was ours
 			if (parsed.was.id === seatId) {
 				currentName = parsed.who.name;

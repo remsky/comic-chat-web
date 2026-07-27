@@ -512,6 +512,82 @@ textarea {
 	grid-area: 2 / 1;
 }
 
+.actor-icon {
+	flex: none;
+	line-height: 0;
+}
+
+.actor-icon img {
+	width: 20px;
+	height: 20px;
+}
+
+/* the character picker draws each option's icon where base-select is supported */
+select.actor-who,
+select.actor-who::picker(select) {
+	appearance: base-select;
+}
+
+@supports (appearance: base-select) {
+	select.actor-who button {
+		display: flex;
+		gap: 0.25rem;
+		align-items: center;
+		width: 100%;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: inherit;
+		font: inherit;
+	}
+
+	select.actor-who button::after {
+		content: "\25BE";
+		margin-left: auto;
+	}
+
+	/* biome-ignore lint/correctness/noUnknownTypeSelector: selectedcontent is the base-select mirror element */
+	select.actor-who selectedcontent {
+		display: flex;
+		gap: 0.25rem;
+		align-items: center;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	select.actor-who::picker(select) {
+		padding: 1px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+		color: var(--ink);
+	}
+
+	select.actor-who option {
+		display: flex;
+		gap: 0.25rem;
+		align-items: center;
+		padding: 1px 3px;
+		font: inherit;
+		font-size: 0.75rem;
+	}
+
+	select.actor-who option::before {
+		display: none;
+	}
+
+	select.actor-who option:hover,
+	select.actor-who option:focus-visible,
+	select.actor-who option:checked {
+		background: var(--sel);
+		color: var(--light);
+	}
+
+	select.actor-who img {
+		width: 20px;
+		height: 20px;
+	}
+}
+
 .actor-meta select {
 	max-width: 7rem;
 	font-size: 0.6875rem;

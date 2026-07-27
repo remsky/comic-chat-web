@@ -20,10 +20,16 @@ export interface EditorOptions {
 	// the pane that scrolls, so revealing a card never moves the page itself
 	scroller: HTMLElement;
 	catalog: StripCatalog;
+	// the character's face icon, drawn inside the picker's options
+	icon?: (avatarName: string) => HTMLElement | null;
 	// a value changed; the strip is already up to date
 	onEdit: () => void;
 	onSelect: (index: number) => void;
 }
+
+// rich options render only where the browser takes the base-select opt-in
+const RICH_SELECT =
+	typeof CSS !== "undefined" && CSS.supports("appearance", "base-select");
 
 function named<T extends HTMLElement>(control: T, label: string): T {
 	control.setAttribute("aria-label", label);
@@ -351,14 +357,21 @@ export class PanelEditor {
 		row.className = "actor";
 		row.dataset.path = `panels[${panelIndex}].actors[${actorIndex}]`;
 
-		const avatar = named(
-			selectOf(
-				this.options.catalog.avatars.map((entry) => entry.name),
-				actor.avatar,
-			),
-			"Character",
-		);
+		const avatar = named(this.characterSelect(actor.avatar), "Character");
 		avatar.className = "actor-who";
+		// selectedcontent mirrors the icon itself; the fallback keeps one beside the select
+		let face: HTMLSpanElement | null = null;
+		let paintFace = (): void => {};
+		if (!RICH_SELECT && this.options.icon) {
+			face = document.createElement("span");
+			face.className = "actor-icon";
+			const slot = face;
+			paintFace = () => {
+				const icon = this.options.icon?.(actor.avatar);
+				slot.replaceChildren(...(icon ? [icon] : []));
+			};
+			paintFace();
+		}
 		const gesture = named(
 			selectOf(
 				["", ...this.gesturesFor(actor.avatar)],
@@ -376,6 +389,7 @@ export class PanelEditor {
 
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
+			paintFace();
 			// the new character may not have art for the old gesture, so re-offer only what it can strike
 			const available = this.gesturesFor(actor.avatar);
 			if (actor.gesture && !available.includes(actor.gesture))
@@ -463,9 +477,30 @@ export class PanelEditor {
 		// who and how on one line, what they say on the next
 		const meta = document.createElement("div");
 		meta.className = "actor-meta";
+		if (face) meta.append(face);
 		meta.append(avatar, emotion, gesture, facing, mode);
 		row.append(meta, text, remove);
 		return row;
+	}
+
+	// options carry the icon and name where the browser allows it, the name alone elsewhere
+	private characterSelect(current: string): HTMLSelectElement {
+		const select = document.createElement("select");
+		if (RICH_SELECT && this.options.icon) {
+			const button = document.createElement("button");
+			button.append(document.createElement("selectedcontent"));
+			select.append(button);
+		}
+		for (const entry of this.options.catalog.avatars) {
+			const option = document.createElement("option");
+			option.value = entry.name;
+			const icon = RICH_SELECT ? this.options.icon?.(entry.name) : null;
+			if (icon) option.append(icon);
+			option.append(displayName(entry.name));
+			select.append(option);
+		}
+		select.value = current;
+		return select;
 	}
 
 	private artFor(avatarName: string): AvatarArt {
