@@ -4,7 +4,12 @@ import { CAST_BOUNDS } from "./castBounds.js";
 
 export const MAX_NAME_LENGTH = 24;
 export const MAX_TEXT_LENGTH = 1000;
-export const CAST_SIZE = 31;
+export const CAST_SIZE = Object.keys(CAST_BOUNDS).length;
+
+export function castMember(avatar: unknown): number | null {
+	if (typeof avatar !== "number" || !Number.isInteger(avatar)) return null;
+	return CAST_BOUNDS[avatar] ? avatar : null;
+}
 export const MAX_USER_ID_LENGTH = 64;
 // room names share one charset across the websocket route, the allowlist, and the join field
 export const ROOM_NAME_PATTERN = /^[\w-]{1,64}$/;
@@ -214,7 +219,7 @@ export function annotationInBounds(
 	annotation: ComicAnnotation,
 	avatar: number,
 ): boolean {
-	const bounds = CAST_BOUNDS[avatar - 1];
+	const bounds = CAST_BOUNDS[avatar];
 	if (!bounds) return false;
 	if (bounds.type === "simple")
 		return (
@@ -251,8 +256,8 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 			return null;
 		const name = message.name.trim().slice(0, MAX_NAME_LENGTH);
 		if (name.length === 0) return null;
-		const avatar = Math.trunc(message.avatar);
-		if (avatar < 1 || avatar > CAST_SIZE) return null;
+		const avatar = castMember(Math.trunc(message.avatar));
+		if (avatar === null) return null;
 		if (message.type === "profile") return { type: "profile", name, avatar };
 		// like sent, a malformed origin room is dropped rather than fatal
 		const from =
@@ -348,13 +353,7 @@ export function parseRoomEntry(raw: unknown): RoomEntry | null {
 		if (name !== "" && !BACKGROUND_NAME_PATTERN.test(name)) return null;
 		return { type: "background", seq, at, name, by };
 	}
-	const avatar =
-		typeof entry.avatar === "number" &&
-		Number.isInteger(entry.avatar) &&
-		entry.avatar >= 1 &&
-		entry.avatar <= CAST_SIZE
-			? entry.avatar
-			: null;
+	const avatar = castMember(entry.avatar);
 	const name = boundedString(entry.name, MAX_NAME_LENGTH);
 	const userId = boundedString(entry.userId, MAX_USER_ID_LENGTH);
 	if (avatar === null || name === null || userId === null) return null;

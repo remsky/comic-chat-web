@@ -4,7 +4,7 @@ Build with `npm run build`, deploy with `npx wrangler deploy`. Cloudflare Worker
 
 ## Configuration
 
-Two runtime vars, in `wrangler.jsonc` or the dashboard. Operator details are build variables instead; see [Naming the operator](#naming-the-operator).
+Two runtime vars, in `wrangler.jsonc` or the dashboard. Operator details and [art packs](#art-packs) are build variables instead; see [Naming the operator](#naming-the-operator).
 
 | Var | Default | Effect |
 | --- | --- | --- |
@@ -12,6 +12,20 @@ Two runtime vars, in `wrangler.jsonc` or the dashboard. Operator details are bui
 | `MODERATION` | `on` | `off` drops the profanity screen from chat and the studio, and returns 404 from `/api/moderate`. Any other value leaves it on. |
 
 Clearing `ROOMS` closes a deploy: nothing is listed and every join returns 403 before a Durable Object is touched. Sockets already open stay up until they drop.
+
+## Art packs
+
+The cast arrives in three pieces: the base 1996 art, and two optional packs named in `src/protocol/castPacks.ts`.
+
+| Pack | Brings |
+| --- | --- |
+| base | The 22 characters of the original release, and six backdrops. Always ships. |
+| `artpack1` | `kevin`, `kwensa`, `maynard`, `rebecca`, `sage`, `scotty`, plus the `den` and `volcano` backdrops. |
+| `v2.1b` | `buck`, `kirby`, and `veronica`, plus the `buckroom` backdrop. |
+
+`CHARACTER_PACKS` is a build variable, set in `.env` locally or under Workers Builds settings. It takes a comma separated list of pack names, or `all`; unset ships the original cast alone. The build holds the base art plus the packs the flag enables, and everything follows from that one cast: the manifests, `assets/catalog.json`, the sprite sheets in `dist/`, what the pickers list, and what the studio accepts.
+
+The strip skill under `plugins/` vendors the `artpack1` build's catalog and prose. A deploy that ships a different pack set and wants the skill to match copies its own `dist/assets/catalog.json` over `plugins/comic-strip/skills/comic-strip/reference/catalog.json` and adjusts `reference/cast.md`.
 
 ## Limits
 
@@ -38,7 +52,7 @@ Left off, `console` output and uncaught exceptions still reach Workers Logs. Clo
 
 ## Naming the operator
 
-`legal.html` holds the terms and privacy text and names no operator. A deploy supplies its own through four build variables, listed in `.env.example`:
+`legal.html` holds the terms and privacy text and names no operator. A deploy supplies its own through four build variables, listed in `.env.example` alongside `CHARACTER_PACKS`:
 
 | Variable | Fills |
 | --- | --- |

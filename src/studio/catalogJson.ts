@@ -1,6 +1,7 @@
 // The catalog as it ships to script authors: what each character can express, counted, with no wheel maths in it.
 
 import type { AvatarData } from "../engine/avatar.js";
+import { shipsBackdrop, shipsCharacter } from "../protocol/castPacks.js";
 import {
 	buildCatalog,
 	COLUMNS_MAX,
@@ -52,6 +53,38 @@ function digest(text: string): string {
 		hash = Math.imul(hash, 0x01000193);
 	}
 	return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
+export function shippedManifests(
+	avatarJson: string,
+	backgroundJson: string,
+	packs: ReadonlySet<string>,
+): { avatars: string; backgrounds: string } {
+	const manifest = JSON.parse(avatarJson) as {
+		castOrder: string[];
+		avatars: AvatarData[];
+	};
+	const { backdrops } = JSON.parse(backgroundJson) as {
+		backdrops: { name: string }[];
+	};
+	const avatars = manifest.avatars.filter((entry) =>
+		shipsCharacter(entry.name, packs),
+	);
+	return {
+		avatars: JSON.stringify({
+			castOrder: manifest.castOrder.filter((name) =>
+				shipsCharacter(name, packs),
+			),
+			avatars,
+			poseCount: avatars.reduce(
+				(total, entry) => total + entry.poses.length,
+				0,
+			),
+		}),
+		backgrounds: JSON.stringify({
+			backdrops: backdrops.filter((entry) => shipsBackdrop(entry.name, packs)),
+		}),
+	};
 }
 
 // the committed manifests are the same ones the studio fetches, so the build ships what the page probes

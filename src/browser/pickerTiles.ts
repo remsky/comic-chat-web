@@ -1,27 +1,17 @@
 // Radio-tile builders for the character, background, and room pickers.
 
 import type { AvatarData } from "../engine/avatar.js";
+import { ART_PACKS, packOf } from "../protocol/castPacks.js";
 import type { RoomListing } from "../protocol/room.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { displayName } from "./dom.js";
 
-const RELEASE_CHIP: Record<string, { label: string; tone: string }> = {
-	buck: { label: "v2.1b", tone: "v2" },
-	kirby: { label: "v2.1b", tone: "v2" },
-	veronica: { label: "v2.1b", tone: "v2" },
-	kevin: { label: "ART1", tone: "art1" },
-	kwensa: { label: "ART1", tone: "art1" },
-	maynard: { label: "ART1", tone: "art1" },
-	rebecca: { label: "ART1", tone: "art1" },
-	sage: { label: "ART1", tone: "art1" },
-	scotty: { label: "ART1", tone: "art1" },
-};
-
-// backdrops sourced from artpack1; base comicart ones stay unlabeled
-export const BACKDROP_PACK: Record<string, string> = {
-	den: "ART1",
-	volcano: "ART1",
-};
+// backdrops a pack brought with it; base comicart ones stay unlabeled
+export const BACKDROP_PACK: Record<string, string> = Object.fromEntries(
+	ART_PACKS.flatMap((pack) =>
+		pack.backdrops.map((name) => [name, pack.chip.label]),
+	),
+);
 
 function radioTile(
 	className: string,
@@ -77,7 +67,7 @@ export function buildCharacterTile(
 	const content = document.createElement("span");
 	content.className = "character-option-content";
 	content.append(canvas, name);
-	const release = RELEASE_CHIP[avatar.name];
+	const release = packOf(avatar.name)?.chip;
 	if (release) content.append(chip(release.tone, release.label));
 	label.append(content);
 	return label;

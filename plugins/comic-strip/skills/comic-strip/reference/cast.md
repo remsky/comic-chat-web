@@ -24,40 +24,37 @@ Reading the range column:
 - **X reuses Y**: the character draws X with the same faces as Y, so both names work and neither looks different. These are the `aliases` in `catalog.json`.
 - Everyone with gestures has `wave`, `point`, and `pointself`. Anything beyond that is called out.
 
-The art is 1996 black-and-white cartoon line work. `buck`, `kirby`, and `veronica` are full colour and stand out beside the rest of the cast. All three are children, and drawn to match: they stand about half the height of an adult in the panel, so casting one puts a kid in the scene whatever the dialogue says.
+The art is 1996 black-and-white cartoon line work, the whole cast in one drawing style.
 
 | character | look | range |
 | --- | --- | --- |
-| anna | young woman, black bob, turtleneck and short skirt | full wheel |
+| anna | young woman, black bob haircut, turtleneck and short skirt, trendy | full wheel |
 | armando | beatnik in a beret, goatee and shades, black turtleneck, sandals | full wheel; angry reuses sad |
-| bolo | lanky young man, tall black pompadour, pale blazer over a striped shirt, dark slacks, bolo tie; mildly preppy with a smirk | no bored |
-| buck | freckled kid, spiked orange hair, tee and jeans (colour, child height) | full wheel |
-| connor | curved worm of a creature, tiny cap, stubby feet | no scared; no gesture commands at all; shout reuses angry |
+| bolo | confident young man, tall black styled preppy hair, pale blazer over a striped shirt, dark slacks, bolo tie; defaults a smirk | no bored |
+| connor | curved worm of a creature, tiny cap, stubby vague feet | no scared; no gesture commands at all; shout reuses angry |
 | cro | caveman in a fur tunic, shaggy hair, barefoot | no sad |
 | dan | office everyman, white shirt and tie, thinning curls | full wheel, shrugs; angry reuses sad |
 | denise | woman with curly hair and hoop earrings, sweater and long skirt | no bored, no scared |
 | glenda | grinning woman, long wavy hair | one drawing |
 | hugh | shaggy cat, tufted ears and fangs, patterned dressing gown and slippers | full wheel |
-| jordan | squat creature ringed with eyes, grass skirt | full wheel, no gesture commands; scared reuses happy, shout reuses sad |
-| kevin | lanky guy, black tee, apron tied at the waist, heavy boots | no bored |
-| kirby | kid with a bowl cut and round glasses, red and blue motion capture suit (colour, child height) | full wheel |
+| jordan | squat creature ringed with eyes, grass skirt | full wheel; scared reuses happy, shout reuses sad |
+| kevin | lanky dishevelled guy, black tee, sweater tied at the waist, heavy boots, longer unkempt hair, nose ring | no bored |
 | kwensa | older woman in a striped headwrap and hoop earrings, long dress | full wheel; sad reuses scared |
-| lance | someone with a paper bag over their head, loose shirt, sneakers | no happy, no laugh; the only one who walks (`walkaway`, `walkup`, `doublepoint`, `shrug`); shout reuses angry |
-| lynnea | clubgoer in round dark shades, afro puff, tutu and boots | full wheel, one of the widest torso sets |
-| margaret | heavy-set woman, big curls and a headband, striped tracksuit | full wheel |
+| lance | someone with a paper bag over their head, loose shirt, sneakers, casual | no happy, no laugh; the only one who walks (`walkaway`, `walkup`, `doublepoint`, `shrug`); shout reuses angry |
+| lynnea | clubgoer in round dark sunglasses (lifts them with `coy` expression), afro puff, tutu and boots | full wheel, one of the widest torso sets |
+| margaret | middle aged woman, big curls in a headband, striped fitness sweatsuit | full wheel |
 | maynard | floppy-eared dog standing upright | no bored, the most torsos in the cast; shout reuses angry |
-| mike | showman in a fez and bow tie, long nose, dinner jacket | full wheel, shrugs; bored reuses coy, sad reuses scared |
-| pedagog | stern man in a shirt and tie, arms folded | one drawing |
-| rainbow | grinning lizard playing a snare drum | one drawing |
+| mike | showman in a fez and bow tie, long nose, vole-like anthropomorphic features, dinner jacket | full wheel, shrugs; bored reuses coy, sad reuses scared |
+| pedagog | stern man in a shirt and tie, arms folded, disgruntled avoidant expression | one drawing |
+| rainbow | grinning lizard playing a snare drum, frozen grin, expectant look, holding drum sticks in the air | one drawing |
 | rebecca | glamour: curled updo, long black gown and gloves | full wheel, very wide torso set; sad reuses bored, shout reuses scared |
 | sage | old bearded sage in a plain robe, barefoot | full wheel |
 | scotty | black terrier's head on a man in a sweater and cap, walking stick | the most faces in the cast; coy reuses happy |
-| susan | woman with big black hair and flowers in it, long dress | full wheel, shrugs, five distinct happy faces and five neutrals; bored reuses coy |
+| susan | woman with styled black hair and flowers in it, long flowy understated bohemian dress | full wheel, shrugs, five distinct happy faces and five neutrals; bored reuses coy |
 | tiki | carved tiki mask on a stick-thin body | full wheel |
 | tongtyed | heavy-set man, glasses and a curl of hair, V-neck sweater | full wheel, shrugs; bored reuses coy, sad reuses scared |
-| tux | gangly man in a dinner jacket and bow tie, spiky hair | one drawing |
-| veronica | kid with a blonde ponytail under a backwards cap, olive bomber jacket (colour, child height) | full wheel |
-| waf | wide-mouthed frog-lizard on two legs | one drawing |
+| tux | gangly man in a poorly fitting dinner jacket and bow tie, drooped spiky hair | one drawing |
+| waf | wide-mouthed frog-lizard on two legs, mouth agape, despondent but mildly expectant | one drawing |
 | xeno | grey alien, big black eyes, spindly limbs | full wheel |
 
 `walk` is in the command list but no character in this cast owns the art, so it always poses neutral.
@@ -68,11 +65,10 @@ Nobody here wears a uniform or carries a job, so register comes from clothes alo
 
 - **Office or professional**: `dan` and `denise` read closest to coworkers, `tongtyed` as the one who has been there longest, `pedagog` as a humourless authority (but one drawing only), `rebecca` and `tux` as formal to the point of black tie.
 - **Ordinary adults, no setting implied**: `margaret`, `susan`, `kwensa`, `scotty`, `kevin`, `glenda`. Safe for a neighbour, a friend, a customer. For a parent, cast one of the first four; `kevin` reads mid twenties. `glenda` has one drawing, so she can stand there and nothing more.
-- **Children**: `buck`, `kirby`, `veronica`, the three colour characters, all drawn at about half adult height. Cast one only when the scene wants a kid.
 - **Young**: `anna`, `lynnea`, `kevin`, `armando`, `bolo` all read early to mid twenties, the youngest adults in the cast. They keep their other groupings, which are about style rather than age.
-- **Counterculture and outsiders**: `armando`, `lynnea`, `lance`.
-- **Wise or elder**: `sage`, `kwensa`.
-- **Showmen**: `mike`, `rebecca`, `bolo`. Good for anyone overselling something.
-- **Creatures**, which read as comic by default whatever they say: `connor`, `cro`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
+- **Counterculture and outsiders**: `armando`, `lynnea`, `lance`, or `maynard`/`jordan`/`waf`/`hugh`/`cro` in specific contexts.
+- **Wise or elder**: `sage`, `kwensa`, `scotty`.
+- **Showmen**: `mike`, `rebecca`, `bolo`, `rainbow`. Good for anyone overselling something.
+- **Creatures**, which read as comic in most cases, fine for emphasis but be mindful: `connor`, `cro`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
 
-A creature in a straight scene is a joke whether you meant one or not. If the strip has to be taken at face value, cast humans.
+A creature in most scenes is going to be joking, or for specific and mindful emphasis. If the strip has to be taken at face value, cast humans.

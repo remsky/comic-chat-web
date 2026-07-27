@@ -5,7 +5,7 @@ Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, 
 ## Staging, which is where strips go wrong
 
 - The `actors` array is the seating. First actor stands at the left of the panel, next to its right, evenly spaced.
-- Everyone faces right unless told otherwise, and `facing: "left"` flips the drawing. So the leftmost character already looks toward everyone else, and the rightmost has nobody on its right and looks out of the frame until you flip it. **In a two character panel, the second actor takes `facing: "left"`. Always. Whoever is talking.**
+- Everyone faces right unless told otherwise, and `facing: "left"` flips the drawing. So the leftmost character already looks toward everyone else, and the rightmost has nobody on its right and looks out of the frame until you flip it. **In a two character panel, the second actor takes `facing: "left"`. Always. Whoever is talking unless there is a creative reason to have them look away and off-screen.**
 - That is the whole model: face inward. Slot 0 inward is `right`, the last slot inward is `left`.
 - Put `facing: "left"` on the first actor and it turns its back on the scene. Do that and leave the second on the default and both of them stare out of opposite edges, which is the single most common way a strip looks broken.
 - Keep each character in the same slot for the whole strip. If the pitch comes from the left in panel 1, it comes from the left in panel 8. Swapping sides makes the reader re-find who is who.
@@ -17,7 +17,7 @@ Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, 
 
 `close` scales the figure up and crops at the chest. The face carries, raised hands still show, legs are gone, and two characters nearly fill the frame. Spend it on a reaction or a punchline. Half a strip of `close` reads as monotonous.
 
-`zoom` nudges the framing either way and is rarely needed. Reach for it only when a panel is genuinely too tight or too empty.
+`zoom` nudges the framing either way and is rarely needed. Reach for it only for dramatic effect, limited to cases with 1-2 speakers who have few words, to avoid visual overlap.
 
 ## Balloons
 
@@ -66,16 +66,13 @@ Loose suggestions, not rules. Once a pair is chosen, `cast-query.mjs dan margare
 - `xeno` or `tiki` as the outsider who asks the obvious question. Their strangeness is the excuse for exposition.
 - `cro` explaining something modern: the whole joke, and it wears out after one strip.
 - `maynard` or `hugh` as an animal with opinions, next to a human pretending that is normal.
-- `pedagog`, `glenda`, `rainbow`, `tux`, `waf`: one drawing each, so cast them silent or as a face in the background. They cannot react.
-- `buck`, `kirby`, or `veronica` beside anyone else: they are children and stand half height, so the panel reads as an adult talking to a kid. Cast them when that is the scene.
+- `pedagog`, `glenda`, `rainbow`, `tux`, `waf`: one drawing each, they cannot react or pose, so cast them silent or as a face in the background.
 
 Cast and backdrop:
 
-- Monochrome cast on `field` or `room`: the whole panel is one drawing style. The most cohesive look in the set.
-- `buck`, `kirby`, or `veronica` on a colour backdrop: colour on colour, so they stop looking pasted in.
-- `yellow` behind the last panel of a mono strip: cheap, loud, and it lands a punchline.
+- `field` or `room` behind anyone: ink on ink, the whole panel one drawing style. The most cohesive look in the set.
+- `yellow` behind the last panel: cheap, loud, and it lands a punchline.
 - `clouds` for relief and after the fact, `volcano` for a turn that is about to hurt, `den` for a conversation that is meant to feel comfortable, `space` for absurd scale.
-- `buckroom` with `buck` in it and nowhere else. It is busy enough to swallow anyone.
 
 ## Before you hand it over
 

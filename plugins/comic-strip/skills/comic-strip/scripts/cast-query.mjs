@@ -40,7 +40,6 @@ const creatures = registers.find((group) => group.key.startsWith("creature"));
 const plain = (text) => (text ?? "").replaceAll("`", "");
 const rangeOf = (name) => plain(notes.get(name)?.range);
 const lookOf = (name) => plain(notes.get(name)?.look);
-const isColour = (name) => lookOf(name).includes("(colour");
 const isSilent = (name) => rangeOf(name).includes("one drawing");
 
 const usage = () => {
@@ -54,7 +53,6 @@ const usage = () => {
 	console.error(
 		"  --speaks           has more than one drawing, so it can react",
 	);
-	console.error("  --colour, --mono   full colour art, or line work");
 	console.error(
 		"filters combine; with no filters, names dump one character each",
 	);
@@ -65,16 +63,7 @@ const die = (message) => {
 	process.exit(2);
 };
 
-const FLAGS = [
-	"--gesture",
-	"--emotion",
-	"--register",
-	"--human",
-	"--speaks",
-	"--colour",
-	"--color",
-	"--mono",
-];
+const FLAGS = ["--gesture", "--emotion", "--register", "--human", "--speaks"];
 const VALUED = ["--gesture", "--emotion", "--register"];
 
 const args = process.argv.slice(2);
@@ -91,7 +80,7 @@ for (let i = 0; i < args.length; i++) {
 		die(`unknown flag "${arg}"`);
 	}
 	if (!VALUED.includes(arg)) {
-		filters[arg === "--color" ? "--colour" : arg] = true;
+		filters[arg] = true;
 		continue;
 	}
 	const value = args[++i];
@@ -152,8 +141,6 @@ const matched = [...avatars.keys()].filter((name) => {
 	if (register !== undefined && !register.names.has(name)) return false;
 	if (filters["--human"] && creatures?.names.has(name)) return false;
 	if (filters["--speaks"] && isSilent(name)) return false;
-	if (filters["--colour"] && !isColour(name)) return false;
-	if (filters["--mono"] && isColour(name)) return false;
 	return true;
 });
 

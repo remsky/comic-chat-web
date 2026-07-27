@@ -11,7 +11,7 @@ export interface Inbox {
 
 // a valid neutral annotation for the seat's avatar, honoring the simple-avatar convention
 export function annotationFor(avatar: number): ComicAnnotation {
-	const bounds = CAST_BOUNDS[avatar - 1];
+	const bounds = CAST_BOUNDS[avatar];
 	return {
 		faceIndex: 0,
 		faceEmotionIndex: 9,

@@ -1,6 +1,6 @@
 {
 	"version": 2,
-	"art": "f77409fc",
+	"art": "534e7f60",
 	"emotions": [
 		"happy",
 		"coy",
@@ -27,7 +27,6 @@
 	"facings": ["left", "right"],
 	"sizes": ["classic", "modern"],
 	"backgrounds": [
-		"buckroom",
 		"clouds",
 		"den",
 		"field",
@@ -37,12 +36,7 @@
 		"volcano",
 		"yellow"
 	],
-	"limits": {
-		"actors": 5,
-		"balloons": 5,
-		"zoom": [0.5, 2],
-		"columns": [1, 8]
-	},
+	"limits": { "actors": 5, "balloons": 5, "zoom": [0.5, 2], "columns": [1, 8] },
 	"avatars": [
 		{
 			"name": "anna",
@@ -114,9 +108,7 @@
 				"laugh": 1,
 				"neutral": 2
 			},
-			"aliases": {
-				"shout": "angry"
-			},
+			"aliases": { "shout": "angry" },
 			"gestures": [
 				"neutral_1",
 				"neutral_2",
@@ -199,9 +191,7 @@
 				"laugh": 1,
 				"neutral": 5
 			},
-			"aliases": {
-				"bored": "coy"
-			},
+			"aliases": { "bored": "coy" },
 			"gestures": [
 				"wave",
 				"point",
@@ -229,9 +219,7 @@
 				"laugh": 1,
 				"neutral": 2
 			},
-			"aliases": {
-				"angry": "sad"
-			},
+			"aliases": { "angry": "sad" },
 			"gestures": [
 				"wave",
 				"point",
@@ -287,9 +275,7 @@
 				"laugh": 1,
 				"neutral": 4
 			},
-			"aliases": {
-				"angry": "sad"
-			},
+			"aliases": { "angry": "sad" },
 			"gestures": [
 				"wave",
 				"point",
@@ -306,9 +292,7 @@
 		},
 		{
 			"name": "glenda",
-			"emotions": {
-				"neutral": 1
-			},
+			"emotions": { "neutral": 1 },
 			"gestures": ["neutral_1"]
 		},
 		{
@@ -324,10 +308,7 @@
 				"laugh": 1,
 				"neutral": 4
 			},
-			"aliases": {
-				"scared": "happy",
-				"shout": "sad"
-			},
+			"aliases": { "scared": "happy", "shout": "sad" },
 			"gestures": [
 				"wave",
 				"point",
@@ -356,9 +337,7 @@
 				"shout": 1,
 				"neutral": 1
 			},
-			"aliases": {
-				"shout": "angry"
-			},
+			"aliases": { "shout": "angry" },
 			"gestures": [
 				"wave",
 				"point",
@@ -449,10 +428,7 @@
 				"laugh": 1,
 				"neutral": 2
 			},
-			"aliases": {
-				"bored": "coy",
-				"sad": "scared"
-			},
+			"aliases": { "bored": "coy", "sad": "scared" },
 			"gestures": [
 				"wave",
 				"point",
@@ -466,16 +442,12 @@
 		},
 		{
 			"name": "pedagog",
-			"emotions": {
-				"neutral": 1
-			},
+			"emotions": { "neutral": 1 },
 			"gestures": ["neutral_1"]
 		},
 		{
 			"name": "rainbow",
-			"emotions": {
-				"neutral": 1
-			},
+			"emotions": { "neutral": 1 },
 			"gestures": ["neutral_1"]
 		},
 		{
@@ -519,10 +491,7 @@
 				"laugh": 1,
 				"neutral": 2
 			},
-			"aliases": {
-				"bored": "coy",
-				"sad": "scared"
-			},
+			"aliases": { "bored": "coy", "sad": "scared" },
 			"gestures": [
 				"wave",
 				"point",
@@ -539,20 +508,8 @@
 				"angry_4"
 			]
 		},
-		{
-			"name": "tux",
-			"emotions": {
-				"neutral": 1
-			},
-			"gestures": ["neutral_1"]
-		},
-		{
-			"name": "waf",
-			"emotions": {
-				"neutral": 1
-			},
-			"gestures": ["neutral_1"]
-		},
+		{ "name": "tux", "emotions": { "neutral": 1 }, "gestures": ["neutral_1"] },
+		{ "name": "waf", "emotions": { "neutral": 1 }, "gestures": ["neutral_1"] },
 		{
 			"name": "xeno",
 			"emotions": {
@@ -579,96 +536,6 @@
 				"bored_2",
 				"scared_1",
 				"angry_1",
-				"laugh_1",
-				"laugh_2"
-			]
-		},
-		{
-			"name": "buck",
-			"emotions": {
-				"happy": 2,
-				"coy": 1,
-				"bored": 1,
-				"scared": 2,
-				"sad": 1,
-				"angry": 2,
-				"shout": 1,
-				"laugh": 1,
-				"neutral": 3
-			},
-			"gestures": [
-				"wave",
-				"point",
-				"pointself",
-				"neutral_1",
-				"happy_1",
-				"coy_1",
-				"bored_1",
-				"bored_2",
-				"scared_1",
-				"sad_1",
-				"angry_1",
-				"shout_1",
-				"laugh_1"
-			]
-		},
-		{
-			"name": "kirby",
-			"emotions": {
-				"happy": 1,
-				"coy": 1,
-				"bored": 1,
-				"scared": 1,
-				"sad": 2,
-				"angry": 1,
-				"shout": 1,
-				"laugh": 2,
-				"neutral": 3
-			},
-			"gestures": [
-				"wave",
-				"point",
-				"pointself",
-				"neutral_1",
-				"neutral_2",
-				"happy_1",
-				"coy_1",
-				"bored_1",
-				"scared_1",
-				"sad_1",
-				"angry_1",
-				"shout_1",
-				"laugh_1",
-				"laugh_2"
-			]
-		},
-		{
-			"name": "veronica",
-			"emotions": {
-				"happy": 1,
-				"coy": 1,
-				"bored": 1,
-				"scared": 1,
-				"sad": 1,
-				"angry": 1,
-				"shout": 1,
-				"laugh": 3,
-				"neutral": 2
-			},
-			"gestures": [
-				"wave",
-				"point",
-				"pointself",
-				"neutral_1",
-				"neutral_2",
-				"happy_1",
-				"happy_2",
-				"coy_1",
-				"bored_1",
-				"scared_1",
-				"sad_1",
-				"angry_1",
-				"shout_1",
 				"laugh_1",
 				"laugh_2"
 			]
@@ -716,9 +583,7 @@
 				"laugh": 1,
 				"neutral": 1
 			},
-			"aliases": {
-				"sad": "scared"
-			},
+			"aliases": { "sad": "scared" },
 			"gestures": [
 				"wave",
 				"point",
@@ -752,9 +617,7 @@
 				"laugh": 2,
 				"neutral": 2
 			},
-			"aliases": {
-				"shout": "angry"
-			},
+			"aliases": { "shout": "angry" },
 			"gestures": [
 				"wave",
 				"point",
@@ -797,10 +660,7 @@
 				"laugh": 2,
 				"neutral": 1
 			},
-			"aliases": {
-				"sad": "bored",
-				"shout": "scared"
-			},
+			"aliases": { "sad": "bored", "shout": "scared" },
 			"gestures": [
 				"wave",
 				"point",
@@ -874,9 +734,7 @@
 				"laugh": 3,
 				"neutral": 1
 			},
-			"aliases": {
-				"coy": "happy"
-			},
+			"aliases": { "coy": "happy" },
 			"gestures": [
 				"wave",
 				"point",
