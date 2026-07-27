@@ -47,6 +47,8 @@
 		"wrangler": "^4.114.0"
 	},
 	"dependencies": {
+		"gifenc": "^1.0.3",
+		"mp4-muxer": "^5.2.2",
 		"obscenity": "^0.4.6"
 	}
 }

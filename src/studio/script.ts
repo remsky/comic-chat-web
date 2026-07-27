@@ -36,6 +36,9 @@ export const MAX_BALLOONS = 5;
 export const STRIP_MODES = ["say", "think", "whisper", "action"] as const;
 export type StripMode = (typeof STRIP_MODES)[number];
 
+export const STRIP_KINDS = ["scene", "title"] as const;
+export type StripKind = (typeof STRIP_KINDS)[number];
+
 export const STRIP_CAMERAS = ["wide", "close"] as const;
 export type StripCamera = (typeof STRIP_CAMERAS)[number];
 
@@ -86,6 +89,12 @@ export interface StripActor {
 }
 
 export interface StripPanel {
+	// "title" turns the panel into the STARRING card; actors become its credit rows
+	kind?: StripKind;
+	// title panels only; blank composes as UNTITLED
+	title?: string;
+	// title panels only; the line over the cast, blank composes as STARRING
+	starring?: string;
 	background?: string;
 	camera?: StripCamera;
 	zoom?: number;
@@ -209,6 +218,10 @@ export function emptyStrip(): Strip {
 
 export function emptyPanel(): StripPanel {
 	return { camera: "wide", actors: [] };
+}
+
+export function emptyTitlePanel(): StripPanel {
+	return { kind: "title", actors: [] };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -364,6 +377,27 @@ function parsePanel(
 	}
 	const panel: StripPanel = { actors: [] };
 
+	if (raw.kind !== undefined) {
+		const kind = readString(raw.kind)?.toLowerCase();
+		if (!kind || !(STRIP_KINDS as readonly string[]).includes(kind))
+			fail(context, `${path}.kind`, `unknown kind "${String(raw.kind)}"`);
+		else if (kind === "title") panel.kind = "title";
+	}
+
+	if (raw.title !== undefined && raw.title !== null) {
+		const title = readString(raw.title);
+		if (title === undefined)
+			fail(context, `${path}.title`, "title must be a string");
+		else if (title !== "") panel.title = title;
+	}
+
+	if (raw.starring !== undefined && raw.starring !== null) {
+		const starring = readString(raw.starring);
+		if (starring === undefined)
+			fail(context, `${path}.starring`, "starring must be a string");
+		else if (starring !== "") panel.starring = starring;
+	}
+
 	if (raw.background !== undefined && raw.background !== null) {
 		const background = readString(raw.background);
 		if (background === undefined)
@@ -414,7 +448,8 @@ function parsePanel(
 	raw.actors.slice(0, MAX_ACTORS).forEach((rawActor, index) => {
 		const actor = parseActor(rawActor, `${path}.actors[${index}]`, context);
 		if (!actor) return;
-		if (actor.text) balloons++;
+		// title panels spend actor text on credit rows, not balloons
+		if (actor.text && panel.kind !== "title") balloons++;
 		panel.actors.push(actor);
 	});
 	if (balloons > MAX_BALLOONS)
@@ -516,7 +551,36 @@ export function parseStripJson(
 
 // drops defaulted fields so a hand-written script round-trips without acquiring noise
 export function stripToJson(strip: Strip): string {
-	const panels = strip.panels.map((panel) => ({
+	const panels = strip.panels.map((panel) =>
+		panel.kind === "title"
+			? {
+					kind: "title",
+					...(panel.title ? { title: panel.title } : {}),
+					...(panel.starring ? { starring: panel.starring } : {}),
+					actors: panel.actors.map((actor) => ({
+						avatar: actor.avatar,
+						...(actor.text ? { text: actor.text } : {}),
+					})),
+				}
+			: sceneToJson(panel),
+	);
+	return `${JSON.stringify(
+		{
+			version: STRIP_VERSION,
+			...(strip.size && strip.size !== "modern" ? { size: strip.size } : {}),
+			...(strip.seed !== undefined ? { seed: strip.seed } : {}),
+			...(strip.columns !== undefined && strip.columns !== COLUMNS_DEFAULT
+				? { columns: strip.columns }
+				: {}),
+			panels,
+		},
+		null,
+		"  ",
+	)}\n`;
+}
+
+function sceneToJson(panel: StripPanel) {
+	return {
 		...(panel.background ? { background: panel.background } : {}),
 		...(panel.camera && panel.camera !== "wide"
 			? { camera: panel.camera }
@@ -537,18 +601,5 @@ export function stripToJson(strip: Strip): string {
 				? { facing: actor.facing }
 				: {}),
 		})),
-	}));
-	return `${JSON.stringify(
-		{
-			version: STRIP_VERSION,
-			...(strip.size && strip.size !== "modern" ? { size: strip.size } : {}),
-			...(strip.seed !== undefined ? { seed: strip.seed } : {}),
-			...(strip.columns !== undefined && strip.columns !== COLUMNS_DEFAULT
-				? { columns: strip.columns }
-				: {}),
-			panels,
-		},
-		null,
-		"  ",
-	)}\n`;
+	};
 }

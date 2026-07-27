@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta
+			name="description"
+			content="Install the comic-strip agent skill: npx skills, a drag-and-drop .skill file, or a Claude Code or Codex plugin. An AI agent writes the strip and hands back a link that opens it in the Studio."
+		/>
+		<title>Comic Strip Agent Skill - Comic Chat Web</title>
+		<!--if:SITE_ORIGIN-->
+		<link rel="canonical" href="%SITE_ORIGIN%/agent-skill" />
+		<!--/if-->
+		<meta name="robots" content="index, follow" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Comic Strip Agent Skill" />
+		<meta
+			property="og:description"
+			content="Install the comic-strip agent skill: npx skills, a drag-and-drop .skill file, or a Claude Code or Codex plugin. An AI agent writes the strip and hands back a link that opens it in the Studio."
+		/>
+		<!--if:SITE_ORIGIN-->
+		<meta property="og:url" content="%SITE_ORIGIN%/agent-skill" />
+		<meta property="og:image" content="%SITE_ORIGIN%/og.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="600" />
+		<meta
+			property="og:image:alt"
+			content="Three-panel comic strip of Comic Chat characters discussing the TypeScript port"
+		/>
+		<meta name="twitter:card" content="summary_large_image" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "SoftwareApplication",
+				"name": "comic-strip agent skill",
+				"url": "%SITE_ORIGIN%/agent-skill",
+				"description": "An agent skill that writes a Comic Chat strip in the Studio's JSON format and returns a link that opens it in the editor.",
+				"applicationCategory": "DeveloperApplication",
+				"operatingSystem": "Any",
+				"softwareRequirements": "An AI coding agent or chat that supports skills",
+				"downloadUrl": "https://github.com/remsky/comic-chat-web/releases/latest",
+				"license": "https://github.com/remsky/comic-chat-web/blob/main/LICENSE",
+				"isAccessibleForFree": true,
+				"image": "%SITE_ORIGIN%/og.jpg"
+			}
+		</script>
+		<!--/if-->
+		<link rel="stylesheet" href="/src/browser/legal.css" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	</head>
+	<body class="legal">
+		<header class="titlebar">
+			<h1 class="titlebar-title"><a href="/">Comic Chat Web</a></h1>
+			<span class="titlebar-actions">
+				<!--if:SUPPORT_URL-->
+				<a
+					class="titlebar-button"
+					href="%SUPPORT_URL%"
+					target="_blank"
+					rel="noreferrer"
+					aria-label="Buy me a coffee"
+					title="Buy me a coffee"
+				>
+					<svg
+						viewBox="0 0 16 16"
+						width="18"
+						height="18"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.4"
+						stroke-linejoin="round"
+						stroke-linecap="round"
+						aria-hidden="true"
+					>
+						<path
+							d="M5.6 2.2c0-.9 1.1-.9 1.1-1.8M9.3 2.2c0-.9 1.1-.9 1.1-1.8"
+							stroke-width="1.1"
+						/>
+						<rect x="2.6" y="4.2" width="10.8" height="2.1" rx="1.05" />
+						<path
+							d="M4 8.3h8l-0.85 5.5a1.4 1.4 0 0 1-1.39 1.2H6.24a1.4 1.4 0 0 1-1.39-1.2L4 8.3Z"
+						/>
+					</svg>
+				</a>
+				<!--/if-->
+				<a
+					class="titlebar-button"
+					href="https://github.com/remsky/comic-chat-web"
+					target="_blank"
+					rel="noreferrer"
+					aria-label="View source on GitHub"
+					title="View source on GitHub"
+				>
+					<svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+						<path
+							fill="currentColor"
+							d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+						/>
+					</svg>
+				</a>
+				<a class="titlebar-button" href="/studio.html" title="Back to the studio">
+					Studio
+				</a>
+			</span>
+		</header>
+
+		<main class="sheet">
+			<h1 class="sheet-heading">
+				<img src="/assets/help-icon.png" alt="" width="139" height="128" />
+				Studio Agent Skill
+			</h1>
+
+			<hr />
+
+			<div class="summary">
+				<ul class="summary-list">
+					<li>Use this to help an AI agent generate your first draft.</li>
+					<li>Ask for a comic strip to have it generate a link that opens the editor
+						pre-populated in <a href="/studio.html">the Studio</a>.
+					</li>
+					<li>Edit the result on the web, or download as PNG, MP4, or GIF.</li>
+				</ul>
+			</div>
+
+			<section id="install">
+				<h2>Install</h2>
+
+				<h3>Drag-and-drop .skill file</h3>
+				<p>
+					A portable zip of the skill can be dropped into ChatGPT or Claude.ai
+					chats.
+				</p>
+				<p>
+					You can download the latest copy of
+					<code>comic-strip.skill</code> on our
+					<a href="https://github.com/remsky/comic-chat-web/releases/latest"
+						>release page</a>.
+				</p>
+
+				<h3>npx skills</h3>
+				<p>Install for any CLI agent, per project or user level.</p>
+				<pre class="copy-block"><code>npx skills add remsky/comic-chat-web</code></pre>
+
+				<h3>Claude Code plugin</h3>
+				<pre class="copy-block"><code>/plugin marketplace add remsky/comic-chat-web
+/plugin install comic-strip@comic-chat-web</code></pre>
+
+				<h3>OpenAI Codex plugin</h3>
+				<pre class="copy-block"><code>codex plugin marketplace add remsky/comic-chat-web
+codex plugin add comic-strip@comic-chat-web</code></pre>
+			</section>
+
+			<section id="how">
+				<h2>How it works</h2>
+				<p>
+					You describe the strip. The agent writes the panels as a small JSON
+					file, then checks them and builds the link, working from what ships
+					inside:
+				</p>
+				<table>
+					<tr>
+						<th>File</th>
+						<th>Carries</th>
+					</tr>
+					<tr>
+						<td><code>guidance.md</code></td>
+						<td>
+							Suggestions on story, camera, pacing, and character decisions
+						</td>
+					</tr>
+					<tr>
+						<td><code>cast.md</code></td>
+						<td>
+							Descriptions of the available art; with the associated valid face
+							and pose names.
+						</td>
+					</tr>
+					<tr>
+						<td><code>backgrounds.md</code></td>
+						<td>Descriptions of the nine backdrops and their color palettes</td>
+					</tr>
+					<tr>
+						<td><code>cast-query.mjs</code></td>
+						<td>
+							Script to look up who can do a given pose or face, or would
+							fit a given scene.
+						</td>
+					</tr>
+					<tr>
+						<td><code>strip-link.mjs</code></td>
+						<td>
+							Script to check the strip for mistakes and pack it into the link
+						</td>
+					</tr>
+					<tr>
+						<td><code>catalog.json</code></td>
+						<td>
+							The full list of available art, read by both scripts, generated
+							from the shipped drawings
+						</td>
+					</tr>
+				</table>
+
+				<p>
+					The link carries the JSON script compressed. Nothing is uploaded
+					and we store none of it. Opening the link draws the panels in your
+					browser, and the Save menu gets you a PNG sheet, a padded square PNG, an MP4 or
+					GIF, or the JSON back out.
+				</p>
+				<details>
+					<summary>Sample JSON</summary>
+					<pre><code>{
+  "version": 2,
+  "columns": 3,
+  "panels": [
+    {
+      "background": "den",
+      "actors": [
+        { "avatar": "dan", "text": "The build is green", "emotion": "happy" },
+        {
+          "avatar": "anna",
+          "text": "On the first try?",
+          "emotion": "scared",
+          "facing": "left"
+        }
+      ]
+    },
+    {
+      "background": "den",
+      "camera": "close",
+      "actors": [
+        { "avatar": "dan", "text": "I only changed one line", "gesture": "shrug" }
+      ]
+    },
+    {
+      "background": "den",
+      "actors": [
+        {
+          "avatar": "anna",
+          "text": "That is how it always starts",
+          "emotion": "laugh"
+        },
+        { "avatar": "dan", "emotion": "scared", "facing": "left" }
+      ]
+    }
+  ]
+}</code></pre>
+				</details>
+
+				<details>
+					<summary>The link it hands back</summary>
+					<pre class="wrap-block"><code><a href="%SITE_ORIGIN%/studio.html?s=jZCxbsMwDER_heDsqd20dO7UJVuRgZFpSahMGRSV1Aj874WSoTWQApkPj_d4Vzyz1lQE3cuAvuQ2S0X3OuBCwrmi-7ziifxX0NJkRIcjCw5I3oreUzqTkfaEemL8bejwEBlOLeURUoWgfKN4LnbrwkjLsuI2_MFJhH75DwGLDFPSamC6vu3w6kl5xAEn8kkCOsw8GW7HfvGBrqeZldChz6XyM_7vUCSv4CNJ4BGKMOQkHQ1crSl3i6gt_F_6qGP_5CGS9X1iuUAyoHyhtUI1Uqu7fzO1EPdz3W2fmeS4_QA">%SITE_ORIGIN%/studio.html?s=jZCxbsMwDER_heDsqd20dO7UJVuRgZFpSahMGRSV1Aj874WSoTWQApkPj_d4Vzyz1lQE3cuAvuQ2S0X3OuBCwrmi-7ziifxX0NJkRIcjCw5I3oreUzqTkfaEemL8bejwEBlOLeURUoWgfKN4LnbrwkjLsuI2_MFJhH75DwGLDFPSamC6vu3w6kl5xAEn8kkCOsw8GW7HfvGBrqeZldChz6XyM_7vUCSv4CNJ4BGKMOQkHQ1crSl3i6gt_F_6qGP_5CGS9X1iuUAyoHyhtUI1Uqu7fzO1EPdz3W2fmeS4_QA</a></code></pre>
+				</details>
+			</section>
+
+			<section id="limits">
+				<h2>Limits</h2>
+				<ul>
+					<li>Five characters/balloons to a panel.</li>
+					<li>
+						The cast is fixed: the original 1996 troupe.
+					</li>
+					<li>
+						Basic content moderation is enabled. A
+						tripped panel gets flagged and its export waits until it passes.
+					</li>
+					<li>
+						Requires an AI agent to generate and an active internet connection to view/export (e.g., the link).
+					</li>
+				</ul>
+			</section>
+
+			<footer class="legal-footer">
+				<a href="/studio.html">Studio</a>
+				<span aria-hidden="true">·</span>
+				<a href="https://github.com/remsky/comic-chat-web">GitHub</a>
+				<span aria-hidden="true">·</span>
+				<a href="/legal.html#terms">Terms</a>
+				<span aria-hidden="true">·</span>
+				<a href="/legal.html#privacy">Privacy</a>
+			</footer>
+		</main>
+
+		<template id="copy-button">
+			<button class="copy-button" type="button" title="Copy to clipboard">
+				<svg
+					viewBox="0 0 16 16"
+					width="13"
+					height="13"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.2"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<rect x="5.5" y="5.5" width="8" height="8" />
+					<path d="M10.5 2.5h-8v8" />
+				</svg>
+				<span class="copy-note">copied</span>
+			</button>
+		</template>
+
+		<script type="module" src="/src/browser/agentSkillPage.ts"></script>
+	</body>
+</html>

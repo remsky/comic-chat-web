@@ -10,6 +10,7 @@ import { type AvatarData, createAvatar } from "../src/engine/avatar.js";
 import { EM_WAVE } from "../src/engine/emotion.js";
 import { SM_WHISPER } from "../src/engine/panel.js";
 import type { BalloonStyleResolver } from "../src/engine/panelBalloon.js";
+import { NO_TITLE } from "../src/engine/titlePanel.js";
 import { composeStrip } from "../src/studio/compose.js";
 import {
 	buildCatalog,
@@ -322,6 +323,68 @@ describe("composeStrip", () => {
 		const before = compose(base).panels[1]?.panel.balloons[0]?.runtime;
 		const after = compose(edited).panels[1]?.panel.balloons[0]?.runtime;
 		expect(JSON.stringify(after)).toBe(JSON.stringify(before));
+	});
+
+	it("composes a title panel with credits and a custom title", () => {
+		const result = compose({
+			version: 1,
+			panels: [
+				{
+					kind: "title",
+					title: "NO EXIT",
+					actors: [{ avatar: "anna", text: "The Boss" }, { avatar: "bolo" }],
+				},
+			],
+		});
+		const panel = result.panels[0]?.panel;
+		expect(panel?.title?.text).toBe("NO EXIT");
+		expect(panel?.title?.stars).toEqual([
+			{ avatarID: 1, label: "The Boss" },
+			{ avatarID: 2, label: "Bolo" },
+		]);
+		expect(panel?.hasBorder).toBe(false);
+		expect(panel?.bodies).toHaveLength(0);
+		expect(panel?.balloons).toHaveLength(0);
+	});
+
+	it("falls back to UNTITLED when no title is typed", () => {
+		const panel = { kind: "title", actors: [{ avatar: "anna" }] };
+		const untyped = compose({ version: 1, panels: [panel] });
+		expect(untyped.panels[0]?.panel.title?.text).toBe(NO_TITLE);
+		const blank = compose({ version: 1, panels: [{ ...panel, title: "  " }] });
+		expect(blank.panels[0]?.panel.title?.text).toBe(NO_TITLE);
+	});
+
+	// blank leaves the card to draw STARRING; anything typed replaces it
+	it("carries a typed starring line and drops a blank one", () => {
+		const panel = { kind: "title", actors: [{ avatar: "anna" }] };
+		const typed = compose({
+			version: 1,
+			panels: [{ ...panel, starring: "TOLD BY" }],
+		});
+		expect(typed.panels[0]?.panel.title?.starring).toBe("TOLD BY");
+		const blank = compose({
+			version: 1,
+			panels: [{ ...panel, starring: " " }],
+		});
+		expect(blank.panels[0]?.panel.title?.starring).toBeUndefined();
+	});
+
+	it("reports an unknown avatar in a title panel and skips its credit", () => {
+		const result = composeStrip(
+			{
+				version: 1,
+				panels: [
+					{
+						kind: "title",
+						actors: [{ avatar: "ghost" }, { avatar: "anna" }],
+					},
+				],
+			} as Strip,
+			{ avatars, resolveStyle },
+		);
+		expect(result.issues[0]?.path).toBe("panels[0].actors[0].avatar");
+		expect(result.panels[0]?.panel.title?.stars).toHaveLength(1);
 	});
 
 	it("reports an unknown avatar and skips it", () => {

@@ -640,6 +640,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			reconnectAttempt = 0;
 			roster = parsed.roster;
 			renderRoster(roster, deps.avatars, deps.atlases);
+			view.setRoster(roster);
 			seatId = parsed.id;
 			seatAvatar = parsed.avatar;
 			view.setLocalAvatarID(parsed.avatar);
@@ -720,14 +721,17 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			if (!roster.some((entry) => entry.id === parsed.who.id))
 				roster.push(parsed.who);
 			renderRoster(roster, deps.avatars, deps.atlases);
+			view.setRoster(roster);
 		} else if (parsed.type === "left") {
 			const index = roster.findIndex((entry) => entry.id === parsed.who.id);
 			if (index >= 0) roster.splice(index, 1);
 			renderRoster(roster, deps.avatars, deps.atlases);
+			view.setRoster(roster);
 		} else if (parsed.type === "profile") {
 			const index = roster.findIndex((entry) => entry.id === parsed.was.id);
 			if (index >= 0) roster[index] = parsed.who;
 			renderRoster(roster, deps.avatars, deps.atlases);
+			view.setRoster(roster);
 			// the connection id is ours, so a matching seat means the change was ours
 			if (parsed.was.id === seatId) {
 				currentName = parsed.who.name;

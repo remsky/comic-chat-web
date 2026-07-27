@@ -10,6 +10,16 @@ export function panelTranscript(
 	panel: UnitPanel,
 	avatars: readonly AvatarData[],
 ): PanelTranscriptLine[] {
+	if (panel.title) {
+		const lines = [{ speaker: "Title", text: panel.title.text }];
+		if (panel.title.stars.length > 0)
+			lines.push({
+				// the card reads its own subhead, so the transcript announces the cast by the same word
+				speaker: panel.title.starring?.trim() || "Starring",
+				text: panel.title.stars.map((star) => star.label).join(", "),
+			});
+		return lines;
+	}
 	return panel.balloons.map((balloon) => ({
 		speaker:
 			avatars.find((avatar) => avatar.avatarID === balloon.speaker.avatarID)

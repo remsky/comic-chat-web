@@ -15,6 +15,11 @@ import {
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
 import {
+	orderStars,
+	randomTitle,
+	type StarCandidate,
+} from "../engine/titlePanel.js";
+import {
 	type ComicAnnotation,
 	MAX_TALK_TOS,
 	NEUTRAL_EMOTION_INDEX,
@@ -70,6 +75,10 @@ export class RoomView {
 	private localSprite: number | null = null;
 	private baseBackdrop = "";
 	private showAllNames = false;
+	private roster: RosterEntry[] = [];
+	private showTitle = false;
+	// one pick per visit, like GetComicsTitle choosing when the document opens
+	private readonly titleText = randomTitle(Math.random);
 	// off: the "Show nametags" toggle is the sole control; flip to restore auto-chips for co-occupying bodies only
 	private readonly autoCollisionChips = false;
 
@@ -212,6 +221,7 @@ export class RoomView {
 		this.entries.push(...entries);
 		this.composition = this.createComposition();
 		for (const entry of this.entries) this.feed(entry);
+		this.refreshTitle();
 		this.reconcile();
 		this.onRebuilt?.();
 	}
@@ -223,8 +233,59 @@ export class RoomView {
 		this.entries.unshift(...additions);
 		this.composition = this.createComposition();
 		for (const entry of this.entries) this.feed(entry);
+		this.refreshTitle();
 		this.reconcile();
 		this.onRebuilt?.();
+	}
+
+	setShowTitle(on: boolean): void {
+		if (on === this.showTitle) return;
+		this.showTitle = on;
+		this.refreshTitle();
+		this.reconcile();
+	}
+
+	setRoster(roster: readonly RosterEntry[]): void {
+		this.roster = [...roster];
+		if (!this.showTitle) return;
+		this.refreshTitle();
+		this.reconcile();
+	}
+
+	// UpdateTitle (panel.cpp:1300-1314): keep the reserved first panel in step with the cast
+	private refreshTitle(): void {
+		const page = this.composition.page;
+		if (!this.showTitle) {
+			if (page.panels[0]?.title) page.panels[0] = null;
+			return;
+		}
+		const sends = new Map<string, number>();
+		for (const entry of this.entries) {
+			if (entry.type !== "chat" || entry.userId === "") continue;
+			sends.set(entry.userId, (sends.get(entry.userId) ?? 0) + 1);
+		}
+		const seen = new Set<string>();
+		const candidates: StarCandidate[] = [];
+		for (const seat of this.roster) {
+			const avatarID = this.slotFor(seat.userId, seat.avatar);
+			const key = `${avatarID}\0${seat.name}`;
+			if (seen.has(key)) continue;
+			seen.add(key);
+			candidates.push({
+				avatarID,
+				label: seat.name,
+				self: seat.userId !== "" && seat.userId === this.localUserId,
+				sends: sends.get(seat.userId) ?? 0,
+			});
+		}
+		page.panels[0] = {
+			seed: 0,
+			hasBorder: false,
+			backdropMode: 0,
+			bodies: [],
+			balloons: [],
+			title: { text: this.titleText, stars: orderStars(candidates) },
+		};
 	}
 
 	setLocalUserId(userId: string): void {
@@ -278,7 +339,16 @@ export class RoomView {
 				size,
 			);
 		});
-		drawStripMark(context, sheet.width, sheet.height, gap);
+		// on one row the credit starts under the first bordered panel, not the white title card
+		const titled = rows === 1 && panels.length > 1 && panels[0]?.panel.title;
+		drawStripMark(
+			context,
+			sheet.width,
+			sheet.height,
+			gap,
+			undefined,
+			titled ? gap + size + gap : gap,
+		);
 		return new Promise((resolve) => sheet.toBlob(resolve, "image/png"));
 	}
 
@@ -368,6 +438,7 @@ export class RoomView {
 		this.unit = features.modernSizing ? MODERN_UNIT : CLASSIC_UNIT;
 		this.composition = this.createComposition();
 		for (const entry of this.entries) this.feed(entry);
+		this.refreshTitle();
 		this.reconcile();
 		this.onRebuilt?.();
 	}

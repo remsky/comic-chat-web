@@ -154,6 +154,11 @@ textarea {
 	cursor: pointer;
 }
 
+.titlebar-icon {
+	width: auto;
+	height: 18px;
+}
+
 .titlebar-button:active {
 	border-color: var(--ink) var(--edge) var(--edge) var(--ink);
 	box-shadow:
@@ -534,6 +539,15 @@ textarea {
 	grid-area: 2 / 1;
 }
 
+.pedit-title {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.pedit-title .actor-text {
+	flex: 1;
+}
+
 .actor-icon {
 	flex: none;
 	line-height: 0;
@@ -754,24 +768,4 @@ select.actor-who::picker(select) {
 		"Courier New",
 		monospace;
 	resize: vertical;
-}
-
-.skill-line {
-	display: inline-flex;
-	gap: 0.35em;
-	align-items: center;
-	align-self: start;
-	padding: 0;
-	border: 0;
-	background: none;
-	color: #555;
-	font:
-		0.7rem / 1.4 Consolas,
-		"Courier New",
-		monospace;
-	cursor: copy;
-}
-
-.skill-line:hover {
-	color: #000;
 }

@@ -7,6 +7,8 @@ import { deflateRawSync } from "node:zlib";
 
 const DEFAULT_BASE = "https://comics.remsky.art";
 const LONG_BALLOON = 90;
+const LONG_TITLE = 30;
+const LONG_CREDIT = 24;
 
 const catalog = JSON.parse(
 	readFileSync(new URL("../reference/catalog.json", import.meta.url), "utf8"),
@@ -14,8 +16,20 @@ const catalog = JSON.parse(
 const avatars = new Map(catalog.avatars.map((entry) => [entry.name, entry]));
 
 const STRIP_KEYS = ["version", "size", "seed", "columns", "panels"];
-const PANEL_KEYS = ["background", "camera", "zoom", "border", "actors"];
+const PANEL_KEYS = [
+	"kind",
+	"title",
+	"starring",
+	"background",
+	"camera",
+	"zoom",
+	"border",
+	"actors",
+];
 const ACTOR_KEYS = ["avatar", "text", "mode", "emotion", "gesture", "facing"];
+// a title card draws icons and credit rows, so the staging fields have nothing to act on
+const SCENE_KEYS = ["background", "camera", "zoom", "border"];
+const TITLE_KEYS = ["title", "starring"];
 
 const issues = [];
 const fail = (path, message) =>
@@ -108,12 +122,77 @@ function checkActor(raw, path) {
 	}
 }
 
+// a star is a name and a credit line; the card poses it from its icon, so the acting fields go unread
+function checkStar(raw, path) {
+	if (!isRecord(raw)) {
+		fail(path, "actor must be an object");
+		return;
+	}
+	checkKeys(raw, ACTOR_KEYS, path);
+	if (typeof raw.avatar !== "string" || raw.avatar === "")
+		fail(`${path}.avatar`, "avatar is required");
+	else if (!avatars.has(raw.avatar))
+		fail(`${path}.avatar`, `unknown character "${raw.avatar}"`);
+
+	if (raw.text !== undefined && typeof raw.text !== "string")
+		fail(`${path}.text`, "text must be a string");
+	else if (typeof raw.text === "string" && raw.text.length > LONG_CREDIT)
+		warn(
+			`${path}.text`,
+			`${raw.text.length} characters is a long credit; the rows centre on the widest one`,
+		);
+
+	for (const key of ["mode", "emotion", "gesture", "facing"])
+		if (raw[key] !== undefined)
+			warn(`${path}.${key}`, `a credit row ignores ${key}`);
+}
+
+function checkTitlePanel(raw, path) {
+	for (const key of SCENE_KEYS)
+		if (raw[key] !== undefined)
+			warn(`${path}.${key}`, `a title card ignores ${key}`);
+
+	for (const key of TITLE_KEYS) {
+		if (raw[key] === undefined) continue;
+		if (typeof raw[key] !== "string")
+			fail(`${path}.${key}`, `${key} must be a string`);
+	}
+	if (typeof raw.title === "string" && raw.title.length > LONG_TITLE)
+		warn(
+			`${path}.title`,
+			`${raw.title.length} characters wraps the title over several lines and crowds the cast off the card`,
+		);
+
+	if (!Array.isArray(raw.actors)) {
+		fail(`${path}.actors`, "actors must be an array");
+		return;
+	}
+	if (raw.actors.length === 0)
+		warn(`${path}.actors`, "title card credits nobody");
+	if (raw.actors.length > catalog.limits.actors)
+		fail(
+			`${path}.actors`,
+			`a card holds at most ${catalog.limits.actors} credit rows`,
+		);
+	raw.actors.forEach((actor, index) => {
+		checkStar(actor, `${path}.actors[${index}]`);
+	});
+}
+
 function checkPanel(raw, path) {
 	if (!isRecord(raw)) {
 		fail(path, "panel must be an object");
 		return;
 	}
 	checkKeys(raw, PANEL_KEYS, path);
+	checkEnum(raw, "kind", catalog.kinds, path);
+	if (raw.kind === "title") {
+		checkTitlePanel(raw, path);
+		return;
+	}
+	for (const key of TITLE_KEYS)
+		if (raw[key] !== undefined)
+			warn(`${path}.${key}`, `${key} draws only on a "title" panel`);
 	if (raw.background !== undefined && raw.background !== "")
 		checkEnum(raw, "background", catalog.backgrounds, path);
 	checkEnum(raw, "camera", catalog.cameras, path);
@@ -153,30 +232,41 @@ function checkPanel(raw, path) {
 
 // craft rules the studio happily renders and a reader still notices, so they land as warnings
 function checkShape(panels) {
-	const drawn = panels.filter(isRecord);
+	panels.forEach((panel, index) => {
+		if (isRecord(panel) && panel.kind === "title" && index > 0)
+			warn(
+				`panels[${index}]`,
+				"a title card opens a strip; this one interrupts one",
+			);
+	});
+	// the card carries no scene, so the staging rules below only count the panels that do
+	const drawn = panels
+		.map((panel, index) => ({ panel, index }))
+		.filter(({ panel }) => isRecord(panel) && panel.kind !== "title");
 	if (drawn.length < 3) return;
-	const actorsOf = (panel) =>
+	const actorsOf = ({ panel }) =>
 		(Array.isArray(panel.actors) ? panel.actors : []).filter(isRecord);
 
-	if (drawn.every((panel) => !panel.background))
+	if (drawn.every(({ panel }) => !panel.background))
 		warn("panels", "no panel has a backdrop; a blank strip reads unfinished");
 
-	const close = drawn.filter((panel) => panel.camera === "close").length;
+	const close = drawn.filter(({ panel }) => panel.camera === "close").length;
 	if (close * 2 >= drawn.length)
 		warn(
 			"panels",
 			`${close} of ${drawn.length} panels are close shots; wide should carry most of a strip`,
 		);
 
-	if (!drawn.some((panel) => actorsOf(panel).some((actor) => actor.gesture)))
+	if (!drawn.some((entry) => actorsOf(entry).some((actor) => actor.gesture)))
 		warn(
 			"panels",
 			"no panel names a gesture, so every figure holds the same standing pose",
 		);
 
 	const faces = new Map();
-	drawn.forEach((panel, index) => {
-		for (const actor of actorsOf(panel)) {
+	drawn.forEach((entry) => {
+		const index = entry.index;
+		for (const actor of actorsOf(entry)) {
 			if (typeof actor.avatar !== "string") continue;
 			const held = faces.get(actor.avatar) ?? [];
 			held.push({ index, face: String(actor.emotion ?? "neutral") });
@@ -279,8 +369,9 @@ const url = link(strip, base);
 const cast = new Set(
 	strip.panels.flatMap((panel) => panel.actors.map((actor) => actor.avatar)),
 );
+const cards = strip.panels.filter((panel) => panel.kind === "title").length;
 console.log(
-	`ok: ${strip.panels.length} panel(s), ${cast.size} character(s), ${url.length} byte link`,
+	`ok: ${strip.panels.length} panel(s)${cards ? ` including ${cards} title card` : ""}, ${cast.size} character(s), ${url.length} byte link`,
 );
 console.log(url);
 

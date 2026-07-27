@@ -1,10 +1,12 @@
 // The constructor: one collapsible card per panel, one row per character in it.
 
 import { displayName, revealWithin } from "../browser/dom.js";
+import { TITLE_CHOICES } from "../engine/titlePanel.js";
 import { type AvatarArt, emptyArt, splitArtName } from "./art.js";
 import { attachReorder, moveItem } from "./reorder.js";
 import {
 	emptyPanel,
+	emptyTitlePanel,
 	NEUTRAL_KEY,
 	type Strip,
 	type StripActor,
@@ -121,6 +123,13 @@ function toggleButton(
 }
 
 function summarize(panel: StripPanel): string {
+	if (panel.kind === "title") {
+		const text = panel.title?.trim() ? `"${panel.title}"` : "untitled";
+		const cast = panel.actors
+			.map((actor) => actor.text?.trim() || displayName(actor.avatar))
+			.join(", ");
+		return cast ? `${text} starring ${cast}` : text;
+	}
 	if (panel.actors.length === 0) return "empty";
 	const cast = panel.actors
 		.map((actor) => displayName(actor.avatar))
@@ -156,6 +165,13 @@ export class PanelEditor {
 		this.selected = Math.min(this.selected, this.strip.panels.length - 1);
 		const top = this.options.scroller.scrollTop;
 		const fragment = document.createDocumentFragment();
+		// a title card opens the strip, so its button sits above the cards it would lead
+		const addTitle = document.createElement("button");
+		addTitle.type = "button";
+		addTitle.className = "sbutton sbutton--add";
+		addTitle.textContent = "+ Title";
+		addTitle.addEventListener("click", () => this.addTitlePanel());
+		fragment.append(addTitle);
 		this.cards = this.strip.panels.map((panel, index) => {
 			const card = this.panelCard(panel, index);
 			fragment.append(card);
@@ -175,6 +191,11 @@ export class PanelEditor {
 	addPanel(): void {
 		this.strip.panels.push(emptyPanel());
 		this.structural(this.strip.panels.length - 1);
+	}
+
+	addTitlePanel(): void {
+		this.strip.panels.unshift(emptyTitlePanel());
+		this.structural(0);
 	}
 
 	move(from: number, to: number): void {
@@ -252,8 +273,137 @@ export class PanelEditor {
 		header.className = "pedit-head";
 		header.append(grip, toggle, actions);
 		card.append(header);
-		if (open) card.append(this.panelBody(panel, index));
+		if (open)
+			card.append(
+				panel.kind === "title"
+					? this.titleBody(panel, index)
+					: this.panelBody(panel, index),
+			);
 		return card;
+	}
+
+	// the title card: one line of title text, then who gets a credit row
+	private titleBody(panel: StripPanel, index: number): HTMLElement {
+		const body = document.createElement("div");
+		body.className = "pedit-body";
+
+		const title = named(document.createElement("input"), "Title");
+		title.type = "text";
+		title.className = "actor-text";
+		title.dataset.path = `panels[${index}].title`;
+		title.placeholder = "UNTITLED";
+		title.value = panel.title ?? "";
+		title.addEventListener("input", () => {
+			if (title.value) panel.title = title.value;
+			else delete panel.title;
+			this.resummarize(index);
+			this.options.onEdit();
+		});
+
+		// cycles the classic 1996 titles, skipping whatever is already in the box
+		const cycle = iconButton("⟳", "Cycle a classic title");
+		cycle.addEventListener("click", () => {
+			const pool = TITLE_CHOICES.filter((entry) => entry !== title.value);
+			const pick = pool[Math.floor(Math.random() * pool.length)];
+			if (!pick) return;
+			title.value = pick;
+			panel.title = pick;
+			this.resummarize(index);
+			this.options.onEdit();
+		});
+
+		const row = document.createElement("div");
+		row.className = "pedit-title";
+		row.append(title, cycle);
+
+		// the line over the cast, so "STARRING" can become "A Story Told By"
+		const starring = named(document.createElement("input"), "Starring line");
+		starring.type = "text";
+		starring.className = "actor-text";
+		starring.dataset.path = `panels[${index}].starring`;
+		starring.placeholder = "STARRING";
+		starring.value = panel.starring ?? "";
+		starring.addEventListener("input", () => {
+			if (starring.value) panel.starring = starring.value;
+			else delete panel.starring;
+			this.options.onEdit();
+		});
+
+		const stars = document.createElement("ol");
+		stars.className = "pedit-actors";
+		panel.actors.forEach((actor, actorIndex) => {
+			stars.append(this.starRow(panel, actor, index, actorIndex));
+		});
+
+		const addStar = document.createElement("button");
+		addStar.type = "button";
+		addStar.className = "sbutton sbutton--add";
+		addStar.textContent = "+ Character";
+		addStar.disabled = panel.actors.length >= this.options.catalog.maxActors;
+		addStar.addEventListener("click", () => {
+			const first = this.options.catalog.avatars[0];
+			if (!first) return;
+			panel.actors.push({ avatar: first.name });
+			this.refresh(index);
+			this.options.onEdit();
+		});
+
+		body.append(row, starring, stars, addStar);
+		return body;
+	}
+
+	private starRow(
+		panel: StripPanel,
+		actor: StripActor,
+		panelIndex: number,
+		actorIndex: number,
+	): HTMLElement {
+		const row = document.createElement("li");
+		row.className = "actor";
+		row.dataset.path = `panels[${panelIndex}].actors[${actorIndex}]`;
+
+		const avatar = named(
+			selectOf(
+				this.options.catalog.avatars.map((entry) => entry.name),
+				actor.avatar,
+			),
+			"Character",
+		);
+		avatar.className = "actor-who";
+		avatar.addEventListener("change", () => {
+			actor.avatar = avatar.value;
+			this.resummarize(panelIndex);
+			this.options.onEdit();
+		});
+
+		const text = named(document.createElement("input"), "Credit name");
+		text.type = "text";
+		text.className = "actor-text";
+		text.placeholder = `Credited as ${displayName(actor.avatar)}`;
+		text.value = actor.text ?? "";
+		text.addEventListener("input", () => {
+			if (text.value) actor.text = text.value;
+			else delete actor.text;
+			this.resummarize(panelIndex);
+			this.options.onEdit();
+		});
+
+		const remove = iconButton(
+			"✕",
+			`Remove ${displayName(actor.avatar)} from panel ${panelIndex + 1}`,
+		);
+		remove.classList.add("actor-drop");
+		remove.addEventListener("click", () => {
+			panel.actors.splice(actorIndex, 1);
+			this.refresh(panelIndex);
+			this.options.onEdit();
+		});
+
+		const meta = document.createElement("div");
+		meta.className = "actor-meta";
+		meta.append(avatar);
+		row.append(meta, text, remove);
+		return row;
 	}
 
 	private panelBody(panel: StripPanel, index: number): HTMLElement {

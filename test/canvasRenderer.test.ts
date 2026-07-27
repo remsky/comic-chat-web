@@ -113,4 +113,138 @@ describe("canvas avatar composition", () => {
 		);
 		expect(calls.at(-2)?.name).toBe("strokeRect");
 	});
+
+	it("draws a title card as text and cast icons instead of bodies", async () => {
+		const registry = new AvatarRegistry(manifest.avatars);
+		const anna = registry.get(1);
+		if (!anna) throw new Error("missing Anna");
+		const calls: { name: string; args: unknown[] }[] = [];
+		const context = new Proxy(
+			{
+				fillStyle: "",
+				strokeStyle: "",
+				font: "",
+				textAlign: "left",
+				textBaseline: "alphabetic",
+				lineWidth: 0,
+				imageSmoothingEnabled: false,
+				imageSmoothingQuality: "low",
+				measureText: (text: string) => ({
+					width: text.length * 150,
+					fontBoundingBoxAscent: 300,
+					fontBoundingBoxDescent: 100,
+				}),
+			},
+			{
+				get(target, property) {
+					if (property in target)
+						return target[property as keyof typeof target];
+					return (...args: unknown[]) => {
+						calls.push({ name: String(property), args });
+					};
+				},
+			},
+		) as unknown as CanvasRenderingContext2D;
+		const cache = new AvatarAtlasCache(async () => ({}) as CanvasImageSource);
+		await cache.preload(manifest.avatars);
+		const renderer = new CanvasPanelRenderer(context, cache, registry.avatars, {
+			unitWidth: 3000,
+			unitHeight: 3000,
+		});
+		const panel: UnitPanel = {
+			seed: 0,
+			hasBorder: false,
+			backdropMode: 0,
+			bodies: [],
+			balloons: [],
+			title: {
+				text: "NO EXIT",
+				stars: [{ avatarID: 1, label: "anna" }],
+			},
+		};
+		renderer.render(panel);
+		const texts = calls
+			.filter((call) => call.name === "fillText")
+			.map((call) => call.args[0]);
+		expect(texts).toEqual(["NO EXIT", "STARRING", "anna"]);
+		const icon = anna.data.poses.find(
+			(pose) => pose.poseID === anna.data.iconPoseID,
+		);
+		const drawCalls = calls.filter((call) => call.name === "drawImage");
+		expect(drawCalls).toHaveLength(1);
+		expect(drawCalls[0]?.args.slice(1, 5)).toEqual([
+			icon?.sprite?.x,
+			icon?.sprite?.y,
+			icon?.width,
+			icon?.height,
+		]);
+		expect(calls.some((call) => call.name === "strokeRect")).toBe(false);
+	});
+
+	it("drops the line under a descender and takes a written starring line", async () => {
+		const registry = new AvatarRegistry(manifest.avatars);
+		const cache = new AvatarAtlasCache(async () => ({}) as CanvasImageSource);
+		await cache.preload(manifest.avatars);
+		const draw = (text: string, starring?: string) => {
+			const lines: { text: string; y: number }[] = [];
+			const context = new Proxy(
+				{
+					fillStyle: "",
+					font: "",
+					textAlign: "left",
+					textBaseline: "alphabetic",
+					measureText: (probe: string) => ({
+						width: probe.length * 150,
+						fontBoundingBoxAscent: 300,
+						fontBoundingBoxDescent: 100,
+						// the baseline sits 300 under a "top" origin, so a tail reaches 380
+						actualBoundingBoxDescent: /[gjpqy]/.test(probe) ? 380 : 300,
+					}),
+					fillText: (probe: string, _x: number, y: number) =>
+						lines.push({ text: probe, y }),
+				},
+				{
+					get(target, property) {
+						if (property in target)
+							return target[property as keyof typeof target];
+						return () => {};
+					},
+				},
+			) as unknown as CanvasRenderingContext2D;
+			const renderer = new CanvasPanelRenderer(
+				context,
+				cache,
+				registry.avatars,
+				{ unitWidth: 3000, unitHeight: 3000 },
+			);
+			renderer.render({
+				seed: 0,
+				hasBorder: false,
+				backdropMode: 0,
+				bodies: [],
+				balloons: [],
+				title: {
+					text,
+					...(starring ? { starring } : {}),
+					stars: [{ avatarID: 1, label: "anna" }],
+				},
+			});
+			return lines;
+		};
+
+		const caps = draw("NO EXIT");
+		const hung = draw("Digging");
+		expect(caps.map((line) => line.text)).toEqual([
+			"NO EXIT",
+			"STARRING",
+			"anna",
+		]);
+		expect(caps[0]?.y).toBe(hung[0]?.y);
+		expect((hung[1]?.y ?? 0) - (caps[1]?.y ?? 0)).toBe(80);
+		expect(draw("NO EXIT", "TOLD BY").map((line) => line.text)).toEqual([
+			"NO EXIT",
+			"TOLD BY",
+			"anna",
+		]);
+	});
 });

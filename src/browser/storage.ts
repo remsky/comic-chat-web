@@ -8,6 +8,8 @@ export const USER_ID_KEY = "comic-chat.user-id";
 export const TEXT_VIEW_KEY = "comic-chat.text-view";
 // draw a nick chip over every body, not just co-occupying ones; a busy-room readability aid
 export const NAMETAGS_KEY = "comic-chat.nametags";
+// the STARRING opener panel; on by default like the original
+export const TITLE_SCREEN_KEY = "comic-chat.title-screen";
 // opt-in identity, kept only while "Remember me" is on; Disconnect wipes it
 export const PROFILE_KEY = "comic-chat.profile";
 // one-shot breadcrumb across the room-switch reload; carries the origin for the arrival announcement

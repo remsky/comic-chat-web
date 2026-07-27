@@ -55,6 +55,16 @@ Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, 
 - **Caption strip**: every panel one actor with `mode: "action"` and nobody speaking. Reads as narration over illustration. Useful for a README or a recap where dialogue would be forced.
 - **Cold open**: panel 1 is a single character mid-thought with `mode: "think"`, then the second character arrives in panel 2 and the strip becomes a two-hander.
 
+MP4 and GIF exports are also available in the editor, and hold each panel about 4 seconds in order, and fade the balloons in over the art about a half second in.
+
+## The title card
+
+`kind: "title"` is a cover: title, a STARRING line, and an icon-and-name row per character. It goes at panel 0 or nowhere, and the validator says so.
+
+- It spends a panel on no story. A four panel strip with a card in front is three beats, so write it as (title) 1+ (comic panels) 3 or let the sheet run up to 1+7 etc (4 panels per row) if you want to fill the page.
+- You can name the cast that carry the strip, or leave it empty for a simple title card.
+- The credit line puts the script chosen names of the characters (the avatar names are generic art identifiers). If keeping it short (e.g Dan the Server Man), you could use those lines for comedic effect or framing.  
+- Whether to use title is a creative choice. Usually it's not needed. e.g skip it for most cases. It can be used to set the framing/stage of the comic in advance where creatively beneficial, or for longer strips (8+)
 ## Pairings that work
 
 Loose suggestions, not rules. Once a pair is chosen, `cast-query.mjs dan margaret` prints what the two of them can actually act, which is the moment to find out one of them cannot shrug.

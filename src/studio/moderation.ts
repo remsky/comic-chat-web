@@ -1,6 +1,6 @@
 // The profanity screen. The wordlist stays in the worker, so the studio asks rather than checks.
 
-import type { Strip, StripActor, StripIssue } from "./script.js";
+import type { Strip, StripActor, StripIssue, StripPanel } from "./script.js";
 
 interface ScreenRequest {
 	texts: string[];
@@ -21,6 +21,13 @@ const MESSAGE = "flagged by the profanity screen";
 export function collectTexts(strip: Strip): { path: string; text: string }[] {
 	const found: { path: string; text: string }[] = [];
 	strip.panels.forEach((panel, panelIndex) => {
+		if (panel.title)
+			found.push({ path: `panels[${panelIndex}].title`, text: panel.title });
+		if (panel.starring)
+			found.push({
+				path: `panels[${panelIndex}].starring`,
+				text: panel.starring,
+			});
 		panel.actors.forEach((actor, actorIndex) => {
 			if (actor.text)
 				found.push({
@@ -51,6 +58,8 @@ async function ask(texts: string[]): Promise<Set<number> | null> {
 export class StripScreen {
 	private readonly verdicts = new Map<string, boolean>();
 	private readonly held = new WeakMap<StripActor, Held>();
+	private readonly heldTitles = new WeakMap<StripPanel, Held>();
+	private readonly heldStarring = new WeakMap<StripPanel, Held>();
 	// a deploy with the screen off, or a dev server with no worker behind it, screens nothing
 	private reachable = true;
 
@@ -59,7 +68,7 @@ export class StripScreen {
 		return {
 			...strip,
 			panels: strip.panels.map((panel) => ({
-				...panel,
+				...this.settleTitle(panel),
 				actors: panel.actors.map((actor) => this.settle(actor)),
 			})),
 		};
@@ -68,6 +77,18 @@ export class StripScreen {
 	issues(strip: Strip): StripIssue[] {
 		const found: StripIssue[] = [];
 		strip.panels.forEach((panel, panelIndex) => {
+			if (this.heldTitles.get(panel)?.flagged)
+				found.push({
+					path: `panels[${panelIndex}].title`,
+					message: MESSAGE,
+					severity: "error",
+				});
+			if (this.heldStarring.get(panel)?.flagged)
+				found.push({
+					path: `panels[${panelIndex}].starring`,
+					message: MESSAGE,
+					severity: "error",
+				});
 			panel.actors.forEach((actor, actorIndex) => {
 				if (this.held.get(actor)?.flagged)
 					found.push({
@@ -108,6 +129,33 @@ export class StripScreen {
 		entries.forEach((entry, index) => {
 			this.verdicts.set(entry.text, flagged.has(index));
 		});
+	}
+
+	// a flagged title falls back to blank, which composes as UNTITLED; a flagged subhead falls back to STARRING
+	private settleTitle(panel: StripPanel): StripPanel {
+		const title = this.settleLine(this.heldTitles, panel, panel.title);
+		const starring = this.settleLine(this.heldStarring, panel, panel.starring);
+		if (title === panel.title && starring === panel.starring) return panel;
+		const copy = { ...panel };
+		if (title) copy.title = title;
+		else delete copy.title;
+		if (starring) copy.starring = starring;
+		else delete copy.starring;
+		return copy;
+	}
+
+	private settleLine(
+		held: WeakMap<StripPanel, Held>,
+		panel: StripPanel,
+		value: string | undefined,
+	): string | undefined {
+		const text = value ?? "";
+		const verdict = this.verdict(text);
+		if (verdict === true)
+			held.set(panel, { drawn: held.get(panel)?.drawn ?? "", flagged: true });
+		else if (verdict === false)
+			held.set(panel, { drawn: text, flagged: false });
+		return held.get(panel)?.drawn || undefined;
 	}
 
 	private settle(actor: StripActor): StripActor {

@@ -6,7 +6,7 @@ import {
 } from "../src/browser/stripMark.js";
 
 const CREDIT =
-	"Engine ported from Comic Chat 1996 · original character design by Jim Woodring";
+	"Comic Chat 1996 port · original character design by Jim Woodring";
 // the export sheet both callers build: 600px panels inside a 31px gutter
 const PANEL = 600;
 const GAP = 31;
@@ -59,7 +59,7 @@ describe("exported strip credit mark", () => {
 	it("keeps the provenance together and signs with the deployment", () => {
 		expect(stripMarkParts("comics.remsky.art")).toEqual({
 			left: CREDIT,
-			right: "generated at comics.remsky.art",
+			right: "created at comics.remsky.art",
 		});
 	});
 
@@ -77,7 +77,7 @@ describe("exported strip credit mark", () => {
 			configurable: true,
 		});
 		try {
-			expect(mark(662, 662).calls[1]?.text).toBe("generated at fork.example");
+			expect(mark(662, 662).calls[1]?.text).toBe("created at fork.example");
 		} finally {
 			if (original) Object.defineProperty(globalThis, "location", original);
 			else Reflect.deleteProperty(globalThis, "location");
@@ -88,7 +88,7 @@ describe("exported strip credit mark", () => {
 		const { calls } = mark(662, 662, "fork.example");
 		expect(calls.map(({ text, x, align }) => ({ text, x, align }))).toEqual([
 			{ text: CREDIT, x: GAP, align: "left" },
-			{ text: "generated at fork.example", x: 662 - GAP, align: "right" },
+			{ text: "created at fork.example", x: 662 - GAP, align: "right" },
 		]);
 	});
 
@@ -130,6 +130,21 @@ describe("exported strip credit mark", () => {
 		expect(one).toBeLessThanOrEqual(12);
 		expect(five).toBeGreaterThan(one);
 		expect(five).toBeLessThan(one * 3);
+	});
+
+	// a single-row sheet led by the borderless title card starts the credit under the first bordered panel
+	it("starts where the caller says and still clears the host", () => {
+		const start = GAP + PANEL + GAP;
+		const width = exportSheet(2, 1).width;
+		const { context, calls } = fakeContext();
+		drawStripMark(context, width, 3000, GAP, "fork.example", start);
+		const fontPx = Number.parseInt(context.font, 10);
+		const measure = (text: string) => text.length * PER_CHAR_EM * fontPx;
+		expect(calls[0]?.x).toBe(start);
+		expect(calls[1]?.x).toBe(width - GAP);
+		expect(start + measure(calls[0]?.text ?? "")).toBeLessThanOrEqual(
+			width - GAP - measure(calls[1]?.text ?? ""),
+		);
 	});
 
 	it("keeps the credit and the host from running into each other", () => {

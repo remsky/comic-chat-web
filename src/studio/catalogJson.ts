@@ -8,6 +8,7 @@ import {
 	COLUMNS_MIN,
 	MAX_ACTORS,
 	MAX_BALLOONS,
+	STRIP_KINDS,
 	STRIP_VERSION,
 	type StripCatalog,
 	ZOOM_MAX,
@@ -35,6 +36,7 @@ export interface PublishedCatalog {
 	cameras: readonly string[];
 	facings: readonly string[];
 	sizes: readonly string[];
+	kinds: readonly string[];
 	backgrounds: readonly string[];
 	limits: {
 		actors: number;
@@ -118,6 +120,7 @@ export function catalogJson(
 		cameras: catalog.cameras,
 		facings: catalog.facings,
 		sizes: catalog.sizes,
+		kinds: STRIP_KINDS,
 		backgrounds: catalog.backgrounds,
 		limits: {
 			actors: MAX_ACTORS,
