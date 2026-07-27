@@ -12,6 +12,35 @@
 		<link rel="canonical" href="%SITE_ORIGIN%/studio" />
 		<!--/if-->
 		<meta name="robots" content="index, follow" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Comic Chat Studio" />
+		<meta
+			property="og:description"
+			content="Build a Comic Chat strip panel by panel: pick the cast, poses, gestures, balloons, background, and camera, then export PNG or JSON."
+		/>
+		<!--if:SITE_ORIGIN-->
+		<meta property="og:url" content="%SITE_ORIGIN%/studio" />
+		<meta property="og:image" content="%SITE_ORIGIN%/og.jpg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="600" />
+		<meta
+			property="og:image:alt"
+			content="Three-panel comic strip of Comic Chat characters discussing the TypeScript port"
+		/>
+		<meta name="twitter:card" content="summary_large_image" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "WebApplication",
+				"name": "Comic Chat Studio",
+				"url": "%SITE_ORIGIN%/studio",
+				"description": "Build a Comic Chat strip panel by panel: pick the cast, poses, gestures, balloons, background, and camera, then export PNG or JSON.",
+				"applicationCategory": "DesignApplication",
+				"operatingSystem": "Any",
+				"image": "%SITE_ORIGIN%/og.jpg"
+			}
+		</script>
+		<!--/if-->
 		<link rel="stylesheet" href="/src/studio/studio.css" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -173,6 +202,28 @@
 						</button>
 					</div>
 				</details>
+
+				<button
+					id="studio-skill-line"
+					class="skill-line"
+					type="button"
+					title="Copy the skill install command"
+				>
+					<svg
+						viewBox="0 0 16 16"
+						width="12"
+						height="12"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.2"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<rect x="5.5" y="5.5" width="8" height="8" />
+						<path d="M10.5 2.5h-8v8" />
+					</svg>
+					<span id="studio-skill-text">npx skills add remsky/comic-chat-web</span>
+				</button>
 			</aside>
 		</main>
 

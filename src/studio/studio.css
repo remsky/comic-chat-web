@@ -755,3 +755,23 @@ select.actor-who::picker(select) {
 		monospace;
 	resize: vertical;
 }
+
+.skill-line {
+	display: inline-flex;
+	gap: 0.35em;
+	align-items: center;
+	align-self: start;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #555;
+	font:
+		0.7rem / 1.4 Consolas,
+		"Courier New",
+		monospace;
+	cursor: copy;
+}
+
+.skill-line:hover {
+	color: #000;
+}

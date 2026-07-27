@@ -10,7 +10,14 @@
   <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 </p>
 
-Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
+### Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
+
+#### Create a custom comic strip via the [studio](https://comics.remsky.art/)
+To create with AI assistance add this repo as a plugin marketplace, or add skill via:
+
+```bash
+npx skills add remsky/comic-chat-web 
+```
 
 ## Features
 

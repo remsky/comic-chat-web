@@ -32,6 +32,7 @@ import {
 import { wireSplit, wireZoom } from "./viewport.js";
 
 const RENDER_DELAY_MS = 120;
+const SKILL_COMMAND = "npx skills add remsky/comic-chat-web";
 
 const DEMO: unknown = {
 	version: 2,
@@ -261,6 +262,16 @@ async function main(): Promise<void> {
 			return;
 		editor.strip.columns = value;
 		render();
+	});
+
+	const skillText = element("studio-skill-text");
+	element("studio-skill-line").addEventListener("click", () => {
+		void navigator.clipboard.writeText(SKILL_COMMAND).then(() => {
+			skillText.textContent = "copied";
+			setTimeout(() => {
+				skillText.textContent = SKILL_COMMAND;
+			}, 1200);
+		});
 	});
 
 	element("studio-apply-json").addEventListener("click", () => {
