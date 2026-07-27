@@ -20,6 +20,7 @@ body.legal {
 		sans-serif;
 }
 
+/* the sheet reads at 0.875/1.6, but the bar has to match the chat and studio shells exactly */
 .titlebar {
 	display: flex;
 	gap: 0.5rem;
@@ -27,11 +28,16 @@ body.legal {
 	padding: 0.25rem 0.5rem;
 	background: linear-gradient(90deg, #000080, #1084d0);
 	color: #fff;
+	font:
+		0.8125rem / 1.4 Tahoma,
+		"Segoe UI",
+		system-ui,
+		sans-serif;
 }
 
 .titlebar-title {
 	margin: 0;
-	font-size: 0.8125rem;
+	font: inherit;
 }
 
 .titlebar-title a {
@@ -40,11 +46,15 @@ body.legal {
 }
 
 .titlebar-actions {
+	display: flex;
+	gap: 0.2rem;
 	margin-left: auto;
 }
 
 .titlebar-button {
-	padding: 0.15rem 0.6rem;
+	display: flex;
+	align-items: center;
+	padding: 2px 8px;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
 	box-shadow:
@@ -52,8 +62,16 @@ body.legal {
 		inset -1px -1px 0 #808080;
 	background: #c0c0c0;
 	color: #000;
-	font-size: 0.75rem;
+	font: inherit;
 	text-decoration: none;
+	cursor: pointer;
+}
+
+.titlebar-button:active {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow:
+		inset -1px -1px 0 #fff,
+		inset 1px 1px 0 #808080;
 }
 
 .sheet {
@@ -71,6 +89,25 @@ body.legal {
 .sheet h1 {
 	margin: 0 0 0.25rem;
 	font-size: 1.25rem;
+}
+
+.sheet-heading {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+/* the etched Win95 separator: dark line over a light one */
+.sheet hr {
+	margin: 0.9rem 0 1.1rem;
+	border: 0;
+	border-top: 1px solid #808080;
+	border-bottom: 1px solid #fff;
+}
+
+.sheet-heading img {
+	width: auto;
+	height: 2rem;
 }
 
 .sheet h2 {
@@ -122,12 +159,32 @@ body.legal {
 	font-size: 0.8125rem;
 }
 
-.sheet ul {
+.sheet ul,
+.sheet ol {
 	padding-left: 1.25rem;
 }
 
 .sheet li {
 	margin: 0.3rem 0;
+}
+
+/* the old Win95 diamond bullet, tight enough that the lines read as one block */
+.summary-list {
+	margin: 0;
+	padding-left: 1rem;
+	list-style: none;
+}
+
+.summary-list li {
+	margin: 0;
+	text-indent: -1rem;
+}
+
+.summary-list li::before {
+	content: "\25c6";
+	padding-right: 0.4rem;
+	color: #808080;
+	font-size: 0.6875rem;
 }
 
 .sheet table {
@@ -149,6 +206,82 @@ body.legal {
 .sheet code {
 	font-family: Consolas, "Courier New", monospace;
 	font-size: 0.8125rem;
+}
+
+.sheet details {
+	margin: 0.75rem 0;
+}
+
+.sheet summary {
+	font-size: 0.8125rem;
+	cursor: pointer;
+}
+
+/* sunk field like .summary, so a command reads as something to copy rather than page copy */
+.sheet pre {
+	position: relative;
+	overflow-x: auto;
+	margin: 0.6rem 0;
+	padding: 0.5rem 0.7rem;
+	border: 1px solid;
+	border-color: #808080 #dfdfdf #dfdfdf #808080;
+	background: #fff;
+	line-height: 1.5;
+}
+
+.sheet pre.copy-block {
+	padding-right: 2.9rem;
+}
+
+.sheet details > pre {
+	margin-top: 0.4rem;
+}
+
+/* a long url has nowhere to scroll to, so let it wrap instead */
+.sheet pre.wrap-block {
+	overflow-x: visible;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.copy-button {
+	position: absolute;
+	top: 0.3rem;
+	right: 0.3rem;
+	display: inline-flex;
+	gap: 0.3em;
+	justify-content: center;
+	align-items: center;
+	min-width: 1.7rem;
+	min-height: 1.55rem;
+	padding: 0.18rem 0.35rem;
+	border: 1px solid;
+	border-color: #dfdfdf #000 #000 #dfdfdf;
+	box-shadow:
+		inset 1px 1px 0 #fff,
+		inset -1px -1px 0 #808080;
+	background: #c0c0c0;
+	color: #000;
+	font: inherit;
+	font-size: 0.6875rem;
+	cursor: copy;
+}
+
+.copy-button:active {
+	border-color: #000 #dfdfdf #dfdfdf #000;
+	box-shadow: none;
+}
+
+.copy-note {
+	display: none;
+}
+
+.copy-button[data-copied] svg {
+	display: none;
+}
+
+.copy-button[data-copied] .copy-note {
+	display: inline;
 }
 
 /* sunk field matching .summary, so the snapshot reads as data rather than page copy */

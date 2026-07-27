@@ -108,6 +108,7 @@ export default defineConfig(({ mode }) => ({
 				studio: entry("studio.html"),
 				legal: entry("legal.html"),
 				report: entry("report.html"),
+				agentSkill: entry("agent-skill.html"),
 			},
 		},
 	},

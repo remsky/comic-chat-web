@@ -16,7 +16,7 @@ const NO_JURISDICTION = "the jurisdiction in which the operator resides";
 // unset keeps the upstream author's link; any value that is not an https url drops the button
 const UPSTREAM_SUPPORT = "https://buymeacoffee.com/remsky";
 
-const CRAWLER_PATHS = ["/", "/studio", "/legal"];
+const CRAWLER_PATHS = ["/", "/studio", "/agent-skill", "/legal"];
 
 // <!--if:KEY--> ... <!--/if--> drops whole tags a blank value would leave broken
 function resolveBlocks(html: string, set: Record<string, boolean>): string {

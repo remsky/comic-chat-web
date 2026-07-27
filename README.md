@@ -28,7 +28,7 @@ The composition rules follow the SIGGRAPH '96 [Comic Chat paper](https://kurland
 
 Validated against traces from an instrumented C++ client of the original to accurately reproduce the original engine including:
 
-- 31-character cast, automatic panel layout
+- Original character cast and artpacks, automatic panel layout
 - Emotion detection, speech balloon splines
 - Avatar posing, reactive angles and camera
 
@@ -52,14 +52,13 @@ Validated against traces from an instrumented C++ client of the original to accu
 
 Typing `/` will list gestures the character you are wearing has art for: most carry three or four, some none. 
 
+The command text itself is stripped from messages. Gesture commands reach pose art found in the files that did not otherwise seem accessible. The original stores these under codes above the emotion ring which appears skipped by `GetBodyFromEmotion`. 
+
 ```markdown
 /wave /shrug 
 /point /pointself /doublepoint
 /walk /walkup /walkaway
 ```
-
-The command text itself is stripped from messages. Gesture commands reach pose art found in the files that did not otherwise seem accessible. The original stores these under codes above the emotion ring which appears skipped by `GetBodyFromEmotion`. 
-
 
 ### Defaults
 
@@ -87,7 +86,7 @@ The result is exportable as a PNG sheet or square, as an MP4 or GIF that plays t
 - Includes art, combinations, and control not reachable in normal chat (sizing, direction, gestures, etc).
 - The `MODERATION` variable acts similarly to how it does in chat, putting a pause on rendering. See [DEPLOYMENT.md](DEPLOYMENT.md).
 
-For assistance from an AI agent to spin up some strips, a skill is available. It has understanding of the poses, backgrounds, characters, limitations, and can generate a condensed link that will prefill the editor page for review/adjustments/download. 
+For assistance from an AI agent to spin up some strips, a skill is available. It has understanding of the poses, backgrounds, characters, limitations, and can generate a condensed link that will prefill the editor page for review/adjustments/download. See [/agent-skill](https://comics.remsky.art/agent-skill) for details or use one of the following methods:
 
 <details>
 <summary>npx skills</summary>
@@ -98,7 +97,7 @@ npx skills add remsky/comic-chat-web
 </details>
 
 <details>
-<summary>Zipped .skill file</summary>
+<summary>zipped .skill file</summary>
 
 Download [comic-strip.skill](https://github.com/remsky/comic-chat-web/releases/latest/download/comic-strip.skill) from the [latest release](https://github.com/remsky/comic-chat-web/releases/latest) and drop it into a chat on ChatGPT or claude.ai as a custom skill.
 </details>
@@ -282,9 +281,6 @@ All steps are deterministic and byte-reproducible, sourced from a sibling checko
 - `npm run fixtures:avatars`: the test fixture.
 
 </details>
-
-
-
 
 
 ## Related projects to check out
