@@ -6,10 +6,12 @@ import {
 } from "../src/browser/stripMark.js";
 
 const CREDIT =
-	"Engine ported from Comic Chat 1996 · characters by Jim Woodring";
+	"Engine ported from Comic Chat 1996 · original character design by Jim Woodring";
 // the export sheet both callers build: 600px panels inside a 31px gutter
 const PANEL = 600;
 const GAP = 31;
+
+const PER_CHAR_EM = 0.5;
 
 function fakeContext() {
 	const calls: { text: string; x: number; y: number; align: string }[] = [];
@@ -20,6 +22,9 @@ function fakeContext() {
 		textBaseline: "",
 		save: () => {},
 		restore: () => {},
+		measureText: (text: string) => ({
+			width: text.length * PER_CHAR_EM * Number.parseInt(context.font, 10),
+		}),
 		fillText: (text: string, x: number, y: number) =>
 			calls.push({ text, x, y, align: context.textAlign }),
 	};
@@ -54,7 +59,7 @@ describe("exported strip credit mark", () => {
 	it("keeps the provenance together and signs with the deployment", () => {
 		expect(stripMarkParts("comics.remsky.art")).toEqual({
 			left: CREDIT,
-			right: "comics.remsky.art",
+			right: "generated at comics.remsky.art",
 		});
 	});
 
@@ -72,7 +77,7 @@ describe("exported strip credit mark", () => {
 			configurable: true,
 		});
 		try {
-			expect(mark(662, 662).calls[1]?.text).toBe("fork.example");
+			expect(mark(662, 662).calls[1]?.text).toBe("generated at fork.example");
 		} finally {
 			if (original) Object.defineProperty(globalThis, "location", original);
 			else Reflect.deleteProperty(globalThis, "location");
@@ -83,7 +88,7 @@ describe("exported strip credit mark", () => {
 		const { calls } = mark(662, 662, "fork.example");
 		expect(calls.map(({ text, x, align }) => ({ text, x, align }))).toEqual([
 			{ text: CREDIT, x: GAP, align: "left" },
-			{ text: "fork.example", x: 662 - GAP, align: "right" },
+			{ text: "generated at fork.example", x: 662 - GAP, align: "right" },
 		]);
 	});
 
@@ -122,8 +127,21 @@ describe("exported strip credit mark", () => {
 	it("scales the type well under the sheet it grows with", () => {
 		const one = mark(exportSheet(1, 1).width, 3000, "fork.example").fontPx;
 		const five = mark(exportSheet(5, 1).width, 3000, "fork.example").fontPx;
-		expect(one).toBe(12);
+		expect(one).toBeLessThanOrEqual(12);
 		expect(five).toBeGreaterThan(one);
 		expect(five).toBeLessThan(one * 3);
+	});
+
+	it("keeps the credit and the host from running into each other", () => {
+		for (const columns of [1, 2, 5]) {
+			const width = exportSheet(columns, 1).width;
+			const { calls, fontPx } = mark(width, 3000, "comics.remsky.art");
+			const [credit, signature] = calls;
+			const measure = (text: string) => text.length * PER_CHAR_EM * fontPx;
+			expect(fontPx).toBeGreaterThanOrEqual(9);
+			expect(GAP + measure(credit?.text ?? "")).toBeLessThanOrEqual(
+				width - GAP - measure(signature?.text ?? ""),
+			);
+		}
 	});
 });
