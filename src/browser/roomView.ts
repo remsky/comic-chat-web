@@ -35,6 +35,7 @@ import { syncPanelAccessibility } from "./panelAccessibility.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "./panelUnits.js";
 import { SeatBook, seatKey } from "./seatBook.js";
 import type { Features } from "./storage.js";
+import { drawStripMark, stripMarkGrowth } from "./stripMark.js";
 
 const PIN_FRAMES = 3;
 
@@ -260,7 +261,8 @@ export class RoomView {
 		const rows = Math.ceil(panels.length / perRow);
 		const sheet = document.createElement("canvas");
 		sheet.width = gap + cols * (size + gap);
-		sheet.height = gap + rows * (size + gap);
+		sheet.height =
+			gap + rows * (size + gap) + stripMarkGrowth(sheet.width, gap);
 		const context = sheet.getContext("2d");
 		if (!context) return null;
 		context.fillStyle = "#fff";
@@ -276,6 +278,7 @@ export class RoomView {
 				size,
 			);
 		});
+		drawStripMark(context, sheet.width, sheet.height, gap);
 		return new Promise((resolve) => sheet.toBlob(resolve, "image/png"));
 	}
 

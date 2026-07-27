@@ -6,6 +6,7 @@ import { CanvasPanelRenderer } from "../browser/canvasRenderer.js";
 import { CanvasSurface } from "../browser/canvasSurface.js";
 import { revealWithin } from "../browser/dom.js";
 import { syncPanelAccessibility } from "../browser/panelAccessibility.js";
+import { drawStripMark, stripMarkGrowth } from "../browser/stripMark.js";
 import {
 	type Avatar,
 	type AvatarData,
@@ -162,7 +163,10 @@ export class StripPreview {
 		const rows = Math.ceil(panels.length / this.columns);
 		const sheet = document.createElement("canvas");
 		sheet.width = EXPORT_GAP + columns * (CARD_PIXELS + EXPORT_GAP);
-		sheet.height = EXPORT_GAP + rows * (CARD_PIXELS + EXPORT_GAP);
+		sheet.height =
+			EXPORT_GAP +
+			rows * (CARD_PIXELS + EXPORT_GAP) +
+			stripMarkGrowth(sheet.width, EXPORT_GAP);
 		const context = sheet.getContext("2d");
 		if (!context) return null;
 		context.fillStyle = "#fff";
@@ -197,6 +201,7 @@ export class StripPreview {
 			renderer.render(card.panel);
 			context.restore();
 		});
+		drawStripMark(context, sheet.width, sheet.height, EXPORT_GAP);
 		return new Promise((resolve) => sheet.toBlob(resolve, "image/png"));
 	}
 }
