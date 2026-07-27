@@ -67,6 +67,7 @@ Loose suggestions, not rules. Once a pair is chosen, `cast-query.mjs dan margare
 - `cro` explaining something modern: the whole joke, and it wears out after one strip.
 - `maynard` or `hugh` as an animal with opinions, next to a human pretending that is normal.
 - `pedagog`, `glenda`, `rainbow`, `tux`, `waf`: one drawing each, so cast them silent or as a face in the background. They cannot react.
+- `buck`, `kirby`, or `veronica` beside anyone else: they are children and stand half height, so the panel reads as an adult talking to a kid. Cast them when that is the scene.
 
 Cast and backdrop:
 
