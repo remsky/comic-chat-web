@@ -8,6 +8,7 @@ import {
 	loadCanvasFonts,
 } from "../browser/canvasText.js";
 import { element } from "../browser/dom.js";
+import { avatarIconCanvas } from "../browser/pickerTiles.js";
 import type { AvatarData } from "../engine/avatar.js";
 import { emptyArt } from "./art.js";
 import { composeStrip } from "./compose.js";
@@ -61,22 +62,26 @@ function download(blob: Blob, filename: string): void {
 	URL.revokeObjectURL(url);
 }
 
-function decodeScript(encoded: string): string {
+function scriptBytes(encoded: string): Uint8Array<ArrayBuffer> {
 	const padded = encoded.replace(/-/g, "+").replace(/_/g, "/");
-	const binary = atob(padded);
-	const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-	return new TextDecoder().decode(bytes);
+	return Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
 }
 
-function scriptFromUrl(): string | null {
+// ?s= is deflated, ?script= plain; strip-link.mjs writes the short one
+async function scriptFromUrl(): Promise<string | null> {
 	const params = new URLSearchParams(location.search);
-	const inline = params.get("script");
-	if (inline) {
-		try {
-			return decodeScript(inline);
-		} catch {
-			return null;
+	try {
+		const packed = params.get("s");
+		if (packed) {
+			const stream = new Blob([scriptBytes(packed)])
+				.stream()
+				.pipeThrough(new DecompressionStream("deflate-raw"));
+			return await new Response(stream).text();
 		}
+		const inline = params.get("script");
+		if (inline) return new TextDecoder().decode(scriptBytes(inline));
+	} catch {
+		return null;
 	}
 	return null;
 }
@@ -119,7 +124,7 @@ async function main(): Promise<void> {
 	const jsonArea = element<HTMLTextAreaElement>("studio-json");
 	const issueList = element("studio-issues");
 
-	const source = scriptFromUrl();
+	const source = await scriptFromUrl();
 	const initial = source
 		? parseStripJson(source, catalog)
 		: parseStrip(DEMO, catalog);
@@ -128,6 +133,10 @@ async function main(): Promise<void> {
 		container: element("studio-editor"),
 		scroller: element("studio-inspector"),
 		catalog,
+		icon: (name) => {
+			const data = manifest.avatars.find((entry) => entry.name === name);
+			return data ? avatarIconCanvas(data, atlases) : null;
+		},
 		onEdit: () => schedule(),
 		onSelect: (index) => {
 			editor.focus(index);

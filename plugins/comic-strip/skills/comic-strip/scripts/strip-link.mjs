@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Checks a strip document against the published catalog, then prints the link that opens it in the studio.
 
+import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { deflateRawSync } from "node:zlib";
 
 const DEFAULT_BASE = "https://comics.remsky.art";
 const LONG_BALLOON = 90;
@@ -230,24 +232,26 @@ function checkStrip(raw) {
 	checkShape(raw.panels);
 }
 
+// ?s= is deflated, ?script= plain; the studio reads both
 function link(strip, base) {
-	const encoded = Buffer.from(JSON.stringify(strip))
-		.toString("base64")
-		.replace(/\+/g, "-")
-		.replace(/\//g, "_")
-		.replace(/=+$/, "");
-	return `${base.replace(/\/$/, "")}/studio.html?script=${encoded}`;
+	const json = Buffer.from(JSON.stringify(strip));
+	const packed = deflateRawSync(json, { level: 9 }).toString("base64url");
+	const plain = json.toString("base64url");
+	const query =
+		packed.length < plain.length ? `s=${packed}` : `script=${plain}`;
+	return `${base.replace(/\/$/, "")}/studio.html?${query}`;
 }
 
 const args = process.argv.slice(2);
 const baseFlag = args.indexOf("--base");
 const base = baseFlag >= 0 ? args[baseFlag + 1] : DEFAULT_BASE;
 const baseValue = baseFlag >= 0 ? baseFlag + 1 : -1;
+const open = args.includes("--open");
 const file = args.find(
 	(arg, index) => !arg.startsWith("--") && index !== baseValue,
 );
 if (!file) {
-	console.error("usage: strip-link.mjs <strip.json> [--base <url>]");
+	console.error("usage: strip-link.mjs <strip.json> [--base <url>] [--open]");
 	process.exit(2);
 }
 
@@ -279,3 +283,13 @@ console.log(
 	`ok: ${strip.panels.length} panel(s), ${cast.size} character(s), ${url.length} byte link`,
 );
 console.log(url);
+
+if (open) {
+	const [command, commandArgs] =
+		process.platform === "win32"
+			? ["cmd", ["/c", "start", "", url]]
+			: process.platform === "darwin"
+				? ["open", [url]]
+				: ["xdg-open", [url]];
+	spawn(command, commandArgs, { detached: true, stdio: "ignore" }).unref();
+}

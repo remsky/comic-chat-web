@@ -102,6 +102,9 @@ if (names.length > 0) {
 			`unknown character${unknown.length > 1 ? "s" : ""} ${unknown.map((n) => `"${n}"`).join(", ")}; catalog.json lists all ${avatars.size}`,
 		);
 	console.log(names.map(describe).join("\n\n"));
+	console.log(
+		'\nfaces are counts: "happy 3" takes emotion "happy", or "happy_1" to "happy_3" to pin one drawing. poses are written as printed',
+	);
 	process.exit(0);
 }
 

@@ -22,6 +22,7 @@ Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, 
 ## Balloons
 
 - One or two speakers a panel. Three is a crowd scene, not a conversation.
+- Balloons stack in actor order and read top to bottom, so the setup belongs to an earlier slot and the punchline to the last speaker in the panel.
 - About a dozen words a balloon. The balloon takes its space out of the art, so long lines bury the characters. Split a long thought across two panels. The validator warns past 90 characters, and the studio errors if the balloons cannot be laid out at all.
 - Balloons render in capitals. Write sentence case and let the engine shout.
 - `mode`: `say` is a pointed balloon, `think` a cloud, `whisper` smaller type, `action` a tailless box. A caption panel is one actor with `mode: "action"`.

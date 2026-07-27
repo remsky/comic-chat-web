@@ -15,7 +15,7 @@ A strip is a JSON document: a list of panels, each casting up to five characters
 4. Validate and get the link: `node <skill dir>/scripts/strip-link.mjs strip.json`. An error means the studio would reject that field, so fix it and rerun. A warning means the strip renders, but not the way you asked.
 5. Hand back the link and the file path. The link opens the strip in the editor, where the user can retune any panel and export a PNG from the Save menu.
 
-Add `--base http://localhost:5173` to point the link at a dev server instead of the public studio.
+Add `--base http://localhost:5173` to point the link at a dev server instead of the public studio, and `--open` to also launch it in the default browser.
 
 ## Reference
 
@@ -27,7 +27,7 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
 | `reference/backgrounds.md` | choosing where it is set. All nine backdrops, what each looks like, and which are ink and which are colour |
 | `reference/catalog.json` | last resort. The machine authority both scripts already read for you, so you rarely need it open |
 
-`cast-query.mjs` with no arguments prints its filters. Note that a character's faces are stored as counts and its poses as names, so the JSON never spells out a face like `happy_2` even though the `emotion` field accepts it. The query prints both in the form you write them.
+`cast-query.mjs` with no arguments prints its filters. A character's faces are stored as counts and its poses as names: `happy 3` means the `emotion` field takes `happy`, or `happy_1` to `happy_3` to pin one drawing. Poses are written exactly as the query prints them.
 
 ## Document
 
@@ -69,4 +69,4 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
 
 - Five actors and five balloons a panel, hard.
 - The studio screens balloon text for profanity: a tripped panel is outlined, listed in the issues strip, and the export is blocked until it changes. The validator here cannot check that, so keep the copy clean and let the editor be the backstop.
-- The whole strip travels inside the link, so a long strip makes a long URL. That is normal, and the validator prints the byte count so you can see it. An eight panel strip lands around 2 KB, far inside what browsers and the worker accept. Only a strip of dozens of panels would be worth worrying about.
+- The whole strip travels inside the link, deflated, and the validator prints the byte count so you can see it. An eight panel strip lands around 500 bytes, far inside what browsers and the worker accept.

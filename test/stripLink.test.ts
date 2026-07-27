@@ -2,6 +2,7 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { inflateRawSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
 
 const SCRIPT = resolve(
@@ -42,13 +43,14 @@ function strip(...panels: unknown[]) {
 	};
 }
 
-const decode = (url: string): unknown =>
-	JSON.parse(
-		Buffer.from(
-			new URL(url).searchParams.get("script") ?? "",
-			"base64url",
-		).toString("utf8"),
-	);
+const decode = (url: string): unknown => {
+	const params = new URL(url).searchParams;
+	const packed = params.get("s");
+	const raw = packed
+		? inflateRawSync(Buffer.from(packed, "base64url"))
+		: Buffer.from(params.get("script") ?? "", "base64url");
+	return JSON.parse(raw.toString("utf8"));
+};
 
 describe("strip-link validation", () => {
 	it("passes a clean strip and round-trips it through the studio link", () => {
@@ -56,18 +58,16 @@ describe("strip-link validation", () => {
 		const { status, out, url } = run(doc);
 		expect(status).toBe(0);
 		expect(out).toContain("ok: 2 panel(s), 1 character(s)");
-		expect(
-			url.startsWith("https://comics.remsky.art/studio.html?script="),
-		).toBe(true);
+		expect(url.startsWith("https://comics.remsky.art/studio.html?s=")).toBe(
+			true,
+		);
 		// the studio decodes this back into a document, so the encoding is the contract
 		expect(decode(url)).toEqual(doc);
 	});
 
 	it("points the link at another deployment and drops its trailing slash", () => {
 		const { url } = run(strip(), "--base", "https://fork.example/");
-		expect(url.startsWith("https://fork.example/studio.html?script=")).toBe(
-			true,
-		);
+		expect(url.startsWith("https://fork.example/studio.html?s=")).toBe(true);
 	});
 
 	it("refuses a character, emotion, gesture, or field the catalog does not name", () => {
