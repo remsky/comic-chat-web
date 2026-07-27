@@ -40,7 +40,7 @@ const creatures = registers.find((group) => group.key.startsWith("creature"));
 const plain = (text) => (text ?? "").replaceAll("`", "");
 const rangeOf = (name) => plain(notes.get(name)?.range);
 const lookOf = (name) => plain(notes.get(name)?.look);
-const isColour = (name) => lookOf(name).includes("(colour)");
+const isColour = (name) => lookOf(name).includes("(colour");
 const isSilent = (name) => rangeOf(name).includes("one drawing");
 
 const usage = () => {
