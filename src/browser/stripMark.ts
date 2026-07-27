@@ -1,6 +1,6 @@
 // The credit line every exported sheet carries, drawn into the band under the last panel row.
 
-const MARK_COLOR = "#333";
+const MARK_COLOR = "#222";
 const MARK_FAMILY = '"Segoe UI", system-ui, sans-serif';
 // a one-column sheet is the reference; wider sheets scale by the square root, enough to stay legible without taking over
 const MARK_BASE_WIDTH = 700;
@@ -10,8 +10,8 @@ const MARK_MIN_FONT_PX = 9;
 // the host comes off the page, so a fork's exports name the fork
 export function stripMarkParts(host: string): { left: string; right: string } {
 	return {
-		left: "Engine ported from Comic Chat 1996 · original character design by Jim Woodring",
-		right: host ? `generated at ${host}` : "",
+		left: "Comic Chat 1996 port · original character design by Jim Woodring",
+		right: host ? `created at ${host}` : "",
 	};
 }
 
@@ -20,7 +20,7 @@ function markFont(width: number): number {
 	return Math.round(MARK_FONT_PX * scale);
 }
 
-// both ends share one line, so step down until they clear each other
+// both ends share one line, so step down until four ems of daylight separate them
 function fitFont(
 	context: CanvasRenderingContext2D,
 	left: string,
@@ -34,7 +34,7 @@ function fitFont(
 		context.font = `${px}px ${MARK_FAMILY}`;
 		const used =
 			context.measureText(left).width + context.measureText(right).width;
-		if (used + px <= room) break;
+		if (used + px * 4 <= room) break;
 		px -= 1;
 	}
 	return px;
@@ -50,6 +50,26 @@ export function stripMarkGrowth(width: number, gap: number): number {
 	return markBand(width, gap) - gap;
 }
 
+// one baseline, each end set flush against the margin
+export function drawMarkLine(
+	context: CanvasRenderingContext2D,
+	width: number,
+	margin: number,
+	y: number,
+	host: string = location.host,
+): void {
+	const { left, right } = stripMarkParts(host);
+	context.save();
+	context.font = `${fitFont(context, left, right, width, margin)}px ${MARK_FAMILY}`;
+	context.fillStyle = MARK_COLOR;
+	context.textBaseline = "middle";
+	context.textAlign = "left";
+	context.fillText(left, margin, y);
+	context.textAlign = "right";
+	context.fillText(right, width - margin, y);
+	context.restore();
+}
+
 export function drawStripMark(
 	context: CanvasRenderingContext2D,
 	width: number,
@@ -57,17 +77,7 @@ export function drawStripMark(
 	gap: number,
 	host: string = location.host,
 ): void {
-	const { left, right } = stripMarkParts(host);
 	// whole pixels, so "middle" never lands the glyphs on a subpixel boundary
 	const y = height - Math.round(markBand(width, gap) / 2);
-	context.save();
-	context.font = `${fitFont(context, left, right, width, gap)}px ${MARK_FAMILY}`;
-	context.fillStyle = MARK_COLOR;
-	context.textBaseline = "middle";
-	// the gutter on both sides, so each end sits flush with the panel column
-	context.textAlign = "left";
-	context.fillText(left, gap, y);
-	context.textAlign = "right";
-	context.fillText(right, width - gap, y);
-	context.restore();
+	drawMarkLine(context, width, gap, y, host);
 }

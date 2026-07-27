@@ -6,7 +6,7 @@ import {
 } from "../src/browser/stripMark.js";
 
 const CREDIT =
-	"Engine ported from Comic Chat 1996 · original character design by Jim Woodring";
+	"Comic Chat 1996 port · original character design by Jim Woodring";
 // the export sheet both callers build: 600px panels inside a 31px gutter
 const PANEL = 600;
 const GAP = 31;
@@ -59,7 +59,7 @@ describe("exported strip credit mark", () => {
 	it("keeps the provenance together and signs with the deployment", () => {
 		expect(stripMarkParts("comics.remsky.art")).toEqual({
 			left: CREDIT,
-			right: "generated at comics.remsky.art",
+			right: "created at comics.remsky.art",
 		});
 	});
 
@@ -77,7 +77,7 @@ describe("exported strip credit mark", () => {
 			configurable: true,
 		});
 		try {
-			expect(mark(662, 662).calls[1]?.text).toBe("generated at fork.example");
+			expect(mark(662, 662).calls[1]?.text).toBe("created at fork.example");
 		} finally {
 			if (original) Object.defineProperty(globalThis, "location", original);
 			else Reflect.deleteProperty(globalThis, "location");
@@ -88,7 +88,7 @@ describe("exported strip credit mark", () => {
 		const { calls } = mark(662, 662, "fork.example");
 		expect(calls.map(({ text, x, align }) => ({ text, x, align }))).toEqual([
 			{ text: CREDIT, x: GAP, align: "left" },
-			{ text: "generated at fork.example", x: 662 - GAP, align: "right" },
+			{ text: "created at fork.example", x: 662 - GAP, align: "right" },
 		]);
 	});
 

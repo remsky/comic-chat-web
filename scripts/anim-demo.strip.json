@@ -1,0 +1,59 @@
+{
+	"version": 2,
+	"columns": 4,
+	"seed": 1515,
+	"panels": [
+		{
+			"background": "room",
+			"actors": [
+				{
+					"avatar": "dan",
+					"text": "Comic Chat, but it moves now.",
+					"emotion": "happy"
+				},
+				{
+					"avatar": "anna",
+					"text": "You animated a 1996 chat client?",
+					"emotion": "scared",
+					"facing": "left"
+				}
+			]
+		},
+		{
+			"background": "room",
+			"actors": [
+				{
+					"avatar": "dan",
+					"text": "ffmpeg was right there.",
+					"emotion": "neutral",
+					"gesture": "shrug"
+				},
+				{ "avatar": "anna", "emotion": "bored", "facing": "left" }
+			]
+		},
+		{
+			"background": "room",
+			"camera": "close",
+			"actors": [
+				{
+					"avatar": "anna",
+					"text": "The balloons fade in?!",
+					"emotion": "angry"
+				},
+				{ "avatar": "dan", "emotion": "coy", "facing": "left" }
+			]
+		},
+		{
+			"background": "space",
+			"actors": [
+				{ "avatar": "dan", "text": "Ship it.", "emotion": "laugh" },
+				{
+					"avatar": "anna",
+					"text": "It never left the scripts folder.",
+					"emotion": "laugh",
+					"facing": "left"
+				}
+			]
+		}
+	]
+}

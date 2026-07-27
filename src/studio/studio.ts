@@ -10,6 +10,7 @@ import {
 import { element } from "../browser/dom.js";
 import { avatarIconUrl } from "../browser/pickerTiles.js";
 import type { AvatarData } from "../engine/avatar.js";
+import { type AnimateDeps, exportGif, exportMp4 } from "./animate.js";
 import { emptyArt } from "./art.js";
 import { composeStrip } from "./compose.js";
 import { PanelEditor } from "./editor.js";
@@ -324,6 +325,45 @@ async function main(): Promise<void> {
 			});
 	});
 
+	const animateDeps: AnimateDeps = {
+		atlases,
+		backdrops,
+		compose: { avatars: manifest.avatars, resolveStyle, artFor },
+	};
+
+	function wireAnimation(
+		id: string,
+		label: string,
+		filename: string,
+		render: (progress: (fraction: number) => void) => Promise<Blob | null>,
+	): void {
+		element(id).addEventListener("click", () => {
+			saveMenu.open = false;
+			void cleared().then(async (ok) => {
+				if (!ok) return;
+				status.textContent = `Encoding ${label} 0%`;
+				try {
+					const blob = await render((fraction) => {
+						status.textContent = `Encoding ${label} ${Math.round(fraction * 100)}%`;
+					});
+					if (blob) download(blob, filename);
+					status.textContent = blob
+						? ""
+						: `${label} export unavailable in this browser`;
+				} catch {
+					status.textContent = `${label} export failed`;
+				}
+			});
+		});
+	}
+
+	wireAnimation("studio-export-mp4", "MP4", "strip.mp4", (progress) =>
+		exportMp4(editor.strip, animateDeps, progress),
+	);
+	wireAnimation("studio-export-gif", "GIF", "strip.gif", (progress) =>
+		exportGif(editor.strip, animateDeps, progress),
+	);
+
 	const importInput = element<HTMLInputElement>("studio-import");
 	importInput.addEventListener("change", () => {
 		const file = importInput.files?.[0];
@@ -355,6 +395,8 @@ async function main(): Promise<void> {
 				return parsed.issues;
 			},
 			png: () => preview.exportPng(),
+			mp4: () => exportMp4(editor.strip, animateDeps),
+			gif: () => exportGif(editor.strip, animateDeps),
 		},
 	});
 }
