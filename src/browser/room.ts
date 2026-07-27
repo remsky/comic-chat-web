@@ -31,6 +31,7 @@ import {
 	NAMETAGS_KEY,
 	saveStoredProfile,
 	TEXT_VIEW_KEY,
+	TITLE_SCREEN_KEY,
 	takeRoomSwitch,
 } from "./storage.js";
 
@@ -305,6 +306,14 @@ async function main(): Promise<void> {
 		if (tweaks.checked)
 			syncBackground(element<HTMLSelectElement>("background-select").value);
 		view.setFeatures(loadFeatures());
+	});
+
+	const titleToggle = element<HTMLInputElement>("title-toggle");
+	titleToggle.checked = localStorage.getItem(TITLE_SCREEN_KEY) !== "off";
+	view.setShowTitle(titleToggle.checked);
+	titleToggle.addEventListener("change", () => {
+		localStorage.setItem(TITLE_SCREEN_KEY, titleToggle.checked ? "on" : "off");
+		view.setShowTitle(titleToggle.checked);
 	});
 
 	const nameToggle = element<HTMLInputElement>("name-toggle");

@@ -9,6 +9,7 @@ import {
 } from "./avatar.js";
 import { checkWord } from "./emotion.js";
 import type { MsvcRand } from "./rand.js";
+import type { TitleCard } from "./titlePanel.js";
 import { round } from "./vector2d.js";
 
 export interface PlacedAvatar {
@@ -212,6 +213,8 @@ export interface UnitPanel {
 	backdrop?: string;
 	bodies: AvatarBody[];
 	balloons: PanelBalloon[];
+	// the "STARRING" opener; the renderer draws the card in place of bodies and balloons
+	title?: TitleCard;
 }
 
 export interface PanelDecision {
@@ -250,6 +253,7 @@ export function cloneUnitPanel(panel: UnitPanel): UnitPanel {
 		hasBorder: panel.hasBorder,
 		backdropMode: 0,
 		...(panel.backdrop ? { backdrop: panel.backdrop } : {}),
+		...(panel.title ? { title: panel.title } : {}),
 		bodies,
 		balloons: panel.balloons.map((balloon) => {
 			const bodyIndex = panel.bodies.indexOf(balloon.speaker);

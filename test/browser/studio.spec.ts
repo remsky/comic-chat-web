@@ -44,7 +44,10 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 		page.locator("#studio-editor .pedit").first().locator(".pedit-cast"),
 	).toHaveText(/Testing one two/);
 
-	await page.locator("#studio-editor > .sbutton--add").click();
+	await page
+		.locator("#studio-editor")
+		.getByRole("button", { name: "+ Panel" })
+		.click();
 	await expect(panels).toHaveCount(3);
 
 	// deleting the empty panel leaves the first two untouched
@@ -60,6 +63,49 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 		fullPage: true,
 		path: testInfo.outputPath("studio.png"),
 	});
+});
+
+test("studio adds a title panel that draws the STARRING card", async ({
+	page,
+}) => {
+	await page.route("**/api/moderate", (route) =>
+		route.fulfill({ json: { flagged: [] } }),
+	);
+	await page.goto("/studio.html");
+	await expect(page.locator("body")).toHaveAttribute(
+		"data-studio-ready",
+		"true",
+	);
+
+	await page
+		.locator("#studio-editor")
+		.getByRole("button", { name: "+ Title" })
+		.click();
+	const panels = page.locator("#studio-panels .spanel");
+	await expect(panels).toHaveCount(3);
+
+	// the title card leads the strip, so it opens at the front
+	const card = page.locator("#studio-editor .pedit").nth(0);
+	await card.getByLabel("Title", { exact: true }).fill("NO EXIT");
+	await card.getByRole("button", { name: "+ Character" }).click();
+	await card.getByLabel("Credit name").fill("The Boss");
+
+	await expect(panels.nth(0).locator("canvas")).toHaveAttribute(
+		"aria-label",
+		/NO EXIT/,
+	);
+	await expect(panels.nth(0).locator("canvas")).toHaveAttribute(
+		"aria-label",
+		/Starring: The Boss/,
+	);
+
+	// the subhead is the author's to write, and the card reads back what they wrote
+	await card.getByLabel("Starring line").fill("TOLD BY");
+	await expect(panels.nth(0).locator("canvas")).toHaveAttribute(
+		"aria-label",
+		/TOLD BY: The Boss/,
+	);
+	await expect(page.locator("#studio-json")).toHaveValue(/"kind": "title"/);
 });
 
 test("studio keeps one panel open and reorders from the grip", async ({
@@ -183,7 +229,7 @@ test("panels per row shapes both the preview rows and the sheet", async ({
 	expect(tops[2]).toBe(tops[3]);
 	expect(tops[2]).toBeGreaterThan(tops[0] ?? 0);
 
-	// the sheet is square at 2x2, and one row wide once the count covers every panel
+	// the sheet is square at 2x2 plus the credit strip, one row wide once the count covers every panel
 	const shape = async (): Promise<{ width: number; height: number }> =>
 		page.evaluate(async () => {
 			const studio = (

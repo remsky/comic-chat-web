@@ -1,5 +1,6 @@
 // Builds panels straight from a strip script: explicit cast, order, facing, and camera, with no auto panel breaking.
 
+import { displayName } from "../browser/dom.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "../browser/panelUnits.js";
 import type { Avatar, AvatarBody, AvatarData } from "../engine/avatar.js";
 import { AvatarRegistry } from "../engine/avatar.js";
@@ -14,6 +15,7 @@ import {
 	makeRuntimeBalloon,
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
+import { NO_TITLE, type TitleStar } from "../engine/titlePanel.js";
 import { type AvatarArt, avatarArtCache, NEUTRAL_KEY } from "./art.js";
 import {
 	emotionAngles,
@@ -90,6 +92,51 @@ function applyZoom(
 	}
 }
 
+// the studio's AddTitle: named stars instead of the roster, typed title or UNTITLED
+function composeTitlePanel(
+	spec: StripPanel,
+	index: number,
+	registry: AvatarRegistry,
+	rand: MsvcRand,
+): ComposedPanel {
+	const issues: StripIssue[] = [];
+	const stars: TitleStar[] = [];
+	spec.actors.forEach((actor, actorIndex) => {
+		const avatar = registry.avatars.find(
+			(candidate) => candidate.data.name === actor.avatar,
+		);
+		if (!avatar) {
+			issues.push({
+				path: `panels[${index}].actors[${actorIndex}].avatar`,
+				message: `unknown avatar "${actor.avatar}"`,
+				severity: "error",
+			});
+			return;
+		}
+		stars.push({
+			avatarID: avatar.avatarID,
+			label: actor.text?.trim() ? actor.text : displayName(actor.avatar),
+		});
+	});
+	const seed = rand.rand();
+	const text = spec.title?.trim() ? spec.title : NO_TITLE;
+	return {
+		panel: {
+			seed,
+			hasBorder: false,
+			backdropMode: 0,
+			bodies: [],
+			balloons: [],
+			title: {
+				text,
+				...(spec.starring?.trim() ? { starring: spec.starring } : {}),
+				stars,
+			},
+		},
+		issues,
+	};
+}
+
 function composePanel(
 	spec: StripPanel,
 	index: number,
@@ -99,6 +146,8 @@ function composePanel(
 	resolveStyle: BalloonStyleResolver,
 	artFor: (name: string) => AvatarArt,
 ): ComposedPanel {
+	if (spec.kind === "title")
+		return composeTitlePanel(spec, index, registry, rand);
 	const issues: StripIssue[] = [];
 	const panel: UnitPanel = {
 		seed: rand.rand(),

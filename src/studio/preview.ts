@@ -201,7 +201,16 @@ export class StripPreview {
 			renderer.render(card.panel);
 			context.restore();
 		});
-		drawStripMark(context, sheet.width, sheet.height, EXPORT_GAP);
+		// on one row the credit starts under the first bordered panel, not the white title card
+		const titled = rows === 1 && panels.length > 1 && panels[0]?.panel?.title;
+		drawStripMark(
+			context,
+			sheet.width,
+			sheet.height,
+			EXPORT_GAP,
+			undefined,
+			titled ? EXPORT_GAP + CARD_PIXELS + EXPORT_GAP : EXPORT_GAP,
+		);
 		const out = options?.square ? squarePad(sheet) : sheet;
 		return new Promise((resolve) => out.toBlob(resolve, "image/png"));
 	}

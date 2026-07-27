@@ -1,6 +1,6 @@
 // Timing math for the animated export: each panel holds, balloons fade in, panels crossfade.
 
-export const HOLD_SECONDS = 3.5;
+export const HOLD_SECONDS = 4.2;
 export const XFADE_SECONDS = 0.6;
 const FADE_START = 0.6;
 const FADE_DURATION = 0.35;

@@ -9,6 +9,17 @@ import { SM_THINK, SM_WHISPER } from "../engine/panel.js";
 import { BalloonRuntime } from "../engine/panelBalloon.js";
 import { BetaSpline } from "../engine/spline.js";
 import {
+	BELOW_STARRING,
+	STAR_ICON_SIZE,
+	STAR_ICON_SPACE,
+	STARRING,
+	shoutFontCell,
+	TITLE_LEADING,
+	TITLE_UNIT,
+	type TitleCard,
+	titleFontCell,
+} from "../engine/titlePanel.js";
+import {
 	angleBetweenVecs,
 	angleToVector,
 	dpointNorm,
@@ -284,6 +295,8 @@ export interface CanvasPanelRendererOptions {
 export class CanvasPanelRenderer {
 	private normalFontCache?: string;
 	private whisperFontCache?: string;
+	private titleFontCache?: string;
+	private shoutFontCache?: string;
 
 	constructor(
 		readonly context: CanvasRenderingContext2D,
@@ -443,6 +456,132 @@ export class CanvasPanelRenderer {
 		this.context.restore();
 	}
 
+	private wrapTitle(text: string, maxWidth: number): string[] {
+		const words = text.split(/\s+/).filter((word) => word.length > 0);
+		const lines: string[] = [];
+		let line = "";
+		for (const word of words) {
+			const candidate = line === "" ? word : `${line} ${word}`;
+			if (line !== "" && this.context.measureText(candidate).width > maxWidth) {
+				lines.push(line);
+				line = word;
+			} else line = candidate;
+		}
+		if (line !== "") lines.push(line);
+		return lines;
+	}
+
+	private drawStarIcon(
+		avatarID: number,
+		left: number,
+		top: number,
+		size: number,
+	): void {
+		const avatar = this.avatars.find(
+			(candidate) => candidate.avatarID === avatarID,
+		);
+		if (!avatar) return;
+		const pose = avatar.data.poses.find(
+			(candidate) => candidate.poseID === avatar.data.iconPoseID,
+		);
+		if (!pose?.sprite) return;
+		const scale = Math.min(size / pose.width, size / pose.height);
+		const width = Math.round(pose.width * scale);
+		const height = Math.round(pose.height * scale);
+		this.context.drawImage(
+			this.assets.get(pose),
+			pose.sprite.x,
+			pose.sprite.y,
+			pose.width,
+			pose.height,
+			left + Math.trunc((size - width) / 2),
+			top + Math.trunc((size - height) / 2),
+			width,
+			height,
+		);
+	}
+
+	// AddStars (panel.cpp:1391-1446): icon+name rows, centered as a block on the widest name
+	private drawStars(card: TitleCard, top: number): void {
+		const context = this.context;
+		const unit = this.options.unitWidth;
+		const scale = unit / TITLE_UNIT;
+		const iconSize = Math.round(STAR_ICON_SIZE * scale);
+		const iconSpace = Math.round(STAR_ICON_SPACE * scale);
+		const shoutCell = shoutFontCell(unit, BALLOON_FONT_SIZE);
+		const rowHeight = Math.max(iconSize, shoutCell);
+		const maxStars = Math.max(
+			0,
+			Math.trunc((this.options.unitHeight - top) / rowHeight),
+		);
+		const stars = card.stars.slice(0, maxStars);
+		if (stars.length === 0) return;
+		let maxWidth = 0;
+		for (const star of stars)
+			maxWidth = Math.max(maxWidth, context.measureText(star.label).width);
+		const blockWidth = maxWidth + iconSize + iconSpace;
+		const iconOffset = Math.max(0, Math.trunc((unit - blockWidth) / 2));
+		const textOffset = iconOffset + iconSize + iconSpace;
+		const iconVdisp = Math.trunc((rowHeight - iconSize) / 2);
+		const textVdisp = Math.trunc((rowHeight - shoutCell) / 2);
+		let y = top;
+		for (const star of stars) {
+			this.drawStarIcon(star.avatarID, iconOffset, y + iconVdisp, iconSize);
+			context.fillText(star.label, textOffset, y + textVdisp);
+			y += rowHeight;
+		}
+	}
+
+	// how far a line's ink hangs below its baseline, which the classic all-caps titles never do
+	private descender(text: string): number {
+		const metrics = this.context.measureText(text);
+		return Math.max(
+			0,
+			(metrics.actualBoundingBoxDescent ?? 0) -
+				(metrics.fontBoundingBoxAscent ?? 0),
+		);
+	}
+
+	// AddTitle (panel.cpp:1279-1297): title, STARRING beneath, then the cast
+	private drawTitle(card: TitleCard): void {
+		const context = this.context;
+		const unit = this.options.unitWidth;
+		const scale = unit / TITLE_UNIT;
+		this.titleFontCache ??= gdiCellFont(
+			context,
+			"400",
+			titleFontCell(unit, BALLOON_FONT_SIZE),
+		);
+		this.shoutFontCache ??= gdiCellFont(
+			context,
+			"400",
+			shoutFontCell(unit, BALLOON_FONT_SIZE),
+		);
+		context.save();
+		context.fillStyle = this.options.foreground ?? "#000";
+		context.textBaseline = "top";
+		context.textAlign = "center";
+		context.font = this.titleFontCache;
+		let y = Math.round(100 * scale);
+		const lineHeight =
+			titleFontCell(unit, BALLOON_FONT_SIZE) +
+			Math.round(TITLE_LEADING * scale);
+		for (const line of this.wrapTitle(card.text, unit)) {
+			context.fillText(line, unit / 2, y);
+			y += lineHeight + this.descender(line);
+		}
+		context.font = this.shoutFontCache;
+		const starring = card.starring?.trim() ? card.starring : STARRING;
+		context.fillText(starring, unit / 2, y);
+		y +=
+			shoutFontCell(unit, BALLOON_FONT_SIZE) +
+			Math.round(BELOW_STARRING * scale) +
+			this.descender(starring);
+		context.textAlign = "left";
+		this.drawStars(card, y);
+		context.restore();
+	}
+
 	render(panel: UnitPanel): void {
 		const context = this.context;
 		context.save();
@@ -462,6 +601,7 @@ export class CanvasPanelRenderer {
 				this.options.unitWidth,
 				this.options.unitHeight,
 			);
+		if (panel.title) this.drawTitle(panel.title);
 		for (const body of panel.bodies) this.drawBody(body);
 		for (let i = panel.balloons.length - 1; i >= 0; i--) {
 			const balloon = panel.balloons[i];

@@ -57,6 +57,88 @@ describe("emotionVector", () => {
 	});
 });
 
+describe("title panels", () => {
+	it("parses the kind, keeps the title, and round-trips through JSON", () => {
+		const result = parseStrip(
+			{
+				version: 1,
+				panels: [
+					{
+						kind: "title",
+						title: "NO EXIT",
+						actors: [{ avatar: "anna", text: "The Boss" }, { avatar: "bolo" }],
+					},
+				],
+			},
+			catalog,
+		);
+		expect(result.issues).toEqual([]);
+		const panel = result.strip.panels[0];
+		expect(panel?.kind).toBe("title");
+		expect(panel?.title).toBe("NO EXIT");
+		const reparsed = parseStripJson(stripToJson(result.strip), catalog);
+		expect(reparsed.issues).toEqual([]);
+		expect(reparsed.strip).toEqual(result.strip);
+	});
+
+	it("rejects an unknown kind and a non-string title", () => {
+		const result = parseStrip(
+			{
+				version: 1,
+				panels: [
+					{ kind: "poster", actors: [] },
+					{ kind: "title", title: 7, actors: [] },
+				],
+			},
+			catalog,
+		);
+		expect(errors(result.issues)).toEqual([
+			"panels[0].kind",
+			"panels[1].title",
+		]);
+	});
+
+	it("does not count credit rows against the balloon cap", () => {
+		const result = parseStrip(
+			{
+				version: 1,
+				panels: [
+					{
+						kind: "title",
+						actors: Array.from({ length: MAX_ACTORS }, () => ({
+							avatar: "anna",
+							text: "credit",
+						})),
+					},
+				],
+			},
+			catalog,
+		);
+		expect(result.issues).toEqual([]);
+	});
+
+	it("drops scene-only fields when serializing a title panel", () => {
+		const result = parseStrip(
+			{
+				version: 1,
+				panels: [
+					{
+						kind: "title",
+						camera: "close",
+						background: "volcano",
+						actors: [{ avatar: "anna", gesture: "wave", text: "Anna" }],
+					},
+				],
+			},
+			catalog,
+		);
+		const json = stripToJson(result.strip);
+		expect(json).not.toContain("camera");
+		expect(json).not.toContain("volcano");
+		expect(json).not.toContain("gesture");
+	});
+});
+
 describe("parseStrip", () => {
 	it("accepts a minimal panel", () => {
 		const result = parseStrip(

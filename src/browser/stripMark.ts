@@ -27,8 +27,9 @@ function fitFont(
 	right: string,
 	width: number,
 	gap: number,
+	start: number = gap,
 ): number {
-	const room = width - gap * 2;
+	const room = width - start - gap;
 	let px = markFont(width);
 	while (px > MARK_MIN_FONT_PX) {
 		context.font = `${px}px ${MARK_FAMILY}`;
@@ -50,21 +51,22 @@ export function stripMarkGrowth(width: number, gap: number): number {
 	return markBand(width, gap) - gap;
 }
 
-// one baseline, each end set flush against the margin
+// one baseline, each end set flush against its margin; start lets the credit skip a borderless lead panel
 export function drawMarkLine(
 	context: CanvasRenderingContext2D,
 	width: number,
 	margin: number,
 	y: number,
 	host: string = location.host,
+	start: number = margin,
 ): void {
 	const { left, right } = stripMarkParts(host);
 	context.save();
-	context.font = `${fitFont(context, left, right, width, margin)}px ${MARK_FAMILY}`;
+	context.font = `${fitFont(context, left, right, width, margin, start)}px ${MARK_FAMILY}`;
 	context.fillStyle = MARK_COLOR;
 	context.textBaseline = "middle";
 	context.textAlign = "left";
-	context.fillText(left, margin, y);
+	context.fillText(left, start, y);
 	context.textAlign = "right";
 	context.fillText(right, width - margin, y);
 	context.restore();
@@ -76,8 +78,9 @@ export function drawStripMark(
 	height: number,
 	gap: number,
 	host: string = location.host,
+	start: number = gap,
 ): void {
 	// whole pixels, so "middle" never lands the glyphs on a subpixel boundary
 	const y = height - Math.round(markBand(width, gap) / 2);
-	drawMarkLine(context, width, gap, y, host);
+	drawMarkLine(context, width, gap, y, host, start);
 }

@@ -534,6 +534,15 @@ textarea {
 	grid-area: 2 / 1;
 }
 
+.pedit-title {
+	display: flex;
+	gap: 0.25rem;
+}
+
+.pedit-title .actor-text {
+	flex: 1;
+}
+
 .actor-icon {
 	flex: none;
 	line-height: 0;

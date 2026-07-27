@@ -132,6 +132,21 @@ describe("exported strip credit mark", () => {
 		expect(five).toBeLessThan(one * 3);
 	});
 
+	// a single-row sheet led by the borderless title card starts the credit under the first bordered panel
+	it("starts where the caller says and still clears the host", () => {
+		const start = GAP + PANEL + GAP;
+		const width = exportSheet(2, 1).width;
+		const { context, calls } = fakeContext();
+		drawStripMark(context, width, 3000, GAP, "fork.example", start);
+		const fontPx = Number.parseInt(context.font, 10);
+		const measure = (text: string) => text.length * PER_CHAR_EM * fontPx;
+		expect(calls[0]?.x).toBe(start);
+		expect(calls[1]?.x).toBe(width - GAP);
+		expect(start + measure(calls[0]?.text ?? "")).toBeLessThanOrEqual(
+			width - GAP - measure(calls[1]?.text ?? ""),
+		);
+	});
+
 	it("keeps the credit and the host from running into each other", () => {
 		for (const columns of [1, 2, 5]) {
 			const width = exportSheet(columns, 1).width;

@@ -41,11 +41,14 @@ const settle = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
 // bodies are placed before balloons, so a text-free copy renders identical panels minus the balloons
 function silentCopy(strip: Strip): Strip {
 	const copy = structuredClone(strip);
-	for (const panel of copy.panels)
+	for (const panel of copy.panels) {
+		// a title card's text is credit labels, not balloons; it holds complete from the first frame
+		if (panel.kind === "title") continue;
 		for (const actor of panel.actors) {
 			delete actor.text;
 			delete actor.mode;
 		}
+	}
 	return copy;
 }
 
@@ -106,7 +109,7 @@ function buildScrubber(strip: Strip, deps: AnimateDeps): Scrubber | null {
 	const workContext = work.getContext("2d");
 	const layerContext = layer.getContext("2d");
 	if (!workContext || !layerContext) return null;
-	// static credit band, framed as part of the comic: side rails continue the panel border down to a closing rule
+	// the credit band framed as part of the comic: side rails continue the frame down to a closing rule
 	const border = Math.round(60 * (SIZE / full.unit));
 	for (const context of [workContext, layerContext]) {
 		context.fillStyle = "#fff";
@@ -140,18 +143,28 @@ function buildScrubber(strip: Strip, deps: AnimateDeps): Scrubber | null {
 		}
 	};
 
+	// borderless cards (the title screen) get framed too, and the frame holds solid through crossfades
+	const frame = (context: CanvasRenderingContext2D) => {
+		context.fillStyle = "#000";
+		context.fillRect(0, 0, SIZE, border);
+		context.fillRect(0, 0, border, SIZE);
+		context.fillRect(SIZE - border, 0, border, SIZE);
+		context.fillRect(0, SIZE - border, SIZE, border);
+	};
+
 	return {
 		duration: timelineDuration(frames.length),
 		panels: frames.length,
 		drawAt(time) {
-			const frame = timelineAt(time, frames.length);
-			paint(workContext, frame.index, frame.local);
-			if (frame.blend) {
-				paint(layerContext, frame.blend.index, frame.blend.local);
-				workContext.globalAlpha = frame.blend.alpha;
+			const at = timelineAt(time, frames.length);
+			paint(workContext, at.index, at.local);
+			if (at.blend) {
+				paint(layerContext, at.blend.index, at.blend.local);
+				workContext.globalAlpha = at.blend.alpha;
 				workContext.drawImage(layer, 0, 0);
 				workContext.globalAlpha = 1;
 			}
+			frame(workContext);
 			return work;
 		},
 	};
