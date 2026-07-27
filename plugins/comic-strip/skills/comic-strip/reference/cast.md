@@ -1,6 +1,21 @@
-# Cast and backdrops
+# Cast
 
 What each character looks like and how much it can act. `catalog.json` is the authority on exact names and counts; this file is for casting.
+
+Read this file when you want to see the whole troupe at once. When you already know what you need, ask instead: `scripts/cast-query.mjs --register young --emotion bored` narrows it, and `scripts/cast-query.mjs anna` prints one character's faces, poses, look, and register together. The script reads the table and the register bullets below, so both files always agree.
+
+## Naming a face and a pose
+
+The face and the body are named separately.
+
+- `emotion` is the face. Faces are stored as counts, not names, so `"happy": 3` means `happy_1`, `happy_2`, and `happy_3` all exist even though the JSON never writes them out. Write either form in the field: bare `"emotion": "happy"` lets the engine pick one, and `"emotion": "happy_2"` pins that exact drawing. Pin it when a character holds one expression across panels and you do not want the face changing under you. An emotion missing from the entry means the character has no art for it and poses neutral.
+- Omitting `gesture` is the safe default: the face arrives with its own torso, so the pose always matches the mood and can never be a pose the character lacks.
+- But many emotions share a plain standing torso, so a strip of two people talking with no gesture anywhere comes out as the same two figures standing identically in every panel, however much the faces change. Name a gesture on the panels that carry a beat. One or two a strip is enough to stop it looking frozen.
+- `gesture` is the body: a command (`wave`, `point`, `pointself`, `doublepoint`, `shrug`, `walkaway`, `walk`, `walkup`) or an `<emotion>_<n>` stance. Commands are not universal. They have to appear in that character's own `gestures` list, and most of the cast owns only `wave`, `point`, and `pointself`. A gesture the character lacks poses neutral, which the validator reports as a warning.
+- An `aliases` entry means two names draw the same faces: `"shout": "angry"` on `connor` says its shout is its angry art. Both names work and neither looks different, so pick a genuinely different emotion when you want a different face.
+- All of it is per character. `susan` draws five happy faces; `bolo` draws two and has no bored at all. Read the entry, not the global list.
+
+## The troupe
 
 Reading the range column:
 
@@ -9,7 +24,7 @@ Reading the range column:
 - **X reuses Y**: the character draws X with the same faces as Y, so both names work and neither looks different. These are the `aliases` in `catalog.json`.
 - Everyone with gestures has `wave`, `point`, and `pointself`. Anything beyond that is called out.
 
-The art is 1996 black-and-white cartoon line work. `buck`, `kirby`, and `veronica` are full colour and stand out beside the rest of the cast; the colour backdrops behind monochrome characters are normal and read fine.
+The art is 1996 black-and-white cartoon line work. `buck`, `kirby`, and `veronica` are full colour and stand out beside the rest of the cast.
 
 | character | look | range |
 | --- | --- | --- |
@@ -49,10 +64,10 @@ The art is 1996 black-and-white cartoon line work. `buck`, `kirby`, and `veronic
 
 ## Casting by register
 
-Nobody in this cast wears a uniform or carries a job, so register comes from clothes alone. Rough groupings, for when a brief needs a particular kind of person:
+Nobody here wears a uniform or carries a job, so register comes from clothes alone. Rough groupings, for when a brief needs a particular kind of person:
 
 - **Office or professional**: `dan` and `denise` read closest to coworkers, `tongtyed` as the one who has been there longest, `pedagog` as a humourless authority (but one drawing only), `rebecca` and `tux` as formal to the point of black tie.
-- **Ordinary adults, no setting implied**: `margaret`, `susan`, `kwensa`, `scotty`. Safe for a neighbour, a parent, a friend, a customer.
+- **Ordinary adults, no setting implied**: `margaret`, `susan`, `kwensa`, `scotty`, `kevin`, `glenda`. Safe for a neighbour, a parent, a friend, a customer. `glenda` has one drawing, so she can stand there and nothing more.
 - **Young**: `anna`, `buck`, `veronica`, `kirby`, `lynnea`. `buck` is a child; the rest read late teens to twenties.
 - **Counterculture and outsiders**: `armando`, `bolo`, `lance`, `lynnea`.
 - **Wise or elder**: `sage`, `kwensa`.
@@ -60,32 +75,3 @@ Nobody in this cast wears a uniform or carries a job, so register comes from clo
 - **Creatures**, which read as comic by default whatever they say: `connor`, `cro`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
 
 A creature in a straight scene is a joke whether you meant one or not. If the strip has to be taken at face value, cast humans.
-
-## Backdrops
-
-There are nine, and this is all of them. Nothing here is a kitchen, an office, a meeting room, a street, or a workshop. Pick for tone and for how much detail you can afford behind the balloons, never for what the scene is nominally about. A conversation about databases works fine in a field.
-
-Omitting `background` leaves the panel plain white. That is the right call for a scene the set genuinely cannot place, and it is worth one panel where you want the frame to go quiet. It is not a default. A strip with no backdrop anywhere reads as unfinished art, so choose one that fits the mood and hold it.
-
-Every character except `buck`, `kirby`, and `veronica` is black-and-white line art, so the backdrop decides whether a panel is monochrome. Three backdrops are ink; the other six are colour. Colour behind a monochrome character is normal and reads fine, it is just louder, and a whole strip that stays in one register looks more deliberate than one that mixes.
-
-### Monochrome, pen and ink
-
-These three match the cast's own line work. A strip built from these plus blank panels is fully black-and-white.
-
-| backdrop | look | use |
-| --- | --- | --- |
-| field | a bare grassy hill, a giant ribbed urn at the left edge, a hedge ridge behind, dense hatched sky | outdoors, journeys, anything that wants space. The cleanest ink option and the safest of the three |
-| pastoral | a dense garden of trees and shrubs with a stepped footbridge cutting through, hatched throughout | lush, overgrown, complicated. Very textured, so keep the cast large and the balloons short |
-| room | a still interior with one huge arched window onto rolling hills, a tall cactus at the right, hatched walls and floor | stillness, strangeness, waiting. Reads dreamlike and slightly empty. It is not a kitchen and not an office |
-
-### Colour
-
-| backdrop | look | use |
-| --- | --- | --- |
-| buckroom | a kid's bedroom in flat cartoon colour: grey walls, green carpet, shelves crowded with models and toys, a TV on a desk, a pink dresser with a lamp, a beanbag, a toy chest, a bat against the wall | childhood, hobbies, home. The busiest thing in the set, and small characters get lost in it |
-| clouds | soft airbrushed blue sky with white cloud banks, nothing else in frame | calm, relief, optimism, a daydream. Empty enough to be the safest colour choice |
-| den | pastel living room: mint walls, a purple wing chair, a low table with pots, a framed picture, a tall arched opening onto a sunset landscape | quiet conversation, a comfortable interior. The left half is clear, so characters read well |
-| space | purple starfield with cratered planets and two small rockets over a pink rocky plain | scale, ambition, science fiction, absurd distance |
-| volcano | watercolour: a pink peak over a blue ridge and flat water, olive sky, no detail | looming trouble, awe, a turning point. Soft and nearly empty, so characters sit clean against it |
-| yellow | flat chartreuse, a single bright colour field | punchlines and pull quotes. No depth at all, maximum contrast on the balloons |

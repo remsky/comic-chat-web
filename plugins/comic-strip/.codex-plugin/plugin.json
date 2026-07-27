@@ -1,0 +1,26 @@
+{
+	"name": "comic-strip",
+	"version": "0.1.0",
+	"description": "Write a comic strip in the Comic Chat studio format and return a link that opens it, rendered, in the editor.",
+	"author": { "name": "remsky", "url": "https://github.com/remsky" },
+	"homepage": "https://comics.remsky.art/studio.html",
+	"repository": "https://github.com/remsky/comic-chat-web",
+	"license": "AGPL-3.0-only",
+	"keywords": ["comic", "cartoon", "comic-chat", "illustration"],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Comic Strip",
+		"shortDescription": "Cast a 1996 cartoon troupe into a comic strip",
+		"longDescription": "Writes a comic strip as a validated document and returns a link that opens it, rendered, in the Comic Chat studio. Thirty one characters with their own faces and poses, nine backdrops, and a validator that catches a name the art does not have before the strip reaches the screen.",
+		"developerName": "remsky",
+		"category": "Creativity",
+		"capabilities": ["Write"],
+		"websiteURL": "https://comics.remsky.art",
+		"defaultPrompt": [
+			"Draw a comic strip about our migration to the new database",
+			"Make a four panel comic for the changelog",
+			"Turn this postmortem into a comic strip"
+		],
+		"brandColor": "#1F1F1F"
+	}
+}

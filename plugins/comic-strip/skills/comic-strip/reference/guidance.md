@@ -1,0 +1,90 @@
+# Writing a strip that reads
+
+Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, and `scripts/cast-query.mjs` answers who exists and what they can act faster than reading `cast.md`. Reach for those as you cast. This file is the how.
+
+## Staging, which is where strips go wrong
+
+- The `actors` array is the seating. First actor stands at the left of the panel, next to its right, evenly spaced.
+- Everyone faces right unless told otherwise, and `facing: "left"` flips the drawing. So the leftmost character already looks toward everyone else, and the rightmost has nobody on its right and looks out of the frame until you flip it. **In a two character panel, the second actor takes `facing: "left"`. Always. Whoever is talking.**
+- That is the whole model: face inward. Slot 0 inward is `right`, the last slot inward is `left`.
+- Put `facing: "left"` on the first actor and it turns its back on the scene. Do that and leave the second on the default and both of them stare out of opposite edges, which is the single most common way a strip looks broken.
+- Keep each character in the same slot for the whole strip. If the pitch comes from the left in panel 1, it comes from the left in panel 8. Swapping sides makes the reader re-find who is who.
+- A pose points the way the character faces, so `point` with nobody to the right aims at empty frame. Point across at someone.
+
+## Camera
+
+`wide` is the default and the right answer most of the time: whole figures, small, with the backdrop open around them.
+
+`close` scales the figure up and crops at the chest. The face carries, raised hands still show, legs are gone, and two characters nearly fill the frame. Spend it on a reaction or a punchline. Half a strip of `close` reads as monotonous.
+
+`zoom` nudges the framing either way and is rarely needed. Reach for it only when a panel is genuinely too tight or too empty.
+
+## Balloons
+
+- One or two speakers a panel. Three is a crowd scene, not a conversation.
+- About a dozen words a balloon. The balloon takes its space out of the art, so long lines bury the characters. Split a long thought across two panels. The validator warns past 90 characters, and the studio errors if the balloons cannot be laid out at all.
+- Balloons render in capitals. Write sentence case and let the engine shout.
+- `mode`: `say` is a pointed balloon, `think` a cloud, `whisper` smaller type, `action` a tailless box. A caption panel is one actor with `mode: "action"`.
+- Every actor is drawn whether it speaks or not, so a silent character is how you get a reaction in frame. Give the silent one an emotion; that is its whole performance.
+
+## Cast discipline
+
+- Two speakers carry a strip. A third body is for reactions.
+- Keep the cast constant. A character who appears for one panel and is never seen again reads as a mistake, especially a creature standing wordlessly beside two people who have been talking for three panels.
+- Vary the faces. A strip where everyone wears bare `happy` reads like a form letter, and the validator warns when one character holds the same face for three panels running.
+- Vary the bodies too. Leaving `gesture` off is safe but many emotions share a plain standing torso, so a whole strip without one comes out as the same two figures standing identically in every panel. Name a gesture on the beat panels: the pitch, the objection, the payoff.
+- Cast against type when the brief wants a joke. The caveman explaining a deploy pipeline is the whole gag. When the brief wants a straight arc, a pitch that has to land or a recap someone will present, cast plainly and let the writing carry it.
+- Most briefs are both: a straight arc that ends on a laugh. Cast it plainly and put the joke in the last balloon. Gag casting commits the whole strip to comedy from panel 1, which is usually not what a recap or a slide wants.
+
+## Backdrop discipline
+
+- Pick for tone, never for the subject. A conversation about databases works fine in a field.
+- The backdrop is where the scene is, not how the beat feels. One conversation is one place. Hold it, and never flip back and forth for emphasis. `room`, `volcano`, `room`, `clouds` across four panels of one meeting reads as teleporting.
+- Change it when time or place actually moves: after the ship, the next morning, back at the desk. A new topic inside the same conversation is not a move. One change in a four panel strip, two at most in eight.
+- An eight panel arc that ends after something shipped wants exactly one change, at the panel where the time skip happens. Everything before it is one meeting.
+- Blank is for a scene the set cannot place, and for one panel where you want the frame to go quiet. A strip that is blank end to end looks unfinished.
+
+## Shapes
+
+- **Four panels**: setup, turn, escalation, payoff.
+- **Eight panels**: four beats of two, one idea a panel, with something landing at panel 4 as well as panel 8. Read as two rows of four, so panel 4 ends the top row and wants a small button of its own.
+- **Two-hander**: one enthusiast, one skeptic, same two slots throughout. The most reliable shape there is, and the easiest to stage.
+- **Lecture with a foil**: one character explains across three panels while a silent second reacts, face changing each time. The reactions are the joke; the lecture is just scaffolding.
+- **Before and after**: two panels, same cast, same slots, backdrop changed. Good for a changelog or a migration.
+- **Caption strip**: every panel one actor with `mode: "action"` and nobody speaking. Reads as narration over illustration. Useful for a README or a recap where dialogue would be forced.
+- **Cold open**: panel 1 is a single character mid-thought with `mode: "think"`, then the second character arrives in panel 2 and the strip becomes a two-hander.
+
+## Pairings that work
+
+Loose suggestions, not rules. Once a pair is chosen, `cast-query.mjs dan margaret` prints what the two of them can actually act, which is the moment to find out one of them cannot shrug.
+
+- `dan` and `margaret`: coworkers who have had this argument before. He pitches, she does not buy it.
+- `dan` and `anna`: earnest and unimpressed. Anna's `bored` and `coy` do a lot of work silently.
+- `kevin` and `susan`: the one with the apron and the one with the patience. Anything domestic.
+- `sage` or `kwensa` with anybody young: a question asked plainly and answered plainly.
+- `mike` selling, anyone else listening: he is a showman, so he oversells by default.
+- `xeno` or `tiki` as the outsider who asks the obvious question. Their strangeness is the excuse for exposition.
+- `cro` explaining something modern: the whole joke, and it wears out after one strip.
+- `maynard` or `hugh` as an animal with opinions, next to a human pretending that is normal.
+- `pedagog`, `glenda`, `rainbow`, `tux`, `waf`: one drawing each, so cast them silent or as a face in the background. They cannot react.
+
+Cast and backdrop:
+
+- Monochrome cast on `field` or `room`: the whole panel is one drawing style. The most cohesive look in the set.
+- `buck`, `kirby`, or `veronica` on a colour backdrop: colour on colour, so they stop looking pasted in.
+- `yellow` behind the last panel of a mono strip: cheap, loud, and it lands a punchline.
+- `clouds` for relief and after the fact, `volcano` for a turn that is about to hurt, `den` for a conversation that is meant to feel comfortable, `space` for absurd scale.
+- `buckroom` with `buck` in it and nowhere else. It is busy enough to swallow anyone.
+
+## Before you hand it over
+
+Read the strip back as a reader, not as the writer. The failures worth catching:
+
+- Two characters in a panel with nobody facing anybody.
+- A character that changed sides between panels.
+- A backdrop that moved for a mood instead of a scene, or a strip with no backdrop at all.
+- Four `close` panels in a row.
+- The same face on the same character three panels running.
+- Every figure standing in the same pose the whole way down, because no panel named a gesture.
+- A walk-on who appears once.
+- A balloon so long the art vanished under it.

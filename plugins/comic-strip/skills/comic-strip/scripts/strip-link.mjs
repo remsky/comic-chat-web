@@ -149,6 +149,56 @@ function checkPanel(raw, path) {
 	});
 }
 
+// craft rules the studio happily renders and a reader still notices, so they land as warnings
+function checkShape(panels) {
+	const drawn = panels.filter(isRecord);
+	if (drawn.length < 3) return;
+	const actorsOf = (panel) =>
+		(Array.isArray(panel.actors) ? panel.actors : []).filter(isRecord);
+
+	if (drawn.every((panel) => !panel.background))
+		warn("panels", "no panel has a backdrop; a blank strip reads unfinished");
+
+	const close = drawn.filter((panel) => panel.camera === "close").length;
+	if (close * 2 >= drawn.length)
+		warn(
+			"panels",
+			`${close} of ${drawn.length} panels are close shots; wide should carry most of a strip`,
+		);
+
+	if (!drawn.some((panel) => actorsOf(panel).some((actor) => actor.gesture)))
+		warn(
+			"panels",
+			"no panel names a gesture, so every figure holds the same standing pose",
+		);
+
+	const faces = new Map();
+	drawn.forEach((panel, index) => {
+		for (const actor of actorsOf(panel)) {
+			if (typeof actor.avatar !== "string") continue;
+			const held = faces.get(actor.avatar) ?? [];
+			held.push({ index, face: String(actor.emotion ?? "neutral") });
+			faces.set(actor.avatar, held);
+		}
+	});
+	for (const [avatar, held] of faces) {
+		let run = 1;
+		for (let i = 1; i < held.length; i++) {
+			const previous = held[i - 1];
+			const current = held[i];
+			run =
+				current.face === previous.face && current.index === previous.index + 1
+					? run + 1
+					: 1;
+			if (run === 3)
+				warn(
+					"panels",
+					`${avatar} wears "${current.face}" in panels[${current.index - 2}] through panels[${current.index}]; vary the face`,
+				);
+		}
+	}
+}
+
 function checkStrip(raw) {
 	if (!isRecord(raw)) {
 		fail("", "strip must be a JSON object");
@@ -177,6 +227,7 @@ function checkStrip(raw) {
 	raw.panels.forEach((panel, index) => {
 		checkPanel(panel, `panels[${index}]`);
 	});
+	checkShape(raw.panels);
 }
 
 function link(strip, base) {
