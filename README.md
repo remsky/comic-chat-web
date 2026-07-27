@@ -14,12 +14,13 @@
 
 ### Create a custom comic strip @ [comics.remsky.art/studio](https://comics.remsky.art/studio)
 
-To create with AI assistance, add skill:
+<hr>
+
+To create with AI assistance, see [Studio](#studio) section or add skill via:
 
 ```bash
 npx skills add remsky/comic-chat-web 
 ```
-Alternate skill usage methods are in the [Studio](#studio) section.
 
 ## Features
 
@@ -90,6 +91,7 @@ For assistance from an AI agent to spin up some strips, a skill is available. It
 
 <details>
 <summary>npx skills</summary>
+
 ```bash
 npx skills add remsky/comic-chat-web 
 ```
