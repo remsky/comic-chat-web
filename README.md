@@ -81,7 +81,7 @@ Naming someone points your avatar at them, and being named highlights that line 
 
 An integrated editor allowing you to create strips (panel by panel) on your own is available at [/studio](https://comics.remsky.art/studio)
 
-The result is exportable as PNG, or import/export as its JSON definition document. It's pretty fun to tool around with. 
+The result is exportable as a PNG sheet or square, as an MP4 or GIF that plays the panels in order, or import/export as its JSON definition document. It's pretty fun to tool around with. 
 
 - Available art per character is generated as an asset list in `catalog.json`.
 - Includes art, combinations, and control not reachable in normal chat (sizing, direction, gestures, etc).

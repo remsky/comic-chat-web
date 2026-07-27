@@ -26,6 +26,7 @@
 	"cameras": ["wide", "close"],
 	"facings": ["left", "right"],
 	"sizes": ["classic", "modern"],
+	"kinds": ["scene", "title"],
 	"backgrounds": [
 		"clouds",
 		"den",
