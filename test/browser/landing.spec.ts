@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("landing page boots the app shell with the connect dialog", async ({
 	page,
@@ -9,10 +9,6 @@ test("landing page boots the app shell with the connect dialog", async ({
 	});
 	page.on("pageerror", (error) => errors.push(error.message));
 
-	// the preview proxy may reach a live wrangler on :8787; force the static SPA-fallback shape
-	await page.route("**/api/rooms", (route) =>
-		route.fulfill({ contentType: "text/html", body: "<!doctype html>" }),
-	);
 	await page.goto("/?room=preview");
 	await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
 	await expect(page.locator(".titlebar-text")).toHaveText("Comic Chat Web");

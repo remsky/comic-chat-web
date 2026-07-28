@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import type { AvatarData } from "../src/engine/avatar.js";
 import { AvatarRegistry } from "../src/engine/avatar.js";
-import { avatarArtCache, type AvatarArt } from "../src/studio/art.js";
+import { avatarArtCache } from "../src/studio/art.js";
 import { bodyForActor } from "../src/studio/compose.js";
 import { emotionAngles } from "../src/studio/script.js";
 import { suggester } from "../src/studio/suggest.js";
@@ -17,13 +17,24 @@ const suggest = suggester(avatars, artFor);
 const registry = new AvatarRegistry(avatars);
 
 function findAvatar(name: string) {
-	return registry.avatars.find((entry) => entry.data.name === name)!;
+	const avatar = registry.avatars.find((entry) => entry.data.name === name);
+	if (!avatar) throw new Error(`no avatar named ${name} in the fixtures`);
+	return avatar;
 }
 
-function bodyIndices(name: string, text?: string, emotion?: string, gesture?: string) {
+function bodyIndices(
+	name: string,
+	text?: string,
+	emotion?: string,
+	gesture?: string,
+) {
 	const avatar = findAvatar(name);
 	const art = artFor(name);
-	const body = bodyForActor(avatar, { avatar: name, text, emotion, gesture }, art);
+	const body = bodyForActor(
+		avatar,
+		{ avatar: name, text, emotion, gesture },
+		art,
+	);
 	return body.kind === "simple"
 		? { body: body.bodyIndex }
 		: { face: body.faceIndex, torso: body.torsoIndex };
@@ -58,7 +69,9 @@ describe("compose reads the text when emotion is absent", () => {
 
 describe("facings", () => {
 	it("leaves a lone character facing right", () => {
-		expect(suggest.facings({ actors: [{ avatar: "anna" }] })).toEqual(["right"]);
+		expect(suggest.facings({ actors: [{ avatar: "anna" }] })).toEqual([
+			"right",
+		]);
 	});
 
 	it("turns a pair towards each other", () => {

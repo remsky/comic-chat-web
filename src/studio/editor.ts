@@ -576,8 +576,7 @@ export class PanelEditor {
 		fillEmotions(emotion, this.options.catalog.emotions, art);
 		emotion.value = emotionValue(actor, art);
 
-		let auto =
-			actor.emotion === undefined && actor.gesture === undefined;
+		let auto = actor.emotion === undefined && actor.gesture === undefined;
 
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
@@ -683,8 +682,12 @@ export class PanelEditor {
 			}
 			this.options.onEdit();
 		};
-		autoBtn.addEventListener("click", () => { if (!auto) setMode(true); });
-		manualBtn.addEventListener("click", () => { if (auto) setMode(false); });
+		autoBtn.addEventListener("click", () => {
+			if (!auto) setMode(true);
+		});
+		manualBtn.addEventListener("click", () => {
+			if (auto) setMode(false);
+		});
 
 		const text = named(document.createElement("input"), "Balloon text");
 		text.type = "text";

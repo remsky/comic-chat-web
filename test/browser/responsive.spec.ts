@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 async function expectNoHorizontalOverflow(
 	page: import("@playwright/test").Page,
