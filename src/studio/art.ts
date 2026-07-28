@@ -63,6 +63,45 @@ export function splitArtName(name: string): { base: string; index?: number } {
 	return { base: match[1], index: Number(match[2]) };
 }
 
+function preciseName(names: readonly string[]): string | undefined {
+	return (
+		names.find((name) => splitArtName(name).index !== undefined) ?? names[0]
+	);
+}
+
+export function artNamesOf(
+	art: AvatarArt,
+	data: AvatarData,
+	body: AvatarBody,
+): { emotion?: string; gesture?: string } {
+	const faces = faceRecords(data);
+	const torsos = torsoRecords(data);
+	const { face, torso } = indicesOf(body);
+	// a character can own one drawing at two slots, and only one of them carries the name
+	const facePose = faces[face]?.poseID;
+	const torsoPose = torsos[torso]?.poseID;
+	const emotion = preciseName(
+		Object.keys(art.faces).filter((name) => {
+			const named = art.faces[name];
+			return named !== undefined && faces[named.face]?.poseID === facePose;
+		}),
+	);
+	const gesture = preciseName(
+		Object.keys(art.torsos).filter((name) => {
+			const named = art.torsos[name];
+			return named !== undefined && torsos[named]?.poseID === torsoPose;
+		}),
+	);
+	return {
+		...(emotion === undefined ? {} : { emotion }),
+		...(gesture === undefined ? {} : { gesture }),
+	};
+}
+
+export function torsoPose(data: AvatarData, index: number): number | undefined {
+	return torsoRecords(data)[index]?.poseID;
+}
+
 interface Run {
 	pose: number;
 	lo: number;

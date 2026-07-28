@@ -59,8 +59,8 @@ function displacementPenalty(records: readonly PanelBodyRecord[]): number {
 }
 
 function pairRating(
-	b1: PanelBodyRecord,
-	b2: PanelBodyRecord,
+	b1: PlacedAvatar,
+	b2: PlacedAvatar,
 	deltaPlacement: number,
 ): number {
 	let desiredDir = false;
@@ -86,6 +86,21 @@ function pairRating(
 	return rating;
 }
 
+function ratePairs(records: readonly PlacedAvatar[]): number {
+	let rating = 0;
+	for (let i = 0; i < records.length; i++) {
+		const first = records[i];
+		if (!first) continue;
+		for (let j = i + 1; j < records.length; j++) {
+			const second = records[j];
+			if (!second) continue;
+			rating +=
+				pairRating(first, second, j - i) + pairRating(second, first, i - j);
+		}
+	}
+	return rating;
+}
+
 function placementRating(
 	placed: PanelBodyRecord[],
 	candidate: PanelBodyRecord,
@@ -93,37 +108,30 @@ function placementRating(
 ): { rating: number; flip: boolean } {
 	placed.splice(index, 0, candidate);
 	const penalty = displacementPenalty(placed);
-	let ratingRight = penalty;
-	let ratingLeft = penalty;
-
 	candidate.body.flip = false;
-	for (let i = 0; i < placed.length; i++) {
-		const first = placed[i];
-		if (!first) continue;
-		for (let j = i + 1; j < placed.length; j++) {
-			const second = placed[j];
-			if (!second) continue;
-			ratingRight +=
-				pairRating(first, second, j - i) + pairRating(second, first, i - j);
-		}
-	}
-
+	const ratingRight = penalty + ratePairs(placed);
 	candidate.body.flip = true;
-	for (let i = 0; i < placed.length; i++) {
-		const first = placed[i];
-		if (!first) continue;
-		for (let j = i + 1; j < placed.length; j++) {
-			const second = placed[j];
-			if (!second) continue;
-			ratingLeft +=
-				pairRating(first, second, j - i) + pairRating(second, first, i - j);
-		}
-	}
+	const ratingLeft = penalty + ratePairs(placed);
 
 	placed.splice(index, 1);
 	if (ratingRight < ratingLeft) return { rating: ratingRight, flip: false };
 	if (ratingRight > ratingLeft) return { rating: ratingLeft, flip: true };
 	return { rating: ratingRight, flip: candidate.avatar.lastDir };
+}
+
+// the flip half of orderAvatars, for a cast whose left-to-right order is already fixed
+export function chooseFacings(placed: readonly PlacedAvatar[]): void {
+	for (let i = 0; i < placed.length; i++) {
+		const candidate = placed[i];
+		if (!candidate) continue;
+		const settled = placed.slice(0, i + 1);
+		candidate.body.flip = false;
+		const right = ratePairs(settled);
+		candidate.body.flip = true;
+		const left = ratePairs(settled);
+		if (right < left) candidate.body.flip = false;
+		else if (right === left) candidate.body.flip = candidate.avatar.lastDir;
+	}
 }
 
 function addTalkTos(

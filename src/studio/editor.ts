@@ -16,12 +16,15 @@ import {
 	ZOOM_MAX,
 	ZOOM_MIN,
 } from "./script.js";
+import { type Suggester, sameEmotion } from "./suggest.js";
 
 export interface EditorOptions {
 	container: HTMLElement;
 	// the pane that scrolls, so revealing a card never moves the page itself
 	scroller: HTMLElement;
 	catalog: StripCatalog;
+	// the pose and facing the chat rules would reach for, so untouched fields follow the text
+	suggest: Suggester;
 	// the character's face icon, drawn inside the picker's options
 	icon?: (avatarName: string) => HTMLElement | null;
 	// a value changed; the strip is already up to date
@@ -189,7 +192,11 @@ export class PanelEditor {
 	}
 
 	addPanel(): void {
-		this.strip.panels.push(emptyPanel());
+		const panel = emptyPanel();
+		// the engine opens on an establishing shot and moves in from the next panel on
+		if (this.strip.panels.some((entry) => entry.kind !== "title"))
+			panel.camera = "close";
+		this.strip.panels.push(panel);
 		this.structural(this.strip.panels.length - 1);
 	}
 
@@ -501,13 +508,33 @@ export class PanelEditor {
 		addActor.addEventListener("click", () => {
 			const first = this.options.catalog.avatars[0];
 			if (!first) return;
-			panel.actors.push({ avatar: first.name });
+			this.reface(panel, () => {
+				panel.actors.push({ avatar: first.name });
+			});
 			this.refresh(index);
 			this.options.onEdit();
 		});
 
 		body.append(settings, actors, addActor);
 		return body;
+	}
+
+	// the cast changed, so whoever has not been turned by hand faces their new neighbours
+	private reface(panel: StripPanel, mutate: () => void): void {
+		const before = this.options.suggest.facings(panel);
+		const pinned = new Map(
+			panel.actors.map((actor, index) => [
+				actor,
+				(actor.facing ?? "right") !== before[index],
+			]),
+		);
+		mutate();
+		this.options.suggest.facings(panel).forEach((facing, index) => {
+			const actor = panel.actors[index];
+			if (!actor || pinned.get(actor)) return;
+			if (facing === "right") delete actor.facing;
+			else actor.facing = facing;
+		});
 	}
 
 	private actorRow(
@@ -550,6 +577,25 @@ export class PanelEditor {
 		fillEmotions(emotion, this.options.catalog.emotions, art);
 		emotion.value = emotionValue(actor, art);
 
+		const setEmotion = (name?: string): void => {
+			if (name === undefined) delete actor.emotion;
+			else actor.emotion = name;
+			emotion.value = emotionValue(actor, art);
+			// the resting face is what an absent emotion already means, so it stays out of the JSON
+			if (emotion.value === NEUTRAL_KEY || emotion.value === `${NEUTRAL_KEY}_1`)
+				delete actor.emotion;
+			else actor.emotion = emotion.value;
+		};
+		const setGesture = (name?: string): void => {
+			if (name) actor.gesture = name;
+			else delete actor.gesture;
+			gesture.value = actor.gesture ?? "";
+			// a character without that torso has no such option, so the pick does not stick
+			if (gesture.value !== (actor.gesture ?? "")) delete actor.gesture;
+		};
+
+		let suggested = this.options.suggest.art(actor.avatar, actor.text ?? "");
+
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
 			paintFace();
@@ -570,19 +616,16 @@ export class PanelEditor {
 					actor.emotion = `${base}_${count}`;
 			}
 			emotion.value = emotionValue(actor, art);
+			suggested = this.options.suggest.art(actor.avatar, actor.text ?? "");
 			this.resummarize(panelIndex);
 			this.options.onEdit();
 		});
 		gesture.addEventListener("change", () => {
-			if (gesture.value) actor.gesture = gesture.value;
-			else delete actor.gesture;
+			setGesture(gesture.value);
 			this.options.onEdit();
 		});
 		emotion.addEventListener("change", () => {
-			// the resting face is what an absent emotion already means, so it stays out of the JSON
-			if (emotion.value === NEUTRAL_KEY || emotion.value === `${NEUTRAL_KEY}_1`)
-				delete actor.emotion;
-			else actor.emotion = emotion.value;
+			setEmotion(emotion.value);
 			this.options.onEdit();
 		});
 
@@ -622,6 +665,12 @@ export class PanelEditor {
 		text.addEventListener("input", () => {
 			if (text.value) actor.text = text.value;
 			else delete actor.text;
+			// a field still holding what the rules picked keeps following them; anything else was chosen by hand
+			const next = this.options.suggest.art(actor.avatar, text.value);
+			if (sameEmotion(actor.emotion, suggested.emotion))
+				setEmotion(next.emotion);
+			if (actor.gesture === suggested.gesture) setGesture(next.gesture);
+			suggested = next;
 			this.resummarize(panelIndex);
 			this.options.onEdit();
 		});
@@ -632,7 +681,9 @@ export class PanelEditor {
 		);
 		remove.classList.add("actor-drop");
 		remove.addEventListener("click", () => {
-			panel.actors.splice(actorIndex, 1);
+			this.reface(panel, () => {
+				panel.actors.splice(actorIndex, 1);
+			});
 			this.refresh(panelIndex);
 			this.options.onEdit();
 		});

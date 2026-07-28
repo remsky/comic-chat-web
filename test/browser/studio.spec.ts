@@ -65,6 +65,88 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	});
 });
 
+test("studio fills the pose from the line, until a pose is chosen by hand", async ({
+	page,
+}) => {
+	const script = {
+		version: 2,
+		panels: [{ actors: [{ avatar: "bolo" }] }],
+	};
+	const encoded = Buffer.from(JSON.stringify(script))
+		.toString("base64")
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/, "");
+
+	await page.route("**/api/moderate", (route) =>
+		route.fulfill({ json: { flagged: [] } }),
+	);
+	await page.goto(`/studio.html?script=${encoded}`);
+	await expect(page.locator("body")).toHaveAttribute(
+		"data-studio-ready",
+		"true",
+	);
+
+	const row = page.locator("#studio-editor .pedit").first().locator(".actor");
+	const emotion = row.locator('select[aria-label="Emotion"]');
+	const gesture = row.locator('select[aria-label="Gesture"]');
+	await expect(emotion).toHaveValue(/^neutral/);
+
+	// the rules read the line, so the face follows the text without anyone picking one
+	await row.locator(".actor-text").fill("LOOK OUT!!!");
+	await expect(emotion).not.toHaveValue(/^neutral/);
+
+	// a greeting reaches for a torso the face does not already bring
+	await row.locator(".actor-text").fill("hello there");
+	await expect(gesture).toHaveValue("wave");
+
+	// choosing a face by hand takes it out of the engine's hands, and the line stops moving it
+	await emotion.selectOption("happy_2");
+	await row.locator(".actor-text").fill("LOOK OUT!!!");
+	await expect(emotion).toHaveValue("happy_2");
+});
+
+test("studio turns a new character to face the one already there", async ({
+	page,
+}) => {
+	const script = {
+		version: 2,
+		panels: [{ actors: [{ avatar: "bolo", text: "over here" }] }],
+	};
+	const encoded = Buffer.from(JSON.stringify(script))
+		.toString("base64")
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/, "");
+
+	await page.route("**/api/moderate", (route) =>
+		route.fulfill({ json: { flagged: [] } }),
+	);
+	await page.goto(`/studio.html?script=${encoded}`);
+	await expect(page.locator("body")).toHaveAttribute(
+		"data-studio-ready",
+		"true",
+	);
+
+	const card = page.locator("#studio-editor .pedit").first();
+	await expect(card.locator(".actor")).toHaveCount(1);
+	await expect(card.locator(".actor-facing").first()).toHaveAttribute(
+		"aria-label",
+		"Facing right",
+	);
+
+	await card.getByRole("button", { name: "+ Character" }).click();
+	await expect(card.locator(".actor")).toHaveCount(2);
+	await expect(card.locator(".actor-facing").nth(0)).toHaveAttribute(
+		"aria-label",
+		"Facing right",
+	);
+	await expect(card.locator(".actor-facing").nth(1)).toHaveAttribute(
+		"aria-label",
+		"Facing left",
+	);
+});
+
 test("studio adds a title panel that draws the STARRING card", async ({
 	page,
 }) => {

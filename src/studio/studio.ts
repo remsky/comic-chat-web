@@ -30,6 +30,7 @@ import {
 	type StripSize,
 	stripToJson,
 } from "./script.js";
+import { suggester } from "./suggest.js";
 import { wireSplit, wireZoom } from "./viewport.js";
 
 const RENDER_DELAY_MS = 120;
@@ -135,6 +136,7 @@ async function main(): Promise<void> {
 		container: element("studio-editor"),
 		scroller: element("studio-inspector"),
 		catalog,
+		suggest: suggester(manifest.avatars, artFor),
 		icon: (name) => {
 			const data = manifest.avatars.find((entry) => entry.name === name);
 			if (!data) return null;

@@ -46,7 +46,7 @@ export interface ComposeOptions {
 	artFor?: (name: string) => AvatarArt;
 }
 
-function bodyForActor(
+export function bodyForActor(
 	avatar: Avatar,
 	actor: StripActor,
 	art: AvatarArt,
