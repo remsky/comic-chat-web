@@ -584,6 +584,8 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			seatId = parsed.id;
 			seatAvatar = parsed.avatar;
 			view.setLocalAvatarID(parsed.avatar);
+			// ahead of the replay so a composition failure cannot cost us the wheel
+			if (!bodycam) mountBodycam();
 			announceFrom = undefined;
 			profileNameInput.value = currentName;
 			deps.syncProfileAvatar(parsed.avatar);
@@ -621,7 +623,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				if (!arrived && !composerInput.value) composerInput.value = pending.raw;
 				lastComposerSend = null;
 			}
-			if (!bodycam) mountBodycam();
 			hasWelcomed = true;
 			refreshTranscript();
 			composerInput.focus();

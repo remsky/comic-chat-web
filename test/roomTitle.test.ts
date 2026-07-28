@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { beforeAll, describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { AvatarAtlasCache } from "../src/browser/avatarAssets.js";
 import { BackdropCache } from "../src/browser/backdropAssets.js";
 import { RoomView } from "../src/browser/roomView.js";
@@ -140,5 +140,20 @@ describe("room title screen", () => {
 		expect(
 			container.querySelector("canvas")?.getAttribute("aria-label"),
 		).toMatch(/Title: /);
+	});
+});
+
+describe("uncomposable entries", () => {
+	it("skips the bad entry and replays the rest of the history", () => {
+		const errors = vi.spyOn(console, "error").mockImplementation(() => {});
+		const { view, container } = mount();
+		const broken = {
+			...chat(1, "u-other", "other"),
+			annotation: undefined,
+		} as unknown as ChatEntry;
+		view.reset([broken, chat(2, "u-me", "me")]);
+		expect(container.querySelectorAll("figure.panel")).toHaveLength(1);
+		expect(errors).toHaveBeenCalled();
+		errors.mockRestore();
 	});
 });

@@ -208,9 +208,18 @@ export class RoomView {
 		);
 	}
 
+	// one entry the engine cannot compose must not cost the room its strip, wheel, and transcript
+	private feedGuarded(entry: RoomEntry): void {
+		try {
+			this.feed(entry);
+		} catch (error) {
+			console.error("comic: skipped an entry that failed to compose", error);
+		}
+	}
+
 	compose(entry: RoomEntry): void {
 		this.entries.push(entry);
-		this.feed(entry);
+		this.feedGuarded(entry);
 		this.reconcile();
 		this.onComposed?.();
 	}
@@ -220,7 +229,7 @@ export class RoomView {
 		this.entries.length = 0;
 		this.entries.push(...entries);
 		this.composition = this.createComposition();
-		for (const entry of this.entries) this.feed(entry);
+		for (const entry of this.entries) this.feedGuarded(entry);
 		this.refreshTitle();
 		this.reconcile();
 		this.onRebuilt?.();
@@ -232,7 +241,7 @@ export class RoomView {
 		if (additions.length === 0) return;
 		this.entries.unshift(...additions);
 		this.composition = this.createComposition();
-		for (const entry of this.entries) this.feed(entry);
+		for (const entry of this.entries) this.feedGuarded(entry);
 		this.refreshTitle();
 		this.reconcile();
 		this.onRebuilt?.();
