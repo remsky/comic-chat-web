@@ -3,9 +3,15 @@
 import { type AvatarData, AvatarRegistry } from "../engine/avatar.js";
 import { EmotionEngine } from "../engine/emotion.js";
 import { chooseFacings, type PlacedAvatar } from "../engine/panel.js";
-import { type AvatarArt, artNamesOf, NEUTRAL_KEY, torsoPose } from "./art.js";
+import {
+	type AvatarArt,
+	artNamesOf,
+	NEUTRAL_KEY,
+	splitArtName,
+	torsoPose,
+} from "./art.js";
 import { bodyForActor } from "./compose.js";
-import type { StripFacing, StripPanel } from "./script.js";
+import type { StripCamera, StripFacing, StripPanel } from "./script.js";
 
 export interface ArtSuggestion {
 	emotion?: string;
@@ -15,6 +21,7 @@ export interface ArtSuggestion {
 export interface Suggester {
 	art: (avatarName: string, text: string) => ArtSuggestion;
 	facings: (panel: StripPanel) => StripFacing[];
+	camera: (scenePanelsBefore: number) => StripCamera;
 }
 
 export function suggester(
@@ -45,6 +52,10 @@ export function suggester(
 				: names;
 		},
 
+		camera(scenePanelsBefore) {
+			return scenePanelsBefore < 1 ? "wide" : "close";
+		},
+
 		facings(panel) {
 			const placed: PlacedAvatar[] = [];
 			for (const actor of panel.actors) {
@@ -61,9 +72,12 @@ export function suggester(
 	};
 }
 
-// an absent emotion and the first neutral both name the resting face
+// "shout" and "shout_1" name the same face; undefined and "neutral" do too
 export function sameEmotion(a?: string, b?: string): boolean {
-	const key = (name?: string) =>
-		name === undefined || name === `${NEUTRAL_KEY}_1` ? NEUTRAL_KEY : name;
+	const key = (name?: string) => {
+		if (name === undefined) return NEUTRAL_KEY;
+		const { base, index } = splitArtName(name);
+		return index === 1 ? base : name;
+	};
 	return key(a) === key(b);
 }

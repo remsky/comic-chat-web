@@ -624,6 +624,22 @@ select.actor-who::picker(select) {
 	font-weight: 700;
 }
 
+.actor-details {
+	display: contents;
+}
+
+.actor-details[hidden] {
+	display: none;
+}
+
+.actor-auto[aria-pressed="true"] {
+	opacity: 1;
+}
+
+.actor-auto[aria-pressed="false"] {
+	opacity: 0.45;
+}
+
 .actor-drop {
 	grid-area: 1 / 2 / 3 / 3;
 	align-self: center;

@@ -32,6 +32,8 @@ export interface EditorOptions {
 	onSelect: (index: number) => void;
 }
 
+const SUGGEST_DELAY_MS = 150;
+
 // rich options render only where the browser takes the base-select opt-in
 const RICH_SELECT =
 	typeof CSS !== "undefined" && CSS.supports("appearance", "base-select");
@@ -193,9 +195,8 @@ export class PanelEditor {
 
 	addPanel(): void {
 		const panel = emptyPanel();
-		// the engine opens on an establishing shot and moves in from the next panel on
-		if (this.strip.panels.some((entry) => entry.kind !== "title"))
-			panel.camera = "close";
+		const scenes = this.strip.panels.filter((p) => p.kind !== "title").length;
+		panel.camera = this.options.suggest.camera(scenes);
 		this.strip.panels.push(panel);
 		this.structural(this.strip.panels.length - 1);
 	}
@@ -595,6 +596,9 @@ export class PanelEditor {
 		};
 
 		let suggested = this.options.suggest.art(actor.avatar, actor.text ?? "");
+		let auto =
+			sameEmotion(actor.emotion, suggested.emotion) &&
+			actor.gesture === suggested.gesture;
 
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
@@ -621,10 +625,14 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 		gesture.addEventListener("change", () => {
+			auto = false;
+			autoToggle.setAttribute("aria-pressed", "false");
 			setGesture(gesture.value);
 			this.options.onEdit();
 		});
 		emotion.addEventListener("change", () => {
+			auto = false;
+			autoToggle.setAttribute("aria-pressed", "false");
 			setEmotion(emotion.value);
 			this.options.onEdit();
 		});
@@ -657,22 +665,45 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 
+		const details = document.createElement("span");
+		details.className = "actor-details";
+		details.append(emotion, gesture, facing, mode);
+		if (auto) details.hidden = true;
+
+		const autoToggle = toggleButton("⚡", "Auto pose", auto);
+		autoToggle.classList.add("actor-auto");
+		autoToggle.addEventListener("click", () => {
+			auto = !auto;
+			autoToggle.setAttribute("aria-pressed", String(auto));
+			details.hidden = auto;
+			if (auto) {
+				setEmotion(suggested.emotion);
+				setGesture(suggested.gesture);
+				this.options.onEdit();
+			}
+		});
+
 		const text = named(document.createElement("input"), "Balloon text");
 		text.type = "text";
 		text.className = "actor-text";
 		text.placeholder = "Say something, or leave blank for a silent pose";
 		text.value = actor.text ?? "";
+		let suggestTimer = 0;
 		text.addEventListener("input", () => {
 			if (text.value) actor.text = text.value;
 			else delete actor.text;
-			// a field still holding what the rules picked keeps following them; anything else was chosen by hand
-			const next = this.options.suggest.art(actor.avatar, text.value);
-			if (sameEmotion(actor.emotion, suggested.emotion))
-				setEmotion(next.emotion);
-			if (actor.gesture === suggested.gesture) setGesture(next.gesture);
-			suggested = next;
 			this.resummarize(panelIndex);
 			this.options.onEdit();
+			clearTimeout(suggestTimer);
+			if (!auto) return;
+			suggestTimer = window.setTimeout(() => {
+				const next = this.options.suggest.art(actor.avatar, text.value);
+				if (sameEmotion(actor.emotion, suggested.emotion))
+					setEmotion(next.emotion);
+				if (actor.gesture === suggested.gesture) setGesture(next.gesture);
+				suggested = next;
+				this.options.onEdit();
+			}, SUGGEST_DELAY_MS);
 		});
 
 		const remove = iconButton(
@@ -692,7 +723,7 @@ export class PanelEditor {
 		const meta = document.createElement("div");
 		meta.className = "actor-meta";
 		if (face) meta.append(face);
-		meta.append(avatar, emotion, gesture, facing, mode);
+		meta.append(avatar, autoToggle, details);
 		row.append(meta, text, remove);
 		return row;
 	}

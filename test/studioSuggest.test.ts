@@ -71,6 +71,11 @@ describe("sameEmotion", () => {
 		expect(sameEmotion("neutral_1", "neutral")).toBe(true);
 	});
 
+	it("treats a bare name and its _1 variant as the same face", () => {
+		expect(sameEmotion("shout", "shout_1")).toBe(true);
+		expect(sameEmotion("happy_1", "happy")).toBe(true);
+	});
+
 	it("tells a chosen face apart from the resting one", () => {
 		expect(sameEmotion(undefined, "happy_2")).toBe(false);
 		expect(sameEmotion("angry_2", "happy_2")).toBe(false);
