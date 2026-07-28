@@ -14,7 +14,9 @@ import {
 	type FormatInfo,
 	FT_LEFT_JUSTIFY,
 	findFurthestLineBreak,
+	getNextStart,
 	labelBreakIntoLines,
+	MAXLINES,
 	shiftLines,
 	type TextMeasure,
 	widestWord,
@@ -248,6 +250,90 @@ function runtimeOf(balloon: PanelBalloon): BalloonRuntime {
 	return balloon.runtime;
 }
 
+function shortRect(rect: Rect): Rect {
+	return {
+		left: toShort(rect.left),
+		bottom: toShort(rect.bottom),
+		right: toShort(rect.right),
+		top: toShort(rect.top),
+	};
+}
+
+// text needing more than MAXLINES lines never formats at any width, so cut a head that does
+function splitOverflow(
+	runtime: BalloonRuntime,
+	text: string,
+	freeRect: Rect,
+	rand: MsvcRand,
+): { text: string; rest: string } | undefined {
+	const width =
+		freeRect.right - freeRect.left - 2 * XBORDER - CONTINUATION_WIDTH;
+	let end = 0;
+	for (let line = 0; line < MAXLINES; line++) {
+		const found = findFurthestLineBreak(
+			runtime.style.widestMeasure ?? runtime.style.measure,
+			width,
+			text,
+			getNextStart(text, end),
+		);
+		if (found.end <= end) break;
+		end = found.end;
+		if (end >= text.length) break;
+	}
+	while (end > 0) {
+		const head = `${text.slice(0, end)}...`;
+		if (
+			runtime.setBBox(
+				head,
+				freeRect.left,
+				freeRect.bottom,
+				freeRect.right,
+				freeRect.top,
+				rand,
+			)
+		)
+			return { text: head, rest: text.slice(end) };
+		end = Math.trunc(end / 2);
+	}
+	return undefined;
+}
+
+// the widest placement a panel allows, splitting whatever overruns its height into the next panel
+function fillFreeRect(
+	balloon: PanelBalloon,
+	runtime: BalloonRuntime,
+	freeRect: Rect,
+	rand: MsvcRand,
+): BalloonLayoutResult {
+	let overflow: string | undefined;
+	if (
+		!runtime.setBBox(
+			balloon.text,
+			freeRect.left,
+			freeRect.bottom,
+			freeRect.right,
+			freeRect.top,
+			rand,
+		)
+	) {
+		const split = splitOverflow(runtime, balloon.text, freeRect, rand);
+		if (!split) return { fits: true };
+		balloon.text = split.text;
+		overflow = split.rest;
+	}
+	const split = runtime.splitHeight(
+		balloon.text,
+		freeRect.top - freeRect.bottom,
+		rand,
+	);
+	if (runtime.bbox.top > -250) runtime.dockAtTop(freeRect.top);
+	if (split) balloon.text = split.text;
+	if (!overflow) return { fits: true, leftover: split?.rest };
+	// both splits mark a continuation; the joined tail keeps only the leading one
+	const middle = split ? split.rest.slice(0, -3) : "...";
+	return { fits: true, leftover: `${middle}${overflow}` };
+}
+
 export function layoutPanelBalloons(
 	panel: UnitPanel,
 	rand: MsvcRand,
@@ -354,36 +440,18 @@ export function layoutPanelBalloons(
 				rect.top,
 				rand,
 			)
-		)
-			return { fits: false };
+		) {
+			// retrying this text on a fresh panel would fail the same way, so split it here
+			if (index > 0) return { fits: false };
+			const result = fillFreeRect(balloon, runtime, freeRect, rand);
+			runtime.routeRgn = shortRect(runtime.cloudBBox());
+			return result;
+		}
 		if (runtime.bbox.top > -250) runtime.dockAtTop(freeRect.top);
-		runtime.routeRgn = Object.fromEntries(
-			Object.entries(runtime.cloudBBox()).map(([key, value]) => [
-				key,
-				toShort(value),
-			]),
-		) as unknown as Rect;
+		runtime.routeRgn = shortRect(runtime.cloudBBox());
 		if (runtime.routeRgn.bottom < freeRect.bottom + MINHOOKHEIGHT) {
 			if (index > 0) return { fits: false };
-			if (
-				!runtime.setBBox(
-					balloon.text,
-					freeRect.left,
-					freeRect.bottom,
-					freeRect.right,
-					freeRect.top,
-					rand,
-				)
-			)
-				return { fits: true };
-			const split = runtime.splitHeight(
-				balloon.text,
-				freeRect.top - freeRect.bottom,
-				rand,
-			);
-			if (runtime.bbox.top > -250) runtime.dockAtTop(freeRect.top);
-			if (split) balloon.text = split.text;
-			return { fits: true, leftover: split?.rest };
+			return fillFreeRect(balloon, runtime, freeRect, rand);
 		}
 		for (let i = 0; i < index; i++) {
 			const prior = panel.balloons[i];
