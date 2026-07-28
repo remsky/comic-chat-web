@@ -115,7 +115,7 @@
 .titlebar-button {
 	display: flex;
 	align-items: center;
-	padding: 3px 5px;
+	padding: 2px 8px;
 	border: 1px solid;
 	border-color: #dfdfdf #000 #000 #dfdfdf;
 	box-shadow:
@@ -125,6 +125,7 @@
 	color: #000;
 	font: inherit;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .titlebar-icon {

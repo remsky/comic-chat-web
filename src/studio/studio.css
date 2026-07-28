@@ -116,17 +116,6 @@ textarea {
 	white-space: nowrap;
 }
 
-.titlebar-beta {
-	padding: 0 0.4em;
-	border: 1px solid;
-	border-radius: 999px;
-	font-size: 0.625rem;
-	font-weight: 700;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-	opacity: 0.8;
-}
-
 .titlebar-status {
 	font-size: 0.75rem;
 	opacity: 0.85;
