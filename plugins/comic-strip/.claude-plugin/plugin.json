@@ -1,8 +1,11 @@
 {
 	"name": "comic-strip",
 	"description": "Write a comic strip in the Comic Chat studio format and return a link that opens it, rendered, in the editor.",
-	"version": "0.5.0",
-	"author": { "name": "remsky", "url": "https://github.com/remsky" },
+	"version": "0.9.0",
+	"author": {
+		"name": "remsky",
+		"url": "https://github.com/remsky"
+	},
 	"homepage": "https://comics.remsky.art/studio.html",
 	"license": "AGPL-3.0-only",
 	"keywords": ["comic", "cartoon", "comic-chat", "illustration"]

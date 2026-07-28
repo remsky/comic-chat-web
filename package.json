@@ -31,6 +31,7 @@
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"assets:backgrounds": "node tools/avb/generate-bg-assets.ts",
 		"format": "biome format --write .",
+		"version": "bash scripts/sync-plugin-versions.sh",
 		"release": "npm version patch -m \"chore: v%s\" && git push --follow-tags",
 		"release:minor": "npm version minor -m \"chore: v%s\" && git push --follow-tags",
 		"release:major": "npm version major -m \"chore: v%s\" && git push --follow-tags"
