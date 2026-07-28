@@ -127,6 +127,11 @@
 	text-decoration: none;
 }
 
+.titlebar-icon {
+	width: auto;
+	height: 18px;
+}
+
 .titlebar-button:active {
 	border-color: #000 #dfdfdf #dfdfdf #000;
 	box-shadow:
