@@ -157,6 +157,30 @@ describe("panel page lifecycle", () => {
 		expect(page.panels.at(-1)?.bodies[0]?.requested).toBe(true);
 	});
 
+	it("commits instead of retrying a line a fresh panel cannot fit", () => {
+		const registry = new AvatarRegistry(fixture.avatars);
+		requestedBody(registry, 1);
+		let layouts = 0;
+		const page = new PanelPage({
+			registry,
+			rand: new MsvcRand(1515),
+			unitWidth: 2300,
+			unitHeight: 5400,
+			hooks: {
+				layoutBalloons: () => {
+					layouts++;
+					return { fits: false };
+				},
+			},
+		});
+		page.addLine(1, "one", 1);
+		requestedBody(registry, 2);
+		page.addLine(2, "two", 1);
+		// the clone retries once onto a fresh panel; that failure ends the line
+		expect(layouts).toBe(3);
+		expect(page.panels).toHaveLength(3);
+	});
+
 	it("draws the Ohio semantics randfloat and flags the backdrop", () => {
 		const registry = new AvatarRegistry(fixture.avatars);
 		requestedBody(registry, 1);

@@ -401,7 +401,8 @@ export class PanelPage {
 		replaceBody(panel, avatar);
 		this.layoutAvatars(panel, establishing);
 		const result = this.hooks.layoutBalloons(panel, this.rand);
-		if (!result.fits) {
+		// a retry only helps a clone; this panel is already fresh, so take it as laid out
+		if (!result.fits && replaceLast) {
 			this.hooks.onRetry?.();
 			this.startNewPanel();
 			this.addLine(speakerID, words, mode);
@@ -439,7 +440,7 @@ export class PanelPage {
 		if (!replaceBody(panel, avatar)) fetchSpeaker(panel, avatar);
 		this.layoutAvatars(panel, establishing);
 		const result = this.hooks.layoutBalloons(panel, this.rand);
-		if (!result.fits) {
+		if (!result.fits && replaceLast) {
 			this.hooks.onRetry?.();
 			this.startNewPanel();
 			this.addReaction(speakerID);

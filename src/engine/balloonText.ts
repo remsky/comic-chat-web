@@ -106,7 +106,7 @@ export function breakIntoLines(
 	measure: TextMeasure,
 	maxWidth: number,
 	str: string,
-): Line[] | null {
+): Line[] {
 	const lines: Line[] = [];
 	let base = 0;
 	let lineEnd = 0;
@@ -134,7 +134,8 @@ export function breakIntoLines(
 		base = getNextStart(str, base + lastLength);
 		lineEnd = base;
 		if (base >= str.length) return lines;
-		if (lines.length > MAXLINES) return null;
+		// v2.1b clamps here where v1 failed, so overlong text keeps its head and splits onward
+		if (lines.length > MAXLINES) return lines;
 		thisLength = 0;
 	}
 }
@@ -153,8 +154,8 @@ export function labelBreakIntoLines(label: LabelFormatInput): FormatInfo {
 	const desiredWidth = bbox.right - bbox.left;
 	const lines = breakIntoLines(measure, desiredWidth, str);
 	const fInfo: FormatInfo = {
-		nLines: lines ? lines.length : 0,
-		lines: lines ?? [],
+		nLines: lines.length,
+		lines,
 		maxWidth: 0,
 		fbox: { left: 0, bottom: 0, right: 0, top: 0 },
 		leftX: [],
