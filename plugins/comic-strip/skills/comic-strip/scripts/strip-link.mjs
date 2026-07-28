@@ -276,7 +276,14 @@ function checkShape(panels) {
 		for (const actor of actorsOf(entry)) {
 			if (typeof actor.avatar !== "string") continue;
 			const held = faces.get(actor.avatar) ?? [];
-			held.push({ index, face: String(actor.emotion ?? "neutral") });
+			// when emotion is absent and text exists, the engine reads the line; treat each as unique
+			const face =
+				actor.emotion !== undefined
+					? String(actor.emotion)
+					: actor.text
+						? `<auto:${index}>`
+						: "neutral";
+			held.push({ index, face });
 			faces.set(actor.avatar, held);
 		}
 	});

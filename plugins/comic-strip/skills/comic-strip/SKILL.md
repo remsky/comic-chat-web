@@ -39,8 +39,8 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
     {
       "background": "field",
       "actors": [
-        { "avatar": "dan", "text": "The build is green", "emotion": "happy" },
-        { "avatar": "anna", "text": "On the first try?", "emotion": "scared", "facing": "left" }
+        { "avatar": "dan", "text": "The build is green" },
+        { "avatar": "anna", "text": "On the first try?!", "emotion": "scared", "facing": "left" }
       ]
     }
   ]
@@ -62,7 +62,7 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
 | actor | `avatar` | required, lowercase |
 | | `text` | the balloon; omit for a silent character |
 | | `mode` | `say` (default), `think`, `whisper`, `action` |
-| | `emotion` | the face |
+| | `emotion` | the face; name one for control, or omit on a speaking actor and the engine picks from the dialogue |
 | | `gesture` | the body; omit and the face brings its own |
 | | `facing` | `right` (default) or `left` |
 

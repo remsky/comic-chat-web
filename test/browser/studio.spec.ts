@@ -65,7 +65,7 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	});
 });
 
-test("studio fills the pose from the line, until a pose is chosen by hand", async ({
+test("auto pose hides controls and toggling to manual reveals them", async ({
 	page,
 }) => {
 	const script = {
@@ -88,22 +88,27 @@ test("studio fills the pose from the line, until a pose is chosen by hand", asyn
 	);
 
 	const row = page.locator("#studio-editor .pedit").first().locator(".actor");
-	const emotion = row.locator('select[aria-label="Emotion"]');
-	const gesture = row.locator('select[aria-label="Gesture"]');
-	await expect(emotion).toHaveValue(/^neutral/);
+	const modeGroup = row.locator(".actor-auto");
+	const autoBtn = modeGroup.locator("button").first();
+	const manualBtn = modeGroup.locator("button").last();
+	const details = row.locator(".actor-details");
 
-	// the rules read the line, so the face follows the text without anyone picking one
-	await row.locator(".actor-text").fill("LOOK OUT!!!");
-	await expect(emotion).not.toHaveValue(/^neutral/);
+	// auto is on by default when no emotion/gesture is set
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(details).toBeHidden();
 
-	// a greeting reaches for a torso the face does not already bring
-	await row.locator(".actor-text").fill("hello there");
-	await expect(gesture).toHaveValue("wave");
+	// clicking manual reveals the controls
+	await manualBtn.click();
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(details).toBeVisible();
 
-	// choosing a face by hand takes it out of the engine's hands, and the line stops moving it
-	await emotion.selectOption("happy_2");
-	await row.locator(".actor-text").fill("LOOK OUT!!!");
-	await expect(emotion).toHaveValue("happy_2");
+	// clicking auto hides them again
+	await autoBtn.click();
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(details).toBeHidden();
 });
 
 test("studio turns a new character to face the one already there", async ({

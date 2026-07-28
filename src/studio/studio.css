@@ -497,10 +497,10 @@ textarea {
 	list-style: none;
 }
 
-/* who and how across the top, what they say beneath, remove pinned to the right of both */
+/* toggle left, name row + text row centre, remove pinned right */
 .actor {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-columns: auto minmax(0, 1fr) auto;
 	gap: 0.25rem;
 	padding: 0.3rem;
 	border: 1px solid;
@@ -518,14 +518,14 @@ textarea {
 
 .actor-meta {
 	display: flex;
-	grid-area: 1 / 1;
+	grid-area: 1 / 2;
 	flex-wrap: wrap;
 	gap: 0.25rem;
 	align-items: center;
 }
 
 .actor-text {
-	grid-area: 2 / 1;
+	grid-area: 2 / 2;
 }
 
 .pedit-title {
@@ -566,10 +566,6 @@ select.actor-who::picker(select) {
 		font: inherit;
 	}
 
-	select.actor-who button::after {
-		content: "\25BE";
-		margin-left: auto;
-	}
 
 	/* biome-ignore lint/correctness/noUnknownTypeSelector: selectedcontent is the base-select mirror element */
 	select.actor-who selectedcontent {
@@ -632,16 +628,34 @@ select.actor-who::picker(select) {
 	display: none;
 }
 
-.actor-auto[aria-pressed="true"] {
-	opacity: 1;
+.actor-auto {
+	grid-area: 1 / 1 / 3 / 2;
+	flex-direction: column;
+	align-self: stretch;
+	justify-content: center;
 }
 
-.actor-auto[aria-pressed="false"] {
-	opacity: 0.45;
+.actor-auto .seg-option.sicon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3px 6px;
+	flex: 1;
+	min-width: 0;
 }
+
+.actor-auto .seg-option + .seg-option {
+	margin-left: 0;
+	margin-top: -1px;
+}
+
+.actor-auto .seg-option svg {
+	display: block;
+}
+
 
 .actor-drop {
-	grid-area: 1 / 2 / 3 / 3;
+	grid-area: 1 / 3 / 3 / 4;
 	align-self: center;
 }
 

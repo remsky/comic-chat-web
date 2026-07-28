@@ -32,8 +32,9 @@ Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, 
 
 - Two speakers carry a strip. A third body is for reactions.
 - Keep the cast constant. A character who appears for one panel and is never seen again reads as a mistake, especially a creature standing wordlessly beside two people who have been talking for three panels.
-- Vary the faces. A strip where everyone wears bare `happy` reads like a form letter, and the validator warns when one character holds the same face for three panels running.
-- Vary the bodies too. Leaving `gesture` off is safe but many emotions share a plain standing torso, so a whole strip without one comes out as the same two figures standing identically in every panel. Name a gesture on the beat panels: the pitch, the objection, the payoff.
+- Naming `emotion` gives you exact control: pick the face, pin a variant, hold an expression across panels. Directing every face is how you get subtext, irony, and beats that work against the dialogue.
+- Omitting `emotion` on a speaking actor lets the engine read the line and pick a face: caps and exclamation marks land shout or scared, greetings trigger a wave, calm text stays neutral. Useful for quick drafts or panels where the face should just follow the tone of the line. The engine picks face and torso together, so auto panels do get some pose variety.
+- Vary the bodies too. The engine's auto-picked torso mostly stands, so a strip with no `gesture` anywhere can still look frozen body-down even if the faces change. Name a gesture on the beat panels: the pitch, the objection, the payoff.
 - Cast against type when the brief wants a joke. The caveman explaining a deploy pipeline is the whole gag. When the brief wants a straight arc, a pitch that has to land or a recap someone will present, cast plainly and let the writing carry it.
 - Most briefs are both: a straight arc that ends on a laugh. Cast it plainly and put the joke in the last balloon. Gag casting commits the whole strip to comedy from panel 1, which is usually not what a recap or a slide wants.
 
@@ -94,7 +95,7 @@ Read the strip back as a reader, not as the writer. The failures worth catching:
 - A character that changed sides between panels.
 - A backdrop that moved for a mood instead of a scene, or a strip with no backdrop at all.
 - Four `close` panels in a row.
-- The same face on the same character three panels running.
-- Every figure standing in the same pose the whole way down, because no panel named a gesture.
+- The same explicit face on the same character three panels running (auto-derived faces vary on their own).
+- Every figure standing in the same pose the whole way down, because no panel named a gesture and the engine's auto torso is plain standing.
 - A walk-on who appears once.
 - A balloon so long the art vanished under it.

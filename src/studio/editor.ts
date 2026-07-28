@@ -16,7 +16,7 @@ import {
 	ZOOM_MAX,
 	ZOOM_MIN,
 } from "./script.js";
-import { type Suggester, sameEmotion } from "./suggest.js";
+import type { Suggester } from "./suggest.js";
 
 export interface EditorOptions {
 	container: HTMLElement;
@@ -31,8 +31,6 @@ export interface EditorOptions {
 	onEdit: () => void;
 	onSelect: (index: number) => void;
 }
-
-const SUGGEST_DELAY_MS = 150;
 
 // rich options render only where the browser takes the base-select opt-in
 const RICH_SELECT =
@@ -578,38 +576,17 @@ export class PanelEditor {
 		fillEmotions(emotion, this.options.catalog.emotions, art);
 		emotion.value = emotionValue(actor, art);
 
-		const setEmotion = (name?: string): void => {
-			if (name === undefined) delete actor.emotion;
-			else actor.emotion = name;
-			emotion.value = emotionValue(actor, art);
-			// the resting face is what an absent emotion already means, so it stays out of the JSON
-			if (emotion.value === NEUTRAL_KEY || emotion.value === `${NEUTRAL_KEY}_1`)
-				delete actor.emotion;
-			else actor.emotion = emotion.value;
-		};
-		const setGesture = (name?: string): void => {
-			if (name) actor.gesture = name;
-			else delete actor.gesture;
-			gesture.value = actor.gesture ?? "";
-			// a character without that torso has no such option, so the pick does not stick
-			if (gesture.value !== (actor.gesture ?? "")) delete actor.gesture;
-		};
-
-		let suggested = this.options.suggest.art(actor.avatar, actor.text ?? "");
 		let auto =
-			sameEmotion(actor.emotion, suggested.emotion) &&
-			actor.gesture === suggested.gesture;
+			actor.emotion === undefined && actor.gesture === undefined;
 
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
 			paintFace();
-			// the new character may not have art for the old gesture, so re-offer only what it can strike
 			const available = this.gesturesFor(actor.avatar);
 			if (actor.gesture && !available.includes(actor.gesture))
 				delete actor.gesture;
 			fillOptions(gesture, ["", ...available], "No gesture", artLabel);
 			gesture.value = actor.gesture ?? "";
-			// likewise the faces: another character draws a different number of them, or none
 			art = this.artFor(actor.avatar);
 			fillEmotions(emotion, this.options.catalog.emotions, art);
 			if (actor.emotion !== undefined) {
@@ -620,20 +597,16 @@ export class PanelEditor {
 					actor.emotion = `${base}_${count}`;
 			}
 			emotion.value = emotionValue(actor, art);
-			suggested = this.options.suggest.art(actor.avatar, actor.text ?? "");
 			this.resummarize(panelIndex);
 			this.options.onEdit();
 		});
 		gesture.addEventListener("change", () => {
-			auto = false;
-			autoToggle.setAttribute("aria-pressed", "false");
-			setGesture(gesture.value);
+			if (gesture.value) actor.gesture = gesture.value;
+			else delete actor.gesture;
 			this.options.onEdit();
 		});
 		emotion.addEventListener("change", () => {
-			auto = false;
-			autoToggle.setAttribute("aria-pressed", "false");
-			setEmotion(emotion.value);
+			actor.emotion = emotion.value;
 			this.options.onEdit();
 		});
 
@@ -670,40 +643,59 @@ export class PanelEditor {
 		details.append(emotion, gesture, facing, mode);
 		if (auto) details.hidden = true;
 
-		const autoToggle = toggleButton("⚡", "Auto pose", auto);
-		autoToggle.classList.add("actor-auto");
-		autoToggle.addEventListener("click", () => {
-			auto = !auto;
-			autoToggle.setAttribute("aria-pressed", String(auto));
+		const autoToggle = document.createElement("span");
+		autoToggle.className = "seg actor-auto";
+		autoToggle.setAttribute("role", "group");
+		autoToggle.setAttribute("aria-label", "Pose mode");
+		const autoBtn = document.createElement("button");
+		autoBtn.type = "button";
+		autoBtn.className = "sicon seg-option";
+		autoBtn.innerHTML =
+			'<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">' +
+			'<path d="M9 0L3 9h4l-1 7 7-10H9z"/>' +
+			"</svg>";
+		autoBtn.title = "Auto pose";
+		autoBtn.setAttribute("aria-pressed", String(auto));
+		const manualBtn = document.createElement("button");
+		manualBtn.type = "button";
+		manualBtn.className = "sicon seg-option";
+		manualBtn.innerHTML =
+			'<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">' +
+			'<path d="M6 0h4v2.2a5.5 5.5 0 011.7 1L13.4 1.5 15.2 3.3 13.5 5a5.5 5.5 0 011 1.7H16v4h-2.2a5.5 5.5 0 01-1 1.7l1.7 1.7-1.8 1.8L11 13.5a5.5 5.5 0 01-1.7 1V16H6v-2.2a5.5 5.5 0 01-1.7-1L2.6 14.5.8 12.7 2.5 11a5.5 5.5 0 01-1-1.7H0V6h2.2a5.5 5.5 0 011-1.7L1.5 2.6 3.3.8 5 2.5A5.5 5.5 0 016.7 1.5V0zM8 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/>' +
+			"</svg>";
+		manualBtn.title = "Configure pose";
+		manualBtn.setAttribute("aria-pressed", String(!auto));
+		autoToggle.append(manualBtn, autoBtn);
+		const setMode = (next: boolean) => {
+			auto = next;
+			autoBtn.setAttribute("aria-pressed", String(auto));
+			manualBtn.setAttribute("aria-pressed", String(!auto));
 			details.hidden = auto;
 			if (auto) {
-				setEmotion(suggested.emotion);
-				setGesture(suggested.gesture);
-				this.options.onEdit();
+				delete actor.emotion;
+				delete actor.gesture;
+			} else {
+				const snap = this.options.suggest.snapshot(actor);
+				actor.emotion = snap.emotion;
+				actor.gesture = snap.gesture;
+				emotion.value = emotionValue(actor, art);
+				gesture.value = actor.gesture ?? "";
 			}
-		});
+			this.options.onEdit();
+		};
+		autoBtn.addEventListener("click", () => { if (!auto) setMode(true); });
+		manualBtn.addEventListener("click", () => { if (auto) setMode(false); });
 
 		const text = named(document.createElement("input"), "Balloon text");
 		text.type = "text";
 		text.className = "actor-text";
 		text.placeholder = "Say something, or leave blank for a silent pose";
 		text.value = actor.text ?? "";
-		let suggestTimer = 0;
 		text.addEventListener("input", () => {
 			if (text.value) actor.text = text.value;
 			else delete actor.text;
 			this.resummarize(panelIndex);
 			this.options.onEdit();
-			clearTimeout(suggestTimer);
-			if (!auto) return;
-			suggestTimer = window.setTimeout(() => {
-				const next = this.options.suggest.art(actor.avatar, text.value);
-				if (sameEmotion(actor.emotion, suggested.emotion))
-					setEmotion(next.emotion);
-				if (actor.gesture === suggested.gesture) setGesture(next.gesture);
-				suggested = next;
-				this.options.onEdit();
-			}, SUGGEST_DELAY_MS);
 		});
 
 		const remove = iconButton(
@@ -723,8 +715,8 @@ export class PanelEditor {
 		const meta = document.createElement("div");
 		meta.className = "actor-meta";
 		if (face) meta.append(face);
-		meta.append(avatar, autoToggle, details);
-		row.append(meta, text, remove);
+		meta.append(avatar, details);
+		row.append(autoToggle, meta, text, remove);
 		return row;
 	}
 
