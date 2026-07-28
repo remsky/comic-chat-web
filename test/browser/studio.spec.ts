@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { stripMarkGrowth } from "../../src/browser/stripMark.js";
+import { expect, test } from "./fixtures.js";
 
 // the sheet geometry preview.ts exports at, which the assertions below rebuild
 const EXPORT_GAP = 31;
@@ -14,10 +14,6 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	});
 	page.on("pageerror", (error) => errors.push(error.message));
 
-	// vite preview serves no worker, so an unstubbed screen 502s into the error list
-	await page.route("**/api/moderate", (route) =>
-		route.fulfill({ json: { flagged: [] } }),
-	);
 	await page.goto("/studio.html");
 	await expect(page.locator("body")).toHaveAttribute(
 		"data-studio-ready",
@@ -65,12 +61,90 @@ test("studio boots a strip and rebuilds it as the constructor changes", async ({
 	});
 });
 
+test("auto pose hides controls and toggling to manual reveals them", async ({
+	page,
+}) => {
+	const script = {
+		version: 2,
+		panels: [{ actors: [{ avatar: "bolo" }] }],
+	};
+	const encoded = Buffer.from(JSON.stringify(script))
+		.toString("base64")
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/, "");
+
+	await page.goto(`/studio.html?script=${encoded}`);
+	await expect(page.locator("body")).toHaveAttribute(
+		"data-studio-ready",
+		"true",
+	);
+
+	const row = page.locator("#studio-editor .pedit").first().locator(".actor");
+	const modeGroup = row.locator(".actor-auto");
+	const autoBtn = modeGroup.getByRole("button", { name: "Auto pose" });
+	const manualBtn = modeGroup.getByRole("button", { name: "Configure pose" });
+	const details = row.locator(".actor-details");
+
+	// auto is on by default when no emotion/gesture is set
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(details).toBeHidden();
+
+	// clicking manual reveals the controls
+	await manualBtn.click();
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(details).toBeVisible();
+
+	// clicking auto hides them again
+	await autoBtn.click();
+	await expect(autoBtn).toHaveAttribute("aria-pressed", "true");
+	await expect(manualBtn).toHaveAttribute("aria-pressed", "false");
+	await expect(details).toBeHidden();
+});
+
+test("studio turns a new character to face the one already there", async ({
+	page,
+}) => {
+	const script = {
+		version: 2,
+		panels: [{ actors: [{ avatar: "bolo", text: "over here" }] }],
+	};
+	const encoded = Buffer.from(JSON.stringify(script))
+		.toString("base64")
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/, "");
+
+	await page.goto(`/studio.html?script=${encoded}`);
+	await expect(page.locator("body")).toHaveAttribute(
+		"data-studio-ready",
+		"true",
+	);
+
+	const card = page.locator("#studio-editor .pedit").first();
+	await expect(card.locator(".actor")).toHaveCount(1);
+	await expect(card.locator(".actor-facing").first()).toHaveAttribute(
+		"aria-label",
+		"Facing right",
+	);
+
+	await card.getByRole("button", { name: "+ Character" }).click();
+	await expect(card.locator(".actor")).toHaveCount(2);
+	await expect(card.locator(".actor-facing").nth(0)).toHaveAttribute(
+		"aria-label",
+		"Facing right",
+	);
+	await expect(card.locator(".actor-facing").nth(1)).toHaveAttribute(
+		"aria-label",
+		"Facing left",
+	);
+});
+
 test("studio adds a title panel that draws the STARRING card", async ({
 	page,
 }) => {
-	await page.route("**/api/moderate", (route) =>
-		route.fulfill({ json: { flagged: [] } }),
-	);
 	await page.goto("/studio.html");
 	await expect(page.locator("body")).toHaveAttribute(
 		"data-studio-ready",
@@ -293,29 +367,6 @@ test("studio refuses to export a strip the screen flagged", async ({
 	await save.click();
 	await page.locator("#studio-export-json").click();
 	expect((await download).suggestedFilename()).toBe("strip.json");
-});
-
-test("studio holds a flag on screen while the next verdict is in flight", async ({
-	page,
-}) => {
-	// the stub answers slowly, so a redraw that dropped the flag would show a gap here
-	await page.route("**/api/moderate", async (route) => {
-		await new Promise((resolve) => setTimeout(resolve, 400));
-		await route.fulfill({ json: { flagged: [0] } });
-	});
-	await page.goto("/studio.html");
-	const issues = page.locator("#studio-issues .sissue--error");
-	await expect(issues).toHaveCount(1);
-
-	const text = page
-		.locator("#studio-editor .pedit")
-		.first()
-		.locator(".actor-text")
-		.first();
-	for (const key of "abcd") {
-		await text.pressSequentially(key);
-		await expect(issues).toHaveCount(1);
-	}
 });
 
 test("studio keeps flagged text off the canvas", async ({ page }) => {

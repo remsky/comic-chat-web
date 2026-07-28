@@ -4,6 +4,7 @@ import { displayName } from "../browser/dom.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "../browser/panelUnits.js";
 import type { Avatar, AvatarBody, AvatarData } from "../engine/avatar.js";
 import { AvatarRegistry } from "../engine/avatar.js";
+import { EmotionEngine } from "../engine/emotion.js";
 import {
 	layoutAvatarGeometry,
 	type PlacedAvatar,
@@ -46,27 +47,44 @@ export interface ComposeOptions {
 	artFor?: (name: string) => AvatarArt;
 }
 
-function bodyForActor(
+const emotions = new EmotionEngine();
+
+export function bodyForActor(
+	avatar: Avatar,
+	actor: StripActor,
+	art: AvatarArt,
+): AvatarBody {
+	// when the script names an emotion, use that; otherwise let the engine read the text
+	const body =
+		actor.emotion !== undefined || !actor.text
+			? bodyFromNamedEmotion(avatar, actor, art)
+			: avatar.getBodyFromOptions(emotions.getEmotionsFromString(actor.text));
+	// a gesture only ever swaps the torso; asking for one the character lacks is silently ignored
+	if (actor.gesture !== undefined) {
+		const torso = art.torsos[actor.gesture];
+		if (torso !== undefined) {
+			if (body.kind === "simple") body.bodyIndex = torso;
+			else body.torsoIndex = torso;
+		}
+	}
+	body.flip = actor.facing === "left";
+	body.requested = true;
+	return body;
+}
+
+function bodyFromNamedEmotion(
 	avatar: Avatar,
 	actor: StripActor,
 	art: AvatarArt,
 ): AvatarBody {
 	const named =
 		art.faces[actor.emotion ?? NEUTRAL_KEY] ?? art.faces[NEUTRAL_KEY];
-	// a gesture only ever swaps the torso; asking for one the character lacks leaves it standing neutral
-	const gesture =
-		actor.gesture === undefined
-			? undefined
-			: (art.torsos[actor.gesture] ?? art.torsos[NEUTRAL_KEY]);
-	// the wheel builds the record, then the name it landed under says which drawing goes in it
 	const body = avatar.getBodyFromEmotion(0, 0);
-	if (body.kind === "simple") body.bodyIndex = gesture ?? named?.torso ?? 0;
+	if (body.kind === "simple") body.bodyIndex = named?.torso ?? 0;
 	else {
 		body.faceIndex = named?.face ?? body.faceIndex;
-		body.torsoIndex = gesture ?? named?.torso ?? body.torsoIndex;
+		body.torsoIndex = named?.torso ?? body.torsoIndex;
 	}
-	body.flip = actor.facing === "left";
-	body.requested = true;
 	return body;
 }
 

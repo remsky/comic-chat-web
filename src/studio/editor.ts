@@ -16,12 +16,15 @@ import {
 	ZOOM_MAX,
 	ZOOM_MIN,
 } from "./script.js";
+import type { Suggester } from "./suggest.js";
 
 export interface EditorOptions {
 	container: HTMLElement;
 	// the pane that scrolls, so revealing a card never moves the page itself
 	scroller: HTMLElement;
 	catalog: StripCatalog;
+	// the pose and facing the chat rules would reach for, so untouched fields follow the text
+	suggest: Suggester;
 	// the character's face icon, drawn inside the picker's options
 	icon?: (avatarName: string) => HTMLElement | null;
 	// a value changed; the strip is already up to date
@@ -189,7 +192,10 @@ export class PanelEditor {
 	}
 
 	addPanel(): void {
-		this.strip.panels.push(emptyPanel());
+		const panel = emptyPanel();
+		const scenes = this.strip.panels.filter((p) => p.kind !== "title").length;
+		panel.camera = this.options.suggest.camera(scenes);
+		this.strip.panels.push(panel);
 		this.structural(this.strip.panels.length - 1);
 	}
 
@@ -501,13 +507,33 @@ export class PanelEditor {
 		addActor.addEventListener("click", () => {
 			const first = this.options.catalog.avatars[0];
 			if (!first) return;
-			panel.actors.push({ avatar: first.name });
+			this.reface(panel, () => {
+				panel.actors.push({ avatar: first.name });
+			});
 			this.refresh(index);
 			this.options.onEdit();
 		});
 
 		body.append(settings, actors, addActor);
 		return body;
+	}
+
+	// the cast changed, so whoever has not been turned by hand faces their new neighbours
+	private reface(panel: StripPanel, mutate: () => void): void {
+		const before = this.options.suggest.facings(panel);
+		const pinned = new Map(
+			panel.actors.map((actor, index) => [
+				actor,
+				(actor.facing ?? "right") !== before[index],
+			]),
+		);
+		mutate();
+		this.options.suggest.facings(panel).forEach((facing, index) => {
+			const actor = panel.actors[index];
+			if (!actor || pinned.get(actor)) return;
+			if (facing === "right") delete actor.facing;
+			else actor.facing = facing;
+		});
 	}
 
 	private actorRow(
@@ -550,16 +576,16 @@ export class PanelEditor {
 		fillEmotions(emotion, this.options.catalog.emotions, art);
 		emotion.value = emotionValue(actor, art);
 
+		let auto = actor.emotion === undefined && actor.gesture === undefined;
+
 		avatar.addEventListener("change", () => {
 			actor.avatar = avatar.value;
 			paintFace();
-			// the new character may not have art for the old gesture, so re-offer only what it can strike
 			const available = this.gesturesFor(actor.avatar);
 			if (actor.gesture && !available.includes(actor.gesture))
 				delete actor.gesture;
 			fillOptions(gesture, ["", ...available], "No gesture", artLabel);
 			gesture.value = actor.gesture ?? "";
-			// likewise the faces: another character draws a different number of them, or none
 			art = this.artFor(actor.avatar);
 			fillEmotions(emotion, this.options.catalog.emotions, art);
 			if (actor.emotion !== undefined) {
@@ -579,10 +605,7 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 		emotion.addEventListener("change", () => {
-			// the resting face is what an absent emotion already means, so it stays out of the JSON
-			if (emotion.value === NEUTRAL_KEY || emotion.value === `${NEUTRAL_KEY}_1`)
-				delete actor.emotion;
-			else actor.emotion = emotion.value;
+			actor.emotion = emotion.value;
 			this.options.onEdit();
 		});
 
@@ -614,6 +637,58 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 
+		const details = document.createElement("span");
+		details.className = "actor-details";
+		details.append(emotion, gesture, facing, mode);
+		if (auto) details.hidden = true;
+
+		const autoToggle = document.createElement("span");
+		autoToggle.className = "seg actor-auto";
+		autoToggle.setAttribute("role", "group");
+		autoToggle.setAttribute("aria-label", "Pose mode");
+		const autoBtn = document.createElement("button");
+		autoBtn.type = "button";
+		autoBtn.className = "sicon seg-option";
+		autoBtn.innerHTML =
+			'<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">' +
+			'<path d="M9 0L3 9h4l-1 7 7-10H9z"/>' +
+			"</svg>";
+		autoBtn.title = "Auto pose";
+		autoBtn.setAttribute("aria-pressed", String(auto));
+		const manualBtn = document.createElement("button");
+		manualBtn.type = "button";
+		manualBtn.className = "sicon seg-option";
+		manualBtn.innerHTML =
+			'<svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">' +
+			'<path d="M6 0h4v2.2a5.5 5.5 0 011.7 1L13.4 1.5 15.2 3.3 13.5 5a5.5 5.5 0 011 1.7H16v4h-2.2a5.5 5.5 0 01-1 1.7l1.7 1.7-1.8 1.8L11 13.5a5.5 5.5 0 01-1.7 1V16H6v-2.2a5.5 5.5 0 01-1.7-1L2.6 14.5.8 12.7 2.5 11a5.5 5.5 0 01-1-1.7H0V6h2.2a5.5 5.5 0 011-1.7L1.5 2.6 3.3.8 5 2.5A5.5 5.5 0 016.7 1.5V0zM8 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/>' +
+			"</svg>";
+		manualBtn.title = "Configure pose";
+		manualBtn.setAttribute("aria-pressed", String(!auto));
+		autoToggle.append(manualBtn, autoBtn);
+		const setMode = (next: boolean) => {
+			auto = next;
+			autoBtn.setAttribute("aria-pressed", String(auto));
+			manualBtn.setAttribute("aria-pressed", String(!auto));
+			details.hidden = auto;
+			if (auto) {
+				delete actor.emotion;
+				delete actor.gesture;
+			} else {
+				const snap = this.options.suggest.snapshot(actor);
+				actor.emotion = snap.emotion;
+				actor.gesture = snap.gesture;
+				emotion.value = emotionValue(actor, art);
+				gesture.value = actor.gesture ?? "";
+			}
+			this.options.onEdit();
+		};
+		autoBtn.addEventListener("click", () => {
+			if (!auto) setMode(true);
+		});
+		manualBtn.addEventListener("click", () => {
+			if (auto) setMode(false);
+		});
+
 		const text = named(document.createElement("input"), "Balloon text");
 		text.type = "text";
 		text.className = "actor-text";
@@ -632,7 +707,9 @@ export class PanelEditor {
 		);
 		remove.classList.add("actor-drop");
 		remove.addEventListener("click", () => {
-			panel.actors.splice(actorIndex, 1);
+			this.reface(panel, () => {
+				panel.actors.splice(actorIndex, 1);
+			});
 			this.refresh(panelIndex);
 			this.options.onEdit();
 		});
@@ -641,8 +718,8 @@ export class PanelEditor {
 		const meta = document.createElement("div");
 		meta.className = "actor-meta";
 		if (face) meta.append(face);
-		meta.append(avatar, emotion, gesture, facing, mode);
-		row.append(meta, text, remove);
+		meta.append(avatar, details);
+		row.append(autoToggle, meta, text, remove);
 		return row;
 	}
 

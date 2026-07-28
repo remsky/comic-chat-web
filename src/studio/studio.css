@@ -497,10 +497,10 @@ textarea {
 	list-style: none;
 }
 
-/* who and how across the top, what they say beneath, remove pinned to the right of both */
+/* toggle left, name row + text row centre, remove pinned right */
 .actor {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-columns: auto minmax(0, 1fr) auto;
 	gap: 0.25rem;
 	padding: 0.3rem;
 	border: 1px solid;
@@ -518,14 +518,14 @@ textarea {
 
 .actor-meta {
 	display: flex;
-	grid-area: 1 / 1;
+	grid-area: 1 / 2;
 	flex-wrap: wrap;
 	gap: 0.25rem;
 	align-items: center;
 }
 
 .actor-text {
-	grid-area: 2 / 1;
+	grid-area: 2 / 2;
 }
 
 .pedit-title {
@@ -564,11 +564,6 @@ select.actor-who::picker(select) {
 		background: none;
 		color: inherit;
 		font: inherit;
-	}
-
-	select.actor-who button::after {
-		content: "\25BE";
-		margin-left: auto;
 	}
 
 	/* biome-ignore lint/correctness/noUnknownTypeSelector: selectedcontent is the base-select mirror element */
@@ -624,8 +619,23 @@ select.actor-who::picker(select) {
 	font-weight: 700;
 }
 
+.actor-details {
+	display: contents;
+}
+
+.actor-details[hidden] {
+	display: none;
+}
+
+.actor-auto {
+	grid-area: 1 / 1 / 3 / 2;
+	flex-direction: column;
+	align-self: stretch;
+	justify-content: center;
+}
+
 .actor-drop {
-	grid-area: 1 / 2 / 3 / 3;
+	grid-area: 1 / 3 / 3 / 4;
 	align-self: center;
 }
 
@@ -662,6 +672,19 @@ select.actor-who::picker(select) {
 	line-height: 1;
 }
 
+.seg {
+	display: inline-flex;
+}
+
+.seg-option {
+	padding: 2px 10px;
+	font-size: 0.75rem;
+}
+
+.seg-option + .seg-option {
+	margin-left: -1px;
+}
+
 .sbutton:active,
 .sicon:active,
 .stoggle[aria-pressed="true"],
@@ -676,6 +699,25 @@ select.actor-who::picker(select) {
 	background: #b0b0b0;
 }
 
+/* the pose toggle stacks its two icons down the side of the actor row */
+.actor-auto .seg-option.sicon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3px 6px;
+	flex: 1;
+	min-width: 0;
+}
+
+.actor-auto .seg-option + .seg-option {
+	margin-left: 0;
+	margin-top: -1px;
+}
+
+.actor-auto .seg-option svg {
+	display: block;
+}
+
 .sbutton:disabled,
 .sicon:disabled {
 	color: var(--shade);
@@ -687,19 +729,6 @@ select.actor-who::picker(select) {
 .sbutton--add {
 	align-self: stretch;
 	padding: 3px 14px;
-}
-
-.seg {
-	display: inline-flex;
-}
-
-.seg-option {
-	padding: 2px 10px;
-	font-size: 0.75rem;
-}
-
-.seg-option + .seg-option {
-	margin-left: -1px;
 }
 
 /* issues and drawers */

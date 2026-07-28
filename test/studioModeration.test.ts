@@ -73,3 +73,45 @@ describe("strip screen titles", () => {
 		]);
 	});
 });
+
+describe("strip screen verdicts in flight", () => {
+	// the editor types into the actor the screen already answered for, so identity carries the flag
+	function typedActor(): { strip: Strip; retype: (text: string) => void } {
+		const typed = strip();
+		const actor = typed.panels[0]?.actors[0];
+		if (!actor) throw new Error("the fixture lost its actor");
+		return { strip: typed, retype: (text) => (actor.text = text) };
+	}
+
+	it("holds the flag while the next verdict is still in flight", async () => {
+		const screen = screenAnswering(["BAD LINE"]);
+		const { strip: flagged, retype } = typedActor();
+		retype("BAD LINE");
+		await screen.update(flagged);
+		expect(screen.drawable(flagged).panels[0]?.actors[0]?.text).toBeUndefined();
+		expect(screen.issues(flagged)).toHaveLength(1);
+
+		// the next keystroke has no verdict yet, so the flag cannot lapse on the redraw
+		retype("BAD LINE and more");
+		expect(screen.drawable(flagged).panels[0]?.actors[0]?.text).toBeUndefined();
+		expect(screen.issues(flagged).map((issue) => issue.path)).toEqual([
+			"panels[0].actors[0]",
+		]);
+	});
+
+	it("clears the flag once the verdict for the new line lands", async () => {
+		const screen = screenAnswering(["BAD LINE"]);
+		const { strip: flagged, retype } = typedActor();
+		retype("BAD LINE");
+		await screen.update(flagged);
+		expect(screen.drawable(flagged).panels[0]?.actors[0]?.text).toBeUndefined();
+		expect(screen.issues(flagged)).toHaveLength(1);
+
+		retype("clean line");
+		await screen.update(flagged);
+		expect(screen.drawable(flagged).panels[0]?.actors[0]?.text).toBe(
+			"clean line",
+		);
+		expect(screen.issues(flagged)).toEqual([]);
+	});
+});
