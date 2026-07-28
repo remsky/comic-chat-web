@@ -1,4 +1,4 @@
-// One live room session: the WebSocket join, reconnect loop, composer, and roster.
+// One live room session: join lifecycle, composer, roster, and transport-status UI.
 
 import type { AvatarData } from "../engine/avatar.js";
 import {
@@ -8,11 +8,14 @@ import {
 	HISTORY_CHUNK,
 	MESSAGE_BLOCKED_REASON,
 	NAME_BLOCKED_REASON,
-	parseServerMessage,
 	RATE_LIMIT_REASON,
 	type RoomEntry,
 	type RosterEntry,
+	type ServerMessage,
 } from "../protocol/room.js";
+import { createDoTransport } from "../transports/do/doTransport.js";
+import { historyHasGap } from "../transports/do/websocketReconnect.js";
+import type { TransportStatus } from "../transports/types.js";
 import { mentionsNick } from "./addressing.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { BodyCamWidget } from "./bodycamWidget.js";
@@ -38,20 +41,10 @@ import {
 	storeRoomSwitch,
 } from "./storage.js";
 import { transcriptHeader, transcriptLine } from "./textView.js";
-import {
-	describeWebSocketClose,
-	historyHasGap,
-	reconnectDelay,
-	shouldReconnect,
-} from "./websocketReconnect.js";
 
 // client mirror of the server send bucket (worker/room.ts): kill Enter-mashing before it hits the wire
 const SEND_BURST = 5;
 const SEND_REFILL_MS = 1000;
-// liveness: a send expects a reply frame; the composer greys out fast, the pipe is declared dead a beat later
-const HEARTBEAT_MS = 10_000;
-const SUSPECT_MS = 1_200;
-const RESPONSE_TIMEOUT_MS = 4_000;
 
 // Save Strip popup: pick how much of the history goes into the PNG
 const SAVE_CHOICES = [8, 24];
@@ -206,13 +199,22 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	else history.pushState(JOINED_STATE, "", url);
 	const protocol = location.protocol === "https:" ? "wss" : "ws";
 	const socketUrl = `${protocol}://${location.host}/api/rooms/${room}/websocket`;
-	let socket: WebSocket | null = null;
-	let reconnectTimer: number | undefined;
-	let reconnectAttempt = 0;
-	let reconnectAllowed = true;
-	let heartbeatTimer: number | undefined;
-	let watchdogTimer: number | undefined;
-	let suspectTimer: number | undefined;
+	const transport = createDoTransport(
+		socketUrl,
+		{
+			buildJoin: () => ({
+				type: "join",
+				name: currentName,
+				avatar: seatAvatar ?? avatar,
+				userId,
+				...(announceFrom !== undefined ? { from: announceFrom } : {}),
+				sent: Date.now(),
+			}),
+			onMessage: (message) => handleMessage(message),
+			onStatus: (update) => handleStatus(update),
+		},
+		signal,
+	);
 	let seatAvatar: number | null = null;
 	// seatId is this connection (used for roster and profile-of-my-seat); userId is the person
 	let seatId: string | null = null;
@@ -223,7 +225,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	// announced once: the first welcome consumes it so reconnects don't re-arrive
 	let announceFrom = from;
 	let hasWelcomed = false;
-	let joinFailed = false;
 	let noticeTimer: number | undefined;
 	let filterTimer: number | undefined;
 	// a /gesture makes the wire text differ from the typed text; the echo needs one, a restore the other
@@ -274,7 +275,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 
 	// the composer doubles as the connection indicator: greyed with a hint while sends are unconfirmed
 	const composerPlaceholder = composerInput.placeholder;
-	let linkSuspect = false;
 	let hintTimer: number | undefined;
 	const setComposerHint = (hint: string | null, animate = false): void => {
 		if (hintTimer !== undefined) {
@@ -297,59 +297,16 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		setComposerHint(null);
 		if (filterTimer === undefined) setComposerEnabled(true);
 	};
-	// liveness watchdog: a send arms it, any inbound frame disarms it; if it fires the pipe is dead
-	const clearWatchdog = (): void => {
-		if (suspectTimer !== undefined) {
-			window.clearTimeout(suspectTimer);
-			suspectTimer = undefined;
-		}
-		if (watchdogTimer !== undefined) {
-			window.clearTimeout(watchdogTimer);
-			watchdogTimer = undefined;
-		}
-		if (!linkSuspect) return;
-		linkSuspect = false;
-		if (socket?.readyState !== WebSocket.OPEN) return;
-		unlockComposer();
-		// disabling dropped focus; hand it back so typing resumes
-		const active = document.activeElement;
-		if (active === null || active === document.body) composerInput.focus();
-	};
-	const armWatchdog = (): void => {
-		if (watchdogTimer !== undefined) return;
-		suspectTimer = window.setTimeout(() => {
-			suspectTimer = undefined;
-			linkSuspect = true;
-			lockComposer("Connecting", true);
-		}, SUSPECT_MS);
-		watchdogTimer = window.setTimeout(() => {
-			watchdogTimer = undefined;
-			if (socket?.readyState === WebSocket.OPEN)
-				socket.close(4000, "connection lost");
-		}, RESPONSE_TIMEOUT_MS);
-	};
-	// send on the live socket, then start waiting for the server's reply frame
-	const wsSend = (data: string): boolean => {
-		if (socket?.readyState !== WebSocket.OPEN) return false;
-		socket.send(data);
-		armWatchdog();
-		return true;
-	};
 
 	let oldestSeq: number | null = null;
 	let historyPending = false;
 	let historyDone = false;
 
 	const requestOlderHistory = (): void => {
-		if (
-			historyPending ||
-			historyDone ||
-			oldestSeq === null ||
-			socket?.readyState !== WebSocket.OPEN
-		)
-			return;
+		if (historyPending || historyDone || oldestSeq === null) return;
+		if (!transport.isOpen()) return;
 		historyPending = true;
-		wsSend(JSON.stringify({ type: "history", before: oldestSeq }));
+		transport.send({ type: "history", before: oldestSeq });
 	};
 	scroller.addEventListener(
 		"scroll",
@@ -361,7 +318,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 
 	// cui.Say: run the presend hook, then transmit text plus the resolved annotation; returns what went on the wire
 	const sendChat = (input: string, mode: ChatMode): string | null => {
-		if (socket?.readyState !== WebSocket.OPEN) return null;
+		if (!transport.isOpen()) return null;
 		// classic mode never reached gesture art at all (CheckStarts is #if 0), so a slash there is just text
 		const gesture = loadFeatures().gestureCommands ? parseGesture(input) : null;
 		if (gesture) {
@@ -375,15 +332,13 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		const text = gesture ? gesture.text || "<Chr>" : input;
 		const annotation = view.prepareOutgoing(text, roster, gesture?.emotion);
 		if (!annotation) return null;
-		return wsSend(
-			JSON.stringify({
-				type: "chat",
-				text,
-				mode,
-				annotation,
-				sent: Date.now(),
-			}),
-		)
+		return transport.send({
+			type: "chat",
+			text,
+			mode,
+			annotation,
+			sent: Date.now(),
+		})
 			? text
 			: null;
 	};
@@ -392,23 +347,19 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	backgroundSelect.addEventListener(
 		"change",
 		() => {
-			wsSend(
-				JSON.stringify({ type: "background", name: backgroundSelect.value }),
-			);
+			transport.send({ type: "background", name: backgroundSelect.value });
 		},
 		{ signal },
 	);
 
 	const profileError = element("profile-error");
 	hooks.applyProfile = (rawName, rawAvatar) => {
-		if (socket?.readyState !== WebSocket.OPEN || seatAvatar === null) return;
+		if (!transport.isOpen() || seatAvatar === null) return;
 		const nextName = rawName.trim() || currentName;
 		const nextAvatar = Number.isNaN(rawAvatar) ? seatAvatar : rawAvatar;
 		if (nextName === currentName && nextAvatar === seatAvatar) return;
 		profileError.hidden = true;
-		wsSend(
-			JSON.stringify({ type: "profile", name: nextName, avatar: nextAvatar }),
-		);
+		transport.send({ type: "profile", name: nextName, avatar: nextAvatar });
 	};
 	const renderProfileRooms = async (): Promise<void> => {
 		const listings = await fetchRoomListings();
@@ -425,16 +376,14 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	hooks.refreshRooms = () => void renderProfileRooms();
 	hooks.switchRoom = (to) => {
 		if (to === room) return;
-		if (socket?.readyState === WebSocket.OPEN)
-			wsSend(JSON.stringify({ type: "depart", to }));
+		if (transport.isOpen()) transport.send({ type: "depart", to });
 		storeRoomSwitch({
 			room: to,
 			from: room,
 			name: currentName,
 			avatar: seatAvatar ?? avatar,
 		});
-		reconnectAllowed = false;
-		if (reconnectTimer !== undefined) window.clearTimeout(reconnectTimer);
+		transport.stop();
 		// let the depart frame flush before navigation tears the socket down
 		window.setTimeout(() => {
 			location.href = `?room=${encodeURIComponent(to)}`;
@@ -446,9 +395,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	const leaveRoom = (): void => {
 		if (forgetOnLeave) clearStoredProfile();
 		clearRoomSwitch();
-		reconnectAllowed = false;
-		if (reconnectTimer !== undefined) window.clearTimeout(reconnectTimer);
-		socket?.close();
+		transport.close();
 		location.reload();
 	};
 	hooks.onBack = leaveRoom;
@@ -588,7 +535,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			if (filterTimer !== undefined) window.clearInterval(filterTimer);
 			filterTimer = undefined;
 			notice.hidden = true;
-			if (socket?.readyState === WebSocket.OPEN) {
+			if (transport.isOpen()) {
 				setComposerEnabled(true);
 				composerInput.focus();
 			}
@@ -606,9 +553,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 
 	// a refused join hands the form back instead of dead-ending in the status line
 	const failJoin = (reason: string): void => {
-		joinFailed = true;
-		reconnectAllowed = false;
-		socket?.close(1000, "join refused");
+		transport.close(1000, "join refused");
 		const nameError = element("join-name-error");
 		nameError.textContent =
 			reason === NAME_BLOCKED_REASON
@@ -620,11 +565,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			?.removeAttribute("disabled");
 	};
 
-	const handleMessage = (message: MessageEvent): void => {
-		// any frame (including the raw "pong") proves the socket is still alive
-		clearWatchdog();
-		const parsed = parseServerMessage(message.data);
-		if (!parsed) return;
+	const handleMessage = (parsed: ServerMessage): void => {
 		if (parsed.type === "welcome") {
 			const previousNewestSeq = view.entriesView().at(-1)?.seq ?? 0;
 			document.body.classList.add("joined");
@@ -637,7 +578,6 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				element("filter-notice").hidden = true;
 			}
 			unlockComposer();
-			reconnectAttempt = 0;
 			roster = parsed.roster;
 			renderRoster(roster, deps.avatars, deps.atlases);
 			view.setRoster(roster);
@@ -760,81 +700,31 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		}
 	};
 
-	const connect = (): void => {
-		if (reconnectTimer !== undefined) {
-			window.clearTimeout(reconnectTimer);
-			reconnectTimer = undefined;
-		}
-		// a CLOSING socket still owns the shared timers; never race a replacement past it
-		if (socket !== null && socket.readyState !== WebSocket.CLOSED) return;
-		if (!hasWelcomed) {
-			status.textContent = "Connecting…";
-			delete status.dataset.ready;
-		}
-		const next = new WebSocket(socketUrl);
-		socket = next;
-		next.addEventListener("open", () => {
-			wsSend(
-				JSON.stringify({
-					type: "join",
-					name: currentName,
-					avatar: seatAvatar ?? avatar,
-					userId,
-					...(announceFrom !== undefined ? { from: announceFrom } : {}),
-					sent: Date.now(),
-				}),
-			);
-			// idle ping so a dead-but-still-"open" pipe surfaces as a reconnect, not a silent swallow
-			if (heartbeatTimer !== undefined) window.clearInterval(heartbeatTimer);
-			heartbeatTimer = window.setInterval(() => {
-				if (next.readyState === WebSocket.OPEN) wsSend("ping");
-			}, HEARTBEAT_MS);
-		});
-		next.addEventListener("message", handleMessage);
-		next.addEventListener("close", (event) => {
-			if (socket !== next) return;
-			if (heartbeatTimer !== undefined) {
-				window.clearInterval(heartbeatTimer);
-				heartbeatTimer = undefined;
+	// transport status drives the composer lock and the status line; DOM stays on this side of the seam
+	const handleStatus = (update: TransportStatus): void => {
+		if (update.kind === "connecting") {
+			if (!hasWelcomed) {
+				status.textContent = "Connecting…";
+				delete status.dataset.ready;
 			}
-			clearWatchdog();
-			socket = null;
+		} else if (update.kind === "suspect") {
+			lockComposer("Connecting", true);
+		} else if (update.kind === "recovered") {
+			unlockComposer();
+			// disabling dropped focus; hand it back so typing resumes
+			const active = document.activeElement;
+			if (active === null || active === document.body) composerInput.focus();
+		} else if (update.kind === "reconnecting") {
 			historyPending = false;
-			if (joinFailed) return;
-			const detail = describeWebSocketClose(event.code, event.reason);
-			const delay = reconnectDelay(reconnectAttempt);
-			if (!shouldReconnect(event.code)) {
-				reconnectAllowed = false;
-				lockComposer(`Disconnected: ${detail}. Reload to rejoin.`);
-				if (!hasWelcomed)
-					status.textContent = `Disconnected: ${detail}. Reload to rejoin.`;
-				return;
-			}
-			reconnectAttempt++;
 			lockComposer("Reconnecting", true);
-			reconnectTimer = window.setTimeout(connect, delay);
-		});
+		} else {
+			historyPending = false;
+			const detail = `Disconnected: ${update.detail}. Reload to rejoin.`;
+			lockComposer(detail);
+			if (!hasWelcomed) status.textContent = detail;
+		}
 	};
-
-	// the browser knows the network flipped before any timeout can
-	window.addEventListener(
-		"offline",
-		() => {
-			if (socket?.readyState === WebSocket.OPEN) socket.close(4000, "offline");
-		},
-		{ signal },
-	);
-	window.addEventListener(
-		"online",
-		() => {
-			if (socket === null && reconnectAllowed) {
-				reconnectAttempt = 0;
-				connect();
-			}
-		},
-		{ signal },
-	);
-	connect();
+	transport.connect();
 
 	// client-side mirror of the server bucket: a mash drains tokens locally and toasts instead of flooding the wire
 	let sendTokens = SEND_BURST;
@@ -860,7 +750,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			// single flight: the previous send must echo back or fail before the next leaves
 			if (lastComposerSend !== null) return;
 			// composer is disabled while down, but guard anyway: never burn a token into a closed pipe
-			if (socket?.readyState !== WebSocket.OPEN || !navigator.onLine) return;
+			if (!transport.isOpen() || !navigator.onLine) return;
 			if (!takeSendToken()) {
 				flashNotice("Slow down a moment.");
 				return;

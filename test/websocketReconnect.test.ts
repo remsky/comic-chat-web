@@ -4,7 +4,7 @@ import {
 	historyHasGap,
 	reconnectDelay,
 	shouldReconnect,
-} from "../src/browser/websocketReconnect.js";
+} from "../src/transports/do/websocketReconnect.js";
 
 describe("WebSocket reconnect policy", () => {
 	it("uses bounded exponential backoff", () => {
