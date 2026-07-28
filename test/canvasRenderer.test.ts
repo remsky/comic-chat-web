@@ -5,8 +5,14 @@ import {
 	bodySpriteLayers,
 	CanvasPanelRenderer,
 } from "../src/browser/canvasRenderer.js";
+import { BALLOON_FONT_SIZE } from "../src/browser/canvasText.js";
 import { type AvatarData, AvatarRegistry } from "../src/engine/avatar.js";
 import { bodyFromPoseIDs, type UnitPanel } from "../src/engine/panel.js";
+import {
+	FOOTER_MARGIN,
+	shoutFontCell,
+	TITLE_UNIT,
+} from "../src/engine/titlePanel.js";
 
 const manifest = JSON.parse(
 	readFileSync(
@@ -246,5 +252,85 @@ describe("canvas avatar composition", () => {
 			"TOLD BY",
 			"anna",
 		]);
+	});
+
+	it("hangs a footer under the cast without costing it a row", async () => {
+		const registry = new AvatarRegistry(manifest.avatars);
+		const cache = new AvatarAtlasCache(async () => ({}) as CanvasImageSource);
+		await cache.preload(manifest.avatars);
+		const unit = 3000;
+		const draw = (height: number, cast: number, footer?: string) => {
+			const lines: { text: string; y: number; font: string }[] = [];
+			const target = {
+				fillStyle: "",
+				font: "",
+				textAlign: "left",
+				textBaseline: "alphabetic",
+				measureText: (probe: string) => ({
+					width: probe.length * 150,
+					fontBoundingBoxAscent: 300,
+					fontBoundingBoxDescent: 100,
+					actualBoundingBoxDescent: 300,
+				}),
+				fillText: (probe: string, _x: number, y: number) =>
+					lines.push({ text: probe, y, font: target.font }),
+			};
+			const context = new Proxy(target, {
+				get(source, property) {
+					if (property in source)
+						return source[property as keyof typeof source];
+					return () => {};
+				},
+			}) as unknown as CanvasRenderingContext2D;
+			const renderer = new CanvasPanelRenderer(
+				context,
+				cache,
+				registry.avatars,
+				{ unitWidth: unit, unitHeight: height },
+			);
+			renderer.render({
+				seed: 0,
+				hasBorder: false,
+				backdropMode: 0,
+				bodies: [],
+				balloons: [],
+				title: {
+					text: "NO EXIT",
+					...(footer ? { footer } : {}),
+					stars: Array.from({ length: cast }, (_, index) => ({
+						avatarID: 1,
+						label: `anna ${index}`,
+					})),
+				},
+			});
+			return lines;
+		};
+
+		const margin = Math.round((FOOTER_MARGIN * unit) / TITLE_UNIT);
+		const cell = shoutFontCell(unit, BALLOON_FONT_SIZE);
+		const stars = (lines: { text: string; y: number }[]) =>
+			lines.filter((line) => line.text.startsWith("anna"));
+
+		const plain = draw(4000, 5);
+		const signed = draw(4000, 5, "Written by Anna");
+		const line = signed.at(-1);
+		expect(line?.text).toBe("Written by Anna");
+		expect(stars(signed)).toEqual(stars(plain));
+		expect(line?.font).toBe(signed[1]?.font);
+		expect(line?.y).toBe(4000 - margin - cell);
+
+		// 2600 leaves the three rows room for a line, but not a full-size one
+		const tight = draw(2600, 3, "Written by Anna");
+		expect(stars(tight)).toEqual(stars(draw(2600, 3)));
+		expect(tight.at(-1)?.text).toBe("Written by Anna");
+		expect(tight.at(-1)?.font).not.toBe(tight[1]?.font);
+		expect(tight.at(-1)?.y ?? 0).toBeGreaterThan(
+			(stars(tight).at(-1)?.y ?? 0) + cell,
+		);
+
+		// a full cast on a 3000 card reaches the bottom edge, so the line is dropped
+		const full = draw(3000, 5, "Written by Anna");
+		expect(stars(full)).toEqual(stars(draw(3000, 5)));
+		expect(full.at(-1)?.text).toBe("anna 4");
 	});
 });

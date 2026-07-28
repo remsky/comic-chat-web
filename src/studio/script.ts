@@ -95,6 +95,8 @@ export interface StripPanel {
 	title?: string;
 	// title panels only; the line over the cast, blank composes as STARRING
 	starring?: string;
+	// title panels only; a credit along the bottom, off when blank
+	footer?: string;
 	background?: string;
 	camera?: StripCamera;
 	zoom?: number;
@@ -398,6 +400,13 @@ function parsePanel(
 		else if (starring !== "") panel.starring = starring;
 	}
 
+	if (raw.footer !== undefined && raw.footer !== null) {
+		const footer = readString(raw.footer);
+		if (footer === undefined)
+			fail(context, `${path}.footer`, "footer must be a string");
+		else if (footer !== "") panel.footer = footer;
+	}
+
 	if (raw.background !== undefined && raw.background !== null) {
 		const background = readString(raw.background);
 		if (background === undefined)
@@ -557,6 +566,7 @@ export function stripToJson(strip: Strip): string {
 					kind: "title",
 					...(panel.title ? { title: panel.title } : {}),
 					...(panel.starring ? { starring: panel.starring } : {}),
+					...(panel.footer ? { footer: panel.footer } : {}),
 					actors: panel.actors.map((actor) => ({
 						avatar: actor.avatar,
 						...(actor.text ? { text: actor.text } : {}),

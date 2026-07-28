@@ -348,7 +348,20 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 
-		body.append(row, starring, stars, addStar);
+		// the bottom line, blank until someone wants a "Written by"
+		const footer = named(document.createElement("input"), "Footer line");
+		footer.type = "text";
+		footer.className = "actor-text";
+		footer.dataset.path = `panels[${index}].footer`;
+		footer.placeholder = "Footer (optional)";
+		footer.value = panel.footer ?? "";
+		footer.addEventListener("input", () => {
+			if (footer.value) panel.footer = footer.value;
+			else delete panel.footer;
+			this.options.onEdit();
+		});
+
+		body.append(row, starring, stars, addStar, footer);
 		return body;
 	}
 

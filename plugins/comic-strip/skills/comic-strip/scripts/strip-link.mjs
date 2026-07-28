@@ -20,6 +20,7 @@ const PANEL_KEYS = [
 	"kind",
 	"title",
 	"starring",
+	"footer",
 	"background",
 	"camera",
 	"zoom",
@@ -29,7 +30,8 @@ const PANEL_KEYS = [
 const ACTOR_KEYS = ["avatar", "text", "mode", "emotion", "gesture", "facing"];
 // a title card draws icons and credit rows, so the staging fields have nothing to act on
 const SCENE_KEYS = ["background", "camera", "zoom", "border"];
-const TITLE_KEYS = ["title", "starring"];
+const TITLE_KEYS = ["title", "starring", "footer"];
+const LONG_FOOTER = 40;
 
 const issues = [];
 const fail = (path, message) =>
@@ -161,6 +163,11 @@ function checkTitlePanel(raw, path) {
 		warn(
 			`${path}.title`,
 			`${raw.title.length} characters wraps the title over several lines and crowds the cast off the card`,
+		);
+	if (typeof raw.footer === "string" && raw.footer.length > LONG_FOOTER)
+		warn(
+			`${path}.footer`,
+			`${raw.footer.length} characters is a long footer; it draws on one line`,
 		);
 
 	if (!Array.isArray(raw.actors)) {

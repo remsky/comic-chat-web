@@ -130,6 +130,7 @@ function composeTitlePanel(
 			title: {
 				text,
 				...(spec.starring?.trim() ? { starring: spec.starring } : {}),
+				...(spec.footer?.trim() ? { footer: spec.footer } : {}),
 				stars,
 			},
 		},

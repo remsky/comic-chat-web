@@ -28,6 +28,11 @@ export function collectTexts(strip: Strip): { path: string; text: string }[] {
 				path: `panels[${panelIndex}].starring`,
 				text: panel.starring,
 			});
+		if (panel.footer)
+			found.push({
+				path: `panels[${panelIndex}].footer`,
+				text: panel.footer,
+			});
 		panel.actors.forEach((actor, actorIndex) => {
 			if (actor.text)
 				found.push({
@@ -60,6 +65,7 @@ export class StripScreen {
 	private readonly held = new WeakMap<StripActor, Held>();
 	private readonly heldTitles = new WeakMap<StripPanel, Held>();
 	private readonly heldStarring = new WeakMap<StripPanel, Held>();
+	private readonly heldFooter = new WeakMap<StripPanel, Held>();
 	// a deploy with the screen off, or a dev server with no worker behind it, screens nothing
 	private reachable = true;
 
@@ -86,6 +92,12 @@ export class StripScreen {
 			if (this.heldStarring.get(panel)?.flagged)
 				found.push({
 					path: `panels[${panelIndex}].starring`,
+					message: MESSAGE,
+					severity: "error",
+				});
+			if (this.heldFooter.get(panel)?.flagged)
+				found.push({
+					path: `panels[${panelIndex}].footer`,
 					message: MESSAGE,
 					severity: "error",
 				});
@@ -131,16 +143,24 @@ export class StripScreen {
 		});
 	}
 
-	// a flagged title falls back to blank, which composes as UNTITLED; a flagged subhead falls back to STARRING
+	// a flagged line falls back to blank, so the card draws its default or nothing
 	private settleTitle(panel: StripPanel): StripPanel {
 		const title = this.settleLine(this.heldTitles, panel, panel.title);
 		const starring = this.settleLine(this.heldStarring, panel, panel.starring);
-		if (title === panel.title && starring === panel.starring) return panel;
+		const footer = this.settleLine(this.heldFooter, panel, panel.footer);
+		if (
+			title === panel.title &&
+			starring === panel.starring &&
+			footer === panel.footer
+		)
+			return panel;
 		const copy = { ...panel };
 		if (title) copy.title = title;
 		else delete copy.title;
 		if (starring) copy.starring = starring;
 		else delete copy.starring;
+		if (footer) copy.footer = footer;
+		else delete copy.footer;
 		return copy;
 	}
 

@@ -10,6 +10,8 @@ import { BalloonRuntime } from "../engine/panelBalloon.js";
 import { BetaSpline } from "../engine/spline.js";
 import {
 	BELOW_STARRING,
+	FOOTER_MARGIN,
+	FOOTER_MIN_SCALE,
 	STAR_ICON_SIZE,
 	STAR_ICON_SPACE,
 	STARRING,
@@ -38,6 +40,25 @@ import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { BALLOON_FONT_SIZE, gdiCellFont } from "./canvasText.js";
 
 const TORSOFIRST = 4;
+
+function starRowHeight(unit: number, scale: number): number {
+	return Math.max(
+		Math.round(STAR_ICON_SIZE * scale),
+		shoutFontCell(unit, BALLOON_FONT_SIZE),
+	);
+}
+
+function starRows(
+	card: TitleCard,
+	top: number,
+	height: number,
+	rowHeight: number,
+): number {
+	return Math.min(
+		card.stars.length,
+		Math.max(0, Math.trunc((height - top) / rowHeight)),
+	);
+}
 
 export interface SpriteLayer {
 	pose: PoseData;
@@ -509,12 +530,11 @@ export class CanvasPanelRenderer {
 		const iconSize = Math.round(STAR_ICON_SIZE * scale);
 		const iconSpace = Math.round(STAR_ICON_SPACE * scale);
 		const shoutCell = shoutFontCell(unit, BALLOON_FONT_SIZE);
-		const rowHeight = Math.max(iconSize, shoutCell);
-		const maxStars = Math.max(
+		const rowHeight = starRowHeight(unit, scale);
+		const stars = card.stars.slice(
 			0,
-			Math.trunc((this.options.unitHeight - top) / rowHeight),
+			starRows(card, top, this.options.unitHeight, rowHeight),
 		);
-		const stars = card.stars.slice(0, maxStars);
 		if (stars.length === 0) return;
 		let maxWidth = 0;
 		for (const star of stars)
@@ -532,7 +552,7 @@ export class CanvasPanelRenderer {
 		}
 	}
 
-	// how far a line's ink hangs below its baseline, which the classic all-caps titles never do
+	// how far a line's ink hangs below its baseline
 	private descender(text: string): number {
 		const metrics = this.context.measureText(text);
 		return Math.max(
@@ -573,13 +593,53 @@ export class CanvasPanelRenderer {
 		context.font = this.shoutFontCache;
 		const starring = card.starring?.trim() ? card.starring : STARRING;
 		context.fillText(starring, unit / 2, y);
+		const shoutCell = shoutFontCell(unit, BALLOON_FONT_SIZE);
 		y +=
-			shoutFontCell(unit, BALLOON_FONT_SIZE) +
-			Math.round(BELOW_STARRING * scale) +
-			this.descender(starring);
+			shoutCell + Math.round(BELOW_STARRING * scale) + this.descender(starring);
+		const footer = card.footer?.trim();
 		context.textAlign = "left";
 		this.drawStars(card, y);
+		if (footer) this.drawFooter(footer, card, y, scale, shoutCell);
 		context.restore();
+	}
+
+	// the cast keeps every row it would draw without a footer; the line takes what is left under it
+	private drawFooter(
+		footer: string,
+		card: TitleCard,
+		starsTop: number,
+		scale: number,
+		shoutCell: number,
+	): void {
+		const context = this.context;
+		const unit = this.options.unitWidth;
+		const rowHeight = starRowHeight(unit, scale);
+		const rows = starRows(card, starsTop, this.options.unitHeight, rowHeight);
+		const drop = this.descender(footer);
+		const free = this.options.unitHeight - (starsTop + rows * rowHeight) - drop;
+		const floor = Math.round(shoutCell * FOOTER_MIN_SCALE);
+		if (free < floor) return;
+		let margin = Math.round(FOOTER_MARGIN * scale);
+		let cell = Math.min(shoutCell, free - margin * 2);
+		if (cell < floor) {
+			cell = floor;
+			margin = Math.trunc((free - floor) / 2);
+		}
+		let font = gdiCellFont(context, "400", cell);
+		context.font = font;
+		const maxWidth = unit - margin * 2;
+		const width = context.measureText(footer).width;
+		if (width > maxWidth) {
+			cell = Math.round((cell * maxWidth) / width);
+			font = gdiCellFont(context, "400", cell);
+		}
+		context.textAlign = "center";
+		context.font = font;
+		context.fillText(
+			footer,
+			unit / 2,
+			this.options.unitHeight - margin - cell - drop,
+		);
 	}
 
 	render(panel: UnitPanel): void {

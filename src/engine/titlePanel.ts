@@ -7,8 +7,8 @@ export interface TitleStar {
 
 export interface TitleCard {
 	text: string;
-	// the line over the cast; STARRING unless the author wrote their own
 	starring?: string;
+	footer?: string;
 	stars: TitleStar[];
 }
 
@@ -38,7 +38,7 @@ export const TITLE_TABLE: readonly string[] = [
 	"MICROSOFT CHAT",
 ];
 
-// the table stays whole as the 1996 record; the port picks from it minus the 'wah' one and the corporate product name
+// the table stays whole as the 1996 record; the port skips two
 export const TITLE_CHOICES: readonly string[] = TITLE_TABLE.filter(
 	(title) => title !== "DOGGY DOGGY WAH WAH" && title !== "MICROSOFT CHAT",
 );
@@ -53,6 +53,10 @@ export const TITLE_UNIT = 4860;
 export const STAR_ICON_SIZE = 500;
 export const STAR_ICON_SPACE = 100;
 export const BELOW_STARRING = 300;
+// clearance kept above and below the footer line
+export const FOOTER_MARGIN = 240;
+// how far the footer will shrink to fit under a full cast before a credit row goes
+export const FOOTER_MIN_SCALE = 0.6;
 // nFontHeightTitle / nFontHeightShout magnitudes (defines.h:137-138)
 const TITLE_CELL = 576;
 const SHOUT_CELL = 252;
