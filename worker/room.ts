@@ -19,14 +19,14 @@ import { isProhibited, screeningEnabled } from "./moderation.js";
 
 // server policy: bound connections and per-socket send rate
 const SOCKET_LIMIT = 12;
-const RATE_BURST = 5;
+export const RATE_BURST = 5;
 const RATE_REFILL_MS = 1000;
 // a rate-limited message is dropped with an error; only this many consecutive drops closes the socket
-const FLOOD_CLOSE_STRIKES = 20;
+export const FLOOD_CLOSE_STRIKES = 20;
 // each blocked message mutes the socket for strikes * this, so repeat offenders wait longer
-const MUTE_STEP_MS = 15_000;
+export const MUTE_STEP_MS = 15_000;
 // after this many blocked messages the socket is closed rather than muted again
-const MOD_CLOSE_STRIKES = 5;
+export const MOD_CLOSE_STRIKES = 5;
 // keep the directory's last-active fresh for idle-but-chatty rooms without a report per message
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 // a chat composed this long ago is a dead pipe's TCP flush, not a late delivery; measured on the sender's own clock

@@ -6,21 +6,54 @@ import {
 	RATE_LIMIT_REASON,
 } from "../../src/protocol/room.js";
 import { HISTORY_RETENTION } from "../../worker/db/events.js";
+import {
+	FLOOD_CLOSE_STRIKES,
+	MOD_CLOSE_STRIKES,
+	MUTE_STEP_MS,
+	RATE_BURST,
+} from "../../worker/room.js";
 import { chatMessage, connect, join, seedLines } from "./helpers.js";
 
-// both cooldowns are wall-clock stamps on the socket attachment; rewriting them reaches the next strike without a real wait
-async function skipCooldowns(room: string): Promise<void> {
+// policy state rides on the socket attachment, so rewriting it walks the socket to a given standing without a real wait
+async function patchSocketState(
+	room: string,
+	patch: Record<string, unknown>,
+): Promise<void> {
 	const stub = env.CHAT_ROOM.getByName(room);
 	await runInDurableObject(stub, (_instance, state) => {
 		for (const ws of state.getWebSockets()) {
 			const attached = ws.deserializeAttachment() as Record<string, unknown>;
-			ws.serializeAttachment({
-				...attached,
-				mutedUntil: 0,
-				tokens: 5,
-				at: Date.now(),
-			});
+			ws.serializeAttachment({ ...attached, ...patch });
 		}
+	});
+}
+
+// the bucket refills by wall clock, and the worker floors elapsed at zero; a stamp in the future holds it still for the next send, so the token count is the code's arithmetic and not the runner's speed
+const REFILL_HOLD_MS = 60_000;
+const holdRefill = (room: string) =>
+	patchSocketState(room, { at: Date.now() + REFILL_HOLD_MS });
+
+const primeStrikes = (room: string, strikes: number) =>
+	patchSocketState(room, {
+		tokens: 0,
+		at: Date.now() + REFILL_HOLD_MS,
+		strikes,
+	});
+
+const skipCooldowns = (room: string) =>
+	patchSocketState(room, {
+		mutedUntil: 0,
+		tokens: RATE_BURST,
+		at: Date.now(),
+	});
+
+async function strikesOf(room: string): Promise<number> {
+	const stub = env.CHAT_ROOM.getByName(room);
+	return await runInDurableObject(stub, (_instance, state) => {
+		const [ws] = state.getWebSockets();
+		if (!ws) throw new Error("expected an attached socket");
+		const attached = ws.deserializeAttachment() as { strikes?: number };
+		return attached.strikes ?? 0;
 	});
 }
 
@@ -28,10 +61,16 @@ describe("room policy", () => {
 	it("drops sends past the burst and closes a sustained flood", async () => {
 		const room = "flood";
 		const { socket, inbox } = await join(room, "ann", 1);
-		// the join itself spent one of the 5 burst tokens
-		for (let index = 0; index < 4; index++) {
-			socket.send(chatMessage(`burst ${index}`, 1));
+		await holdRefill(room);
+		// the join spent one token; the rest of the burst goes to chat and leaves the bucket dry
+		const burst = Array.from(
+			{ length: RATE_BURST - 1 },
+			(_, index) => `burst ${index}`,
+		);
+		for (const text of burst) {
+			socket.send(chatMessage(text, 1));
 			await inbox.next("entry");
+			await holdRefill(room);
 		}
 		socket.send(chatMessage("dropped", 1));
 		const limited = await inbox.next("error");
@@ -43,26 +82,23 @@ describe("room policy", () => {
 				.exec<{ text: string }>("SELECT text FROM events ORDER BY seq")
 				.toArray(),
 		);
-		expect(rows.map((row) => row.text)).toEqual([
-			"burst 0",
-			"burst 1",
-			"burst 2",
-			"burst 3",
-		]);
+		expect(rows.map((row) => row.text)).toEqual(burst);
+
+		// consecutive drops stack, and an allowed send would zero the count instead
+		expect(await strikesOf(room)).toBe(1);
+		await holdRefill(room);
+		socket.send(chatMessage("dropped again", 1));
+		await inbox.next("error");
+		expect(await strikesOf(room)).toBe(2);
 
 		const closed = new Promise<{ code: number; reason: string }>((resolve) =>
 			socket.addEventListener("close", (event) =>
 				resolve({ code: event.code, reason: event.reason }),
 			),
 		);
-		// 30 back-to-back sends comfortably clears the 20-strike close threshold
-		for (let index = 0; index < 30; index++) {
-			try {
-				socket.send(chatMessage("flood", 1));
-			} catch {
-				break;
-			}
-		}
+		// the ceiling is many more drops away, so jump to it rather than sending that many
+		await primeStrikes(room, FLOOD_CLOSE_STRIKES - 1);
+		socket.send(chatMessage("flood", 1));
 		const close = await closed;
 		expect(close.code).toBe(1008);
 		expect(close.reason).toBe(RATE_LIMIT_REASON);
@@ -76,7 +112,7 @@ describe("room policy", () => {
 		expect(blocked.type === "error" && blocked.reason).toBe(
 			MESSAGE_BLOCKED_REASON,
 		);
-		expect(blocked.type === "error" && blocked.retryAfter).toBe(15_000);
+		expect(blocked.type === "error" && blocked.retryAfter).toBe(MUTE_STEP_MS);
 
 		// the mute outlasts the offense, so even a clean line bounces with the remaining wait
 		socket.send(chatMessage("sorry", 2));
@@ -84,7 +120,7 @@ describe("room policy", () => {
 		expect(muted.type === "error" && muted.reason).toBe(MESSAGE_BLOCKED_REASON);
 		if (muted.type !== "error") throw new Error("expected an error");
 		expect(muted.retryAfter).toBeGreaterThan(0);
-		expect(muted.retryAfter).toBeLessThanOrEqual(15_000);
+		expect(muted.retryAfter).toBeLessThanOrEqual(MUTE_STEP_MS);
 
 		const stub = env.CHAT_ROOM.getByName(room);
 		const count = await runInDurableObject(stub, (_instance, state) =>
@@ -104,15 +140,15 @@ describe("room policy", () => {
 				resolve({ code: event.code, reason: event.reason }),
 			),
 		);
-		// four strikes wait 15s, 30s, 45s, 60s; the fifth is shown the door instead
-		for (const strike of [1, 2, 3, 4]) {
+		// every strike below the ceiling stretches the mute by another step; the one at the ceiling is shown the door instead
+		for (let strike = 1; strike < MOD_CLOSE_STRIKES; strike++) {
 			socket.send(chatMessage("4rse this", 3));
 			const blocked = await inbox.next("error");
 			expect(blocked.type === "error" && blocked.reason).toBe(
 				MESSAGE_BLOCKED_REASON,
 			);
 			expect(blocked.type === "error" && blocked.retryAfter).toBe(
-				strike * 15_000,
+				strike * MUTE_STEP_MS,
 			);
 			await skipCooldowns(room);
 		}
