@@ -1,8 +1,10 @@
 // Generates one request-efficient transparent avatar atlas per cast member and the runtime manifest.
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { ART_REPAIRS, applyArtRepairs, describeRepair } from "./artRepairs.ts";
+import { readCastAvb } from "./castSource.ts";
 import { composeImageRgba, decodePose } from "./convert.ts";
 import {
 	buildAvatarFixtures,
@@ -66,28 +68,20 @@ function buildAtlas(
 	return atlas;
 }
 
-// v1.0 art first for the classic cast, then the old-magic v2.1b additions and art pack 1
-const SOURCE_DIRS = [
-	"../../../comic-chat/v1.0-pre-modern/comicart/avatars/",
-	"../../../comic-chat/v2.1b/cchat/comicart/",
-	"../../../comic-chat/v2.1b/cchat/artpack1/",
-].map((dir) => fileURLToPath(new URL(dir, import.meta.url)));
-
-function readAvb(name: string): Uint8Array {
-	const dirs = process.argv[2] ? [resolve(process.argv[2])] : SOURCE_DIRS;
-	for (const dir of dirs) {
-		const path = join(dir, `${name}.avb`);
-		if (existsSync(path)) return new Uint8Array(readFileSync(path));
-	}
-	throw new Error(`${name}.avb not found under ${dirs.join(", ")}`);
-}
-
 const outputDir = resolve(
 	process.argv[3] ??
 		fileURLToPath(new URL("../../public/assets/avatars/", import.meta.url)),
 );
-const inputs = FULL_CAST.map((name) => ({ name, bytes: readAvb(name) }));
+const inputs = FULL_CAST.map((name) => ({
+	name,
+	bytes: readCastAvb(name, process.argv[2]),
+}));
 const fixtures = buildAvatarFixtures(inputs);
+applyArtRepairs(fixtures).forEach((applied, index) => {
+	const repair = ART_REPAIRS[index];
+	if (applied === 0 && repair)
+		throw new Error(`stale art repair: ${describeRepair(repair)}`);
+});
 mkdirSync(outputDir, { recursive: true });
 
 for (let avatarIndex = 0; avatarIndex < inputs.length; avatarIndex++) {
