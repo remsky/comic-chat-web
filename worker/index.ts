@@ -9,6 +9,7 @@ import {
 import { RoomDirectoryDO } from "./directory.js";
 import { createStudioServer } from "./mcp/server.js";
 import { isProhibited, screeningEnabled } from "./moderation.js";
+import { stripSvgResponse } from "./render/stripSvg.js";
 import { ChatRoomDO } from "./room.js";
 
 export { ChatRoomDO, RoomDirectoryDO };
@@ -59,6 +60,8 @@ async function roomDirectory(
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
+		if (url.pathname === "/strip.svg")
+			return stripSvgResponse(request, env.ASSETS);
 		if (url.pathname === "/mcp" || url.pathname.startsWith("/mcp/")) {
 			if (Number(request.headers.get("content-length")) > MAX_MCP_BODY)
 				return Response.json({ error: "request too large" }, { status: 413 });

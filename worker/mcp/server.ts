@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import type { Catalog, CatalogAvatar } from "./catalog.js";
 import { loadCatalog } from "./catalog.js";
-import { stripLink } from "./link.js";
+import { stripLinks } from "./link.js";
 import { checkStrip } from "./validate.js";
 
 // hard caps sized from catalog names and the warn thresholds in validate.ts
@@ -388,7 +388,7 @@ export function createStudioServer(assets: Fetcher) {
 				};
 			}
 
-			const url = await stripLink(strip);
+			const links = await stripLinks(strip);
 			const warnings = issues.filter((i) => i.severity === "warning");
 			const cast = new Set(
 				strip.panels
@@ -399,14 +399,14 @@ export function createStudioServer(assets: Fetcher) {
 			);
 			const cards = strip.panels.filter((p) => p.kind === "title").length;
 
-			const summary = `ok: ${strip.panels.length} panel(s)${cards ? ` including ${cards} title card` : ""}, ${cast.size} character(s), ${url.length} byte link`;
+			const summary = `ok: ${strip.panels.length} panel(s)${cards ? ` including ${cards} title card` : ""}, ${cast.size} character(s), ${links.studio.length} byte link`;
 			const parts: string[] = [summary];
 			if (warnings.length > 0) {
 				parts.push("");
 				for (const w of warnings)
 					parts.push(`warning: ${w.path ? `${w.path}: ` : ""}${w.message}`);
 			}
-			parts.push("", url);
+			parts.push("", `editor: ${links.studio}`, `image: ${links.image}`);
 
 			return {
 				content: [{ type: "text" as const, text: parts.join("\n") }],
