@@ -1,11 +1,13 @@
 // Worker entry: routes room WebSockets to their Durable Object, everything else to static assets.
 
+import { createMcpHandler } from "@modelcontextprotocol/server";
 import {
 	type RoomListing,
 	resolveRoomAllowlist,
 	roomNameFromPath,
 } from "../src/protocol/room.js";
 import { RoomDirectoryDO } from "./directory.js";
+import { createStudioServer } from "./mcp/server.js";
 import { isProhibited, screeningEnabled } from "./moderation.js";
 import { ChatRoomDO } from "./room.js";
 
@@ -13,6 +15,7 @@ export { ChatRoomDO, RoomDirectoryDO };
 
 const MAX_SCREEN_TEXTS = 200;
 const MAX_SCREEN_CHARS = 2000;
+const MAX_MCP_BODY = 256 * 1024;
 
 // the studio's profanity screen; the wordlist stays here so it never ships to a browser
 async function moderate(request: Request, env: Env): Promise<Response> {
@@ -56,6 +59,12 @@ async function roomDirectory(
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
+		if (url.pathname === "/mcp" || url.pathname.startsWith("/mcp/")) {
+			if (Number(request.headers.get("content-length")) > MAX_MCP_BODY)
+				return Response.json({ error: "request too large" }, { status: 413 });
+			const mcp = createMcpHandler(() => createStudioServer(env.ASSETS));
+			return mcp.fetch(request);
+		}
 		if (url.pathname.startsWith("/api/")) {
 			if (url.pathname === "/api/moderate") return moderate(request, env);
 			const allowed = resolveRoomAllowlist(env.ROOMS);
