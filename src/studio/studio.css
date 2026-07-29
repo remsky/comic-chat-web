@@ -627,11 +627,27 @@ select.actor-who::picker(select) {
 	display: none;
 }
 
+/* a phone splits the row so the character keeps its facing and balloon style and the pose pair drops together */
+@media (width < 30rem) {
+	.actor-details::before {
+		content: "";
+		flex-basis: 100%;
+		order: 1;
+	}
+
+	.actor-meta select {
+		flex: 1;
+		max-width: none;
+	}
+
+	.actor-meta .actor-pose {
+		order: 2;
+	}
+}
+
 .actor-auto {
 	grid-area: 1 / 1 / 3 / 2;
-	flex-direction: column;
 	align-self: stretch;
-	justify-content: center;
 }
 
 .actor-drop {
@@ -699,13 +715,18 @@ select.actor-who::picker(select) {
 	background: #b0b0b0;
 }
 
-/* the pose toggle stacks its two icons down the side of the actor row */
+/* borrowing the actor's own rows puts the gear beside the options and the bolt beside the line, however either wraps */
+.actor-auto {
+	display: grid;
+	grid-template-rows: subgrid;
+	row-gap: 0;
+}
+
 .actor-auto .seg-option.sicon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	padding: 3px 6px;
-	flex: 1;
 	min-width: 0;
 }
 

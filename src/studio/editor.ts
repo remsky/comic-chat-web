@@ -637,9 +637,11 @@ export class PanelEditor {
 			this.options.onEdit();
 		});
 
+		emotion.classList.add("actor-pose");
+		gesture.classList.add("actor-pose");
 		const details = document.createElement("span");
 		details.className = "actor-details";
-		details.append(emotion, gesture, facing, mode);
+		details.append(facing, mode, emotion, gesture);
 		if (auto) details.hidden = true;
 
 		const autoToggle = document.createElement("span");
