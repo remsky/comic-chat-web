@@ -41,6 +41,7 @@
 		"@cloudflare/vitest-pool-workers": "^0.18.8",
 		"@playwright/test": "^1.61.1",
 		"@types/node": "^26.1.1",
+		"fontkit": "^2.0.4",
 		"jsdom": "^29.1.1",
 		"typescript": "^7.0.2",
 		"vite": "^8.1.5",
@@ -48,8 +49,10 @@
 		"wrangler": "^4.114.0"
 	},
 	"dependencies": {
+		"@modelcontextprotocol/server": "^2.0.0",
 		"gifenc": "^1.0.3",
 		"mp4-muxer": "^5.2.2",
-		"obscenity": "^0.4.6"
+		"obscenity": "^0.4.6",
+		"zod": "^4.4.3"
 	}
 }

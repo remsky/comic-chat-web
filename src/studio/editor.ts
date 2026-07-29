@@ -641,7 +641,7 @@ export class PanelEditor {
 		gesture.classList.add("actor-pose");
 		const details = document.createElement("span");
 		details.className = "actor-details";
-		details.append(facing, mode, emotion, gesture);
+		details.append(mode, facing, emotion, gesture);
 		if (auto) details.hidden = true;
 
 		const autoToggle = document.createElement("span");
@@ -684,12 +684,8 @@ export class PanelEditor {
 			}
 			this.options.onEdit();
 		};
-		autoBtn.addEventListener("click", () => {
-			if (!auto) setMode(true);
-		});
-		manualBtn.addEventListener("click", () => {
-			if (auto) setMode(false);
-		});
+		for (const btn of [manualBtn, autoBtn])
+			btn.addEventListener("click", () => setMode(!auto));
 
 		const text = named(document.createElement("input"), "Balloon text");
 		text.type = "text";

@@ -6,9 +6,7 @@ export function element<T extends HTMLElement>(id: string): T {
 	return found as T;
 }
 
-export function displayName(name: string): string {
-	return name.charAt(0).toUpperCase() + name.slice(1);
-}
+export { displayName } from "../render/displayName.js";
 
 // how far a scroller must move to bring an item into view, matching scrollIntoView's "nearest"
 export function scrollDelta(

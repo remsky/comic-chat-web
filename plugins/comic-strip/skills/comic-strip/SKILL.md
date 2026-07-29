@@ -51,7 +51,6 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
 | --- | --- | --- |
 | strip | `version` | `2` |
 | | `columns` | 1 to 8 panels per row, default 4 |
-| | `size` | `classic` or `modern` (default) |
 | | `seed` | integer, fixes the engine's random choices |
 | panel | `kind` | `scene` (default) or `title` |
 | | `background` | a backdrop name, or omit for blank |

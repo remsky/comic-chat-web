@@ -1,6 +1,5 @@
 // Builds panels straight from a strip script: explicit cast, order, facing, and camera, with no auto panel breaking.
 
-import { displayName } from "../browser/dom.js";
 import { CLASSIC_UNIT, MODERN_UNIT } from "../browser/panelUnits.js";
 import type { Avatar, AvatarBody, AvatarData } from "../engine/avatar.js";
 import { AvatarRegistry } from "../engine/avatar.js";
@@ -17,6 +16,7 @@ import {
 } from "../engine/panelBalloon.js";
 import { MsvcRand } from "../engine/rand.js";
 import { NO_TITLE, type TitleStar } from "../engine/titlePanel.js";
+import { displayName } from "../render/displayName.js";
 import { type AvatarArt, avatarArtCache, NEUTRAL_KEY } from "./art.js";
 import {
 	emotionAngles,

@@ -9,14 +9,30 @@
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",
-		"not_found_handling": "single-page-application"
+		"not_found_handling": "single-page-application",
+		// unlisted routes get asset handling, so every dynamic route must appear here
+		"run_worker_first": [
+			"/api/*",
+			"/mcp",
+			"/mcp/*",
+			"/studio/s/*",
+			"/studio/strip.svg"
+		]
 	},
 	// bounded default room set: only these rooms accept connections; keep it small to cap how many DOs a public deploy can create
 	"vars": {
 		"ROOMS": ["lobby", "tech-news", "weather-chat"],
 		// "off" drops the profanity screen from the chat room and the studio alike
-		"MODERATION": "on"
+		"MODERATION": "on",
+		"SHORTLINK_CAP": 100
 	},
+	// temporary studio short links, 24h TTL
+	"kv_namespaces": [
+		{
+			"binding": "SHORTLINKS",
+			"id": "9355ffc000694c72818b5e28ad5a9a68"
+		}
+	],
 	"durable_objects": {
 		"bindings": [
 			{

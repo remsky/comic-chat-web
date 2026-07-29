@@ -65,7 +65,7 @@ MP4 and GIF exports are also available in the editor, and hold each panel about 
 - It spends a panel on no story. A four panel strip with a card in front is three beats, so write it as (title) 1+ (comic panels) 3 or let the sheet run up to 1+7 etc (4 panels per row) if you want to fill the page.
 - You can name the cast that carry the strip, or leave it empty for a simple title card.
 - The credit line puts the script chosen names of the characters (the avatar names are generic art identifiers). If keeping it short (e.g Dan the Server Man), you could use those lines for comedic effect or framing.  
-- `footer` is an optional bottom line, off by default: an authorship credit ("Written by ...") or a date. Use it when the strip is signed work; leave it out otherwise. It never costs a credit row, though a five-name cast on a `classic` sized strip fills the card and drops it entirely (default `modern` works fine however)
+- `footer` is an optional bottom line, off by default: an authorship credit ("Written by ...") or a date. Use it when the strip is signed work; leave it out otherwise. It never costs a credit row, though a five-name cast can fill the card and drop it entirely
 - Whether to use title is a creative choice. Usually it's not needed. e.g skip it for most cases. It can be used to set the framing/stage of the comic in advance where creatively beneficial, or for longer strips (8+)
 ## Pairings that work
 
