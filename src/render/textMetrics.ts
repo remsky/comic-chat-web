@@ -50,6 +50,7 @@ export const WHISPER_FONT_METRICS: FontMetrics = {
 
 export interface CanvasMeasureContext {
 	font: string;
+	textBaseline?: string;
 	measureText(text: string): {
 		width: number;
 		fontBoundingBoxAscent?: number;

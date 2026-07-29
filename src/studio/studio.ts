@@ -70,7 +70,7 @@ function scriptBytes(encoded: string): Uint8Array<ArrayBuffer> {
 	return Uint8Array.from(atob(padded), (char) => char.charCodeAt(0));
 }
 
-// ?s= is deflated, ?script= plain; strip-link.mjs writes the short one
+// ?s= carries the deflated strip; ?script= is a legacy plain-base64 alias
 async function scriptFromUrl(): Promise<string | null> {
 	const params = new URLSearchParams(location.search);
 	try {

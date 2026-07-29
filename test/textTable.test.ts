@@ -41,19 +41,27 @@ describe("TableMeasureContext", () => {
 		);
 	});
 
-	it("reports ink below the baseline only for descending glyphs", () => {
+	it("anchors metrics to the current textBaseline like a real canvas", () => {
 		context.font = "400 100px 'Comic Neue'";
+		const scale = 100 / COMIC_NEUE_REGULAR.unitsPerEm;
 		const flat = context.measureText("m");
 		const deep = context.measureText("g");
-		const flatInk = flat.actualBoundingBoxDescent - flat.fontBoundingBoxAscent;
-		const deepInk = deep.actualBoundingBoxDescent - deep.fontBoundingBoxAscent;
-		expect(flatInk).toBeLessThan(1);
-		expect(deepInk).toBeCloseTo(
-			((COMIC_NEUE_REGULAR.inkDescents.g ?? 0) /
-				COMIC_NEUE_REGULAR.unitsPerEm) *
-				100,
+		expect(flat.actualBoundingBoxDescent).toBeLessThan(1);
+		expect(deep.actualBoundingBoxDescent).toBeCloseTo(
+			(COMIC_NEUE_REGULAR.inkDescents.g ?? 0) * scale,
 			6,
 		);
+		context.textBaseline = "top";
+		const top = context.measureText("g");
+		expect(top.fontBoundingBoxAscent).toBeCloseTo(0, 6);
+		expect(
+			top.actualBoundingBoxDescent - top.fontBoundingBoxAscent,
+		).toBeCloseTo(
+			(COMIC_NEUE_REGULAR.ascent + (COMIC_NEUE_REGULAR.inkDescents.g ?? 0)) *
+				scale,
+			6,
+		);
+		context.textBaseline = "alphabetic";
 	});
 
 	it("drives gdiCellFont to a smaller em when the font box outgrows the cell", () => {

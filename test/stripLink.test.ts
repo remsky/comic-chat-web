@@ -44,12 +44,10 @@ function strip(...panels: unknown[]) {
 }
 
 const decode = (url: string): unknown => {
-	const params = new URL(url).searchParams;
-	const packed = params.get("s");
-	const raw = packed
-		? inflateRawSync(Buffer.from(packed, "base64url"))
-		: Buffer.from(params.get("script") ?? "", "base64url");
-	return JSON.parse(raw.toString("utf8"));
+	const packed = new URL(url).searchParams.get("s") ?? "";
+	return JSON.parse(
+		inflateRawSync(Buffer.from(packed, "base64url")).toString("utf8"),
+	);
 };
 
 describe("strip-link validation", () => {
@@ -80,6 +78,7 @@ describe("strip-link validation", () => {
 			],
 			[{ avatar: "kevin", mode: "yell" }, 'unknown mode "yell"'],
 			[{ avatar: "kevin", facing: "up" }, 'unknown facing "up"'],
+			[{ avatar: "kevin", nickname: "kev" }, 'unknown field "nickname"'],
 		] as const) {
 			const { status, err } = run(
 				strip({ background: "den", actors: [actor] }),
@@ -121,7 +120,6 @@ describe("strip-link validation", () => {
 			[{ avatar: "kevin", gesture: "shrug" }, 'no "shrug" art'],
 			[{ avatar: "connor", emotion: "shout" }, 'its "angry" faces'],
 			[{ avatar: "kevin", text: "x".repeat(95) }, "will crowd the art"],
-			[{ avatar: "kevin", nickname: "kev" }, 'unknown field "nickname"'],
 		] as const;
 		for (const [actor, wanted] of cases) {
 			const { status, err } = run(
@@ -144,6 +142,12 @@ describe("strip-link validation", () => {
 		expect(err).toContain("no panel names a gesture");
 		expect(err).toContain('kevin wears "happy" in panels[0] through panels[2]');
 		expect(status).toBe(0);
+	});
+
+	it("refuses the retired size field even at its old default", () => {
+		const { status, err } = run({ ...strip(), size: "modern" });
+		expect(err).toContain("drop the size field");
+		expect(status).toBe(1);
 	});
 
 	it("reports a version the catalog has moved past", () => {

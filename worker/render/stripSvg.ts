@@ -1,4 +1,4 @@
-// GET /strip.svg?s=<packed>: composes the strip server-side and answers a self-contained SVG sheet.
+// GET /studio/strip.svg?s=<packed>: composes the strip server-side and answers a self-contained SVG sheet.
 
 import type { SvgImage } from "../../src/render/svgContext.js";
 import { renderSheetSvg } from "../../src/render/svgSheet.js";
@@ -36,6 +36,7 @@ async function inflate(bytes: Uint8Array): Promise<string> {
 async function scriptFromQuery(url: URL): Promise<string | null> {
 	const packed = url.searchParams.get("s");
 	if (packed) return inflate(decodeBytes(packed));
+	// legacy plain-base64 alias
 	const inline = url.searchParams.get("script");
 	if (inline) return new TextDecoder().decode(decodeBytes(inline));
 	return null;
@@ -62,7 +63,7 @@ export async function stripSvgResponse(
 	} catch {
 		return plain(400, "the script parameter does not decode");
 	}
-	if (!text) return plain(400, "pass the strip as ?s= or ?script=");
+	if (!text) return plain(400, "pass the strip as ?s=");
 	if (text.length > MAX_SCRIPT_BYTES) return plain(413, "script too large");
 
 	let raw: unknown;

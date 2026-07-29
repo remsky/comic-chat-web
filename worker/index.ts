@@ -11,6 +11,7 @@ import { createStudioServer } from "./mcp/server.js";
 import { isProhibited, screeningEnabled } from "./moderation.js";
 import { stripSvgResponse } from "./render/stripSvg.js";
 import { ChatRoomDO } from "./room.js";
+import { SHORT_LINK_PATH, shortLinkResponse } from "./shortlink.js";
 
 export { ChatRoomDO, RoomDirectoryDO };
 
@@ -60,12 +61,23 @@ async function roomDirectory(
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
-		if (url.pathname === "/strip.svg")
+		if (url.pathname === "/studio/strip.svg")
 			return stripSvgResponse(request, env.ASSETS);
+		if (url.pathname.startsWith(SHORT_LINK_PATH))
+			return shortLinkResponse(request, env.SHORTLINKS);
 		if (url.pathname === "/mcp" || url.pathname.startsWith("/mcp/")) {
 			if (Number(request.headers.get("content-length")) > MAX_MCP_BODY)
 				return Response.json({ error: "request too large" }, { status: 413 });
-			const mcp = createMcpHandler(() => createStudioServer(env.ASSETS));
+			const mcp = createMcpHandler(() =>
+				createStudioServer({
+					assets: env.ASSETS,
+					base: url.origin,
+					shortLinks: env.SHORTLINKS,
+					// a missing or malformed cap fails closed
+					cap: Number(env.SHORTLINK_CAP) || 0,
+					...(screeningEnabled(env) ? { prohibited: isProhibited } : {}),
+				}),
+			);
 			return mcp.fetch(request);
 		}
 		if (url.pathname.startsWith("/api/")) {

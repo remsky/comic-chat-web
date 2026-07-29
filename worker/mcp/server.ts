@@ -1,8 +1,14 @@
 import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
+import {
+	type LinkStore,
+	mintShortLink,
+	SHORT_LINK_PATH,
+} from "../shortlink.js";
 import type { Catalog, CatalogAvatar } from "./catalog.js";
 import { loadCatalog } from "./catalog.js";
 import { stripLinks } from "./link.js";
+import { screenStrip } from "./screen.js";
 import { checkStrip } from "./validate.js";
 
 // hard caps sized from catalog names and the warn thresholds in validate.ts
@@ -61,7 +67,6 @@ const panelSchema = z.strictObject({
 
 const stripSchema = z.strictObject({
 	version: z.number().describe("Schema version, currently 2"),
-	size: z.enum(["classic", "modern"]).optional().describe("Panel aspect ratio"),
 	seed: z
 		.number()
 		.int()
@@ -103,7 +108,6 @@ function summarizeAvatar(entry: CatalogAvatar): string {
 function buildBearings(catalog: Catalog): string {
 	return [
 		`backgrounds: ${catalog.backgrounds.join(", ")}`,
-		`sizes: ${catalog.sizes.join(", ")}`,
 		`cameras: ${catalog.cameras.join(", ")} (default wide)`,
 		`facings: ${catalog.facings.join(", ")}`,
 		`modes: ${catalog.modes.join(", ")} (default say)`,
@@ -114,7 +118,7 @@ function buildBearings(catalog: Catalog): string {
 		`limits: ${catalog.limits.actors} actors per panel, ${catalog.limits.balloons} balloons per panel, zoom ${catalog.limits.zoom[0]} to ${catalog.limits.zoom[1]}, ${catalog.limits.columns[0]} to ${catalog.limits.columns[1]} columns`,
 		"",
 		"strip shape:",
-		"  {version: 2, size?, seed?, columns?, panels: [panel, ...]}",
+		"  {version: 2, seed?, columns?, panels: [panel, ...]}",
 		"",
 		"scene panel:",
 		"  {background?, camera?, zoom?, border?, actors: [actor, ...]}",
@@ -135,7 +139,18 @@ function buildBearings(catalog: Catalog): string {
 	].join("\n");
 }
 
-export function createStudioServer(assets: Fetcher) {
+const MAX_SHORT_QUERY = 8192;
+
+export interface StudioServerOptions {
+	assets: Fetcher;
+	base: string;
+	shortLinks?: LinkStore;
+	cap: number;
+	prohibited?: (text: string) => boolean;
+}
+
+export function createStudioServer(options: StudioServerOptions) {
+	const { assets } = options;
 	const server = new McpServer({
 		name: "comic-chat-studio",
 		version: "1.0.0",
@@ -368,7 +383,8 @@ export function createStudioServer(assets: Fetcher) {
 			inputSchema: {
 				strip: stripSchema.describe("The strip JSON document"),
 			},
-			annotations: { readOnlyHint: true },
+			// minting a short link writes a KV row
+			annotations: { readOnlyHint: false, destructiveHint: false },
 		},
 		async ({ strip }) => {
 			const catalog = await loadCatalog(assets);
@@ -388,7 +404,41 @@ export function createStudioServer(assets: Fetcher) {
 				};
 			}
 
-			const links = await stripLinks(strip);
+			if (options.prohibited) {
+				const flagged = screenStrip(strip, options.prohibited);
+				if (flagged.length > 0) {
+					return {
+						content: [
+							{
+								type: "text" as const,
+								text: `blocked: prohibited language in ${flagged.join(", ")}`,
+							},
+						],
+						isError: true,
+					};
+				}
+			}
+
+			const links = await stripLinks(strip, options.base);
+			let editor = links.studio;
+			let image = links.image;
+			let expires = false;
+			if (options.shortLinks && links.query.length <= MAX_SHORT_QUERY) {
+				// minting is best effort; the full links stand on their own
+				try {
+					const slug = await mintShortLink(
+						options.shortLinks,
+						links.query,
+						options.cap,
+					);
+					if (slug) {
+						editor = `${options.base}${SHORT_LINK_PATH}${slug}`;
+						image = `${options.base}${SHORT_LINK_PATH}${slug}.svg`;
+						expires = true;
+					}
+				} catch {}
+			}
+
 			const warnings = issues.filter((i) => i.severity === "warning");
 			const cast = new Set(
 				strip.panels
@@ -399,14 +449,15 @@ export function createStudioServer(assets: Fetcher) {
 			);
 			const cards = strip.panels.filter((p) => p.kind === "title").length;
 
-			const summary = `ok: ${strip.panels.length} panel(s)${cards ? ` including ${cards} title card` : ""}, ${cast.size} character(s), ${links.studio.length} byte link`;
+			const summary = `ok: ${strip.panels.length} panel(s)${cards ? ` including ${cards} title card` : ""}, ${cast.size} character(s)`;
 			const parts: string[] = [summary];
 			if (warnings.length > 0) {
 				parts.push("");
 				for (const w of warnings)
 					parts.push(`warning: ${w.path ? `${w.path}: ` : ""}${w.message}`);
 			}
-			parts.push("", `editor: ${links.studio}`, `image: ${links.image}`);
+			parts.push("", `editor: ${editor}`, `image: ${image}`);
+			if (expires) parts.push("links expire in 24h");
 
 			return {
 				content: [{ type: "text" as const, text: parts.join("\n") }],

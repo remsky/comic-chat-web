@@ -37,19 +37,25 @@ function inkDescent(metrics: FaceMetrics, text: string): number {
 	return units;
 }
 
-// actual descent reads as if textBaseline were "top", so descender() recovers the ink below the baseline
+// metrics anchor to the current textBaseline, as on a real canvas
 export class TableMeasureContext implements CanvasMeasureContext {
 	font = "";
+	textBaseline = "alphabetic";
 
 	measureText(text: string): TableTextMetrics {
 		const metrics = face(this.font);
 		const scale = parseFontPx(this.font) / metrics.unitsPerEm;
+		const shift =
+			this.textBaseline === "top"
+				? metrics.ascent
+				: this.textBaseline === "middle"
+					? (metrics.ascent - metrics.descent) / 2
+					: 0;
 		return {
 			width: advanceWidth(metrics, text) * scale,
-			fontBoundingBoxAscent: metrics.ascent * scale,
-			fontBoundingBoxDescent: metrics.descent * scale,
-			actualBoundingBoxDescent:
-				(metrics.ascent + inkDescent(metrics, text)) * scale,
+			fontBoundingBoxAscent: (metrics.ascent - shift) * scale,
+			fontBoundingBoxDescent: (metrics.descent + shift) * scale,
+			actualBoundingBoxDescent: (shift + inkDescent(metrics, text)) * scale,
 		};
 	}
 }

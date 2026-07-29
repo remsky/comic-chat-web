@@ -340,6 +340,8 @@ export class SvgRenderContext implements PanelRenderContext {
 
 	measureText(text: string): PanelRenderMetrics {
 		this.measurer.font = this.state.font;
+		if ("textBaseline" in this.measurer)
+			this.measurer.textBaseline = this.state.textBaseline;
 		return this.measurer.measureText(text);
 	}
 

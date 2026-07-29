@@ -49,7 +49,7 @@ function checkKeys(
 			issues.push({
 				path: path ? `${path}.${key}` : key,
 				message: `unknown field "${key}"`,
-				severity: "warning",
+				severity: "error",
 			});
 }
 
@@ -477,7 +477,12 @@ export function checkStrip(raw: unknown, catalog: Catalog): StripIssue[] {
 			message: `expected version ${catalog.version}`,
 			severity: "warning",
 		});
-	checkEnum(raw, "size", catalog.sizes, "", issues);
+	if (raw.size !== undefined)
+		issues.push({
+			path: "size",
+			message: 'strips render "modern"; drop the size field',
+			severity: "error",
+		});
 	if (raw.seed !== undefined && !Number.isInteger(raw.seed))
 		issues.push({
 			path: "seed",

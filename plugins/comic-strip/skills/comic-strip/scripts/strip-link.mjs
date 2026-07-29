@@ -51,7 +51,7 @@ function splitName(name) {
 function checkKeys(raw, allowed, path) {
 	for (const key of Object.keys(raw))
 		if (!allowed.includes(key))
-			warn(path ? `${path}.${key}` : key, `unknown field "${key}"`);
+			fail(path ? `${path}.${key}` : key, `unknown field "${key}"`);
 }
 
 function checkEnum(raw, key, allowed, path) {
@@ -313,7 +313,8 @@ function checkStrip(raw) {
 	checkKeys(raw, STRIP_KEYS, "");
 	if (raw.version !== catalog.version)
 		warn("version", `expected version ${catalog.version}`);
-	checkEnum(raw, "size", catalog.sizes, "");
+	if (raw.size !== undefined)
+		fail("size", 'strips render "modern"; drop the size field');
 	if (raw.seed !== undefined && !Number.isInteger(raw.seed))
 		fail("seed", "seed must be an integer");
 
@@ -336,14 +337,11 @@ function checkStrip(raw) {
 	checkShape(raw.panels);
 }
 
-// ?s= is deflated, ?script= plain; the studio reads both
+// ?s= carries the deflated strip
 function link(strip, base) {
 	const json = Buffer.from(JSON.stringify(strip));
 	const packed = deflateRawSync(json, { level: 9 }).toString("base64url");
-	const plain = json.toString("base64url");
-	const query =
-		packed.length < plain.length ? `s=${packed}` : `script=${plain}`;
-	return `${base.replace(/\/$/, "")}/studio.html?${query}`;
+	return `${base.replace(/\/$/, "")}/studio.html?s=${packed}`;
 }
 
 const args = process.argv.slice(2);
