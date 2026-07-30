@@ -23,6 +23,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      # committed generated files must match their sources; regenerating here must be a no-op
+      - run: npm run generate
+      - run: git diff --exit-code
   test:
     runs-on: ubuntu-latest
     steps:

@@ -2,7 +2,7 @@
 
 What each character looks like and how much it can act. `catalog.json` is the authority on exact names and counts; this file is for casting.
 
-Read this file when you want to see the whole troupe at once. When you already know what you need, ask instead: `scripts/cast-query.mjs --register young --emotion bored` narrows it, and `scripts/cast-query.mjs anna` prints one character's faces, poses, look, and register together. The script reads the table and the register bullets below, so both files always agree.
+Read this file when you want to see the whole troupe at once. When you already know what you need, ask instead: `scripts/cast-query.mjs --register young --emotion bored` narrows it, and `scripts/cast-query.mjs anna` prints one character's faces, poses, look, and register together. `catalog.json` bakes in the table and the register bullets below at generate time, so the script and this file always agree.
 
 ## Naming a face and a pose
 
@@ -62,14 +62,14 @@ The art is 1996 black-and-white cartoon line work, the whole cast in one drawing
 
 ## Casting by register
 
-Nobody here wears a uniform or carries a job, so register comes from clothes alone. Rough groupings, for when a brief needs a particular kind of person:
+Nobody here wears a uniform or carries a job, so register comes from clothes or context. Rough groupings, for when a brief needs a particular kind of person:
 
-- **Office or professional**: `dan` and `denise` read closest to coworkers, `tongtyed` as the one who has been there longest, `pedagog` as a humourless authority (but one drawing only), `rebecca` and `tux` as formal to the point of black tie.
+- **Office or professional**: `dan` and `denise` read closest to coworkers, `tongtyed` as the one who has been there longest, `pedagog` as a humourless authority (he only has 1 disgruntled avoidant pose), `rebecca` and `tux` as formal to the point of black tie.
 - **Ordinary adults, no setting implied**: `margaret`, `susan`, `kwensa`, `scotty`, `kevin`, `glenda`. Safe for a neighbour, a friend, a customer. For a parent, cast one of the first four; `kevin` reads mid twenties. `glenda` has one drawing, so she can stand there and nothing more.
 - **Young**: `anna`, `lynnea`, `kevin`, `armando`, `bolo` all read early to mid twenties, the youngest adults in the cast. They keep their other groupings, which are about style rather than age.
 - **Counterculture and outsiders**: `armando`, `lynnea`, `lance`, or `maynard`/`jordan`/`waf`/`hugh`/`cro` in specific contexts.
 - **Wise or elder**: `sage`, `kwensa`, `scotty`.
 - **Showmen**: `mike`, `rebecca`, `bolo`, `rainbow`. Good for anyone overselling something.
-- **Creatures**, which read as comic in most cases, fine for emphasis but be mindful: `connor`, `cro`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
+- **Creatures/Unknown**, which read as comic in most cases, fine for emphasis but be mindful: `connor`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
 
 A creature in most scenes is going to be joking, or for specific and mindful emphasis. If the strip has to be taken at face value, cast humans.

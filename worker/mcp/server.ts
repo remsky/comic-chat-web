@@ -7,6 +7,7 @@ import {
 } from "../shortlink.js";
 import type { Catalog, CatalogAvatar } from "./catalog.js";
 import { loadCatalog } from "./catalog.js";
+import { loadDoc } from "./docs.js";
 import { stripLinks } from "./link.js";
 import { screenStrip } from "./screen.js";
 import { checkStrip } from "./validate.js";
@@ -62,7 +63,7 @@ const panelSchema = z.strictObject({
 		.describe("Shot framing, default wide"),
 	zoom: z.number().optional().describe("Zoom level, 0.5 to 2"),
 	border: z.boolean().optional().describe("Draw panel border"),
-	actors: z.array(actorSchema).max(8).describe("Characters in this panel"),
+	actors: z.array(actorSchema).max(5).describe("Characters in this panel"),
 });
 
 const stripSchema = z.strictObject({
@@ -76,12 +77,15 @@ const stripSchema = z.strictObject({
 	panels: z.array(panelSchema).max(32).describe("Ordered list of panels"),
 });
 
-function isSpeaking(a: CatalogAvatar): boolean {
+function isExpressive(a: CatalogAvatar): boolean {
 	return Object.values(a.emotions).reduce((sum, n) => sum + n, 0) > 1;
 }
 
-function describeAvatar(entry: CatalogAvatar): string {
-	const faces = Object.entries(entry.emotions)
+const LEGEND =
+	'legend: "happy 3" = 3 variants; use emotion "happy" or "happy_1" through "happy_3" to pin one. "(drawn as sad)" = reuses sad\'s art. poses are literal names.';
+
+function facesOf(entry: CatalogAvatar): string {
+	return Object.entries(entry.emotions)
 		.filter(([, count]) => count > 0)
 		.map(([face, count]) => {
 			const alias = entry.aliases?.[face];
@@ -90,19 +94,48 @@ function describeAvatar(entry: CatalogAvatar): string {
 				: `${face} ${count}`;
 		})
 		.join(", ");
-	return [
-		entry.name,
-		`  faces: ${faces}`,
-		`  poses: ${(entry.gestures ?? []).join(", ") || "none"}`,
-	].join("\n");
+}
+
+function findRegister(catalog: Catalog, wanted: string) {
+	return catalog.registers.find((group) =>
+		group.key.startsWith(wanted.toLowerCase()),
+	);
+}
+
+function registersOf(catalog: Catalog, name: string): string[] {
+	return catalog.registers
+		.filter((group) => group.names.includes(name))
+		.map((group) => group.label);
+}
+
+function describeAvatar(entry: CatalogAvatar, catalog: Catalog): string {
+	const groups = registersOf(catalog, entry.name);
+	const lines = [entry.name];
+	if (entry.look && entry.range)
+		lines.push(`  look     ${entry.look}`, `  range    ${entry.range}`);
+	lines.push(`  faces    ${facesOf(entry)}`);
+	lines.push(`  poses    ${(entry.gestures ?? []).join(", ") || "none"}`);
+	if (groups.length > 0) lines.push(`  register ${groups.join("; ")}`);
+	return lines.join("\n");
 }
 
 function summarizeAvatar(entry: CatalogAvatar): string {
+	const lead = entry.look ? `${entry.look}. ` : "";
+	if (!isExpressive(entry)) return `  ${entry.name}: ${lead}one drawing`;
 	const faces = Object.keys(entry.emotions).filter(
 		(e) => (entry.emotions[e] ?? 0) > 0,
 	);
 	const poses = (entry.gestures ?? []).length;
-	return `  ${entry.name}: ${faces.join(" ")}${poses ? `, ${poses} poses` : ""}`;
+	return `  ${entry.name}: ${lead}${faces.join(" ")}${poses ? `, ${poses} poses` : ""}`;
+}
+
+function buildCastBlock(catalog: Catalog): string {
+	return [
+		`cast (${catalog.avatars.length}):`,
+		...catalog.avatars.map(summarizeAvatar),
+		'  "one drawing" characters still take speaking parts; the fixed face is the performance.',
+		`  registers: ${catalog.registers.map((group) => group.key).join(", ")}. query_cast filters by them.`,
+	].join("\n");
 }
 
 function buildBearings(catalog: Catalog): string {
@@ -139,6 +172,36 @@ function buildBearings(catalog: Catalog): string {
 	].join("\n");
 }
 
+const WORKFLOW = [
+	"workflow:",
+	"  1. get_bearings (once per conversation)",
+	"  2. create_strip to validate and get the studio link",
+	"  query_cast({avatars: [...]}) lists exact pose names, needed only to pin a gesture.",
+	"  create_strip validates internally. use validate_strip to iterate without minting a link.",
+].join("\n");
+
+// vocabulary, cast, backdrops, craft, then what to call: one payload behind both the prompt and get_bearings
+function buildBriefing(
+	catalog: Catalog,
+	backdrops: string,
+	guidance: string,
+): string {
+	const parts = [buildBearings(catalog), buildCastBlock(catalog)];
+	if (backdrops) parts.push(backdrops);
+	if (guidance) parts.push(guidance);
+	parts.push(WORKFLOW);
+	return parts.join("\n\n");
+}
+
+async function loadBriefing(assets: Fetcher): Promise<string> {
+	const [catalog, backdrops, guidance] = await Promise.all([
+		loadCatalog(assets),
+		loadDoc(assets, "backgrounds.md"),
+		loadDoc(assets, "guidance.md"),
+	]);
+	return buildBriefing(catalog, backdrops, guidance);
+}
+
 const MAX_SHORT_QUERY = 8192;
 
 export interface StudioServerOptions {
@@ -161,34 +224,19 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Comic strip authoring guide",
 			description:
-				"Vocabulary, schema, cast overview, and workflow for authoring comic strips.",
+				"Vocabulary, schema, cast overview, craft guidance, and workflow for authoring comic strips.",
 		},
-		async () => {
-			const catalog = await loadCatalog(assets);
-			const bearings = buildBearings(catalog);
-			const speaking = catalog.avatars.filter(isSpeaking);
-			const castBlock = [
-				`speaking cast (${speaking.length} of ${catalog.avatars.length}):`,
-				...speaking.map(summarizeAvatar),
-			].join("\n");
-			const workflow = [
-				"next steps:",
-				"  1. query_cast({avatars: [...]}) for detailed art on your chosen characters",
-				"  2. create_strip to validate and get the studio link",
-				"  use validate_strip to iterate without minting a link.",
-			].join("\n");
-			return {
-				messages: [
-					{
-						role: "user" as const,
-						content: {
-							type: "text" as const,
-							text: [bearings, "", castBlock, "", workflow].join("\n"),
-						},
+		async () => ({
+			messages: [
+				{
+					role: "user" as const,
+					content: {
+						type: "text" as const,
+						text: await loadBriefing(assets),
 					},
-				],
-			};
-		},
+				},
+			],
+		}),
 	);
 
 	server.registerResource(
@@ -197,21 +245,20 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Full cast inventory",
 			description:
-				"Every speaking character with variant counts and pose names.",
+				"Every character with its look, range, variant counts, pose names, and registers.",
 			mimeType: "text/plain",
 		},
 		async (uri) => {
 			const catalog = await loadCatalog(assets);
-			const speaking = catalog.avatars.filter(isSpeaking);
-			const legend =
-				'legend: "happy 3" = 3 variants; use emotion "happy" or "happy_1" through "happy_3" to pin one. "(drawn as sad)" = reuses sad\'s art. poses are literal names.';
-			const lines = speaking.map(describeAvatar);
+			const lines = catalog.avatars.map((entry) =>
+				describeAvatar(entry, catalog),
+			);
 			return {
 				contents: [
 					{
 						uri: uri.href,
 						mimeType: "text/plain",
-						text: `${legend}\n\n${lines.join("\n\n")}`,
+						text: `${LEGEND}\n\n${lines.join("\n\n")}`,
 					},
 				],
 			};
@@ -223,30 +270,18 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Get bearings",
 			description:
-				"Vocabulary, limits, strip schema, and workflow. Call once at the start of a conversation. Redundant if the comic-strip prompt is loaded.",
+				"Vocabulary, cast, limits, strip schema, staging and pacing craft, and workflow. Call once at the start of a conversation, before writing any panels. Redundant if the comic-strip prompt is loaded.",
 			inputSchema: {},
 			annotations: { readOnlyHint: true },
 		},
-		async () => {
-			const catalog = await loadCatalog(assets);
-			const workflow = [
-				"",
-				"workflow:",
-				"  1. get_bearings (once per conversation)",
-				"  2. query_cast({speaks: true}) to list characters who can react",
-				"  3. query_cast({avatars: [...]}) to dump art inventories for your picks",
-				"  4. create_strip to validate and get the studio link",
-				"  create_strip validates internally. use validate_strip to iterate without minting a link.",
-			].join("\n");
-			return {
-				content: [
-					{
-						type: "text" as const,
-						text: buildBearings(catalog) + workflow,
-					},
-				],
-			};
-		},
+		async () => ({
+			content: [
+				{
+					type: "text" as const,
+					text: await loadBriefing(assets),
+				},
+			],
+		}),
 	);
 
 	server.registerTool(
@@ -254,7 +289,7 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Query cast",
 			description:
-				"Look up which characters own a gesture, an emotion, or both. With character names, dump each one's full art inventory.",
+				"Look up which characters own a gesture or an emotion, or cast by register. With character names, dump each one's look, range, art inventory, and registers.",
 			inputSchema: {
 				avatars: z
 					.array(z.string())
@@ -268,16 +303,24 @@ export function createStudioServer(options: StudioServerOptions) {
 					.string()
 					.optional()
 					.describe("Filter to characters that own this face"),
-				speaks: z
-					.boolean()
+				register: z
+					.string()
 					.optional()
 					.describe(
-						"Filter to characters with more than one drawing, so they can react",
+						"Filter to a casting register, e.g. office, young, wise, creatures",
 					),
+				human: z
+					.boolean()
+					.optional()
+					.describe("Filter out the creatures of the cast"),
+				reacts: z
+					.boolean()
+					.optional()
+					.describe("Filter to characters with more than one drawing"),
 			},
 			annotations: { readOnlyHint: true },
 		},
-		async ({ avatars: names, gesture, emotion, speaks }) => {
+		async ({ avatars: names, gesture, emotion, register, human, reacts }) => {
 			const catalog = await loadCatalog(assets);
 
 			if (names && names.length > 0) {
@@ -294,33 +337,49 @@ export function createStudioServer(options: StudioServerOptions) {
 						isError: true,
 					};
 				}
-				const legend =
-					'legend: "happy 3" = 3 variants; use emotion "happy" or "happy_1" through "happy_3" to pin one. "(drawn as sad)" = reuses sad\'s art. poses are literal names.';
 				const lines = names
 					.map((n) => byName.get(n))
 					.filter((a) => a !== undefined)
-					.map(describeAvatar);
+					.map((entry) => describeAvatar(entry, catalog));
 				return {
 					content: [
 						{
 							type: "text" as const,
-							text: `${legend}\n\n${lines.join("\n\n")}`,
+							text: `${LEGEND}\n\n${lines.join("\n\n")}`,
 						},
 					],
 				};
 			}
+
+			const group = register ? findRegister(catalog, register) : undefined;
+			if (register && !group)
+				return {
+					content: [
+						{
+							type: "text" as const,
+							text: `unknown register "${register}". use one of ${catalog.registers.map((r) => r.key).join(", ")}`,
+						},
+					],
+					isError: true,
+				};
+			const creatures = findRegister(catalog, "creature");
 
 			let matched = catalog.avatars;
 			if (gesture)
 				matched = matched.filter((a) => (a.gestures ?? []).includes(gesture));
 			if (emotion)
 				matched = matched.filter((a) => (a.emotions[emotion] ?? 0) > 0);
-			if (speaks) matched = matched.filter(isSpeaking);
+			if (group) matched = matched.filter((a) => group.names.includes(a.name));
+			if (human)
+				matched = matched.filter((a) => !creatures?.names.includes(a.name));
+			if (reacts) matched = matched.filter(isExpressive);
 
 			const filters = [
 				gesture && `gesture=${gesture}`,
 				emotion && `emotion=${emotion}`,
-				speaks && "speaks",
+				group && `register=${group.label}`,
+				human && "human",
+				reacts && "reacts",
 			]
 				.filter(Boolean)
 				.join(" ");

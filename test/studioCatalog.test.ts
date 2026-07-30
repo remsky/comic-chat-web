@@ -17,8 +17,14 @@ const backgroundJson = JSON.stringify({
 	backdrops: [{ name: "volcano" }, { name: "pastoral" }],
 });
 
+const noProse = { notes: {}, registers: [] };
+
 describe("catalogJson", () => {
-	const published = catalogJson(buildCatalog(avatars, ["volcano"]), "test");
+	const published = catalogJson(
+		buildCatalog(avatars, ["volcano"]),
+		"test",
+		noProse,
+	);
 	const find = (name: string) =>
 		published.avatars.find((entry) => entry.name === name);
 
@@ -77,17 +83,19 @@ describe("catalogJson", () => {
 
 describe("catalogFromManifests", () => {
 	it("reads the committed manifests and stamps the art they describe", () => {
-		const built = catalogFromManifests(avatarJson, backgroundJson);
+		const built = catalogFromManifests(avatarJson, backgroundJson, "");
 		expect(built.backgrounds).toEqual(["volcano", "pastoral"]);
 		expect(built.avatars).toHaveLength(avatars.length);
 		expect(built.art).toMatch(/^[0-9a-f]{8}$/);
 	});
 
 	it("moves the stamp when the art moves, so a stale copy is visible", () => {
-		const first = catalogFromManifests(avatarJson, backgroundJson).art;
-		expect(catalogFromManifests(avatarJson, backgroundJson).art).toBe(first);
-		expect(catalogFromManifests(` ${avatarJson}`, backgroundJson).art).not.toBe(
+		const first = catalogFromManifests(avatarJson, backgroundJson, "").art;
+		expect(catalogFromManifests(avatarJson, backgroundJson, "").art).toBe(
 			first,
 		);
+		expect(
+			catalogFromManifests(` ${avatarJson}`, backgroundJson, "").art,
+		).not.toBe(first);
 	});
 });

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Answers a casting question from the catalog and cast.md, so a strip can be written without reading either in full.
+// Answers a casting question from the catalog, which bakes in cast.md's look, range, and register prose.
 
 import { readFileSync } from "node:fs";
 
@@ -7,51 +7,27 @@ const catalog = JSON.parse(
 	readFileSync(new URL("../reference/catalog.json", import.meta.url), "utf8"),
 );
 const avatars = new Map(catalog.avatars.map((entry) => [entry.name, entry]));
+const registers = catalog.registers;
 
-const cast = readFileSync(
-	new URL("../reference/cast.md", import.meta.url),
-	"utf8",
-);
+const findRegister = (wanted) =>
+	registers.find((group) => group.key.startsWith(wanted.toLowerCase()));
+const creatures = findRegister("creature");
 
-// the troupe table: | name | look | range |
-const notes = new Map();
-for (const [, name, look, range] of cast.matchAll(
-	/^\| ([a-z]+) \| ([^|]+) \| ([^|]+) \|$/gm,
-))
-	if (avatars.has(name))
-		notes.set(name, { look: look.trim(), range: range.trim() });
-
-// the casting-by-register bullets: - **Label**: `name`, `name`
-const registers = [];
-for (const [, label, body] of cast.matchAll(/^- \*\*([^*]+)\*\*(.*)$/gm)) {
-	const names = [...body.matchAll(/`([a-z]+)`/g)]
-		.map((match) => match[1])
-		.filter((name) => avatars.has(name));
-	if (names.length)
-		registers.push({
-			label: label.trim(),
-			key: label.trim().toLowerCase(),
-			names: new Set(names),
-		});
-}
-const creatures = registers.find((group) => group.key.startsWith("creature"));
-
-// prose from cast.md, minus the markdown ticks
-const plain = (text) => (text ?? "").replaceAll("`", "");
-const rangeOf = (name) => plain(notes.get(name)?.range);
-const lookOf = (name) => plain(notes.get(name)?.look);
-const isSilent = (name) => rangeOf(name).includes("one drawing");
+const rangeOf = (name) => avatars.get(name)?.range ?? "";
+const lookOf = (name) => avatars.get(name)?.look ?? "";
+const reacts = (entry) =>
+	Object.values(entry.emotions).reduce((sum, n) => sum + n, 0) > 1;
 
 const usage = () => {
 	console.error("usage: cast-query.mjs <character>... | <filters>");
 	console.error("  --gesture <name>   owns that pose art");
 	console.error("  --emotion <name>   owns that face art");
 	console.error(
-		`  --register <label> one of: ${registers.map((group) => group.key.split(" ")[0]).join(", ")}`,
+		`  --register <label> one of: ${registers.map((group) => group.key).join(", ")}`,
 	);
 	console.error("  --human            not a creature");
 	console.error(
-		"  --speaks           has more than one drawing, so it can react",
+		"  --reacts           has more than one drawing, so it can change face",
 	);
 	console.error(
 		"filters combine; with no filters, names dump one character each",
@@ -63,7 +39,7 @@ const die = (message) => {
 	process.exit(2);
 };
 
-const FLAGS = ["--gesture", "--emotion", "--register", "--human", "--speaks"];
+const FLAGS = ["--gesture", "--emotion", "--register", "--human", "--reacts"];
 const VALUED = ["--gesture", "--emotion", "--register"];
 
 const args = process.argv.slice(2);
@@ -127,13 +103,10 @@ if (emotion !== undefined && !catalog.emotions.includes(emotion))
 	);
 
 const wanted = filters["--register"];
-const register =
-	wanted === undefined
-		? undefined
-		: registers.find((group) => group.key.startsWith(wanted.toLowerCase()));
+const register = wanted === undefined ? undefined : findRegister(wanted);
 if (wanted !== undefined && register === undefined)
 	die(
-		`unknown register "${wanted}"; use one of ${registers.map((group) => group.key.split(" ")[0]).join(", ")}`,
+		`unknown register "${wanted}"; use one of ${registers.map((group) => group.key).join(", ")}`,
 	);
 
 const matched = [...avatars.keys()].filter((name) => {
@@ -141,9 +114,9 @@ const matched = [...avatars.keys()].filter((name) => {
 	if (gesture !== undefined && !(entry.gestures ?? []).includes(gesture))
 		return false;
 	if (emotion !== undefined && !(entry.emotions[emotion] > 0)) return false;
-	if (register !== undefined && !register.names.has(name)) return false;
-	if (filters["--human"] && creatures?.names.has(name)) return false;
-	if (filters["--speaks"] && isSilent(name)) return false;
+	if (register !== undefined && !register.names.includes(name)) return false;
+	if (filters["--human"] && creatures?.names.includes(name)) return false;
+	if (filters["--reacts"] && !reacts(entry)) return false;
 	return true;
 });
 
@@ -175,10 +148,10 @@ function describe(name) {
 		})
 		.join(", ");
 	const groups = registers
-		.filter((group) => group.names.has(name))
+		.filter((group) => group.names.includes(name))
 		.map((group) => group.label);
 	const lines = [name];
-	if (notes.has(name))
+	if (entry.look)
 		lines.push(`  look     ${lookOf(name)}`, `  range    ${rangeOf(name)}`);
 	lines.push(`  faces    ${faces}`);
 	lines.push(`  poses    ${(entry.gestures ?? []).join(", ") || "none"}`);

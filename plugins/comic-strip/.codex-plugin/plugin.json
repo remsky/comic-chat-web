@@ -14,7 +14,7 @@
 	"interface": {
 		"displayName": "Comic Strip",
 		"shortDescription": "Cast a 1996 cartoon troupe into a comic strip",
-		"longDescription": "Writes a comic strip as a validated document and returns a link that opens it, rendered, in the Comic Chat studio. Thirty one characters with their own faces and poses, nine backdrops, and a validator that catches a name the art does not have before the strip reaches the screen.",
+		"longDescription": "Writes a comic strip as a validated document and returns a link that opens it, rendered, in the Comic Chat studio. Twenty eight characters with their own faces and poses, eight backdrops, and a validator that catches a name the art does not have before the strip reaches the screen.",
 		"developerName": "remsky",
 		"category": "Creativity",
 		"capabilities": ["Write"],

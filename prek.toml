@@ -4,4 +4,6 @@
 repo = "local"
 hooks = [
     { id = "biome", name = "biome check", entry = "npx biome check --no-errors-on-unmatched --files-ignore-unknown=true", language = "system", types = ["text"] },
+    # every committed generated file, rebuilt on each commit: no file list to keep in step with the generators
+    { id = "generate", name = "regenerate committed artifacts", entry = "npm run generate", language = "system", always_run = true, pass_filenames = false },
 ]

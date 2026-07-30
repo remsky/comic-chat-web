@@ -15,7 +15,9 @@ A strip is a JSON document: a list of panels, each casting up to five characters
 4. Validate and get the link: `node <skill dir>/scripts/strip-link.mjs strip.json`. An error means the studio would reject that field, so fix it and rerun. A warning means the strip renders, but not the way you asked.
 5. Hand back the link and the file path. The link opens the strip in the editor, where the user can retune any panel and export it from the Save menu: a PNG sheet, a square PNG, an MP4 or GIF that plays the panels one at a time, or the JSON back out.
 
-Add `--base http://localhost:5173` to point the link at a dev server instead of the public studio, and `--open` to also launch it in the default browser.
+Links point at the public studio, `https://comics.remsky.art`. Add `--open` to also launch the link in the default browser.
+
+When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary, the whole cast, and the same craft as `reference/guidance.md`, so it stands in for steps 1 and 2. `create_strip` validates and returns a short link in one call, and `query_cast` lists exact pose names when you want to pin a gesture.
 
 ## Reference
 
@@ -24,7 +26,7 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
 | `reference/guidance.md` | before writing anything. Staging, camera, pacing, pairings, and the mistakes that only show up in the render |
 | `scripts/cast-query.mjs` | casting. Ask it which characters own a pose or a face, or dump one character in full. Prefer this over reading the cast |
 | `reference/cast.md` | browsing the whole troupe at once, or reading how faces and poses are named |
-| `reference/backgrounds.md` | choosing where it is set. All nine backdrops, what each looks like, and which are ink and which are colour |
+| `reference/backgrounds.md` | choosing where it is set. All eight backdrops, what each looks like, and which are ink and which are colour |
 | `reference/catalog.json` | last resort. The machine authority both scripts already read for you, so you rarely need it open |
 
 `cast-query.mjs` with no arguments prints its filters. A character's faces are stored as counts and its poses as names: `happy 3` means the `emotion` field takes `happy`, or `happy_1` to `happy_3` to pin one drawing. Poses are written exactly as the query prints them.
@@ -74,7 +76,7 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
   "kind": "title",
   "title": "SHIP IT ON FRIDAY",
   "actors": [
-    { "avatar": "dan", "text": "Dan, who pushed" },
+    { "avatar": "dan", "text": "Dan; who pushed" },
     { "avatar": "margaret" }
   ]
 }
