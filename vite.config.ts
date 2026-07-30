@@ -1,4 +1,10 @@
-import { cpSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+	cpSync,
+	mkdirSync,
+	readFileSync,
+	rmSync,
+	writeFileSync,
+} from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, loadEnv, type Plugin } from "vite";
@@ -14,6 +20,7 @@ import {
 	docAsset,
 	SKILL_DOCS,
 	SKILL_REFERENCE,
+	SKILL_THUMBS,
 	shippedManifests,
 } from "./src/studio/catalogJson.js";
 import {
@@ -78,6 +85,11 @@ function shippedPublicDir(mode: string): string {
 			join(staged, docAsset(doc)),
 			readFileSync(entry(`${SKILL_REFERENCE}/${doc}`), "utf8"),
 		);
+	for (const thumb of SKILL_THUMBS) {
+		const dest = join(staged, docAsset(thumb));
+		mkdirSync(join(dest, ".."), { recursive: true });
+		writeFileSync(dest, readFileSync(entry(`${SKILL_REFERENCE}/${thumb}`)));
+	}
 	return staged;
 }
 

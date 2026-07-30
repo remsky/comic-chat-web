@@ -7,7 +7,7 @@ import {
 } from "../shortlink.js";
 import type { Catalog, CatalogAvatar } from "./catalog.js";
 import { loadCatalog } from "./catalog.js";
-import { loadDoc } from "./docs.js";
+import { loadBlob, loadDoc } from "./docs.js";
 import { stripLinks } from "./link.js";
 import { screenStrip } from "./screen.js";
 import { checkStrip } from "./validate.js";
@@ -270,18 +270,42 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Get bearings",
 			description:
-				"Vocabulary, cast, limits, strip schema, staging and pacing craft, and workflow. Call once at the start of a conversation, before writing any panels. Redundant if the comic-strip prompt is loaded.",
-			inputSchema: {},
+				"Vocabulary, cast, limits, strip schema, staging and pacing craft, and workflow. Call once at the start of a conversation, before writing any panels. Redundant if the comic-strip prompt is loaded. Pass images: true to include character and background reference sheets (adds ~750 KB).",
+			inputSchema: {
+				images: z
+					.boolean()
+					.optional()
+					.describe(
+						"Include cast and background contact-sheet images for visual reference",
+					),
+			},
 			annotations: { readOnlyHint: true },
 		},
-		async () => ({
-			content: [
-				{
-					type: "text" as const,
-					text: await loadBriefing(assets),
-				},
-			],
-		}),
+		async ({ images }) => {
+			const content: Array<
+				| { type: "text"; text: string }
+				| { type: "image"; data: string; mimeType: string }
+			> = [{ type: "text" as const, text: await loadBriefing(assets) }];
+			if (images) {
+				const [cast, bgs] = await Promise.all([
+					loadBlob(assets, "thumbs/cast.png"),
+					loadBlob(assets, "thumbs/backgrounds.png"),
+				]);
+				if (cast)
+					content.push({
+						type: "image" as const,
+						data: cast,
+						mimeType: "image/png",
+					});
+				if (bgs)
+					content.push({
+						type: "image" as const,
+						data: bgs,
+						mimeType: "image/png",
+					});
+			}
+			return { content };
+		},
 	);
 
 	server.registerTool(

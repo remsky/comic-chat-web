@@ -23,6 +23,10 @@ export const CATALOG_FILE = "assets/catalog.json";
 export const SKILL_REFERENCE =
 	"plugins/comic-strip/skills/comic-strip/reference";
 export const SKILL_DOCS = ["guidance.md", "backgrounds.md"] as const;
+export const SKILL_THUMBS = [
+	"thumbs/cast.png",
+	"thumbs/backgrounds.png",
+] as const;
 
 export const docAsset = (name: string): string => `assets/${name}`;
 
