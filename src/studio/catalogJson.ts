@@ -17,6 +17,13 @@ import {
 
 export const CATALOG_FILE = "assets/catalog.json";
 
+// the skill's reference docs are the single source; the build republishes them so MCP clients read the same text
+export const SKILL_REFERENCE =
+	"plugins/comic-strip/skills/comic-strip/reference";
+export const SKILL_DOCS = ["guidance.md", "cast.md", "backgrounds.md"] as const;
+
+export const docAsset = (name: string): string => `assets/${name}`;
+
 export interface PublishedAvatar {
 	name: string;
 	// emotion -> how many faces it names: "happy_1" to "happy_N", or bare "happy" for the strongest

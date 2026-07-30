@@ -11,6 +11,9 @@ import {
 import {
 	CATALOG_FILE,
 	catalogFromManifests,
+	docAsset,
+	SKILL_DOCS,
+	SKILL_REFERENCE,
 	shippedManifests,
 } from "./src/studio/catalogJson.js";
 import {
@@ -66,6 +69,11 @@ function shippedPublicDir(mode: string): string {
 			catalogFromManifests(manifests.avatars, manifests.backgrounds),
 		),
 	);
+	for (const doc of SKILL_DOCS)
+		writeFileSync(
+			join(staged, docAsset(doc)),
+			readFileSync(entry(`${SKILL_REFERENCE}/${doc}`), "utf8"),
+		);
 	return staged;
 }
 

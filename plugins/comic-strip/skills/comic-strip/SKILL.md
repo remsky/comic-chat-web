@@ -17,7 +17,7 @@ A strip is a JSON document: a list of panels, each casting up to five characters
 
 Links point at the public studio, `https://comics.remsky.art`. Add `--open` to also launch the link in the default browser.
 
-When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary and the whole cast, `create_strip` validates and returns a short link in one call, and `query_cast` lists exact pose names when you want to pin a gesture.
+When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary, the whole cast, and the same craft as `reference/guidance.md`, so it stands in for steps 1 and 2. `create_strip` validates and returns a short link in one call, and `query_cast` lists exact pose names when you want to pin a gesture.
 
 ## Reference
 
@@ -26,7 +26,7 @@ When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries
 | `reference/guidance.md` | before writing anything. Staging, camera, pacing, pairings, and the mistakes that only show up in the render |
 | `scripts/cast-query.mjs` | casting. Ask it which characters own a pose or a face, or dump one character in full. Prefer this over reading the cast |
 | `reference/cast.md` | browsing the whole troupe at once, or reading how faces and poses are named |
-| `reference/backgrounds.md` | choosing where it is set. All nine backdrops, what each looks like, and which are ink and which are colour |
+| `reference/backgrounds.md` | choosing where it is set. All eight backdrops, what each looks like, and which are ink and which are colour |
 | `reference/catalog.json` | last resort. The machine authority both scripts already read for you, so you rarely need it open |
 
 `cast-query.mjs` with no arguments prints its filters. A character's faces are stored as counts and its poses as names: `happy 3` means the `emotion` field takes `happy`, or `happy_1` to `happy_3` to pin one drawing. Poses are written exactly as the query prints them.

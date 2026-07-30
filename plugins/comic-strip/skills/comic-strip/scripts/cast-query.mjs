@@ -2,45 +2,28 @@
 // Answers a casting question from the catalog and cast.md, so a strip can be written without reading either in full.
 
 import { readFileSync } from "node:fs";
+import {
+	findRegister,
+	parseCastProse,
+	isSilent as proseIsSilent,
+	registersOf,
+} from "./generated/castProse.mjs";
 
 const catalog = JSON.parse(
 	readFileSync(new URL("../reference/catalog.json", import.meta.url), "utf8"),
 );
 const avatars = new Map(catalog.avatars.map((entry) => [entry.name, entry]));
 
-const cast = readFileSync(
-	new URL("../reference/cast.md", import.meta.url),
-	"utf8",
+const prose = parseCastProse(
+	readFileSync(new URL("../reference/cast.md", import.meta.url), "utf8"),
+	new Set(avatars.keys()),
 );
+const { notes, registers } = prose;
+const creatures = findRegister(prose, "creature");
 
-// the troupe table: | name | look | range |
-const notes = new Map();
-for (const [, name, look, range] of cast.matchAll(
-	/^\| ([a-z]+) \| ([^|]+) \| ([^|]+) \|$/gm,
-))
-	if (avatars.has(name))
-		notes.set(name, { look: look.trim(), range: range.trim() });
-
-// the casting-by-register bullets: - **Label**: `name`, `name`
-const registers = [];
-for (const [, label, body] of cast.matchAll(/^- \*\*([^*]+)\*\*(.*)$/gm)) {
-	const names = [...body.matchAll(/`([a-z]+)`/g)]
-		.map((match) => match[1])
-		.filter((name) => avatars.has(name));
-	if (names.length)
-		registers.push({
-			label: label.trim(),
-			key: label.trim().toLowerCase(),
-			names: new Set(names),
-		});
-}
-const creatures = registers.find((group) => group.key.startsWith("creature"));
-
-// prose from cast.md, minus the markdown ticks
-const plain = (text) => (text ?? "").replaceAll("`", "");
-const rangeOf = (name) => plain(notes.get(name)?.range);
-const lookOf = (name) => plain(notes.get(name)?.look);
-const isSilent = (name) => rangeOf(name).includes("one drawing");
+const rangeOf = (name) => notes.get(name)?.range ?? "";
+const lookOf = (name) => notes.get(name)?.look ?? "";
+const isSilent = (name) => proseIsSilent(prose, name);
 
 const usage = () => {
 	console.error("usage: cast-query.mjs <character>... | <filters>");
@@ -127,10 +110,7 @@ if (emotion !== undefined && !catalog.emotions.includes(emotion))
 	);
 
 const wanted = filters["--register"];
-const register =
-	wanted === undefined
-		? undefined
-		: registers.find((group) => group.key.startsWith(wanted.toLowerCase()));
+const register = wanted === undefined ? undefined : findRegister(prose, wanted);
 if (wanted !== undefined && register === undefined)
 	die(
 		`unknown register "${wanted}"; use one of ${registers.map((group) => group.key.split(" ")[0]).join(", ")}`,
@@ -174,9 +154,7 @@ function describe(name) {
 			return alias ? `${face} ${count} (=${alias})` : `${face} ${count}`;
 		})
 		.join(", ");
-	const groups = registers
-		.filter((group) => group.names.has(name))
-		.map((group) => group.label);
+	const groups = registersOf(prose, name);
 	const lines = [name];
 	if (notes.has(name))
 		lines.push(`  look     ${lookOf(name)}`, `  range    ${rangeOf(name)}`);

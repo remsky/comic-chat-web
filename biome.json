@@ -10,6 +10,7 @@
 		"includes": [
 			"**",
 			"!worker-configuration.d.ts",
+			"!plugins/comic-strip/skills/comic-strip/scripts/generated",
 			"!.claude/settings.local.json",
 			"!.glyph"
 		]

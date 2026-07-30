@@ -1,6 +1,6 @@
 # Writing a strip that reads
 
-Craft, in the order it bites. `backgrounds.md` covers where a strip can be set, and `scripts/cast-query.mjs` answers who exists and what they can act faster than reading `cast.md`. Reach for those as you cast. This file is the how.
+Craft, in the order it bites. This is the how. Who exists, what each character can act, and where a strip can be set are all looked up separately; ask for a character's inventory rather than guessing at it.
 
 ## Staging, which is where strips go wrong
 
@@ -69,7 +69,7 @@ MP4 and GIF exports are also available in the editor, and hold each panel about 
 - Whether to use title is a creative choice. Usually it's not needed. e.g skip it for most cases. It can be used to set the framing/stage of the comic in advance where creatively beneficial, or for longer strips (8+)
 ## Pairings that work
 
-Loose suggestions, not rules. Once a pair is chosen, `cast-query.mjs dan margaret` prints what the two of them can actually act, which is the moment to find out one of them cannot shrug.
+Loose suggestions, not rules. Once a pair is chosen, query those two characters and read what they can actually act, which is the moment to find out one of them cannot shrug.
 
 - `dan` and `margaret`: coworkers who have had this argument before. He pitches, she does not buy it.
 - `dan` and `anna`: earnest and unimpressed. Anna's `bored` and `coy` do a lot of work silently.
