@@ -33,7 +33,7 @@
 		"generate": "node tools/generateValidator.ts && node scripts/generate-font-metrics.mjs && node scripts/generate-skill-catalog.mjs",
 		"skill:validator": "node tools/generateValidator.ts",
 		"format": "biome format --write .",
-		"version": "bash scripts/sync-plugin-versions.sh",
+		"version": "node scripts/sync-plugin-versions.mjs",
 		"release": "npm version patch -m \"chore: v%s\" && git push --follow-tags",
 		"release:minor": "npm version minor -m \"chore: v%s\" && git push --follow-tags",
 		"release:major": "npm version major -m \"chore: v%s\" && git push --follow-tags"
