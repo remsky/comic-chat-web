@@ -25,7 +25,7 @@ The cast arrives in three pieces: the base 1996 art, and two optional packs name
 
 `CHARACTER_PACKS` is a build variable, set in `.env` locally or under Workers Builds settings. It takes a comma separated list of pack names, or `all`; unset ships the original cast alone. The build holds the base art plus the packs the flag enables, and everything follows from that one cast: the manifests, `assets/catalog.json`, the sprite sheets in `dist/`, what the pickers list, and what the studio accepts.
 
-The strip skill under `plugins/` vendors the `artpack1` build's catalog and prose. A deploy that ships a different pack set and wants the skill to match copies its own `dist/assets/catalog.json` over `plugins/comic-strip/skills/comic-strip/reference/catalog.json` and adjusts `reference/cast.md`.
+The strip skill under `plugins/` vendors the `artpack1` build's catalog, with `cast.md`'s look, range, and register prose baked in at generate time. A deploy that ships a different pack set and wants the skill to match adjusts `reference/cast.md`, points `VENDORED_PACKS` in `src/protocol/castPacks.ts` at its packs, and runs `npm run generate`.
 
 ## Limits
 

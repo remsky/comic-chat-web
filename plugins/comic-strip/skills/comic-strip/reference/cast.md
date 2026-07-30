@@ -2,7 +2,7 @@
 
 What each character looks like and how much it can act. `catalog.json` is the authority on exact names and counts; this file is for casting.
 
-Read this file when you want to see the whole troupe at once. When you already know what you need, ask instead: `scripts/cast-query.mjs --register young --emotion bored` narrows it, and `scripts/cast-query.mjs anna` prints one character's faces, poses, look, and register together. The script reads the table and the register bullets below, so both files always agree.
+Read this file when you want to see the whole troupe at once. When you already know what you need, ask instead: `scripts/cast-query.mjs --register young --emotion bored` narrows it, and `scripts/cast-query.mjs anna` prints one character's faces, poses, look, and register together. `catalog.json` bakes in the table and the register bullets below at generate time, so the script and this file always agree.
 
 ## Naming a face and a pose
 

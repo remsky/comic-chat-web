@@ -16,7 +16,7 @@ const bundle = join(cache, "catalog.mjs");
 await build({
 	stdin: {
 		contents: [
-			'export { catalogFromManifests, shippedManifests } from "./src/studio/catalogJson.js";',
+			'export { catalogFromManifests, shippedManifests, SKILL_REFERENCE } from "./src/studio/catalogJson.js";',
 			'export { resolvePacks, VENDORED_PACKS } from "./src/protocol/castPacks.js";',
 		].join("\n"),
 		resolveDir: root,
@@ -28,8 +28,13 @@ await build({
 	outfile: bundle,
 });
 
-const { catalogFromManifests, resolvePacks, shippedManifests, VENDORED_PACKS } =
-	await import(pathToFileURL(bundle).href);
+const {
+	catalogFromManifests,
+	resolvePacks,
+	shippedManifests,
+	SKILL_REFERENCE,
+	VENDORED_PACKS,
+} = await import(pathToFileURL(bundle).href);
 
 const read = (file) => readFileSync(join(root, file), "utf8");
 const shipped = shippedManifests(
@@ -37,7 +42,11 @@ const shipped = shippedManifests(
 	read("public/assets/backgrounds/manifest.json"),
 	resolvePacks(VENDORED_PACKS),
 );
-const catalog = catalogFromManifests(shipped.avatars, shipped.backgrounds);
+const catalog = catalogFromManifests(
+	shipped.avatars,
+	shipped.backgrounds,
+	read(`${SKILL_REFERENCE}/cast.md`),
+);
 
 // biome does not format this file, so the emitted bytes are the committed bytes
 writeFileSync(join(root, TARGET), `${JSON.stringify(catalog, null, "\t")}\n`);

@@ -14,7 +14,6 @@ export const GENERATED =
 // each worker module imports only types, so stripping them leaves a module with no dependencies
 export const EMITTED = [
 	{ source: "worker/mcp/validate.ts", target: `${GENERATED}/validate.mjs` },
-	{ source: "worker/mcp/castProse.ts", target: `${GENERATED}/castProse.mjs` },
 ] as const;
 
 export async function emitModule(

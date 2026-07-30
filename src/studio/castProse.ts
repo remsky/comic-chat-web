@@ -1,4 +1,4 @@
-// cast.md's prose: the look, range, and registers the catalog's art counts cannot carry.
+// cast.md's prose, parsed at generate time so the catalog carries look, range, and registers.
 
 export interface CastNote {
 	look: string;
@@ -6,13 +6,14 @@ export interface CastNote {
 }
 
 export interface CastRegister {
-	label: string;
+	// the label's first word, lowercased: what --register and query_cast match on
 	key: string;
-	names: Set<string>;
+	label: string;
+	names: string[];
 }
 
 export interface CastProse {
-	notes: Map<string, CastNote>;
+	notes: Record<string, CastNote>;
 	registers: CastRegister[];
 }
 
@@ -26,12 +27,12 @@ export function parseCastProse(
 	known: ReadonlySet<string>,
 ): CastProse {
 	// the troupe table: | name | look | range |
-	const notes = new Map<string, CastNote>();
+	const notes: Record<string, CastNote> = {};
 	for (const [, name, look, range] of markdown.matchAll(
 		/^\| ([a-z]+) \| ([^|]+) \| ([^|]+) \|$/gm,
 	))
 		if (name && known.has(name))
-			notes.set(name, { look: plain(look), range: plain(range) });
+			notes[name] = { look: plain(look), range: plain(range) };
 
 	// the casting-by-register bullets: - **Label**: `name`, `name`
 	const registers: CastRegister[] = [];
@@ -39,36 +40,22 @@ export function parseCastProse(
 		/^- \*\*([^*]+)\*\*(.*)$/gm,
 	)) {
 		if (!label) continue;
-		const names = [...(body ?? "").matchAll(/`([a-z]+)`/g)]
-			.map((match) => match[1] as string)
-			.filter((name) => known.has(name));
+		const names = [
+			...new Set(
+				[...(body ?? "").matchAll(/`([a-z]+)`/g)]
+					.map((match) => match[1] as string)
+					.filter((name) => known.has(name)),
+			),
+		];
 		// a bullet naming nobody is ordinary prose, not a register
 		if (names.length === 0) continue;
+		const clean = label.trim();
 		registers.push({
-			label: label.trim(),
-			key: label.trim().toLowerCase(),
-			names: new Set(names),
+			key: clean.toLowerCase().split(" ")[0] as string,
+			label: clean,
+			names,
 		});
 	}
 
 	return { notes, registers };
-}
-
-export function isSilent(prose: CastProse, name: string): boolean {
-	return (prose.notes.get(name)?.range ?? "").includes("one drawing");
-}
-
-export function registersOf(prose: CastProse, name: string): string[] {
-	return prose.registers
-		.filter((group) => group.names.has(name))
-		.map((group) => group.label);
-}
-
-export function findRegister(
-	prose: CastProse,
-	wanted: string,
-): CastRegister | undefined {
-	return prose.registers.find((group) =>
-		group.key.startsWith(wanted.toLowerCase()),
-	);
 }

@@ -1,36 +1,29 @@
 #!/usr/bin/env node
-// Answers a casting question from the catalog and cast.md, so a strip can be written without reading either in full.
+// Answers a casting question from the catalog, which bakes in cast.md's look, range, and register prose.
 
 import { readFileSync } from "node:fs";
-import {
-	findRegister,
-	parseCastProse,
-	isSilent as proseIsSilent,
-	registersOf,
-} from "./generated/castProse.mjs";
 
 const catalog = JSON.parse(
 	readFileSync(new URL("../reference/catalog.json", import.meta.url), "utf8"),
 );
 const avatars = new Map(catalog.avatars.map((entry) => [entry.name, entry]));
+const registers = catalog.registers;
 
-const prose = parseCastProse(
-	readFileSync(new URL("../reference/cast.md", import.meta.url), "utf8"),
-	new Set(avatars.keys()),
-);
-const { notes, registers } = prose;
-const creatures = findRegister(prose, "creature");
+const findRegister = (wanted) =>
+	registers.find((group) => group.key.startsWith(wanted.toLowerCase()));
+const creatures = findRegister("creature");
 
-const rangeOf = (name) => notes.get(name)?.range ?? "";
-const lookOf = (name) => notes.get(name)?.look ?? "";
-const isSilent = (name) => proseIsSilent(prose, name);
+const rangeOf = (name) => avatars.get(name)?.range ?? "";
+const lookOf = (name) => avatars.get(name)?.look ?? "";
+const reacts = (entry) =>
+	Object.values(entry.emotions).reduce((sum, n) => sum + n, 0) > 1;
 
 const usage = () => {
 	console.error("usage: cast-query.mjs <character>... | <filters>");
 	console.error("  --gesture <name>   owns that pose art");
 	console.error("  --emotion <name>   owns that face art");
 	console.error(
-		`  --register <label> one of: ${registers.map((group) => group.key.split(" ")[0]).join(", ")}`,
+		`  --register <label> one of: ${registers.map((group) => group.key).join(", ")}`,
 	);
 	console.error("  --human            not a creature");
 	console.error(
@@ -110,10 +103,10 @@ if (emotion !== undefined && !catalog.emotions.includes(emotion))
 	);
 
 const wanted = filters["--register"];
-const register = wanted === undefined ? undefined : findRegister(prose, wanted);
+const register = wanted === undefined ? undefined : findRegister(wanted);
 if (wanted !== undefined && register === undefined)
 	die(
-		`unknown register "${wanted}"; use one of ${registers.map((group) => group.key.split(" ")[0]).join(", ")}`,
+		`unknown register "${wanted}"; use one of ${registers.map((group) => group.key).join(", ")}`,
 	);
 
 const matched = [...avatars.keys()].filter((name) => {
@@ -121,9 +114,9 @@ const matched = [...avatars.keys()].filter((name) => {
 	if (gesture !== undefined && !(entry.gestures ?? []).includes(gesture))
 		return false;
 	if (emotion !== undefined && !(entry.emotions[emotion] > 0)) return false;
-	if (register !== undefined && !register.names.has(name)) return false;
-	if (filters["--human"] && creatures?.names.has(name)) return false;
-	if (filters["--reacts"] && isSilent(name)) return false;
+	if (register !== undefined && !register.names.includes(name)) return false;
+	if (filters["--human"] && creatures?.names.includes(name)) return false;
+	if (filters["--reacts"] && !reacts(entry)) return false;
 	return true;
 });
 
@@ -154,9 +147,11 @@ function describe(name) {
 			return alias ? `${face} ${count} (=${alias})` : `${face} ${count}`;
 		})
 		.join(", ");
-	const groups = registersOf(prose, name);
+	const groups = registers
+		.filter((group) => group.names.includes(name))
+		.map((group) => group.label);
 	const lines = [name];
-	if (notes.has(name))
+	if (entry.look)
 		lines.push(`  look     ${lookOf(name)}`, `  range    ${rangeOf(name)}`);
 	lines.push(`  faces    ${faces}`);
 	lines.push(`  poses    ${(entry.gestures ?? []).join(", ") || "none"}`);

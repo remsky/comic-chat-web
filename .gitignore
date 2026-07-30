@@ -11,3 +11,6 @@ IRC_STYLE_ANNOTATIONS.md
 .claude/commands/codex-review.md
 RISK_ASSESSMENT.md
 DO_EXTRACT.md
+.claude/skills/comment-ratio/SKILL.md
+.claude/skills/comment-ratio/scripts/commentRatio.mjs
+.claude/skills/adding-art-packs/SKILL.md

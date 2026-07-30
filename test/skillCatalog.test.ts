@@ -34,7 +34,11 @@ describe("the strip skill's vendored reference", () => {
 		read("public/assets/backgrounds/manifest.json"),
 		resolvePacks(VENDORED_PACKS),
 	);
-	const published = catalogFromManifests(shipped.avatars, shipped.backgrounds);
+	const published = catalogFromManifests(
+		shipped.avatars,
+		shipped.backgrounds,
+		read(`${SKILL}/reference/cast.md`),
+	);
 
 	it("carries the catalog the build publishes", () => {
 		expect(JSON.parse(read(`${SKILL}/reference/catalog.json`))).toEqual(
@@ -102,6 +106,10 @@ describe("the strip skill's vendored reference", () => {
 		expect(
 			published.avatars.map((entry) => entry.name).filter((n) => !rows.has(n)),
 		).toEqual([]);
+		// the parse bakes the table into the catalog, so a reworded row surfaces as a look-less avatar
+		expect(
+			published.avatars.filter((entry) => !entry.look).map((e) => e.name),
+		).toEqual([]);
 	});
 
 	it("names nobody the vendored packs leave out", () => {
@@ -123,7 +131,7 @@ describe("the strip skill's vendored reference", () => {
 		expect(published.backgrounds.filter((name) => !rows.has(name))).toEqual([]);
 	});
 
-	// cast-query reads cast.md's prose, so a rewrite that breaks the parse has to fail here
+	// the registers ride in catalog.json, parsed from cast.md at generate time; a rewrite that breaks the parse has to fail here
 	it("can cast every character by register", () => {
 		let usage = "";
 		try {

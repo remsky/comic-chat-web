@@ -2,6 +2,8 @@
 
 import type { AvatarData } from "../engine/avatar.js";
 import { shipsBackdrop, shipsCharacter } from "../protocol/castPacks.js";
+import type { CastProse, CastRegister } from "./castProse.js";
+import { parseCastProse } from "./castProse.js";
 import {
 	buildCatalog,
 	COLUMNS_MAX,
@@ -20,12 +22,15 @@ export const CATALOG_FILE = "assets/catalog.json";
 // the skill's reference docs are the single source; the build republishes them so MCP clients read the same text
 export const SKILL_REFERENCE =
 	"plugins/comic-strip/skills/comic-strip/reference";
-export const SKILL_DOCS = ["guidance.md", "cast.md", "backgrounds.md"] as const;
+export const SKILL_DOCS = ["guidance.md", "backgrounds.md"] as const;
 
 export const docAsset = (name: string): string => `assets/${name}`;
 
 export interface PublishedAvatar {
 	name: string;
+	// cast.md's table prose, baked in at generate time
+	look?: string;
+	range?: string;
 	// emotion -> how many faces it names: "happy_1" to "happy_N", or bare "happy" for the strongest
 	emotions: Record<string, number>;
 	aliases?: Record<string, string>;
@@ -52,6 +57,8 @@ export interface PublishedCatalog {
 		columns: [number, number];
 	};
 	avatars: PublishedAvatar[];
+	// cast.md's casting-by-register bullets, baked in at generate time
+	registers: CastRegister[];
 }
 
 // FNV-1a over the manifest text: a staleness marker for regenerated art, not a security digest
@@ -100,23 +107,27 @@ export function shippedManifests(
 export function catalogFromManifests(
 	avatarJson: string,
 	backgroundJson: string,
+	castMarkdown: string,
 ): PublishedCatalog {
 	const { avatars } = JSON.parse(avatarJson) as { avatars: AvatarData[] };
 	const { backdrops } = JSON.parse(backgroundJson) as {
 		backdrops: { name: string }[];
 	};
-	return catalogJson(
-		buildCatalog(
-			avatars,
-			backdrops.map((entry) => entry.name),
-		),
-		digest(avatarJson),
+	const catalog = buildCatalog(
+		avatars,
+		backdrops.map((entry) => entry.name),
 	);
+	const prose = parseCastProse(
+		castMarkdown,
+		new Set(catalog.avatars.map((entry) => entry.name)),
+	);
+	return catalogJson(catalog, digest(avatarJson), prose);
 }
 
 export function catalogJson(
 	catalog: StripCatalog,
 	art: string,
+	prose: CastProse,
 ): PublishedCatalog {
 	return {
 		version: STRIP_VERSION,
@@ -139,10 +150,12 @@ export function catalogJson(
 			const { counts: emotions, aliases } = entry.art;
 			return {
 				name: entry.name,
+				...(prose.notes[entry.name] ?? {}),
 				emotions,
 				...(Object.keys(aliases).length > 0 ? { aliases } : {}),
 				...(entry.gestures.length > 0 ? { gestures: entry.gestures } : {}),
 			};
 		}),
+		registers: prose.registers,
 	};
 }

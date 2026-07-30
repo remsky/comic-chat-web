@@ -1,28 +1,11 @@
-export interface CatalogAvatar {
-	name: string;
-	emotions: Record<string, number>;
-	aliases?: Record<string, string>;
-	gestures?: string[];
-}
+// type-only imports, so the worker bundle stays clear of the studio's build modules
+import type {
+	PublishedAvatar,
+	PublishedCatalog,
+} from "../../src/studio/catalogJson.js";
 
-export interface Catalog {
-	version: number;
-	emotions: string[];
-	gestures: string[];
-	modes: string[];
-	cameras: string[];
-	facings: string[];
-	sizes: string[];
-	kinds: string[];
-	backgrounds: string[];
-	limits: {
-		actors: number;
-		balloons: number;
-		zoom: [number, number];
-		columns: [number, number];
-	};
-	avatars: CatalogAvatar[];
-}
+export type CatalogAvatar = PublishedAvatar;
+export type Catalog = PublishedCatalog;
 
 let cached: Catalog | undefined;
 

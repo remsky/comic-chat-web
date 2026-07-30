@@ -5,13 +5,6 @@ import {
 	mintShortLink,
 	SHORT_LINK_PATH,
 } from "../shortlink.js";
-import type { CastProse } from "./castProse.js";
-import {
-	findRegister,
-	isSilent,
-	parseCastProse,
-	registersOf,
-} from "./castProse.js";
 import type { Catalog, CatalogAvatar } from "./catalog.js";
 import { loadCatalog } from "./catalog.js";
 import { loadDoc } from "./docs.js";
@@ -103,20 +96,31 @@ function facesOf(entry: CatalogAvatar): string {
 		.join(", ");
 }
 
-function describeAvatar(entry: CatalogAvatar, prose: CastProse): string {
-	const note = prose.notes.get(entry.name);
-	const groups = registersOf(prose, entry.name);
+function findRegister(catalog: Catalog, wanted: string) {
+	return catalog.registers.find((group) =>
+		group.key.startsWith(wanted.toLowerCase()),
+	);
+}
+
+function registersOf(catalog: Catalog, name: string): string[] {
+	return catalog.registers
+		.filter((group) => group.names.includes(name))
+		.map((group) => group.label);
+}
+
+function describeAvatar(entry: CatalogAvatar, catalog: Catalog): string {
+	const groups = registersOf(catalog, entry.name);
 	const lines = [entry.name];
-	if (note) lines.push(`  look     ${note.look}`, `  range    ${note.range}`);
+	if (entry.look && entry.range)
+		lines.push(`  look     ${entry.look}`, `  range    ${entry.range}`);
 	lines.push(`  faces    ${facesOf(entry)}`);
 	lines.push(`  poses    ${(entry.gestures ?? []).join(", ") || "none"}`);
 	if (groups.length > 0) lines.push(`  register ${groups.join("; ")}`);
 	return lines.join("\n");
 }
 
-function summarizeAvatar(entry: CatalogAvatar, prose: CastProse): string {
-	const look = prose.notes.get(entry.name)?.look;
-	const lead = look ? `${look}. ` : "";
+function summarizeAvatar(entry: CatalogAvatar): string {
+	const lead = entry.look ? `${entry.look}. ` : "";
 	if (!isExpressive(entry)) return `  ${entry.name}: ${lead}one drawing`;
 	const faces = Object.keys(entry.emotions).filter(
 		(e) => (entry.emotions[e] ?? 0) > 0,
@@ -125,12 +129,12 @@ function summarizeAvatar(entry: CatalogAvatar, prose: CastProse): string {
 	return `  ${entry.name}: ${lead}${faces.join(" ")}${poses ? `, ${poses} poses` : ""}`;
 }
 
-function buildCastBlock(catalog: Catalog, prose: CastProse): string {
+function buildCastBlock(catalog: Catalog): string {
 	return [
 		`cast (${catalog.avatars.length}):`,
-		...catalog.avatars.map((entry) => summarizeAvatar(entry, prose)),
+		...catalog.avatars.map(summarizeAvatar),
 		'  "one drawing" characters still take speaking parts; the fixed face is the performance.',
-		`  registers: ${prose.registers.map((group) => group.key.split(" ")[0]).join(", ")}. query_cast filters by them.`,
+		`  registers: ${catalog.registers.map((group) => group.key).join(", ")}. query_cast filters by them.`,
 	].join("\n");
 }
 
@@ -179,36 +183,23 @@ const WORKFLOW = [
 // vocabulary, cast, backdrops, craft, then what to call: one payload behind both the prompt and get_bearings
 function buildBriefing(
 	catalog: Catalog,
-	prose: CastProse,
 	backdrops: string,
 	guidance: string,
 ): string {
-	const parts = [buildBearings(catalog), buildCastBlock(catalog, prose)];
+	const parts = [buildBearings(catalog), buildCastBlock(catalog)];
 	if (backdrops) parts.push(backdrops);
 	if (guidance) parts.push(guidance);
 	parts.push(WORKFLOW);
 	return parts.join("\n\n");
 }
 
-async function loadProse(
-	assets: Fetcher,
-	catalog: Catalog,
-): Promise<CastProse> {
-	const cast = await loadDoc(assets, "cast.md");
-	return parseCastProse(
-		cast,
-		new Set(catalog.avatars.map((entry) => entry.name)),
-	);
-}
-
 async function loadBriefing(assets: Fetcher): Promise<string> {
-	const catalog = await loadCatalog(assets);
-	const [prose, backdrops, guidance] = await Promise.all([
-		loadProse(assets, catalog),
+	const [catalog, backdrops, guidance] = await Promise.all([
+		loadCatalog(assets),
 		loadDoc(assets, "backgrounds.md"),
 		loadDoc(assets, "guidance.md"),
 	]);
-	return buildBriefing(catalog, prose, backdrops, guidance);
+	return buildBriefing(catalog, backdrops, guidance);
 }
 
 const MAX_SHORT_QUERY = 8192;
@@ -259,9 +250,8 @@ export function createStudioServer(options: StudioServerOptions) {
 		},
 		async (uri) => {
 			const catalog = await loadCatalog(assets);
-			const prose = await loadProse(assets, catalog);
 			const lines = catalog.avatars.map((entry) =>
-				describeAvatar(entry, prose),
+				describeAvatar(entry, catalog),
 			);
 			return {
 				contents: [
@@ -332,7 +322,6 @@ export function createStudioServer(options: StudioServerOptions) {
 		},
 		async ({ avatars: names, gesture, emotion, register, human, reacts }) => {
 			const catalog = await loadCatalog(assets);
-			const prose = await loadProse(assets, catalog);
 
 			if (names && names.length > 0) {
 				const byName = new Map(catalog.avatars.map((a) => [a.name, a]));
@@ -351,7 +340,7 @@ export function createStudioServer(options: StudioServerOptions) {
 				const lines = names
 					.map((n) => byName.get(n))
 					.filter((a) => a !== undefined)
-					.map((entry) => describeAvatar(entry, prose));
+					.map((entry) => describeAvatar(entry, catalog));
 				return {
 					content: [
 						{
@@ -362,27 +351,28 @@ export function createStudioServer(options: StudioServerOptions) {
 				};
 			}
 
-			const group = register ? findRegister(prose, register) : undefined;
+			const group = register ? findRegister(catalog, register) : undefined;
 			if (register && !group)
 				return {
 					content: [
 						{
 							type: "text" as const,
-							text: `unknown register "${register}". use one of ${prose.registers.map((r) => r.key.split(" ")[0]).join(", ")}`,
+							text: `unknown register "${register}". use one of ${catalog.registers.map((r) => r.key).join(", ")}`,
 						},
 					],
 					isError: true,
 				};
-			const creatures = findRegister(prose, "creature");
+			const creatures = findRegister(catalog, "creature");
 
 			let matched = catalog.avatars;
 			if (gesture)
 				matched = matched.filter((a) => (a.gestures ?? []).includes(gesture));
 			if (emotion)
 				matched = matched.filter((a) => (a.emotions[emotion] ?? 0) > 0);
-			if (group) matched = matched.filter((a) => group.names.has(a.name));
-			if (human) matched = matched.filter((a) => !creatures?.names.has(a.name));
-			if (reacts) matched = matched.filter((a) => !isSilent(prose, a.name));
+			if (group) matched = matched.filter((a) => group.names.includes(a.name));
+			if (human)
+				matched = matched.filter((a) => !creatures?.names.includes(a.name));
+			if (reacts) matched = matched.filter(isExpressive);
 
 			const filters = [
 				gesture && `gesture=${gesture}`,
@@ -394,7 +384,7 @@ export function createStudioServer(options: StudioServerOptions) {
 				.filter(Boolean)
 				.join(" ");
 			const header = `${filters || "all"}: ${matched.length} of ${catalog.avatars.length} characters`;
-			const lines = matched.map((entry) => summarizeAvatar(entry, prose));
+			const lines = matched.map(summarizeAvatar);
 
 			return {
 				content: [

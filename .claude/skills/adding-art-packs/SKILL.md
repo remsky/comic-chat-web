@@ -57,7 +57,7 @@ No generator and no test on the wording, so these go stale silently:
 
 Both counts have been wrong before. They claimed nine backdrops and thirty one characters against a catalog of eight and twenty eight. Nothing checks them, so read them against `catalog.json` whenever a pack changes.
 
-`worker/mcp/castProse.ts` scrapes `cast.md` for the troupe table and the register bullets, and the skill's `cast-query.mjs` imports the generated copy of it. A row that breaks mid-cell parses as nothing, so the character loses its look and range in both the CLI and `get_bearings`.
+`src/studio/castProse.ts` scrapes `cast.md` for the troupe table and the register bullets at generate time, baking both into `catalog.json`. A row that breaks mid-cell parses as nothing, so the character loses its look and range in both `cast-query.mjs` and `get_bearings`.
 
 ## What tells you something is missing
 

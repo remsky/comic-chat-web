@@ -69,6 +69,8 @@
 	"avatars": [
 		{
 			"name": "anna",
+			"look": "young woman, black bob haircut, turtleneck and short skirt, trendy",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 2,
 				"coy": 2,
@@ -101,6 +103,8 @@
 		},
 		{
 			"name": "bolo",
+			"look": "confident young man, tall black styled preppy hair, pale blazer over a striped shirt, dark slacks, bolo tie; defaults a smirk",
+			"range": "no bored",
 			"emotions": {
 				"happy": 2,
 				"coy": 1,
@@ -127,6 +131,8 @@
 		},
 		{
 			"name": "connor",
+			"look": "curved worm of a creature, tiny cap, stubby vague feet",
+			"range": "no scared; no gesture commands at all; shout reuses angry",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -160,6 +166,8 @@
 		},
 		{
 			"name": "denise",
+			"look": "woman with curly hair and hoop earrings, sweater and long skirt",
+			"range": "no bored, no scared",
 			"emotions": {
 				"happy": 3,
 				"coy": 4,
@@ -183,6 +191,8 @@
 		},
 		{
 			"name": "hugh",
+			"look": "shaggy cat, tufted ears and fangs, patterned dressing gown and slippers",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 2,
 				"coy": 1,
@@ -211,6 +221,8 @@
 		},
 		{
 			"name": "susan",
+			"look": "woman with styled black hair and flowers in it, long flowy understated bohemian dress",
+			"range": "full wheel, shrugs, five distinct happy faces and five neutrals; bored reuses coy",
 			"emotions": {
 				"happy": 5,
 				"coy": 2,
@@ -241,6 +253,8 @@
 		},
 		{
 			"name": "armando",
+			"look": "beatnik in a beret, goatee and shades, black turtleneck, sandals",
+			"range": "full wheel; angry reuses sad",
 			"emotions": {
 				"happy": 1,
 				"coy": 1,
@@ -271,6 +285,8 @@
 		},
 		{
 			"name": "cro",
+			"look": "caveman in a fur tunic, shaggy hair, barefoot",
+			"range": "no sad",
 			"emotions": {
 				"happy": 1,
 				"coy": 1,
@@ -299,6 +315,8 @@
 		},
 		{
 			"name": "dan",
+			"look": "office everyman, white shirt and tie, thinning curls",
+			"range": "full wheel, shrugs; angry reuses sad",
 			"emotions": {
 				"happy": 3,
 				"coy": 3,
@@ -329,6 +347,8 @@
 		},
 		{
 			"name": "glenda",
+			"look": "grinning woman, long wavy hair",
+			"range": "one drawing",
 			"emotions": {
 				"neutral": 1
 			},
@@ -338,6 +358,8 @@
 		},
 		{
 			"name": "jordan",
+			"look": "squat creature ringed with eyes, grass skirt",
+			"range": "full wheel; scared reuses happy, shout reuses sad",
 			"emotions": {
 				"happy": 1,
 				"coy": 1,
@@ -372,6 +394,8 @@
 		},
 		{
 			"name": "lance",
+			"look": "someone with a paper bag over their head, loose shirt, sneakers, casual",
+			"range": "no happy, no laugh; the only one who walks (walkaway, walkup, doublepoint, shrug); shout reuses angry",
 			"emotions": {
 				"coy": 2,
 				"bored": 2,
@@ -400,6 +424,8 @@
 		},
 		{
 			"name": "lynnea",
+			"look": "clubgoer in round dark sunglasses (lifts them with coy expression), afro puff, tutu and boots",
+			"range": "full wheel, one of the widest torso sets",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -434,6 +460,8 @@
 		},
 		{
 			"name": "margaret",
+			"look": "middle aged woman, big curls in a headband, striped fitness sweatsuit",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 2,
 				"coy": 3,
@@ -463,6 +491,8 @@
 		},
 		{
 			"name": "mike",
+			"look": "showman in a fez and bow tie, long nose, vole-like anthropomorphic features, dinner jacket",
+			"range": "full wheel, shrugs; bored reuses coy, sad reuses scared",
 			"emotions": {
 				"happy": 2,
 				"coy": 1,
@@ -491,6 +521,8 @@
 		},
 		{
 			"name": "pedagog",
+			"look": "stern man in a shirt and tie, arms folded, disgruntled avoidant expression",
+			"range": "one drawing",
 			"emotions": {
 				"neutral": 1
 			},
@@ -500,6 +532,8 @@
 		},
 		{
 			"name": "rainbow",
+			"look": "grinning lizard playing a snare drum, frozen grin, expectant look, holding drum sticks in the air",
+			"range": "one drawing",
 			"emotions": {
 				"neutral": 1
 			},
@@ -509,6 +543,8 @@
 		},
 		{
 			"name": "tiki",
+			"look": "carved tiki mask on a stick-thin body",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -537,6 +573,8 @@
 		},
 		{
 			"name": "tongtyed",
+			"look": "heavy-set man, glasses and a curl of hair, V-neck sweater",
+			"range": "full wheel, shrugs; bored reuses coy, sad reuses scared",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -570,6 +608,8 @@
 		},
 		{
 			"name": "tux",
+			"look": "gangly man in a poorly fitting dinner jacket and bow tie, drooped spiky hair",
+			"range": "one drawing",
 			"emotions": {
 				"neutral": 1
 			},
@@ -579,6 +619,8 @@
 		},
 		{
 			"name": "waf",
+			"look": "wide-mouthed frog-lizard on two legs, mouth agape, despondent but mildly expectant",
+			"range": "one drawing",
 			"emotions": {
 				"neutral": 1
 			},
@@ -588,6 +630,8 @@
 		},
 		{
 			"name": "xeno",
+			"look": "grey alien, big black eyes, spindly limbs",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 1,
 				"coy": 1,
@@ -618,6 +662,8 @@
 		},
 		{
 			"name": "kevin",
+			"look": "lanky dishevelled guy, black tee, sweater tied at the waist, heavy boots, longer unkempt hair, nose ring",
+			"range": "no bored",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -648,6 +694,8 @@
 		},
 		{
 			"name": "kwensa",
+			"look": "older woman in a striped headwrap and hoop earrings, long dress",
+			"range": "full wheel; sad reuses scared",
 			"emotions": {
 				"happy": 2,
 				"coy": 2,
@@ -685,6 +733,8 @@
 		},
 		{
 			"name": "maynard",
+			"look": "floppy-eared dog standing upright",
+			"range": "no bored, the most torsos in the cast; shout reuses angry",
 			"emotions": {
 				"happy": 2,
 				"coy": 1,
@@ -729,6 +779,8 @@
 		},
 		{
 			"name": "rebecca",
+			"look": "glamour: curled updo, long black gown and gloves",
+			"range": "full wheel, very wide torso set; sad reuses bored, shout reuses scared",
 			"emotions": {
 				"happy": 3,
 				"coy": 1,
@@ -773,6 +825,8 @@
 		},
 		{
 			"name": "sage",
+			"look": "old bearded sage in a plain robe, barefoot",
+			"range": "full wheel",
 			"emotions": {
 				"happy": 3,
 				"coy": 2,
@@ -806,6 +860,8 @@
 		},
 		{
 			"name": "scotty",
+			"look": "black terrier's head on a man in a sweater and cap, walking stick",
+			"range": "the most faces in the cast; coy reuses happy",
 			"emotions": {
 				"happy": 2,
 				"coy": 2,
@@ -830,6 +886,90 @@
 				"bored_1",
 				"scared_1",
 				"angry_1"
+			]
+		}
+	],
+	"registers": [
+		{
+			"key": "office",
+			"label": "Office or professional",
+			"names": [
+				"dan",
+				"denise",
+				"tongtyed",
+				"pedagog",
+				"rebecca",
+				"tux"
+			]
+		},
+		{
+			"key": "ordinary",
+			"label": "Ordinary adults, no setting implied",
+			"names": [
+				"margaret",
+				"susan",
+				"kwensa",
+				"scotty",
+				"kevin",
+				"glenda"
+			]
+		},
+		{
+			"key": "young",
+			"label": "Young",
+			"names": [
+				"anna",
+				"lynnea",
+				"kevin",
+				"armando",
+				"bolo"
+			]
+		},
+		{
+			"key": "counterculture",
+			"label": "Counterculture and outsiders",
+			"names": [
+				"armando",
+				"lynnea",
+				"lance",
+				"maynard",
+				"jordan",
+				"waf",
+				"hugh",
+				"cro"
+			]
+		},
+		{
+			"key": "wise",
+			"label": "Wise or elder",
+			"names": [
+				"sage",
+				"kwensa",
+				"scotty"
+			]
+		},
+		{
+			"key": "showmen",
+			"label": "Showmen",
+			"names": [
+				"mike",
+				"rebecca",
+				"bolo",
+				"rainbow"
+			]
+		},
+		{
+			"key": "creatures/unknown",
+			"label": "Creatures/Unknown",
+			"names": [
+				"connor",
+				"hugh",
+				"jordan",
+				"maynard",
+				"rainbow",
+				"tiki",
+				"waf",
+				"xeno"
 			]
 		}
 	]
