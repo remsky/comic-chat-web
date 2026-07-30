@@ -150,13 +150,27 @@
 				<h3>OpenAI Codex plugin</h3>
 				<pre class="copy-block"><code>codex plugin marketplace add remsky/comic-chat-web
 codex plugin add comic-strip@comic-chat-web</code></pre>
+
+				<h3>MCP server</h3>
+				<p>
+					Both plugins above ship this already. For any other MCP client, point
+					it at the hosted endpoint:
+				</p>
+				<pre class="copy-block"><code>https://comics.remsky.art/mcp</code></pre>
+				<p>
+					It serves four tools: <code>get_bearings</code> for the vocabulary,
+					cast, and craft, <code>query_cast</code> for exact pose names,
+					<code>validate_strip</code> to check a draft, and
+					<code>create_strip</code> to validate and mint the link in one call.
+				</p>
 			</section>
 
 			<section id="how">
 				<h2>How it works</h2>
 				<p>
 					You describe the strip. The agent writes the panels as a small JSON
-					file, then checks them and builds the link, working from what ships
+					file, then checks them and builds the link. Over MCP the tools do that
+					work server-side; installed as a skill, it works from what ships
 					inside:
 				</p>
 				<table>
@@ -179,7 +193,7 @@ codex plugin add comic-strip@comic-chat-web</code></pre>
 					</tr>
 					<tr>
 						<td><code>backgrounds.md</code></td>
-						<td>Descriptions of the nine backdrops and their color palettes</td>
+						<td>Descriptions of the eight backdrops and their color palettes</td>
 					</tr>
 					<tr>
 						<td><code>cast-query.mjs</code></td>
@@ -195,19 +209,28 @@ codex plugin add comic-strip@comic-chat-web</code></pre>
 						</td>
 					</tr>
 					<tr>
+						<td><code>generated/validate.mjs</code></td>
+						<td>
+							The checker itself, generated from the studio's own rules so the
+							skill, the server, and the editor agree on what is valid
+						</td>
+					</tr>
+					<tr>
 						<td><code>catalog.json</code></td>
 						<td>
-							The full list of available art, read by both scripts, generated
-							from the shipped drawings
+							The full list of available art with its written descriptions, read
+							by both scripts, generated from the shipped drawings
 						</td>
 					</tr>
 				</table>
 
 				<p>
-					The link carries the JSON script compressed. Nothing is uploaded
-					and we store none of it. Opening the link draws the panels in your
-					browser, and the Save menu gets you a PNG sheet, a padded square PNG, an MP4 or
-					GIF, or the JSON back out.
+					The link carries the JSON script compressed. The skill builds it
+					offline: nothing is uploaded and we store none of it. The MCP tools
+					return a short link instead, which keeps the same script on our side
+					for 24 hours so the URL stays small. Opening either link draws the
+					panels in your browser, and the Save menu gets you a PNG sheet, a
+					padded square PNG, an MP4 or GIF, or the JSON back out.
 				</p>
 				<details>
 					<summary>Sample JSON</summary>

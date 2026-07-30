@@ -5,22 +5,22 @@
 
 **Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
-<p>
-  <img src="https://img.shields.io/badge/tests-450%20passing-forestgreen" alt="450 tests passing" height="20">
-  <a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
-</p>
+<img src="https://img.shields.io/badge/tests-450%20passing-forestgreen" alt="450 tests passing" height="20"><a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 
-### Live Demo @ [comics.remsky.art](https://comics.remsky.art/)
-
-### Create a custom comic strip @ [comics.remsky.art/studio](https://comics.remsky.art/studio)
-
-<hr>
-
-To create with AI assistance, see [Studio](#studio) section or add skill via:
-
-```bash
-npx skills add remsky/comic-chat-web 
-```
+<table>
+  <tr>
+    <td>Live demo</td>
+    <td><b><a href="https://comics.remsky.art/">comics.remsky.art</a></b></td>
+  </tr>
+  <tr>
+    <td>Create a custom comic strip</td>
+    <td><b><a href="https://comics.remsky.art/studio">comics.remsky.art/studio</a></b></td>
+  </tr>
+  <tr>
+    <td>Create with AI assistance</td>
+    <td><b><a href="https://comics.remsky.art/agent-skill">comics.remsky.art/agent-skill</a></b></td>
+  </tr>
+</table>
 
 ## Features
 
@@ -186,13 +186,16 @@ codex plugin add comic-strip@comic-chat-web
 
 ## Deployment / Self-Hosting
 
+<a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
+
 > [!NOTE]
-> Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public billed deployments must determine and set Cloudflare rate-limiting rules and usage alerts to avoid any suprising bills. On Free Tier, it will simply stop running until end of day if limits are reached. For reference, the traffic on this repo's demo sits comfortably under 10% of daily Free Tier usage. 
+> See [DEPLOYMENT.md](DEPLOYMENT.md) before deploying to understand the parameters available, and what a fork inherits.
 
-  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/remsky/comic-chat-web"><img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" height="35"></a>
+<details>
+<summary>Quick Details</summary>
 
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) before deploying to understand the parameters available: `ROOMS` and `MODERATION` vars, the source constants behind the rate limits and retention, the build variables that name an operator on the terms page, and what a fork inherits.
+Rooms are anonymous (no accounts); moderation is rudimentary: a content filter with escalating mutes. A deploy is bounded by its fixed room list, and public billed deployments must determine and set Cloudflare rate-limiting rules and usage alerts to avoid any suprising bills. On Free Tier, it will simply stop running until end of day if limits are reached. For reference, the traffic on this repo's demo sits comfortably under 10% of daily Free Tier usage. 
+</details>
 
 ## Reception
 
