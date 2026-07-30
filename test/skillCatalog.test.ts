@@ -2,7 +2,11 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
-import { ART_PACKS, resolvePacks } from "../src/protocol/castPacks.js";
+import {
+	ART_PACKS,
+	resolvePacks,
+	VENDORED_PACKS,
+} from "../src/protocol/castPacks.js";
 import {
 	catalogFromManifests,
 	SKILL_DOCS,
@@ -24,11 +28,11 @@ const query = (...args: string[]): string =>
 	);
 
 describe("the strip skill's vendored reference", () => {
-	// the vendored reference tracks this repo's own deploy, which enables artpack1
+	// scripts/generate-skill-catalog.mjs emits the vendored copy from this same pack set
 	const shipped = shippedManifests(
 		read("public/assets/avatars/manifest.json"),
 		read("public/assets/backgrounds/manifest.json"),
-		resolvePacks("artpack1"),
+		resolvePacks(VENDORED_PACKS),
 	);
 	const published = catalogFromManifests(shipped.avatars, shipped.backgrounds);
 

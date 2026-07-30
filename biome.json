@@ -11,6 +11,8 @@
 			"**",
 			"!worker-configuration.d.ts",
 			"!plugins/comic-strip/skills/comic-strip/scripts/generated",
+			"!plugins/comic-strip/skills/comic-strip/reference/catalog.json",
+			"!src/render/comicNeueMetrics.ts",
 			"!.claude/settings.local.json",
 			"!.glyph"
 		]

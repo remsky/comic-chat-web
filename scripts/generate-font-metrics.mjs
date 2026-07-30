@@ -18,6 +18,11 @@ function range(lo, hi) {
 	return Array.from({ length: hi - lo + 1 }, (_, i) => lo + i);
 }
 
+// biome does not format this file, so the emitted bytes are the committed bytes
+function indent(value) {
+	return JSON.stringify(value, null, "\t");
+}
+
 function faceMetrics(file) {
 	const font = create(readFileSync(join(root, file)));
 	const advances = {};
@@ -54,9 +59,9 @@ export interface FaceMetrics {
 	inkDescents: Record<string, number>;
 }
 
-export const COMIC_NEUE_REGULAR: FaceMetrics = ${JSON.stringify(regular)};
+export const COMIC_NEUE_REGULAR: FaceMetrics = ${indent(regular)};
 
-export const COMIC_NEUE_ITALIC: FaceMetrics = ${JSON.stringify(italic)};
+export const COMIC_NEUE_ITALIC: FaceMetrics = ${indent(italic)};
 `;
 
 writeFileSync(join(root, "src/render/comicNeueMetrics.ts"), out);

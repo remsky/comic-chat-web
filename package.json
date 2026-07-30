@@ -30,6 +30,7 @@
 		"fixtures:cast-bounds": "node tools/avb/generate-cast-bounds.ts",
 		"assets:avatars": "node tools/avb/generate-web-assets.ts",
 		"assets:backgrounds": "node tools/avb/generate-bg-assets.ts",
+		"generate": "node tools/generateValidator.ts && node scripts/generate-font-metrics.mjs && node scripts/generate-skill-catalog.mjs",
 		"skill:validator": "node tools/generateValidator.ts",
 		"format": "biome format --write .",
 		"version": "bash scripts/sync-plugin-versions.sh",

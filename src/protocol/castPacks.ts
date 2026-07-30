@@ -25,6 +25,9 @@ export const ART_PACKS: readonly ArtPack[] = [
 
 export const PACK_IDS: readonly string[] = ART_PACKS.map((pack) => pack.id);
 
+// the skill's vendored reference tracks this repo's own deploy, so the generator and its test read one value
+export const VENDORED_PACKS = "artpack1";
+
 function requested(value: string | undefined): string[] {
 	const raw = (value ?? "").trim();
 	if (raw === "" || raw === "none") return [];

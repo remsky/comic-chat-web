@@ -4,6 +4,6 @@
 repo = "local"
 hooks = [
     { id = "biome", name = "biome check", entry = "npx biome check --no-errors-on-unmatched --files-ignore-unknown=true", language = "system", types = ["text"] },
-    # the skill ships worker logic as plain JS; regenerating here keeps a commit from splitting it from its source
-    { id = "skill-validator", name = "regenerate skill modules", entry = "node tools/generateValidator.ts", language = "system", files = '^(worker/|tools/generateValidator\.ts$)', pass_filenames = false },
+    # every committed generated file, rebuilt on each commit: no file list to keep in step with the generators
+    { id = "generate", name = "regenerate committed artifacts", entry = "npm run generate", language = "system", always_run = true, pass_filenames = false },
 ]
