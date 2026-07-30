@@ -109,8 +109,8 @@ describe("the strip skill's vendored reference", () => {
 
 	// this reads the range prose, so a reworded table would silently match nobody
 	it("splits the troupe on whether it can react", () => {
-		const speaks = query("--speaks");
-		expect(speaks).toContain("dan");
-		expect(speaks).not.toContain("pedagog");
+		const reacts = query("--reacts");
+		expect(reacts).toContain("dan");
+		expect(reacts).not.toContain("pedagog");
 	});
 });

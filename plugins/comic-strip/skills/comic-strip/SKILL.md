@@ -15,7 +15,9 @@ A strip is a JSON document: a list of panels, each casting up to five characters
 4. Validate and get the link: `node <skill dir>/scripts/strip-link.mjs strip.json`. An error means the studio would reject that field, so fix it and rerun. A warning means the strip renders, but not the way you asked.
 5. Hand back the link and the file path. The link opens the strip in the editor, where the user can retune any panel and export it from the Save menu: a PNG sheet, a square PNG, an MP4 or GIF that plays the panels one at a time, or the JSON back out.
 
-Add `--base http://localhost:5173` to point the link at a dev server instead of the public studio, and `--open` to also launch it in the default browser.
+Links point at the public studio, `https://comics.remsky.art`. Add `--open` to also launch the link in the default browser.
+
+When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary and the whole cast, `create_strip` validates and returns a short link in one call, and `query_cast` lists exact pose names when you want to pin a gesture.
 
 ## Reference
 
@@ -74,7 +76,7 @@ Add `--base http://localhost:5173` to point the link at a dev server instead of 
   "kind": "title",
   "title": "SHIP IT ON FRIDAY",
   "actors": [
-    { "avatar": "dan", "text": "Dan, who pushed" },
+    { "avatar": "dan", "text": "Dan; who pushed" },
     { "avatar": "margaret" }
   ]
 }

@@ -51,7 +51,7 @@ const usage = () => {
 	);
 	console.error("  --human            not a creature");
 	console.error(
-		"  --speaks           has more than one drawing, so it can react",
+		"  --reacts           has more than one drawing, so it can change face",
 	);
 	console.error(
 		"filters combine; with no filters, names dump one character each",
@@ -63,7 +63,7 @@ const die = (message) => {
 	process.exit(2);
 };
 
-const FLAGS = ["--gesture", "--emotion", "--register", "--human", "--speaks"];
+const FLAGS = ["--gesture", "--emotion", "--register", "--human", "--reacts"];
 const VALUED = ["--gesture", "--emotion", "--register"];
 
 const args = process.argv.slice(2);
@@ -143,7 +143,7 @@ const matched = [...avatars.keys()].filter((name) => {
 	if (emotion !== undefined && !(entry.emotions[emotion] > 0)) return false;
 	if (register !== undefined && !register.names.has(name)) return false;
 	if (filters["--human"] && creatures?.names.has(name)) return false;
-	if (filters["--speaks"] && isSilent(name)) return false;
+	if (filters["--reacts"] && isSilent(name)) return false;
 	return true;
 });
 

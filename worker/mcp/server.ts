@@ -76,7 +76,7 @@ const stripSchema = z.strictObject({
 	panels: z.array(panelSchema).max(32).describe("Ordered list of panels"),
 });
 
-function isSpeaking(a: CatalogAvatar): boolean {
+function isExpressive(a: CatalogAvatar): boolean {
 	return Object.values(a.emotions).reduce((sum, n) => sum + n, 0) > 1;
 }
 
@@ -98,11 +98,20 @@ function describeAvatar(entry: CatalogAvatar): string {
 }
 
 function summarizeAvatar(entry: CatalogAvatar): string {
+	if (!isExpressive(entry)) return `  ${entry.name}: one drawing`;
 	const faces = Object.keys(entry.emotions).filter(
 		(e) => (entry.emotions[e] ?? 0) > 0,
 	);
 	const poses = (entry.gestures ?? []).length;
 	return `  ${entry.name}: ${faces.join(" ")}${poses ? `, ${poses} poses` : ""}`;
+}
+
+function buildCastBlock(catalog: Catalog): string {
+	return [
+		`cast (${catalog.avatars.length}):`,
+		...catalog.avatars.map(summarizeAvatar),
+		'  "one drawing" characters still take speaking parts; the fixed face is the performance.',
+	].join("\n");
 }
 
 function buildBearings(catalog: Catalog): string {
@@ -166,15 +175,11 @@ export function createStudioServer(options: StudioServerOptions) {
 		async () => {
 			const catalog = await loadCatalog(assets);
 			const bearings = buildBearings(catalog);
-			const speaking = catalog.avatars.filter(isSpeaking);
-			const castBlock = [
-				`speaking cast (${speaking.length} of ${catalog.avatars.length}):`,
-				...speaking.map(summarizeAvatar),
-			].join("\n");
+			const castBlock = buildCastBlock(catalog);
 			const workflow = [
 				"next steps:",
-				"  1. query_cast({avatars: [...]}) for detailed art on your chosen characters",
-				"  2. create_strip to validate and get the studio link",
+				"  1. create_strip to validate and get the studio link",
+				"  query_cast({avatars: [...]}) lists exact pose names, needed only to pin a gesture.",
 				"  use validate_strip to iterate without minting a link.",
 			].join("\n");
 			return {
@@ -196,16 +201,14 @@ export function createStudioServer(options: StudioServerOptions) {
 		"comic-chat://cast",
 		{
 			title: "Full cast inventory",
-			description:
-				"Every speaking character with variant counts and pose names.",
+			description: "Every character with variant counts and pose names.",
 			mimeType: "text/plain",
 		},
 		async (uri) => {
 			const catalog = await loadCatalog(assets);
-			const speaking = catalog.avatars.filter(isSpeaking);
 			const legend =
 				'legend: "happy 3" = 3 variants; use emotion "happy" or "happy_1" through "happy_3" to pin one. "(drawn as sad)" = reuses sad\'s art. poses are literal names.';
-			const lines = speaking.map(describeAvatar);
+			const lines = catalog.avatars.map(describeAvatar);
 			return {
 				contents: [
 					{
@@ -223,7 +226,7 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Get bearings",
 			description:
-				"Vocabulary, limits, strip schema, and workflow. Call once at the start of a conversation. Redundant if the comic-strip prompt is loaded.",
+				"Vocabulary, cast, limits, strip schema, and workflow. Call once at the start of a conversation. Redundant if the comic-strip prompt is loaded.",
 			inputSchema: {},
 			annotations: { readOnlyHint: true },
 		},
@@ -233,16 +236,20 @@ export function createStudioServer(options: StudioServerOptions) {
 				"",
 				"workflow:",
 				"  1. get_bearings (once per conversation)",
-				"  2. query_cast({speaks: true}) to list characters who can react",
-				"  3. query_cast({avatars: [...]}) to dump art inventories for your picks",
-				"  4. create_strip to validate and get the studio link",
+				"  2. create_strip to validate and get the studio link",
+				"  query_cast({avatars: [...]}) lists exact pose names, needed only to pin a gesture.",
 				"  create_strip validates internally. use validate_strip to iterate without minting a link.",
 			].join("\n");
 			return {
 				content: [
 					{
 						type: "text" as const,
-						text: buildBearings(catalog) + workflow,
+						text: [
+							buildBearings(catalog),
+							"",
+							buildCastBlock(catalog),
+							workflow,
+						].join("\n"),
 					},
 				],
 			};
@@ -268,16 +275,10 @@ export function createStudioServer(options: StudioServerOptions) {
 					.string()
 					.optional()
 					.describe("Filter to characters that own this face"),
-				speaks: z
-					.boolean()
-					.optional()
-					.describe(
-						"Filter to characters with more than one drawing, so they can react",
-					),
 			},
 			annotations: { readOnlyHint: true },
 		},
-		async ({ avatars: names, gesture, emotion, speaks }) => {
+		async ({ avatars: names, gesture, emotion }) => {
 			const catalog = await loadCatalog(assets);
 
 			if (names && names.length > 0) {
@@ -315,12 +316,10 @@ export function createStudioServer(options: StudioServerOptions) {
 				matched = matched.filter((a) => (a.gestures ?? []).includes(gesture));
 			if (emotion)
 				matched = matched.filter((a) => (a.emotions[emotion] ?? 0) > 0);
-			if (speaks) matched = matched.filter(isSpeaking);
 
 			const filters = [
 				gesture && `gesture=${gesture}`,
 				emotion && `emotion=${emotion}`,
-				speaks && "speaks",
 			]
 				.filter(Boolean)
 				.join(" ");

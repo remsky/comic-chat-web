@@ -1,0 +1,8 @@
+{
+	"mcpServers": {
+		"comic-chat": {
+			"type": "http",
+			"url": "https://comics.remsky.art/mcp"
+		}
+	}
+}
