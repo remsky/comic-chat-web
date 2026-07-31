@@ -21,12 +21,18 @@ export const ART_PACKS: readonly ArtPack[] = [
 		characters: ["kevin", "kwensa", "maynard", "rebecca", "sage", "scotty"],
 		backdrops: ["den", "volcano"],
 	},
+	{
+		id: "rem1",
+		chip: { label: "REM1", tone: "rem" },
+		characters: [],
+		backdrops: ["mauve", "teal", "slate"],
+	},
 ];
 
 export const PACK_IDS: readonly string[] = ART_PACKS.map((pack) => pack.id);
 
 // the skill's vendored reference tracks this repo's own deploy, so the generator and its test read one value
-export const VENDORED_PACKS = "artpack1";
+export const VENDORED_PACKS = "artpack1,rem1";
 
 function requested(value: string | undefined): string[] {
 	const raw = (value ?? "").trim();

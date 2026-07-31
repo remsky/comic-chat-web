@@ -53,9 +53,8 @@ No generator and no test on the wording, so these go stale silently:
 | `reference/cast.md` | a troupe table row (`name`, `look`, `range`) and a casting-by-register bullet |
 | `reference/backgrounds.md` | a backdrop table row |
 | `skills/comic-strip/SKILL.md` | the backdrop count in prose |
-| `.codex-plugin/plugin.json` | the character and backdrop counts in the description |
 
-Both counts have been wrong before. They claimed nine backdrops and thirty one characters against a catalog of eight and twenty eight. Nothing checks them, so read them against `catalog.json` whenever a pack changes.
+Counts have been wrong before. They claimed nine backdrops and thirty one characters against a catalog of eight and twenty eight. Nothing checks them, so read them against `catalog.json` whenever a pack changes.
 
 `src/studio/castProse.ts` scrapes `cast.md` for the troupe table and the register bullets at generate time, baking both into `catalog.json`. A row that breaks mid-cell parses as nothing, so the character loses its look and range in both `cast-query.mjs` and `get_bearings`.
 

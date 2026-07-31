@@ -1,10 +1,10 @@
 # Backdrops
 
-There are eight, and this is all of them. Nothing here is a kitchen, an office, a meeting room, a street, or a workshop. Pick for general tone, not for what the scene is nominally about.
+There are eleven, and this is all of them. Nothing here is a kitchen, an office, a meeting room, a street, or a workshop. Pick for general tone, not for what the scene is nominally about.
 
 Omitting `background` leaves the panel plain white. That is the right call for a scene the set genuinely cannot place, and it is worth one panel where you want the frame to go quiet or the focus to draw to a moment. It is not a default. A strip with no backdrop anywhere and changing every frame tends to read as unfinished or sloppy, so choose one that fits the mood and hold it; but they are just backdrops, so judiciously changing for thematic effect is fine.
 
-Every character is black-and-white line art, so the backdrop alone decides whether a panel is monochrome. Three backdrops are ink; the other five are colour. Colour behind a monochrome character is normal and reads fine, it is just louder, and a strip that stays in one register often looks more deliberate than one that mixes.
+Every character is black-and-white line art, so the backdrop alone decides whether a panel is monochrome. Three backdrops are ink; the other eight are colour. Colour behind a monochrome character is normal and reads fine, it is just louder, and a strip that stays in one register often looks more deliberate than one that mixes.
 
 ## Monochrome, pen and ink
 
@@ -24,4 +24,7 @@ These three match the cast's own line work. A strip built from these plus blank 
 | den | pastel colorful living room: mint walls, decorative sitting stool, a low table with decorative flower pots, a vague framed picture on the wall; a tall arched window and sitting room + chair looking onto a sunset landscape in the right half | conversation, a comfortable interior, lively yet dreamlike. Characters read well |
 | space | purple starfield with cratered planets and two small rockets over a pink rocky plain | scale, ambition, science fiction, absurd distance |
 | volcano | watercolour: a pink peak over a blue ridge and flat water, olive sky, soft detail | soft and nearly empty, prehistoric feel. Characters sit clean against it |
+| mauve | flat muted mauve | warm and quiet, slightly feminine. Softer than yellow, still reads as a colour panel |
+| slate | flat cool blue-grey | neutral and professional, recedes behind the cast. The most understated colour option |
+| teal | flat muted teal | calm and grounded, cooler than the warm backdrops without the weight of the ink ones |
 | yellow | flat chartreuse, a single bright colour field | no depth at all, maximum contrast on the balloons and art |

@@ -839,6 +839,11 @@ body:not(.modern-tweaks) .background-picker-grid {
 	background: #7a4f9c;
 }
 
+.character-option-chip--rem {
+	background: #222;
+	color: #eee;
+}
+
 .character-option input {
 	position: absolute;
 	inset: 0;

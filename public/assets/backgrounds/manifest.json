@@ -57,6 +57,27 @@
 			"copyright": null
 		},
 		{
+			"name": "mauve",
+			"url": "/assets/backgrounds/mauve.png",
+			"width": 315,
+			"height": 315,
+			"copyright": null
+		},
+		{
+			"name": "slate",
+			"url": "/assets/backgrounds/slate.png",
+			"width": 315,
+			"height": 315,
+			"copyright": null
+		},
+		{
+			"name": "teal",
+			"url": "/assets/backgrounds/teal.png",
+			"width": 315,
+			"height": 315,
+			"copyright": null
+		},
+		{
 			"name": "yellow",
 			"url": "/assets/backgrounds/yellow.png",
 			"width": 315,

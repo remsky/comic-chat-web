@@ -26,7 +26,7 @@ When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries
 | `reference/guidance.md` | before writing anything. Staging, camera, pacing, pairings, and the mistakes that only show up in the render |
 | `scripts/cast-query.mjs` | casting. Ask it which characters own a pose or a face, or dump one character in full. Prefer this over reading the cast |
 | `reference/cast.md` | browsing the whole troupe at once, or reading how faces and poses are named |
-| `reference/backgrounds.md` | choosing where it is set. All eight backdrops, what each looks like, and which are ink and which are colour |
+| `reference/backgrounds.md` | choosing where it is set. All eleven backdrops, what each looks like, and which are ink and which are colour |
 | `reference/catalog.json` | last resort. The machine authority both scripts already read for you, so you rarely need it open |
 
 `cast-query.mjs` with no arguments prints its filters. A character's faces are stored as counts and its poses as names: `happy 3` means the `emotion` field takes `happy`, or `happy_1` to `happy_3` to pin one drawing. Poses are written exactly as the query prints them.

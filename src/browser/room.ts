@@ -13,6 +13,7 @@ import {
 } from "./layout.js";
 import {
 	BACKDROP_PACK,
+	backdropSortKey,
 	buildBackgroundTile,
 	buildCharacterTile,
 } from "./pickerTiles.js";
@@ -198,24 +199,27 @@ function wireBackgroundPicker(
 		checkRadios(backgroundOptions, name);
 	};
 	if (backdrops.backdrops.length === 0) return syncBackground;
+	const sorted = [...backdrops.backdrops].sort((a, b) =>
+		backdropSortKey(a.name).localeCompare(backdropSortKey(b.name)),
+	);
 	const none = document.createElement("option");
 	none.value = "";
 	none.textContent = "None";
 	backgroundSelect.append(
 		none,
-		...backdrops.backdrops.map((info) => {
+		...sorted.map((info) => {
 			const option = document.createElement("option");
 			option.value = info.name;
 			const pack = BACKDROP_PACK[info.name];
 			option.textContent = pack
-				? `${displayName(info.name)} (${pack})`
+				? `${displayName(info.name)} (${pack.label})`
 				: displayName(info.name);
 			return option;
 		}),
 	);
 	backgroundOptions.append(
 		buildBackgroundTile("", "None", null, undefined),
-		...backdrops.backdrops.map((info) =>
+		...sorted.map((info) =>
 			buildBackgroundTile(
 				info.name,
 				displayName(info.name),

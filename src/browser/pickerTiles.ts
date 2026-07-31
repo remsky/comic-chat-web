@@ -7,11 +7,17 @@ import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { displayName } from "./dom.js";
 
 // backdrops a pack brought with it; base comicart ones stay unlabeled
-export const BACKDROP_PACK: Record<string, string> = Object.fromEntries(
-	ART_PACKS.flatMap((pack) =>
-		pack.backdrops.map((name) => [name, pack.chip.label]),
-	),
-);
+export const BACKDROP_PACK: Record<string, { label: string; tone: string }> =
+	Object.fromEntries(
+		ART_PACKS.flatMap((pack) =>
+			pack.backdrops.map((name) => [name, pack.chip]),
+		),
+	);
+
+export function backdropSortKey(name: string): string {
+	const pack = ART_PACKS.findIndex((p) => p.backdrops.includes(name));
+	return pack === -1 ? `0_${name}` : `${pack + 1}_${name}`;
+}
 
 function radioTile(
 	className: string,
@@ -101,7 +107,7 @@ export function buildBackgroundTile(
 	value: string,
 	label: string,
 	url: string | null,
-	pack: string | undefined,
+	pack: { label: string; tone: string } | undefined,
 ): HTMLLabelElement {
 	const option = radioTile("character-option", "background", value);
 	const content = document.createElement("span");
@@ -122,7 +128,7 @@ export function buildBackgroundTile(
 	name.className = "character-option-name";
 	name.textContent = label;
 	content.append(thumb, name);
-	if (pack) content.append(chip("art1", pack));
+	if (pack) content.append(chip(pack.tone, pack.label));
 	option.append(content);
 	return option;
 }
