@@ -1,7 +1,7 @@
 {
 	"name": "comic-strip",
 	"description": "Write a comic strip in the Comic Chat studio format and return a link that opens it, rendered, in the editor.",
-	"version": "0.10.0",
+	"version": "0.11.0",
 	"author": {
 		"name": "remsky",
 		"url": "https://github.com/remsky"

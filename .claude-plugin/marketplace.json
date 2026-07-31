@@ -6,7 +6,7 @@
 	},
 	"metadata": {
 		"description": "Agent tooling for the Comic Chat studio.",
-		"version": "0.10.0"
+		"version": "0.11.0"
 	},
 	"plugins": [
 		{
