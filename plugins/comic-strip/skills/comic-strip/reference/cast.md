@@ -47,6 +47,7 @@ The art is 1996 black-and-white cartoon line work, the whole cast in one drawing
 | maynard | floppy-eared dog standing upright | no bored, the most torsos in the cast; shout reuses angry |
 | mike | showman in a fez and bow tie, long nose, vole-like anthropomorphic features, dinner jacket | full wheel, shrugs; bored reuses coy, sad reuses scared |
 | pedagog | stern man in a shirt and tie, arms folded, disgruntled avoidant expression | one drawing |
+| peety | long-eared creature with a rounded muzzle, simple tunic, stick limbs and circular hands | full wheel, waves, points, double-points and shrugs |
 | rainbow | grinning lizard playing a snare drum, frozen grin, expectant look, holding drum sticks in the air | one drawing |
 | rebecca | glamour: curled updo, long black gown and gloves | full wheel, very wide torso set; sad reuses bored, shout reuses scared |
 | sage | old bearded sage in a plain robe, barefoot | full wheel |
@@ -70,6 +71,6 @@ Nobody here wears a uniform or carries a job, so register comes from clothes or 
 - **Counterculture and outsiders**: `armando`, `lynnea`, `lance`, or `maynard`/`jordan`/`waf`/`hugh`/`cro` in specific contexts.
 - **Wise or elder**: `sage`, `kwensa`, `scotty`.
 - **Showmen**: `mike`, `rebecca`, `bolo`, `rainbow`. Good for anyone overselling something.
-- **Creatures/Unknown**, which read as comic in most cases, fine for emphasis but be mindful: `connor`, `hugh`, `jordan`, `maynard`, `rainbow`, `tiki`, `waf`, `xeno`.
+- **Creatures/Unknown**, which read as comic in most cases, fine for emphasis but be mindful: `connor`, `hugh`, `jordan`, `maynard`, `peety`, `rainbow`, `tiki`, `waf`, `xeno`.
 
 A creature in most scenes is going to be joking, or for specific and mindful emphasis. If the strip has to be taken at face value, cast humans.

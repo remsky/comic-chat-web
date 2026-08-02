@@ -30,7 +30,8 @@
 		"maynard",
 		"rebecca",
 		"sage",
-		"scotty"
+		"scotty",
+		"peety"
 	],
 	"avatars": [
 		{
@@ -14773,7 +14774,357 @@
 				}
 			],
 			"bodies": []
+		},
+		{
+			"avatarID": 32,
+			"name": "peety",
+			"type": "complex",
+			"iconPoseID": 558,
+			"flags": 5,
+			"poses": [
+				{
+					"poseID": 558,
+					"localPoseID": 1,
+					"width": 40,
+					"height": 40,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 1,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 559,
+					"localPoseID": 2,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 42,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 560,
+					"localPoseID": 3,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 179,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 561,
+					"localPoseID": 4,
+					"width": 142,
+					"height": 142,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 316,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 562,
+					"localPoseID": 5,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 459,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 563,
+					"localPoseID": 6,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 596,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 564,
+					"localPoseID": 7,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 733,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 565,
+					"localPoseID": 8,
+					"width": 136,
+					"height": 126,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 870,
+						"y": 1
+					}
+				},
+				{
+					"poseID": 566,
+					"localPoseID": 9,
+					"width": 136,
+					"height": 127,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 1,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 567,
+					"localPoseID": 10,
+					"width": 79,
+					"height": 142,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 138,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 568,
+					"localPoseID": 11,
+					"width": 108,
+					"height": 143,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 218,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 569,
+					"localPoseID": 12,
+					"width": 129,
+					"height": 140,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 327,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 570,
+					"localPoseID": 13,
+					"width": 70,
+					"height": 148,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 457,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 571,
+					"localPoseID": 14,
+					"width": 97,
+					"height": 153,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 528,
+						"y": 144
+					}
+				},
+				{
+					"poseID": 572,
+					"localPoseID": 15,
+					"width": 115,
+					"height": 147,
+					"sprite": {
+						"atlasUrl": "/assets/avatars/peety-88a95f0415.png",
+						"x": 626,
+						"y": 144
+					}
+				}
+			],
+			"faces": [
+				{
+					"poseID": 559,
+					"emotion": 0,
+					"emotionIndex": 9,
+					"intensity": 0,
+					"intensityTenths": 0,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 560,
+					"emotion": 0,
+					"emotionIndex": 1,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 560,
+					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 561,
+					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 83,
+					"yCX": 140,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 83,
+					"faceY": 65
+				},
+				{
+					"poseID": 562,
+					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 563,
+					"emotion": 2.3561925888061523,
+					"emotionIndex": 4,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 564,
+					"emotion": 3.141590118408203,
+					"emotionIndex": 5,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 565,
+					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 125,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				},
+				{
+					"poseID": 566,
+					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 77,
+					"yCX": 126,
+					"deltaXCX": 0,
+					"deltaYCX": 0,
+					"faceX": 77,
+					"faceY": 50
+				}
+			],
+			"torsos": [
+				{
+					"poseID": 567,
+					"emotion": 0,
+					"emotionIndex": 9,
+					"intensity": 0,
+					"intensityTenths": 0,
+					"xCX": 41,
+					"yCX": 13
+				},
+				{
+					"poseID": 568,
+					"emotion": 1002,
+					"emotionIndex": 11,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 41,
+					"yCX": 13
+				},
+				{
+					"poseID": 570,
+					"emotion": 1003,
+					"emotionIndex": 12,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 42,
+					"yCX": 16
+				},
+				{
+					"poseID": 569,
+					"emotion": 1004,
+					"emotionIndex": 13,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 67,
+					"yCX": 12
+				},
+				{
+					"poseID": 571,
+					"emotion": 1001,
+					"emotionIndex": 10,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 61,
+					"yCX": 22
+				},
+				{
+					"poseID": 572,
+					"emotion": 1005,
+					"emotionIndex": 14,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 58,
+					"yCX": 16
+				}
+			],
+			"bodies": []
 		}
 	],
-	"poseCount": 557
+	"poseCount": 572
 }

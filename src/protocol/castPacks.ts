@@ -24,7 +24,7 @@ export const ART_PACKS: readonly ArtPack[] = [
 	{
 		id: "rem1",
 		chip: { label: "REM1", tone: "rem" },
-		characters: [],
+		characters: ["peety"],
 		backdrops: ["mauve", "teal", "slate"],
 	},
 ];

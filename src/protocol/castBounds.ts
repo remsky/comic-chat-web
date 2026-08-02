@@ -41,4 +41,5 @@ export const CAST_BOUNDS: Readonly<Record<number, CastBounds>> = {
 	29: { name: "rebecca", type: "complex", faces: 19, torsos: 24, bodies: 0 },
 	30: { name: "sage", type: "complex", faces: 20, torsos: 17, bodies: 0 },
 	31: { name: "scotty", type: "complex", faces: 24, torsos: 9, bodies: 0 },
+	32: { name: "peety", type: "complex", faces: 9, torsos: 8, bodies: 0 },
 };

@@ -113,7 +113,7 @@ describe("the strip skill's vendored reference", () => {
 	});
 
 	it("names nobody the vendored packs leave out", () => {
-		const packs = resolvePacks("artpack1");
+		const packs = resolvePacks(VENDORED_PACKS);
 		const dropped = ART_PACKS.filter((pack) => !packs.has(pack.id)).flatMap(
 			(pack) => pack.characters,
 		);

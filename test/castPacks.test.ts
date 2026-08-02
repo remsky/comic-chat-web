@@ -11,7 +11,10 @@ import {
 	shipsCharacter,
 	unknownPacks,
 } from "../src/protocol/castPacks.js";
-import { shippedManifests } from "../src/studio/catalogJson.js";
+import {
+	droppedAvatarAtlases,
+	shippedManifests,
+} from "../src/studio/catalogJson.js";
 
 const read = (file: string): string =>
 	readFileSync(resolve(process.cwd(), file), "utf8");
@@ -84,6 +87,16 @@ describe("the manifests a build publishes", () => {
 		expect(manifest.poseCount).toBeLessThan(
 			(JSON.parse(AVATARS) as { poseCount: number }).poseCount,
 		);
+	});
+
+	it("drops a disabled character's atlas under whatever filename it carries", () => {
+		const dropped = droppedAvatarAtlases(AVATARS, resolvePacks("artpack1"));
+		expect(dropped).toContain("kirby.png");
+		// peety's atlas is content-hashed, so a name-derived filename would have missed it
+		expect(dropped.some((file) => file.startsWith("peety-"))).toBe(true);
+		expect(dropped).not.toContain("dan.png");
+		expect(dropped).not.toContain("sage.png");
+		expect(droppedAvatarAtlases(AVATARS, resolvePacks("all"))).toEqual([]);
 	});
 
 	it("drops the backdrops that came with that pack", () => {

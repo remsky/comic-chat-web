@@ -18,6 +18,7 @@ import {
 	CATALOG_FILE,
 	catalogFromManifests,
 	docAsset,
+	droppedAvatarAtlases,
 	SKILL_DOCS,
 	SKILL_REFERENCE,
 	SKILL_THUMBS,
@@ -46,23 +47,23 @@ function shippedPublicDir(mode: string): string {
 		);
 	const packs = resolvePacks(value);
 	const source = entry("public");
-	const dropped = new Set(
-		ART_PACKS.filter((pack) => !packs.has(pack.id)).flatMap((pack) => [
-			...pack.characters.map((name) =>
-				resolve(source, "assets/avatars", `${name}.png`),
-			),
-			...pack.backdrops.map((name) =>
+	const read = (file: string) => readFileSync(join(source, file), "utf8");
+	const dropped = new Set([
+		...droppedAvatarAtlases(read(AVATAR_MANIFEST), packs).map((file) =>
+			resolve(source, "assets/avatars", file),
+		),
+		...ART_PACKS.filter((pack) => !packs.has(pack.id)).flatMap((pack) =>
+			pack.backdrops.map((name) =>
 				resolve(source, "assets/backgrounds", `${name}.png`),
 			),
-		]),
-	);
+		),
+	]);
 	const staged = entry("node_modules/.cache/art-packs/public");
 	rmSync(staged, { recursive: true, force: true });
 	cpSync(source, staged, {
 		recursive: true,
 		filter: (file) => !dropped.has(resolve(file)),
 	});
-	const read = (file: string) => readFileSync(join(source, file), "utf8");
 	const manifests = shippedManifests(
 		read(AVATAR_MANIFEST),
 		read(BACKDROP_MANIFEST),

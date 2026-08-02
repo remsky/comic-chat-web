@@ -14,3 +14,5 @@ DO_EXTRACT.md
 .claude/skills/comment-ratio/SKILL.md
 .claude/skills/comment-ratio/scripts/commentRatio.mjs
 .claude/skills/adding-art-packs/SKILL.md
+# source art for hand-packed atlases; only the packed sheet and manifest ship
+tools/avb/custom/

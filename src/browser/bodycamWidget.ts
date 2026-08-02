@@ -256,10 +256,16 @@ export class BodyCamWidget {
 		this.menu = null;
 	}
 
+	// Reset posed the avatar neutral; a cursor parked off-center also makes re-picking that pixel a no-op
+	private recenter(): void {
+		this.model.updateEmotion({ emotion: 0, intensity: 0 });
+	}
+
 	// RefreshBodyCam after a message lands: resync the freeze mirror and repaint
 	refresh(): void {
 		const avatar = this.options.getAvatar();
 		if (avatar) this.freeze = avatar.freeze;
+		if (this.freeze === AF_UNFROZEN) this.recenter();
 		this.syncFreeze();
 		this.draw();
 	}
@@ -269,7 +275,8 @@ export class BodyCamWidget {
 		const avatar = this.options.getAvatar();
 		if (!avatar) return;
 		avatar.freeze = this.freeze;
-		if (this.freeze !== AF_UNFROZEN)
+		if (this.freeze === AF_UNFROZEN) this.recenter();
+		else
 			avatar.updateBody(
 				avatar.getBodyFromEmotion(
 					this.model.emotion.emotion,

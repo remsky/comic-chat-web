@@ -10,6 +10,7 @@ import {
 	repairTargets,
 } from "./artRepairs.ts";
 import { castArtAvailable, readCastAvb } from "./castSource.ts";
+import { appendCustomAvatars } from "./customAvatars.ts";
 import {
 	type AvatarFixtureSet,
 	buildAvatarFixtures,
@@ -24,9 +25,11 @@ const MANIFEST = fileURLToPath(
 const hasCastArt = castArtAvailable();
 
 function fromSource(): AvatarFixtureSet {
-	return buildAvatarFixtures(
+	const fixtures = buildAvatarFixtures(
 		FULL_CAST.map((name) => ({ name, bytes: readCastAvb(name) })),
 	);
+	appendCustomAvatars(fixtures);
+	return fixtures;
 }
 
 // the atlas packer stamps these onto the shipped copy; nothing upstream of it knows them

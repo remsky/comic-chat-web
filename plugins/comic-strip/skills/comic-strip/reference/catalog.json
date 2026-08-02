@@ -1,6 +1,6 @@
 {
 	"version": 2,
-	"art": "319d0b0e",
+	"art": "eade1e5b",
 	"emotions": [
 		"happy",
 		"coy",
@@ -890,6 +890,33 @@
 				"scared_1",
 				"angry_1"
 			]
+		},
+		{
+			"name": "peety",
+			"look": "long-eared creature with a rounded muzzle, simple tunic, stick limbs and circular hands",
+			"range": "full wheel, waves, points, double-points and shrugs",
+			"emotions": {
+				"happy": 1,
+				"coy": 1,
+				"bored": 1,
+				"scared": 1,
+				"sad": 1,
+				"angry": 1,
+				"shout": 1,
+				"laugh": 1,
+				"neutral": 1
+			},
+			"aliases": {
+				"laugh": "happy"
+			},
+			"gestures": [
+				"wave",
+				"point",
+				"pointself",
+				"doublepoint",
+				"shrug",
+				"neutral_1"
+			]
 		}
 	],
 	"registers": [
@@ -969,6 +996,7 @@
 				"hugh",
 				"jordan",
 				"maynard",
+				"peety",
 				"rainbow",
 				"tiki",
 				"waf",

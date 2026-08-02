@@ -1,11 +1,12 @@
 // Generates one request-efficient transparent avatar atlas per cast member and the runtime manifest.
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ART_REPAIRS, applyArtRepairs, describeRepair } from "./artRepairs.ts";
 import { readCastAvb } from "./castSource.ts";
 import { composeImageRgba, decodePose } from "./convert.ts";
+import { appendCustomAvatars, CUSTOM_AVATAR_ATLASES } from "./customAvatars.ts";
 import {
 	buildAvatarFixtures,
 	FULL_CAST,
@@ -82,6 +83,7 @@ applyArtRepairs(fixtures).forEach((applied, index) => {
 	if (applied === 0 && repair)
 		throw new Error(`stale art repair: ${describeRepair(repair)}`);
 });
+appendCustomAvatars(fixtures);
 mkdirSync(outputDir, { recursive: true });
 
 for (let avatarIndex = 0; avatarIndex < inputs.length; avatarIndex++) {
@@ -127,6 +129,24 @@ for (let avatarIndex = 0; avatarIndex < inputs.length; avatarIndex++) {
 			y: sprite.y,
 		};
 	}
+}
+
+for (const atlas of CUSTOM_AVATAR_ATLASES) {
+	const avatar = fixtures.avatars.find((entry) => entry.name === atlas.name);
+	if (!avatar) throw new Error(`missing custom avatar ${atlas.name}`);
+	for (const pose of avatar.poses) {
+		const bounds = atlas.bounds[pose.localPoseID - 1];
+		if (!bounds)
+			throw new Error(`missing ${atlas.name} pose ${pose.localPoseID}`);
+		const [x, y] = bounds;
+		pose.sprite = {
+			atlasUrl: `/assets/avatars/${atlas.file}`,
+			x,
+			y,
+		};
+	}
+	const target = resolve(outputDir, atlas.file);
+	if (resolve(atlas.source) !== target) copyFileSync(atlas.source, target);
 }
 
 writeFileSync(

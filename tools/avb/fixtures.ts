@@ -50,7 +50,7 @@ export const FULL_CAST = [
 ] as const;
 
 export type TraceAvatarName = (typeof TRACE_CAST)[number];
-export type AvatarName = (typeof FULL_CAST)[number];
+export type AvatarName = (typeof FULL_CAST)[number] | "peety";
 
 // biome-ignore lint/suspicious/noApproximativeNumericConstant: vector2d.h defines PI as 3.14159; fixture floats must match the oracle
 const ORACLE_PI = 3.14159;

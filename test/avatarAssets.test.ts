@@ -53,6 +53,50 @@ describe("avatar web atlases", () => {
 			expectWireRecords([...avatar.faces, ...avatar.torsos, ...avatar.bodies]);
 	});
 
+	it("ships Peety with separate face and gesture art", () => {
+		const peety = manifest.avatars.find((avatar) => avatar.name === "peety");
+		expect(peety).toMatchObject({
+			avatarID: 32,
+			type: "complex",
+			iconPoseID: 558,
+		});
+		expect(peety?.poses).toHaveLength(15);
+		expect(peety?.faces).toHaveLength(9);
+		expect(peety?.torsos).toHaveLength(6);
+		expect(peety?.bodies).toEqual([]);
+		expect(new Set(peety?.faces.map((face) => face.emotionIndex))).toEqual(
+			new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+		);
+		expect(
+			[...(peety?.faces ?? []), ...(peety?.torsos ?? [])].every((part) =>
+				peety?.poses.some((pose) => pose.poseID === part.poseID),
+			),
+		).toBe(true);
+		expect(new Set(peety?.torsos.map((torso) => torso.emotionIndex))).toEqual(
+			new Set([9, 10, 11, 12, 13, 14]),
+		);
+		expect(peety?.faces.map(({ xCX, faceX }) => [xCX, faceX])).toEqual([
+			[77, 77],
+			[77, 77],
+			[77, 77],
+			[83, 83],
+			[77, 77],
+			[77, 77],
+			[77, 77],
+			[77, 77],
+			[77, 77],
+		]);
+		// neck anchors measured per torso, so a raised-arm sheet does not carry the head off the tunic
+		expect(peety?.torsos.map(({ xCX, yCX }) => [xCX, yCX])).toEqual([
+			[41, 13],
+			[41, 13],
+			[42, 16],
+			[67, 12],
+			[61, 22],
+			[58, 16],
+		]);
+	});
+
 	it("retries a failed decode instead of caching the rejection", async () => {
 		let attempts = 0;
 		const cache = new AvatarAtlasCache(async () => {

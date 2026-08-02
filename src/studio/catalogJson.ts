@@ -75,6 +75,22 @@ function digest(text: string): string {
 	return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
+// some atlases are content-hashed rather than named after the character, so the build reads the filenames off the manifest
+export function droppedAvatarAtlases(
+	avatarJson: string,
+	packs: ReadonlySet<string>,
+): string[] {
+	const { avatars } = JSON.parse(avatarJson) as { avatars: AvatarData[] };
+	const kept = new Set<string>();
+	const cut = new Set<string>();
+	for (const avatar of avatars) {
+		const into = shipsCharacter(avatar.name, packs) ? kept : cut;
+		for (const pose of avatar.poses)
+			if (pose.sprite) into.add(pose.sprite.atlasUrl.split("/").pop() ?? "");
+	}
+	return [...cut].filter((file) => file !== "" && !kept.has(file));
+}
+
 export function shippedManifests(
 	avatarJson: string,
 	backgroundJson: string,
