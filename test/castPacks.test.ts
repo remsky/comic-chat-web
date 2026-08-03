@@ -92,11 +92,17 @@ describe("the manifests a build publishes", () => {
 	it("drops a disabled character's atlas under whatever filename it carries", () => {
 		const dropped = droppedAvatarAtlases(AVATARS, resolvePacks("artpack1"));
 		expect(dropped).toContain("kirby.png");
-		// peety's atlas is content-hashed, so a name-derived filename would have missed it
-		expect(dropped.some((file) => file.startsWith("peety-"))).toBe(true);
+		expect(dropped).toContain("peety.png");
 		expect(dropped).not.toContain("dan.png");
 		expect(dropped).not.toContain("sage.png");
 		expect(droppedAvatarAtlases(AVATARS, resolvePacks("all"))).toEqual([]);
+		// the filename is whatever the manifest carries, never rebuilt from the character name
+		const renamed = AVATARS.split("/assets/avatars/peety.png").join(
+			"/assets/avatars/peety-9f8e7d6c5b.png",
+		);
+		expect(droppedAvatarAtlases(renamed, resolvePacks("artpack1"))).toContain(
+			"peety-9f8e7d6c5b.png",
+		);
 	});
 
 	it("drops the backdrops that came with that pack", () => {

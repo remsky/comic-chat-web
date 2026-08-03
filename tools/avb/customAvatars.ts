@@ -1,3 +1,6 @@
+// Drop-in avatars: one json in customAvatars/ plus its atlas png beside the cast art, no code per character.
+
+import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type {
 	AvatarFaceFixture,
@@ -7,121 +10,132 @@ import type {
 } from "./fixtures.ts";
 import { oracleEmotion } from "./fixtures.ts";
 
-const BOUNDS = [
-	[1, 1, 40, 40],
-	[42, 1, 136, 127],
-	[179, 1, 136, 127],
-	[316, 1, 142, 142],
-	[459, 1, 136, 127],
-	[596, 1, 136, 127],
-	[733, 1, 136, 127],
-	[870, 1, 136, 126],
-	[1, 144, 136, 127],
-	[138, 144, 79, 142],
-	[218, 144, 108, 143],
-	[327, 144, 129, 140],
-	[457, 144, 70, 148],
-	[528, 144, 97, 153],
-	[626, 144, 115, 147],
-] as const;
+interface CustomPose {
+	localPoseID: number;
+	name: string;
+	bounds: [number, number, number, number];
+}
 
-const FACE_SPECS = [
-	[2, 9, 0, 77, 126, 77, 50],
-	[3, 1, 1, 77, 126, 77, 50],
-	[3, 8, 1, 77, 126, 77, 50],
-	[4, 2, 1, 83, 140, 83, 65],
-	[5, 3, 1, 77, 126, 77, 50],
-	[6, 4, 1, 77, 126, 77, 50],
-	[7, 5, 1, 77, 126, 77, 50],
-	[8, 6, 1, 77, 125, 77, 50],
-	[9, 7, 1, 77, 126, 77, 50],
-] as const;
+interface CustomFace {
+	localPoseID: number;
+	emotionIndex: number;
+	intensity: number;
+	anchor: [number, number];
+	face: [number, number];
+}
 
-// neck anchors measured against each torso's own art, so a raised-arm sheet does not drag the head with it
-const TORSO_SPECS = [
-	[10, 9, 0, 41, 13],
-	[11, 11, 1, 41, 13],
-	[13, 12, 1, 42, 16],
-	[12, 13, 1, 67, 12],
-	[14, 10, 1, 61, 22],
-	[15, 14, 1, 58, 16],
-	// second tagging of the same drawings on the emotion ring, which the gesture codes are skipped for
-	[14, 8, Math.fround(0.8), 61, 22],
-	[12, 7, 1, 67, 12],
-	[15, 3, Math.fround(0.8), 58, 16],
-	[11, 6, 1, 41, 13],
-	[13, 2, Math.fround(0.6), 42, 16],
-] as const;
+interface CustomTorso {
+	localPoseID: number;
+	emotionIndex: number;
+	intensity: number;
+	anchor: [number, number];
+}
 
-export const CUSTOM_AVATAR_ATLASES = [
-	{
-		name: "peety",
-		file: "peety-88a95f0415.png",
-		source: fileURLToPath(
-			new URL(
-				"../../public/assets/avatars/peety-88a95f0415.png",
-				import.meta.url,
-			),
-		),
-		bounds: BOUNDS,
-	},
-] as const;
+interface CustomAvatarSpec {
+	name: string;
+	type: "simple" | "complex";
+	flags: number;
+	atlas: string;
+	iconLocalPoseID: number;
+	poses: CustomPose[];
+	faces: CustomFace[];
+	torsos: CustomTorso[];
+}
 
-function poses(poseBase: number): AvatarPoseFixture[] {
-	return BOUNDS.map(([, , width, height], index) => ({
-		poseID: poseBase + index + 1,
-		localPoseID: index + 1,
-		width,
-		height,
+const SPEC_DIR = new URL("customAvatars/", import.meta.url);
+const ATLAS_DIR = new URL("../../public/assets/avatars/", import.meta.url);
+
+function loadSpec(file: string): CustomAvatarSpec {
+	const spec = JSON.parse(
+		readFileSync(new URL(file, SPEC_DIR), "utf8"),
+	) as CustomAvatarSpec;
+	spec.poses.forEach((pose, index) => {
+		if (pose.localPoseID !== index + 1)
+			throw new Error(
+				`${file}: poses must run 1..n in order, found ${pose.localPoseID} at ${index}`,
+			);
+	});
+	for (const part of [...spec.faces, ...spec.torsos])
+		if (!spec.poses[part.localPoseID - 1])
+			throw new Error(`${file}: no pose ${part.localPoseID}`);
+	return spec;
+}
+
+const SPECS = readdirSync(SPEC_DIR)
+	.filter((file) => file.endsWith(".json"))
+	.sort()
+	.map(loadSpec);
+
+export const CUSTOM_AVATAR_ATLASES = SPECS.map((spec) => ({
+	name: spec.name,
+	file: spec.atlas,
+	source: fileURLToPath(new URL(spec.atlas, ATLAS_DIR)),
+	bounds: spec.poses.map((pose) => pose.bounds),
+}));
+
+function poses(spec: CustomAvatarSpec, poseBase: number): AvatarPoseFixture[] {
+	return spec.poses.map((pose) => ({
+		poseID: poseBase + pose.localPoseID,
+		localPoseID: pose.localPoseID,
+		width: pose.bounds[2],
+		height: pose.bounds[3],
 	}));
 }
 
-function faces(poseBase: number): AvatarFaceFixture[] {
-	return FACE_SPECS.map(
-		([localPoseID, emotionIndex, intensity, xCX, yCX, faceX, faceY]) => ({
-			poseID: poseBase + localPoseID,
-			emotion: oracleEmotion(emotionIndex),
-			emotionIndex,
+function faces(spec: CustomAvatarSpec, poseBase: number): AvatarFaceFixture[] {
+	return spec.faces.map((face) => {
+		const intensity = Math.fround(face.intensity);
+		return {
+			poseID: poseBase + face.localPoseID,
+			emotion: oracleEmotion(face.emotionIndex),
+			emotionIndex: face.emotionIndex,
 			intensity,
 			intensityTenths: Math.trunc(intensity * 10),
-			xCX,
-			yCX,
+			xCX: face.anchor[0],
+			yCX: face.anchor[1],
 			deltaXCX: 0,
 			deltaYCX: 0,
-			faceX,
-			faceY,
-		}),
-	);
+			faceX: face.face[0],
+			faceY: face.face[1],
+		};
+	});
 }
 
-function torsos(poseBase: number): AvatarTorsoFixture[] {
-	return TORSO_SPECS.map(
-		([localPoseID, emotionIndex, intensity, xCX, yCX]) => ({
-			poseID: poseBase + localPoseID,
-			emotion: oracleEmotion(emotionIndex),
-			emotionIndex,
+// neck anchors measured against each torso's own art, so a raised-arm sheet does not drag the head with it
+function torsos(
+	spec: CustomAvatarSpec,
+	poseBase: number,
+): AvatarTorsoFixture[] {
+	return spec.torsos.map((torso) => {
+		const intensity = Math.fround(torso.intensity);
+		return {
+			poseID: poseBase + torso.localPoseID,
+			emotion: oracleEmotion(torso.emotionIndex),
+			emotionIndex: torso.emotionIndex,
 			intensity,
 			intensityTenths: Math.trunc(intensity * 10),
-			xCX,
-			yCX,
-		}),
-	);
+			xCX: torso.anchor[0],
+			yCX: torso.anchor[1],
+		};
+	});
 }
 
 export function appendCustomAvatars(fixtures: AvatarFixtureSet): void {
-	const poseBase = fixtures.poseCount;
-	const avatarPoses = poses(poseBase);
-	fixtures.castOrder.push("peety");
-	fixtures.avatars.push({
-		avatarID: fixtures.avatars.length + 1,
-		name: "peety",
-		type: "complex",
-		iconPoseID: poseBase + 1,
-		flags: 5,
-		poses: avatarPoses,
-		faces: faces(poseBase),
-		torsos: torsos(poseBase),
-		bodies: [],
-	});
-	fixtures.poseCount += avatarPoses.length;
+	for (const spec of SPECS) {
+		const poseBase = fixtures.poseCount;
+		const avatarPoses = poses(spec, poseBase);
+		fixtures.castOrder.push(spec.name);
+		fixtures.avatars.push({
+			avatarID: fixtures.avatars.length + 1,
+			name: spec.name,
+			type: spec.type,
+			iconPoseID: poseBase + spec.iconLocalPoseID,
+			flags: spec.flags,
+			poses: avatarPoses,
+			faces: faces(spec, poseBase),
+			torsos: torsos(spec, poseBase),
+			bodies: [],
+		});
+		fixtures.poseCount += avatarPoses.length;
+	}
 }

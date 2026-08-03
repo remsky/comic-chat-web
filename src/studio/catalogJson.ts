@@ -75,7 +75,7 @@ function digest(text: string): string {
 	return (hash >>> 0).toString(16).padStart(8, "0");
 }
 
-// some atlases are content-hashed rather than named after the character, so the build reads the filenames off the manifest
+// the manifest owns the atlas filenames, so pack filtering reads them there rather than rebuilding them from the character name
 export function droppedAvatarAtlases(
 	avatarJson: string,
 	packs: ReadonlySet<string>,
