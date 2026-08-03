@@ -5,6 +5,8 @@ const LONG_BALLOON = 90;
 const LONG_TITLE = 30;
 const LONG_CREDIT = 24;
 const LONG_FOOTER = 40;
+const MAX_TEXT = 200;
+const MAX_TITLE = 80;
 const STRIP_KEYS = ["version", "size", "seed", "columns", "panels"];
 const PANEL_KEYS = [
   "kind",
@@ -45,6 +47,22 @@ function checkEnum(raw, key, allowed, path, issues) {
       severity: "error"
     });
 }
+function checkLength(raw, key, limits, path, issues) {
+  const value = raw[key];
+  if (typeof value !== "string") return;
+  if (value.length > limits.cap)
+    issues.push({
+      path: `${path}.${key}`,
+      message: `${value.length} characters is past the ${limits.cap} character cap; split it up`,
+      severity: "error"
+    });
+  else if (limits.soft !== void 0 && value.length > limits.soft)
+    issues.push({
+      path: `${path}.${key}`,
+      message: `${value.length} characters ${limits.crowds}`,
+      severity: "warning"
+    });
+}
 function checkActor(raw, path, catalog, avatars, issues) {
   if (!isRecord(raw)) {
     issues.push({
@@ -74,12 +92,18 @@ function checkActor(raw, path, catalog, avatars, issues) {
       message: "text must be a string",
       severity: "error"
     });
-  else if (typeof raw.text === "string" && raw.text.length > LONG_BALLOON)
-    issues.push({
-      path: `${path}.text`,
-      message: `${raw.text.length} characters will crowd the art; split it across panels`,
-      severity: "warning"
-    });
+  else
+    checkLength(
+      raw,
+      "text",
+      {
+        cap: MAX_TEXT,
+        soft: LONG_BALLOON,
+        crowds: "will crowd the art; split it across panels"
+      },
+      path,
+      issues
+    );
   checkEnum(raw, "mode", catalog.modes, path, issues);
   checkEnum(raw, "facing", catalog.facings, path, issues);
   if (raw.emotion !== void 0) {
@@ -160,12 +184,18 @@ function checkStar(raw, path, avatars, issues) {
       message: "text must be a string",
       severity: "error"
     });
-  else if (typeof raw.text === "string" && raw.text.length > LONG_CREDIT)
-    issues.push({
-      path: `${path}.text`,
-      message: `${raw.text.length} characters is a long credit; the rows centre on the widest one`,
-      severity: "warning"
-    });
+  else
+    checkLength(
+      raw,
+      "text",
+      {
+        cap: MAX_TEXT,
+        soft: LONG_CREDIT,
+        crowds: "is a long credit; the rows centre on the widest one"
+      },
+      path,
+      issues
+    );
   for (const key of ["mode", "emotion", "gesture", "facing"])
     if (raw[key] !== void 0)
       issues.push({
@@ -189,18 +219,29 @@ function checkTitlePanel(raw, path, catalog, avatars, issues) {
         message: `${key} must be a string`,
         severity: "error"
       });
-  if (typeof raw.title === "string" && raw.title.length > LONG_TITLE)
-    issues.push({
-      path: `${path}.title`,
-      message: `${raw.title.length} characters wraps the title over several lines and crowds the cast off the card`,
-      severity: "warning"
-    });
-  if (typeof raw.footer === "string" && raw.footer.length > LONG_FOOTER)
-    issues.push({
-      path: `${path}.footer`,
-      message: `${raw.footer.length} characters is a long footer; it draws on one line`,
-      severity: "warning"
-    });
+  checkLength(
+    raw,
+    "title",
+    {
+      cap: MAX_TITLE,
+      soft: LONG_TITLE,
+      crowds: "wraps the title over several lines and crowds the cast off the card"
+    },
+    path,
+    issues
+  );
+  checkLength(raw, "starring", { cap: MAX_TITLE }, path, issues);
+  checkLength(
+    raw,
+    "footer",
+    {
+      cap: MAX_TITLE,
+      soft: LONG_FOOTER,
+      crowds: "is a long footer; it draws on one line"
+    },
+    path,
+    issues
+  );
   if (!Array.isArray(raw.actors)) {
     issues.push({
       path: `${path}.actors`,
@@ -429,5 +470,7 @@ function checkStrip(raw, catalog) {
   return issues;
 }
 export {
+  MAX_TEXT,
+  MAX_TITLE,
   checkStrip
 };

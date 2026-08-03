@@ -82,7 +82,7 @@ When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries
 }
 ```
 
-An actor's `text` is its credit line, not a balloon; leave it off and the card credits the character's own name. The card draws icons, so `emotion`, `gesture`, `facing`, and `mode` do nothing on it, and so do `background`, `camera`, `zoom`, and `border`. Blank `title` composes as `UNTITLED`, blank `starring` as `STARRING`; write your own `starring` when the credit should read `A STORY TOLD BY`. Keep the title short, roughly the length of `THE GANG'S ALL HERE`, or it wraps and pushes the cast off the card.
+An actor's `text` is its credit line, not a balloon; leave it off and the card credits the character's own name. The card draws icons, so `emotion`, `gesture`, `facing`, and `mode` do nothing on it, and so do `background`, `camera`, `zoom`, and `border`. Blank `title` composes as `UNTITLED`, blank `starring` as `STARRING`; write your own `starring` when the credit should read `A STORY TOLD BY`. Keep the title short, roughly the length of `THE GANG'S ALL HERE`, or it wraps and pushes the cast off the card. `title`, `starring`, and `footer` are each rejected past 80 characters.
 
 `footer` adds an optional line along the bottom of the card, the size of the `starring` line: `"footer": "Written by Margaret"` or `"footer": "A reflection on the times"`. It is off unless you write one. The cast never gives up a row for it: the line shrinks to whatever space is left under the credits, and on a card whose credits already reach the bottom edge it is dropped. One line, so keep it under about forty characters.
 

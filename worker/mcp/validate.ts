@@ -5,6 +5,10 @@ const LONG_TITLE = 30;
 const LONG_CREDIT = 24;
 const LONG_FOOTER = 40;
 
+// create_strip's schema rejects anything past these, so both tools answer the same document alike
+export const MAX_TEXT = 200;
+export const MAX_TITLE = 80;
+
 const STRIP_KEYS = ["version", "size", "seed", "columns", "panels"];
 const PANEL_KEYS = [
 	"kind",
@@ -69,6 +73,30 @@ function checkEnum(
 		});
 }
 
+// past the cap the document is rejected outright; past the soft limit the art only crowds
+function checkLength(
+	raw: Record<string, unknown>,
+	key: string,
+	limits: { cap: number; soft?: number; crowds?: string },
+	path: string,
+	issues: StripIssue[],
+): void {
+	const value = raw[key];
+	if (typeof value !== "string") return;
+	if (value.length > limits.cap)
+		issues.push({
+			path: `${path}.${key}`,
+			message: `${value.length} characters is past the ${limits.cap} character cap; split it up`,
+			severity: "error",
+		});
+	else if (limits.soft !== undefined && value.length > limits.soft)
+		issues.push({
+			path: `${path}.${key}`,
+			message: `${value.length} characters ${limits.crowds}`,
+			severity: "warning",
+		});
+}
+
 function checkActor(
 	raw: unknown,
 	path: string,
@@ -105,12 +133,18 @@ function checkActor(
 			message: "text must be a string",
 			severity: "error",
 		});
-	else if (typeof raw.text === "string" && raw.text.length > LONG_BALLOON)
-		issues.push({
-			path: `${path}.text`,
-			message: `${raw.text.length} characters will crowd the art; split it across panels`,
-			severity: "warning",
-		});
+	else
+		checkLength(
+			raw,
+			"text",
+			{
+				cap: MAX_TEXT,
+				soft: LONG_BALLOON,
+				crowds: "will crowd the art; split it across panels",
+			},
+			path,
+			issues,
+		);
 
 	checkEnum(raw, "mode", catalog.modes, path, issues);
 	checkEnum(raw, "facing", catalog.facings, path, issues);
@@ -206,12 +240,18 @@ function checkStar(
 			message: "text must be a string",
 			severity: "error",
 		});
-	else if (typeof raw.text === "string" && raw.text.length > LONG_CREDIT)
-		issues.push({
-			path: `${path}.text`,
-			message: `${raw.text.length} characters is a long credit; the rows centre on the widest one`,
-			severity: "warning",
-		});
+	else
+		checkLength(
+			raw,
+			"text",
+			{
+				cap: MAX_TEXT,
+				soft: LONG_CREDIT,
+				crowds: "is a long credit; the rows centre on the widest one",
+			},
+			path,
+			issues,
+		);
 
 	for (const key of ["mode", "emotion", "gesture", "facing"])
 		if ((raw as Record<string, unknown>)[key] !== undefined)
@@ -245,24 +285,30 @@ function checkTitlePanel(
 				severity: "error",
 			});
 
-	if (
-		typeof raw.title === "string" &&
-		(raw.title as string).length > LONG_TITLE
-	)
-		issues.push({
-			path: `${path}.title`,
-			message: `${(raw.title as string).length} characters wraps the title over several lines and crowds the cast off the card`,
-			severity: "warning",
-		});
-	if (
-		typeof raw.footer === "string" &&
-		(raw.footer as string).length > LONG_FOOTER
-	)
-		issues.push({
-			path: `${path}.footer`,
-			message: `${(raw.footer as string).length} characters is a long footer; it draws on one line`,
-			severity: "warning",
-		});
+	checkLength(
+		raw,
+		"title",
+		{
+			cap: MAX_TITLE,
+			soft: LONG_TITLE,
+			crowds:
+				"wraps the title over several lines and crowds the cast off the card",
+		},
+		path,
+		issues,
+	);
+	checkLength(raw, "starring", { cap: MAX_TITLE }, path, issues);
+	checkLength(
+		raw,
+		"footer",
+		{
+			cap: MAX_TITLE,
+			soft: LONG_FOOTER,
+			crowds: "is a long footer; it draws on one line",
+		},
+		path,
+		issues,
+	);
 
 	if (!Array.isArray(raw.actors)) {
 		issues.push({

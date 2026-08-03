@@ -10,12 +10,12 @@ import { loadCatalog } from "./catalog.js";
 import { loadBlob, loadDoc } from "./docs.js";
 import { stripLinks } from "./link.js";
 import { screenStrip } from "./screen.js";
-import { checkStrip } from "./validate.js";
+import { checkStrip, MAX_TEXT, MAX_TITLE } from "./validate.js";
 
 // hard caps sized from catalog names and the warn thresholds in validate.ts
 const actorSchema = z.strictObject({
 	avatar: z.string().max(32).describe("Character name from the catalog"),
-	text: z.string().max(200).optional().describe("Balloon text"),
+	text: z.string().max(MAX_TEXT).optional().describe("Balloon text"),
 	mode: z
 		.enum(["say", "think", "whisper", "action"])
 		.optional()
@@ -41,15 +41,19 @@ const panelSchema = z.strictObject({
 		.enum(["scene", "title"])
 		.optional()
 		.describe("Panel type, default scene"),
-	title: z.string().max(80).optional().describe("Heading, title panels only"),
+	title: z
+		.string()
+		.max(MAX_TITLE)
+		.optional()
+		.describe("Heading, title panels only"),
 	starring: z
 		.string()
-		.max(80)
+		.max(MAX_TITLE)
 		.optional()
 		.describe("Subheading, title panels only"),
 	footer: z
 		.string()
-		.max(80)
+		.max(MAX_TITLE)
 		.optional()
 		.describe("Footer text, title panels only"),
 	background: z

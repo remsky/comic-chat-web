@@ -10,6 +10,6 @@
 		"skipLibCheck": true,
 		"types": ["node", "vite/client"]
 	},
-	"include": ["src", "test"],
+	"include": ["src", "test", "playwright.config.ts"],
 	"exclude": ["test/worker"]
 }

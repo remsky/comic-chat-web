@@ -3,6 +3,8 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
 	testDir: "./test/browser",
 	fullyParallel: true,
+	// default is half the cores, which is 8 chromiums on a desktop
+	workers: process.env.CI ? "50%" : 4,
 	reporter: "line",
 	use: {
 		baseURL: "http://127.0.0.1:4173",
@@ -30,5 +32,7 @@ export default defineConfig({
 		url: "http://127.0.0.1:4173",
 		reuseExistingServer: false,
 		timeout: 120_000,
+		// specs cover pack-gated characters, so build every pack
+		env: { CHARACTER_PACKS: "all" },
 	},
 });
