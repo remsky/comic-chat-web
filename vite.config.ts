@@ -24,6 +24,7 @@ import {
 	SKILL_THUMBS,
 	shippedManifests,
 } from "./src/studio/catalogJson.js";
+import { artUrls, moveArt, rewriteArtUrls } from "./tools/artHash.js";
 import {
 	type OperatorValues,
 	robotsTxt,
@@ -69,8 +70,18 @@ function shippedPublicDir(mode: string): string {
 		read(BACKDROP_MANIFEST),
 		packs,
 	);
-	writeFileSync(join(staged, AVATAR_MANIFEST), manifests.avatars);
-	writeFileSync(join(staged, BACKDROP_MANIFEST), manifests.backgrounds);
+	const moved = moveArt(
+		staged,
+		artUrls(manifests.avatars, manifests.backgrounds),
+	);
+	writeFileSync(
+		join(staged, AVATAR_MANIFEST),
+		rewriteArtUrls(manifests.avatars, moved),
+	);
+	writeFileSync(
+		join(staged, BACKDROP_MANIFEST),
+		rewriteArtUrls(manifests.backgrounds, moved),
+	);
 	writeFileSync(
 		join(staged, CATALOG_FILE),
 		JSON.stringify(
@@ -127,6 +138,8 @@ export default defineConfig(({ mode }) => ({
 	publicDir: shippedPublicDir(mode),
 	plugins: [operatorPages()],
 	build: {
+		// art keeps /assets, so the immutable cache header covers these hashed bundles alone
+		assetsDir: "build",
 		rollupOptions: {
 			input: {
 				main: entry("index.html"),

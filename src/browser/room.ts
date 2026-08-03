@@ -1,6 +1,7 @@
 // Live room client entry: boots assets, wires the shell, and hands joins to the session.
 
 import type { AvatarData } from "../engine/avatar.js";
+import { artUrl } from "./artUrl.js";
 import { AvatarAtlasCache } from "./avatarAssets.js";
 import { BackdropCache } from "./backdropAssets.js";
 import { loadCanvasFonts } from "./canvasText.js";
@@ -253,7 +254,7 @@ async function main(): Promise<void> {
 	wireSidebarMore();
 	wireSidebarResize();
 	await loadCanvasFonts();
-	const response = await fetch("/assets/avatars/manifest.json");
+	const response = await fetch(artUrl("/assets/avatars/manifest.json"));
 	if (!response.ok)
 		throw new Error(`failed to load avatar manifest: ${response.status}`);
 	const manifest = (await response.json()) as { avatars: AvatarData[] };

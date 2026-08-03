@@ -1,6 +1,6 @@
 {
 	"version": 2,
-	"art": "eade1e5b",
+	"art": "0aeaff9b",
 	"emotions": [
 		"happy",
 		"coy",
@@ -915,7 +915,12 @@
 				"pointself",
 				"doublepoint",
 				"shrug",
-				"neutral_1"
+				"neutral_1",
+				"coy_1",
+				"bored_1",
+				"angry_1",
+				"shout_1",
+				"laugh_1"
 			]
 		}
 	],

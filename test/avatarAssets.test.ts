@@ -62,7 +62,7 @@ describe("avatar web atlases", () => {
 		});
 		expect(peety?.poses).toHaveLength(15);
 		expect(peety?.faces).toHaveLength(9);
-		expect(peety?.torsos).toHaveLength(6);
+		expect(peety?.torsos).toHaveLength(11);
 		expect(peety?.bodies).toEqual([]);
 		expect(new Set(peety?.faces.map((face) => face.emotionIndex))).toEqual(
 			new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]),
@@ -72,8 +72,9 @@ describe("avatar web atlases", () => {
 				peety?.poses.some((pose) => pose.poseID === part.poseID),
 			),
 		).toBe(true);
+		// 10 to 14 are the gesture codes, 2 to 8 the ring the emotion wheel reads
 		expect(new Set(peety?.torsos.map((torso) => torso.emotionIndex))).toEqual(
-			new Set([9, 10, 11, 12, 13, 14]),
+			new Set([2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14]),
 		);
 		expect(peety?.faces.map(({ xCX, faceX }) => [xCX, faceX])).toEqual([
 			[77, 77],
@@ -94,6 +95,11 @@ describe("avatar web atlases", () => {
 			[67, 12],
 			[61, 22],
 			[58, 16],
+			[61, 22],
+			[67, 12],
+			[58, 16],
+			[41, 13],
+			[42, 16],
 		]);
 	});
 

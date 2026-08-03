@@ -18,8 +18,8 @@ test("Peety composes emotion heads with gesture torsos", async ({
 	});
 	page.on("pageerror", (error) => errors.push(error.message));
 	page.on("response", (response) => {
-		// the atlas filename carries a content hash, so match the stem not the whole name
-		if (/\/assets\/avatars\/peety-[0-9a-f]{10}\.png$/.test(response.url()))
+		// the build content-hashes the atlas into /art, so match the stem alone
+		if (/\/art\/peety-[0-9a-f-]+\.png$/.test(response.url()))
 			atlasResponses.push(response.status());
 	});
 
@@ -48,10 +48,11 @@ test("Peety composes emotion heads with gesture torsos", async ({
 		canvas.evaluate((element) => (element as HTMLCanvasElement).toDataURL());
 
 	const neutral = await pixels();
-	await emotion.selectOption("bored");
+	// sad, because an emotion the wheel pairs a torso with would render its own gesture here
+	await emotion.selectOption("sad");
 	await expect.poll(pixels).not.toBe(neutral);
 	let previous = await pixels();
-	await canvas.screenshot({ path: testInfo.outputPath("peety-bored.png") });
+	await canvas.screenshot({ path: testInfo.outputPath("peety-sad.png") });
 
 	await gesture.selectOption("wave");
 	await expect.poll(pixels).not.toBe(previous);

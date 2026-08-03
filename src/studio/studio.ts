@@ -1,5 +1,6 @@
 // Studio entry: boots the cast, keeps one strip in memory, and re-renders it on every edit.
 
+import { artUrl } from "../browser/artUrl.js";
 import { AvatarAtlasCache } from "../browser/avatarAssets.js";
 import { BackdropCache } from "../browser/backdropAssets.js";
 import {
@@ -91,7 +92,7 @@ async function scriptFromUrl(): Promise<string | null> {
 
 async function main(): Promise<void> {
 	await loadCanvasFonts();
-	const response = await fetch("/assets/avatars/manifest.json");
+	const response = await fetch(artUrl("/assets/avatars/manifest.json"));
 	if (!response.ok)
 		throw new Error(`failed to load avatar manifest: ${response.status}`);
 	const manifest = (await response.json()) as { avatars: AvatarData[] };

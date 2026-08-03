@@ -15121,6 +15121,51 @@
 					"intensityTenths": 10,
 					"xCX": 58,
 					"yCX": 16
+				},
+				{
+					"poseID": 571,
+					"emotion": 5.4977827072143555,
+					"emotionIndex": 8,
+					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
+					"xCX": 61,
+					"yCX": 22
+				},
+				{
+					"poseID": 569,
+					"emotion": 4.712385177612305,
+					"emotionIndex": 7,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 67,
+					"yCX": 12
+				},
+				{
+					"poseID": 572,
+					"emotion": 1.5707950592041016,
+					"emotionIndex": 3,
+					"intensity": 0.800000011920929,
+					"intensityTenths": 8,
+					"xCX": 58,
+					"yCX": 16
+				},
+				{
+					"poseID": 568,
+					"emotion": 3.926987409591675,
+					"emotionIndex": 6,
+					"intensity": 1,
+					"intensityTenths": 10,
+					"xCX": 41,
+					"yCX": 13
+				},
+				{
+					"poseID": 570,
+					"emotion": 0.7853975296020508,
+					"emotionIndex": 2,
+					"intensity": 0.6000000238418579,
+					"intensityTenths": 6,
+					"xCX": 42,
+					"yCX": 16
 				}
 			],
 			"bodies": []

@@ -5,7 +5,7 @@
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
-	src: url("/assets/fonts/comic-neue-400.woff2") format("woff2");
+	src: url("/assets/fonts/comic-neue-400.woff2?v=2") format("woff2");
 }
 
 @font-face {
@@ -13,7 +13,7 @@
 	font-style: italic;
 	font-weight: 400;
 	font-display: swap;
-	src: url("/assets/fonts/comic-neue-400-italic.woff2") format("woff2");
+	src: url("/assets/fonts/comic-neue-400-italic.woff2?v=2") format("woff2");
 }
 
 :root {

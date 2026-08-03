@@ -23,6 +23,7 @@ import {
 	WHEEL_ICON_FILES,
 } from "../engine/bodycam.js";
 import type { Point } from "../engine/vector2d.js";
+import { artUrl } from "./artUrl.js";
 import type { AvatarAtlasCache } from "./avatarAssets.js";
 import { bodySpriteLayers, drawSpriteLayer } from "./canvasRenderer.js";
 
@@ -56,7 +57,7 @@ export class BodyCamWidget {
 		const { canvas } = options;
 		for (const name of WHEEL_ICON_FILES) {
 			const image = new Image(ICON_WIDTH, ICON_HEIGHT);
-			image.src = `/assets/wheel/${name}.png`;
+			image.src = artUrl(`/assets/wheel/${name}.png`);
 			image.decode().then(
 				() => this.draw(),
 				() => {},

@@ -1,5 +1,7 @@
 // Loads the backdrop manifest and images; missing assets degrade to plain white panels.
 
+import { artUrl } from "./artUrl.js";
+
 export interface BackdropInfo {
 	name: string;
 	url: string;
@@ -15,7 +17,7 @@ export class BackdropCache {
 	async load(): Promise<void> {
 		let entries: BackdropInfo[];
 		try {
-			const response = await fetch("/assets/backgrounds/manifest.json");
+			const response = await fetch(artUrl("/assets/backgrounds/manifest.json"));
 			if (!response.ok) return;
 			entries = ((await response.json()) as { backdrops: BackdropInfo[] })
 				.backdrops;

@@ -45,6 +45,12 @@ const TORSO_SPECS = [
 	[12, 13, 1, 67, 12],
 	[14, 10, 1, 61, 22],
 	[15, 14, 1, 58, 16],
+	// second tagging of the same drawings on the emotion ring, which the gesture codes are skipped for
+	[14, 8, Math.fround(0.8), 61, 22],
+	[12, 7, 1, 67, 12],
+	[15, 3, Math.fround(0.8), 58, 16],
+	[11, 6, 1, 41, 13],
+	[13, 2, Math.fround(0.6), 42, 16],
 ] as const;
 
 export const CUSTOM_AVATAR_ATLASES = [
