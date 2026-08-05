@@ -38,6 +38,9 @@
 		"release:minor": "npm version minor -m \"chore: v%s\" && git push --follow-tags",
 		"release:major": "npm version major -m \"chore: v%s\" && git push --follow-tags"
 	},
+	"overrides": {
+		"undici": "^7.29.0"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.4",
 		"@cloudflare/vitest-pool-workers": "^0.18.8",
