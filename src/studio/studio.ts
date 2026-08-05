@@ -42,7 +42,8 @@ const DEMO: unknown = {
 		{
 			camera: "wide",
 			actors: [
-				{ avatar: "anna", text: "Welcome to the studio", gesture: "wave" },
+				// no gesture: "Welcome" starts an EM_WAVE rule, so auto poses her anyway
+				{ avatar: "anna", text: "Welcome to the studio" },
 				{
 					avatar: "tiki",
 					text: "Build a strip panel by panel",
