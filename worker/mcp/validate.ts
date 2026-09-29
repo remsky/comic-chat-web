@@ -567,7 +567,7 @@ export function checkStrip(raw: unknown, catalog: Catalog): StripIssue[] {
 		issues.push({
 			path: "panels",
 			message: "strip has no panels",
-			severity: "warning",
+			severity: "error",
 		});
 	(raw.panels as unknown[]).forEach((panel, index) => {
 		checkPanel(panel, `panels[${index}]`, catalog, avatars, issues);

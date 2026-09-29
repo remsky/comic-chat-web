@@ -466,7 +466,7 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Create strip",
 			description:
-				"Validate a strip document and return the link that opens it in the studio editor. Fails on errors; warnings are included alongside the link.",
+				"Validate a strip document and return the link that opens it in the studio editor. Fails on errors; warnings are included alongside the link. Every call mints a link, so iterate with validate_strip first and call this once it reports no issues.",
 			inputSchema: {
 				strip: stripSchema.describe("The strip JSON document"),
 			},
