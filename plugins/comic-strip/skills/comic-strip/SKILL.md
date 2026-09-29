@@ -17,7 +17,7 @@ A strip is a JSON document: a list of panels, each casting up to five characters
 
 Links point at the public studio, `https://comics.remsky.art`. Add `--open` to also launch the link in the default browser.
 
-When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary, the whole cast, and the same craft as `reference/guidance.md`, so it stands in for steps 1 and 2. `create_strip` validates and returns a short link in one call, and `query_cast` lists exact pose names when you want to pin a gesture.
+When the comic-chat MCP tools are connected, prefer them: `get_bearings` carries the vocabulary, the whole cast, and the same craft as `reference/guidance.md`, so it stands in for steps 1 and 2. `validate_strip` checks a draft without minting a link, so iterate there and call `create_strip` once for the short link, and `query_cast` lists exact pose names when you want to pin a gesture.
 
 ## Reference
 
