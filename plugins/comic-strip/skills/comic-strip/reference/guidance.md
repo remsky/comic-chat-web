@@ -48,6 +48,8 @@ Craft, in the order it bites. This is the how. Who exists, what each character c
 
 ## Shapes
 
+**Default**: when the user asks for a comic strip with no shape in mind, write a title card plus three panels (setup, turn, payoff). Follow any length or cast they name, and skip the card if they ask for a plain strip.
+
 - **Four panels**: setup, turn, escalation, payoff.
 - **Eight panels**: four beats of two, one idea a panel, with something landing at panel 4 as well as panel 8. Read as two rows of four, so panel 4 ends the top row and wants a small button of its own.
 - **Two-hander**: one enthusiast, one skeptic, same two slots throughout. The most reliable shape there is, and the easiest to stage.
@@ -66,7 +68,8 @@ MP4 and GIF exports are also available in the editor, and hold each panel about 
 - You can name the cast that carry the strip, or leave it empty for a simple title card.
 - The credit line puts the script chosen names of the characters (the avatar names are generic art identifiers). If keeping it short (e.g Dan the Server Man), you could use those lines for comedic effect or framing.  
 - `footer` is an optional bottom line, off by default: an authorship credit ("Written by ...") or a date. Use it when the strip is signed work; leave it out otherwise. It never costs a credit row, though a five-name cast can fill the card and drop it entirely
-- Whether to use title is a creative choice. Usually it's not needed. e.g skip it for most cases. It can be used to set the framing/stage of the comic in advance where creatively beneficial, or for longer strips (8+)
+- The card is part of the default shape (title plus three panels), and it sets the framing of the comic in advance. Skip it when the user asks for a plain strip, or names a panel count that has no room for it. Longer strips (8+) suit it too.
+
 ## Pairings that work
 
 Loose suggestions, not rules. Once a pair is chosen, query those two characters and read what they can actually act, which is the moment to find out one of them cannot shrug.
