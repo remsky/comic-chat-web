@@ -31,6 +31,13 @@ const card = (field: string, value: string) => ({
 const at = (raw: unknown, path: string) =>
 	checkStrip(raw, CATALOG).filter((issue) => issue.path === path);
 
+describe("the strip validator's shape checks", () => {
+	it("errors on a strip with no panels", () => {
+		const issues = at({ version: 2, panels: [] }, "panels");
+		expect(issues.map((issue) => issue.severity)).toEqual(["error"]);
+	});
+});
+
 describe("the strip validator's length checks", () => {
 	it("warns on a crowded balloon without failing it", () => {
 		const issues = at(scene("x".repeat(120)), "panels[0].actors[0].text");

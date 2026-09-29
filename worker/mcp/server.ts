@@ -179,9 +179,10 @@ function buildBearings(catalog: Catalog): string {
 const WORKFLOW = [
 	"workflow:",
 	"  1. get_bearings (once per conversation)",
-	"  2. create_strip to validate and get the studio link",
+	"  2. validate_strip each draft until it reports no issues",
+	"  3. create_strip once, to get the studio link",
 	"  query_cast({avatars: [...]}) lists exact pose names, needed only to pin a gesture.",
-	"  create_strip validates internally. use validate_strip to iterate without minting a link.",
+	"  every create_strip call mints a link, so iterate with validate_strip.",
 ].join("\n");
 
 // vocabulary, cast, backdrops, craft, then what to call: one payload behind both the prompt and get_bearings
@@ -430,7 +431,7 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Validate strip",
 			description:
-				"Check a strip document against the catalog. Returns errors and warnings. create_strip validates internally; use this tool to iterate without minting a link.",
+				"Check a strip document against the catalog. Returns errors and warnings without minting a link. Iterate here until it reports no issues, then call create_strip.",
 			inputSchema: {
 				strip: z
 					.record(z.string(), z.unknown())
@@ -466,7 +467,7 @@ export function createStudioServer(options: StudioServerOptions) {
 		{
 			title: "Create strip",
 			description:
-				"Validate a strip document and return the link that opens it in the studio editor. Fails on errors; warnings are included alongside the link.",
+				"Mint the link that opens a strip in the studio editor. Call validate_strip first and iterate there, since every successful call mints a link. Errors are rejected; warnings are returned alongside the link.",
 			inputSchema: {
 				strip: stripSchema.describe("The strip JSON document"),
 			},

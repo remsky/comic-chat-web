@@ -461,7 +461,7 @@ function checkStrip(raw, catalog) {
     issues.push({
       path: "panels",
       message: "strip has no panels",
-      severity: "warning"
+      severity: "error"
     });
   raw.panels.forEach((panel, index) => {
     checkPanel(panel, `panels[${index}]`, catalog, avatars, issues);
