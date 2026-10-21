@@ -125,8 +125,6 @@ export class ChatRoomDO extends DurableObject<Env> {
 					console.warn(`push failed: ${String(error)}`);
 					return 0;
 				});
-				if (status >= 300)
-					console.warn(`push ${status} from ${new URL(sub.endpoint).host}`);
 				if (status === 404 || status === 410) gone.add(sub.endpoint);
 			}),
 		);

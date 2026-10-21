@@ -208,7 +208,6 @@ export async function sendPush(
 			"Content-Encoding": "aes128gcm",
 			"Content-Type": "application/octet-stream",
 			TTL: String(options.ttlSeconds ?? 4 * 60 * 60),
-			Urgency: "normal",
 			// RFC 8030 caps Topic at 32 base64url characters
 			...(options.topic !== undefined
 				? { Topic: options.topic.slice(0, 32) }
@@ -219,7 +218,11 @@ export async function sendPush(
 		redirect: "manual",
 		signal: AbortSignal.timeout(10_000),
 	});
-	// the push service's body is irrelevant; drain it so the connection can be reused
-	await response.body?.cancel();
+	// a failure body carries the service's reason; a success body is drained for connection reuse
+	if (response.ok) await response.body?.cancel();
+	else
+		console.warn(
+			`push ${response.status} from ${new URL(target.endpoint).host}: ${await response.text()}`,
+		);
 	return response.status;
 }

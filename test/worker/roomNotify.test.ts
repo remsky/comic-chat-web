@@ -30,7 +30,7 @@ interface SentPush {
 }
 
 // tests share the worker's isolate, so stubbing global fetch catches the room's push deliveries
-function stubPushFetch(status = 201): SentPush[] {
+function stubPushFetch(status = 201, body: string | null = null): SentPush[] {
 	const sent: SentPush[] = [];
 	vi.stubGlobal(
 		"fetch",
@@ -41,7 +41,7 @@ function stubPushFetch(status = 201): SentPush[] {
 				bytes: ((init?.body ?? new Uint8Array()) as Uint8Array).length,
 				redirect: init?.redirect,
 			});
-			return new Response(null, { status });
+			return new Response(body, { status });
 		}),
 	);
 	return sent;
@@ -201,7 +201,7 @@ describe("room push notifications", () => {
 
 	it("leaves a failed delivery quiet until the normal rearm", async () => {
 		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-		const sent = stubPushFetch(503);
+		const sent = stubPushFetch(503, '{"reason":"Shutdown"}');
 		const bea = await join("notify-down", "Bea", 2);
 		const alice = await join("notify-down", "Alice", 1);
 		const sub = await subscription("/sub/down");
@@ -213,7 +213,9 @@ describe("room push notifications", () => {
 		await bea.inbox.next("entry");
 		await vi.waitFor(() => expect(sent).toHaveLength(1));
 		await vi.waitFor(() =>
-			expect(warn).toHaveBeenCalledWith("push 503 from push.test"),
+			expect(warn).toHaveBeenCalledWith(
+				'push 503 from push.test: {"reason":"Shutdown"}',
+			),
 		);
 		// the 503 leaves the stamp in place; a rearm would zero it once the 503 lands
 		await vi.waitFor(async () =>
