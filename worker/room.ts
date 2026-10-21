@@ -54,6 +54,7 @@ interface SocketState {
 	modStrikes?: number;
 	mutedUntil?: number;
 	skew?: number;
+	away?: boolean;
 }
 
 export class ChatRoomDO extends DurableObject<Env> {
@@ -101,7 +102,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 		const vapid = this.vapid();
 		if (!vapid) return;
 		const subs = await this.push.load();
-		const connected = new Set(this.roster().map((seat) => seat.userId));
+		const connected = new Set<string>();
+		for (const ws of this.ctx.getWebSockets()) {
+			const state = this.stateOf(ws);
+			if (state.userId !== undefined && !state.away)
+				connected.add(state.userId);
+		}
 		const now = Date.now();
 		const due = dueSubs(subs, connected, now);
 		if (due.length === 0) return;
@@ -115,7 +121,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 			due.map(async (sub) => {
 				const status = await sendPush(sub, payload, vapid, {
 					topic: room,
-				}).catch(() => 0);
+				}).catch((error: unknown) => {
+					console.warn(`push failed: ${String(error)}`);
+					return 0;
+				});
+				if (status >= 300)
+					console.warn(`push ${status} from ${new URL(sub.endpoint).host}`);
 				if (status === 404 || status === 410) gone.add(sub.endpoint);
 			}),
 		);
@@ -160,6 +171,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				? { mutedUntil: state.mutedUntil }
 				: {}),
 			...(typeof state.skew === "number" ? { skew: state.skew } : {}),
+			...(state.away === true ? { away: true } : {}),
 		};
 	}
 
@@ -357,6 +369,16 @@ export class ChatRoomDO extends DurableObject<Env> {
 				}),
 			);
 			ack(true);
+			return;
+		}
+		if (message.type === "away") {
+			ws.serializeAttachment({ ...this.stateOf(ws), away: message.on });
+			this.send(ws, { type: "away", on: message.on });
+			if (!message.on) {
+				const current = await this.push.load();
+				const rearmed = rearmUser(current, seat.userId);
+				if (rearmed !== current) await this.push.save(rearmed);
+			}
 			return;
 		}
 		if (message.type === "unnotify") {

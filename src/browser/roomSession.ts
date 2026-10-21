@@ -233,6 +233,11 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 	// announced once: the first welcome consumes it so reconnects don't re-arrive
 	let announceFrom = from;
 	let hasWelcomed = false;
+	// a hidden tab is absent for push; the server re-arms the ping when it shows again
+	const syncAway = (): void => {
+		if (hasWelcomed) transport.send({ type: "away", on: document.hidden });
+	};
+	document.addEventListener("visibilitychange", syncAway, { signal });
 	let noticeTimer: number | undefined;
 	let filterTimer: number | undefined;
 	// a /gesture makes the wire text differ from the typed text; the echo needs one, a restore the other
@@ -638,6 +643,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				lastComposerSend = null;
 			}
 			hasWelcomed = true;
+			if (document.hidden) syncAway();
 			refreshTranscript();
 			composerInput.focus();
 		} else if (parsed.type === "entry") {

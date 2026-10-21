@@ -176,7 +176,31 @@ describe("room push notifications", () => {
 		);
 	});
 
+	it("pings a subscriber who tabbed away, rearmed when the tab shows", async () => {
+		const sent = stubPushFetch();
+		const bea = await join("notify-away", "Bea", 2);
+		const alice = await join("notify-away", "Alice", 1);
+		const sub = await subscription("/sub/away");
+		alice.socket.send(JSON.stringify({ type: "notify", ...sub }));
+		await alice.inbox.next("notify");
+		alice.socket.send(JSON.stringify({ type: "away", on: true }));
+		expect(await alice.inbox.next("away")).toEqual({ type: "away", on: true });
+		bea.socket.send(chatMessage("psst", 2));
+		await bea.inbox.next("entry");
+		await vi.waitFor(() => expect(sent).toHaveLength(1));
+		alice.socket.send(JSON.stringify({ type: "away", on: false }));
+		expect(await alice.inbox.next("away")).toEqual({ type: "away", on: false });
+		await vi.waitFor(async () =>
+			expect((await storedSubs("notify-away"))[0]?.pingedAt).toBe(0),
+		);
+		// a visible seat is present: no ping, and the rearm waits for the next absence
+		bea.socket.send(chatMessage("welcome back", 2));
+		await bea.inbox.next("entry");
+		expect(sent).toHaveLength(1);
+	});
+
 	it("leaves a failed delivery quiet until the normal rearm", async () => {
+		const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
 		const sent = stubPushFetch(503);
 		const bea = await join("notify-down", "Bea", 2);
 		const alice = await join("notify-down", "Alice", 1);
@@ -188,6 +212,9 @@ describe("room push notifications", () => {
 		bea.socket.send(chatMessage("one", 2));
 		await bea.inbox.next("entry");
 		await vi.waitFor(() => expect(sent).toHaveLength(1));
+		await vi.waitFor(() =>
+			expect(warn).toHaveBeenCalledWith("push 503 from push.test"),
+		);
 		// the 503 leaves the stamp in place; a rearm would zero it once the 503 lands
 		await vi.waitFor(async () =>
 			expect((await storedSubs("notify-down"))[0]?.pingedAt).toBeTruthy(),
