@@ -155,6 +155,56 @@ describe("room wire protocol", () => {
 		).toBeNull();
 	});
 
+	it("parses push subscribe and unsubscribe messages", () => {
+		const client = (message: object) =>
+			parseClientMessage(JSON.stringify(message));
+		const server = (message: object) =>
+			parseServerMessage(JSON.stringify(message));
+		const endpoint = "https://p.example/1";
+		// exact base64url lengths of a 65-byte point and 16-byte auth secret
+		const keys = { p256dh: `B${"A".repeat(86)}`, auth: "A".repeat(22) };
+		expect(client({ type: "notify", endpoint, keys })).toEqual({
+			type: "notify",
+			endpoint,
+			keys,
+		});
+		expect(client({ type: "unnotify", endpoint })).toEqual({
+			type: "unnotify",
+			endpoint,
+		});
+		// push services are https-only; keys must be exact-length base64url
+		expect(
+			client({ type: "notify", endpoint: "http://p.example/1", keys }),
+		).toBeNull();
+		expect(
+			client({
+				type: "notify",
+				endpoint,
+				keys: { p256dh: "BPoint", auth: keys.auth },
+			}),
+		).toBeNull();
+		expect(client({ type: "notify", endpoint })).toBeNull();
+		expect(
+			client({
+				type: "unnotify",
+				endpoint: `https://p.example/${"x".repeat(3000)}`,
+			}),
+		).toBeNull();
+		// the subscribe ack travels the other way
+		expect(server({ type: "notify", endpoint, on: true })).toEqual({
+			type: "notify",
+			endpoint,
+			on: true,
+		});
+		expect(server({ type: "notify", endpoint })).toBeNull();
+		// the subscriber-count broadcast
+		expect(server({ type: "pushUsers", count: 2 })).toEqual({
+			type: "pushUsers",
+			count: 2,
+		});
+		expect(server({ type: "pushUsers", count: "2" })).toBeNull();
+	});
+
 	it("parses room directory listings and rejects other shapes", () => {
 		expect(
 			parseRoomListings({
@@ -275,6 +325,19 @@ describe("room wire protocol", () => {
 			history: [entry],
 		};
 		expect(parseServerMessage(JSON.stringify(welcome))).toEqual(welcome);
+		// the optional VAPID key rides the welcome; an oversized one is dropped, not fatal
+		expect(
+			parseServerMessage(JSON.stringify({ ...welcome, push: "BKey" })),
+		).toEqual({ ...welcome, push: "BKey" });
+		expect(
+			parseServerMessage(JSON.stringify({ ...welcome, push: "x".repeat(200) })),
+		).toEqual(welcome);
+		expect(
+			parseServerMessage(JSON.stringify({ ...welcome, pushUsers: 3 })),
+		).toEqual({ ...welcome, pushUsers: 3 });
+		expect(
+			parseServerMessage(JSON.stringify({ ...welcome, pushUsers: -1 })),
+		).toEqual(welcome);
 		expect(
 			parseServerMessage(JSON.stringify({ ...welcome, history: [{ seq: 1 }] })),
 		).toBeNull();

@@ -12,6 +12,7 @@ import {
 	wireSidebarMore,
 	wireSidebarResize,
 } from "./layout.js";
+import { wireNotifyBell } from "./notify.js";
 import {
 	BACKDROP_PACK,
 	backdropSortKey,
@@ -28,6 +29,7 @@ import { RoomView } from "./roomView.js";
 import {
 	clearStoredProfile,
 	loadFeatures,
+	loadNotifyRooms,
 	loadStoredProfile,
 	MODERN_TWEAKS_KEY,
 	NAMETAGS_KEY,
@@ -249,6 +251,12 @@ function wireBackgroundPicker(
 async function main(): Promise<void> {
 	const status = element("status");
 	const tabBadge = wireTabUnreadBadge();
+	const notifyBell = wireNotifyBell();
+	// keep the push worker fresh for returning subscribers; everyone else gets one lazily at first bell use
+	if ("serviceWorker" in navigator && loadNotifyRooms().length > 0)
+		void navigator.serviceWorker.register("/sw.js").catch(() => {
+			// the bell registers again on first use
+		});
 	trackVisibleViewport();
 	wireMobilePanels();
 	wireSidebarMore();
@@ -351,6 +359,7 @@ async function main(): Promise<void> {
 		avatarDisplayName,
 		syncProfileAvatar,
 		syncBackground,
+		notifyBell,
 		onIncomingChat: (entry, localUserId, mentioned) => {
 			if (entry.userId === localUserId) return;
 			tabBadge.markUnread(mentioned);

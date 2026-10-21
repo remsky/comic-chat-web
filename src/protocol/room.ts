@@ -33,6 +33,11 @@ export const RATE_LIMIT_REASON = "message rate limit exceeded";
 export const MESSAGE_BLOCKED_REASON = "message blocked";
 // join rejection; the client surfaces it at the nickname field
 export const NAME_BLOCKED_REASON = "name blocked";
+// push subscription bounds: endpoints are push-service URLs, keys base64url-exact (65-byte point, 16-byte secret)
+const MAX_PUSH_ENDPOINT_LENGTH = 2048;
+const PUSH_P256DH_PATTERN = /^[\w-]{87}$/;
+const PUSH_AUTH_PATTERN = /^[\w-]{22}$/;
+const MAX_VAPID_KEY_LENGTH = 128;
 
 // Sender-resolved G/E/R/M/T annotation: G is the torso triple, E the face triple (protsupp.cpp:3048-3064)
 export interface ComicAnnotation {
@@ -126,7 +131,13 @@ export type ClientMessage =
 	| { type: "history"; before: number }
 	| { type: "background"; name: string }
 	| { type: "profile"; name: string; avatar: number }
-	| { type: "depart"; to: string };
+	| { type: "depart"; to: string }
+	| {
+			type: "notify";
+			endpoint: string;
+			keys: { p256dh: string; auth: string };
+	  }
+	| { type: "unnotify"; endpoint: string };
 
 export type ServerMessage =
 	| {
@@ -139,12 +150,19 @@ export type ServerMessage =
 			historyBackground: string;
 			roster: RosterEntry[];
 			history: RoomEntry[];
+			// VAPID public key; present only when the deploy can send Web Push
+			push?: string;
+			pushUsers?: number;
 	  }
 	| { type: "entry"; entry: RoomEntry }
 	| { type: "history"; entries: RoomEntry[]; background: string }
 	| { type: "joined"; who: RosterEntry }
 	| { type: "left"; who: RosterEntry }
 	| { type: "profile"; was: RosterEntry; who: RosterEntry }
+	// subscribe/unsubscribe ack; every client message must earn a reply or the liveness watchdog trips
+	| { type: "notify"; endpoint: string; on: boolean }
+	// distinct subscribed users; broadcast when the set changes
+	| { type: "pushUsers"; count: number }
 	| { type: "error"; reason: string; retryAfter?: number };
 
 function uchar(value: unknown): number | null {
@@ -312,7 +330,32 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 			return null;
 		return { type: "background", name: message.name };
 	}
+	if (message.type === "notify") {
+		const endpoint = pushEndpoint(message.endpoint);
+		const keys = (message.keys ?? {}) as Record<string, unknown>;
+		const p256dh = pushKey(keys.p256dh, PUSH_P256DH_PATTERN);
+		const auth = pushKey(keys.auth, PUSH_AUTH_PATTERN);
+		if (endpoint === null || p256dh === null || auth === null) return null;
+		return { type: "notify", endpoint, keys: { p256dh, auth } };
+	}
+	if (message.type === "unnotify") {
+		const endpoint = pushEndpoint(message.endpoint);
+		return endpoint === null ? null : { type: "unnotify", endpoint };
+	}
 	return null;
+}
+
+// push services are always https; anything else is rejected before it reaches storage
+function pushEndpoint(value: unknown): string | null {
+	return typeof value === "string" &&
+		value.startsWith("https://") &&
+		value.length <= MAX_PUSH_ENDPOINT_LENGTH
+		? value
+		: null;
+}
+
+function pushKey(value: unknown, pattern: RegExp): string | null {
+	return typeof value === "string" && pattern.test(value) ? value : null;
 }
 
 function userIdClaim(value: unknown): string | undefined {
@@ -450,6 +493,8 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 			history === null
 		)
 			return null;
+		// a room's subscriber count is capped far below a byte
+		const pushUsers = uchar(message.pushUsers);
 		return {
 			type: "welcome",
 			id: message.id,
@@ -459,6 +504,11 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 			historyBackground: message.historyBackground,
 			roster: roster as RosterEntry[],
 			history,
+			...(typeof message.push === "string" &&
+			message.push.length <= MAX_VAPID_KEY_LENGTH
+				? { push: message.push }
+				: {}),
+			...(pushUsers !== null ? { pushUsers } : {}),
 		};
 	}
 	if (message.type === "entry") {
@@ -482,6 +532,15 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 			return was ? { type: "profile", was, who } : null;
 		}
 		return { type: message.type, who };
+	}
+	if (message.type === "notify") {
+		const endpoint = pushEndpoint(message.endpoint);
+		if (endpoint === null || typeof message.on !== "boolean") return null;
+		return { type: "notify", endpoint, on: message.on };
+	}
+	if (message.type === "pushUsers") {
+		const count = uchar(message.count);
+		return count === null ? null : { type: "pushUsers", count };
 	}
 	if (message.type === "error") {
 		if (typeof message.reason !== "string") return null;

@@ -16,6 +16,8 @@ export const PROFILE_KEY = "comic-chat.profile";
 export const SWITCH_KEY = "comic-chat.switch";
 // a UI preference, not identity; leaving a room keeps it
 export const SIDEBAR_WIDTH_KEY = "comic-chat.sidebar-width";
+// rooms whose bell is on; each welcome re-registers the device so the server copy heals itself
+export const NOTIFY_ROOMS_KEY = "comic-chat.notify-rooms";
 
 // named capabilities; each derives from modern-tweaks today, ready to split onto its own key later
 export interface Features {
@@ -83,6 +85,23 @@ export function loadUserId(): string {
 	const minted = crypto.randomUUID();
 	localStorage.setItem(USER_ID_KEY, minted);
 	return minted;
+}
+
+export function loadNotifyRooms(): string[] {
+	try {
+		const data = JSON.parse(
+			localStorage.getItem(NOTIFY_ROOMS_KEY) ?? "[]",
+		) as unknown;
+		if (Array.isArray(data))
+			return data.filter((room): room is string => typeof room === "string");
+	} catch {
+		// invalid JSON reads as absent
+	}
+	return [];
+}
+
+export function saveNotifyRooms(rooms: string[]): void {
+	localStorage.setItem(NOTIFY_ROOMS_KEY, JSON.stringify(rooms));
 }
 
 export interface RoomSwitch extends StoredProfile {

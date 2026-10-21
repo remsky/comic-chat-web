@@ -5,7 +5,7 @@
 
 **Modern TypeScript port of the 1996+ Microsoft Comic Chat IRC client w/ Cloudflare Durable Objects as the network layer.**
 
-<img src="https://img.shields.io/badge/tests-511%20passing-forestgreen" alt="511 tests passing" height="20"><a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
+<a href="https://github.com/remsky/comic-chat-web/actions/workflows/ci.yml"><img src="https://github.com/remsky/comic-chat-web/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status" height="20"></a><a href="https://biomejs.dev"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Checked with Biome" height="20"></a>
 
 <table>
   <tr>
@@ -47,6 +47,17 @@ Validated against traces from an instrumented C++ client of the original to accu
 <details>
 <summary>Modern tweaks and commands</summary>
 
+### Progressive Web App (PWA) notifications
+
+Get notified of new chat without keeping the window open:
+
+- **iOS:** tap Share, then `Add to Home Screen`, and open from that icon.
+- **Android and desktop:** install from the browser menu.
+
+Then tap the bell in the titlebar inside a room. It is per room.
+
+- Pings only while you are away from the room, with no message text.
+- One ping per absence; it rearms when you rejoin or after 24 hours.
 
 ### Slash Commands/Gestures:
 

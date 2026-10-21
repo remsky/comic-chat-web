@@ -4,7 +4,7 @@ Build with `npm run build`, deploy with `npx wrangler deploy`. Cloudflare Worker
 
 ## Configuration
 
-Two runtime vars, in `wrangler.jsonc` or the dashboard. Operator details and [art packs](#art-packs) are build variables instead; see [Naming the operator](#naming-the-operator).
+Runtime vars, in `wrangler.jsonc` or the dashboard. Operator details and [art packs](#art-packs) are build variables instead; see [Naming the operator](#naming-the-operator).
 
 | Var | Default | Effect |
 | --- | --- | --- |
@@ -12,6 +12,14 @@ Two runtime vars, in `wrangler.jsonc` or the dashboard. Operator details and [ar
 | `MODERATION` | `on` | `off` drops the profanity screen from chat and the studio, and returns 404 from `/api/moderate`. Any other value leaves it on. |
 
 Clearing `ROOMS` closes a deploy: nothing is listed and every join returns 403 before a Durable Object is touched. Sockets already open stay up until they drop.
+
+## Notifications
+
+The titlebar bell subscribes a device to Web Push for its room. The room sends one generic "New message in #room" ping to each subscriber with no live socket, then stays quiet for that device until the user rejoins or 24 hours pass. No message content leaves the room. Without VAPID configuration the welcome carries no key and the bell never appears.
+
+`node scripts/generate-vapid-keys.mjs` prints a key pair. Set it as the secrets `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`, plus `VAPID_SUBJECT`, a `mailto:` or `https:` contact. The Deploy button prompts for all three; locally they go in `.dev.vars`. Rotating the pair invalidates subscriptions; clients re-subscribe on their next visit.
+
+iOS delivers Web Push only to installed web apps, so the bell on uninstalled iOS Safari shows Add-to-Home-Screen directions. `public/sw.js` displays pushes and routes clicks and does no offline caching.
 
 ## Art packs
 
@@ -38,6 +46,8 @@ Everything else is a source constant. These are safety rails, and changing one m
 | Flood disconnect | 20 straight drops | `worker/room.ts` |
 | Mute after a blocked message | 15s, times the strike count | `worker/room.ts` |
 | Disconnect after blocked messages | 5 | `worker/room.ts` |
+| Push subscriptions | 32 per room, 4 per user, oldest dropped first | `worker/pushSubs.ts` |
+| Push ping rearm | 24 hours, or on rejoin | `worker/pushSubs.ts` |
 | History chunk | 50 messages | `src/protocol/room.ts` |
 | History retention | 100 messages per room | `worker/db/events.ts` |
 | Screen batch | 200 texts, first 2000 chars of each screened | `worker/index.ts` |
