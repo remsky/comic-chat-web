@@ -15,7 +15,7 @@ async function stageJoinedRoom(page: import("@playwright/test").Page) {
 	await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
 	await page.evaluate(() => {
 		document.body.classList.add("joined");
-		document.querySelector("#title-room")?.append("- responsive-preview");
+		document.querySelector("#title-room")?.append("responsive-preview");
 		const roster = document.querySelector("#roster");
 		if (roster) {
 			for (const name of ["Alice", "Bob", "Charlie", "Danielle"]) {
@@ -24,7 +24,7 @@ async function stageJoinedRoom(page: import("@playwright/test").Page) {
 				roster.append(item);
 			}
 		}
-		for (const id of ["bodycam", "background-picker"])
+		for (const id of ["bodycam", "background-picker", "notify-bell"])
 			document.getElementById(id)?.removeAttribute("hidden");
 		const panels = document.querySelector("#panels");
 		if (panels) {
@@ -50,11 +50,42 @@ test("connect dialog fits a narrow desktop viewport", async ({ page }) => {
 	await expect(page.locator(".dialog")).toBeInViewport();
 });
 
+test("connect screen drops the title where the buttons would cover it", async ({
+	page,
+}) => {
+	await page.setViewportSize({ width: 260, height: 640 });
+	await page.goto("/");
+	await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
+	await expect(page.locator("#title-home")).toBeHidden();
+});
+
+for (const width of [320, 500]) {
+	test(`connect screen title clears the buttons at ${width}px`, async ({
+		page,
+	}) => {
+		await page.setViewportSize({ width, height: 640 });
+		await page.goto("/");
+		await expect(page.locator("#status")).toHaveAttribute("data-ready", "true");
+		await expect(page.locator("#title-home")).toBeVisible();
+		const clearance = await page.evaluate(() => {
+			const title = document
+				.querySelector("#title-home")
+				?.getBoundingClientRect();
+			const actions = document
+				.querySelector(".titlebar-actions")
+				?.getBoundingClientRect();
+			return title && actions ? actions.left - title.right : NaN;
+		});
+		expect(clearance).toBeGreaterThanOrEqual(0);
+	});
+}
+
 for (const viewport of [
 	{ width: 1024, height: 768 },
 	{ width: 720, height: 700 },
 	{ width: 500, height: 640 },
 	{ width: 390, height: 844 },
+	{ width: 320, height: 640 },
 ]) {
 	test(`joined shell adapts at ${viewport.width}x${viewport.height}`, async ({
 		page,
@@ -65,6 +96,14 @@ for (const viewport of [
 		await expectNoHorizontalOverflow(page);
 		for (const selector of [".titlebar", ".workspace", ".composer"])
 			await expect(page.locator(selector)).toBeInViewport();
+		const titleLines = await page.locator("#title-home").evaluate((title) => {
+			const { fontSize } = getComputedStyle(title);
+			return title.getBoundingClientRect().height / Number.parseFloat(fontSize);
+		});
+		expect(titleLines).toBeLessThan(2);
+		if (viewport.width <= 352)
+			await expect(page.locator("#title-home")).toBeHidden();
+		else await expect(page.locator("#title-home")).toBeVisible();
 		// joined mobile hides the legal line; panels own the screen
 		if (viewport.width <= 760)
 			await expect(page.locator(".legal-footer")).toBeHidden();

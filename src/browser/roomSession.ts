@@ -577,7 +577,7 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 		if (parsed.type === "welcome") {
 			const previousNewestSeq = view.entriesView().at(-1)?.seq ?? 0;
 			document.body.classList.add("joined");
-			element("title-room").textContent = `- ${room}`;
+			element("title-room").textContent = room;
 			status.textContent = "Connected.";
 			status.dataset.ready = "true";
 			if (filterTimer !== undefined) {
