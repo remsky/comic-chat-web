@@ -23,8 +23,7 @@ import {
 	markPinged,
 	PushStore,
 	rearmUser,
-	removeSub,
-	settle,
+	removeSubs,
 	userCount,
 	validKeys,
 } from "./pushSubs.js";
@@ -111,20 +110,19 @@ export class ChatRoomDO extends DurableObject<Env> {
 		this.roomName ??= (await this.ctx.storage.get<string>("room-name")) ?? null;
 		const room = this.roomName ?? "";
 		const payload = JSON.stringify({ room });
-		const statuses = new Map(
-			await Promise.all(
-				due.map(
-					async (sub): Promise<[string, number]> => [
-						sub.endpoint,
-						await sendPush(sub, payload, vapid, { topic: room }).catch(() => 0),
-					],
-				),
-			),
+		const gone = new Set<string>();
+		await Promise.all(
+			due.map(async (sub) => {
+				const status = await sendPush(sub, payload, vapid, {
+					topic: room,
+				}).catch(() => 0);
+				if (status === 404 || status === 410) gone.add(sub.endpoint);
+			}),
 		);
 		// reload: a notify/unnotify may have landed while the deliveries were in flight
 		const current = await this.push.load();
-		const settled = settle(current, statuses);
-		if (settled !== current) await this.push.save(settled);
+		const kept = removeSubs(current, gone);
+		if (kept !== current) await this.push.save(kept);
 	}
 
 	async fetch(request: Request): Promise<Response> {
@@ -363,7 +361,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 		}
 		if (message.type === "unnotify") {
 			const subs = await this.push.load();
-			const kept = removeSub(subs, message.endpoint);
+			const kept = removeSubs(subs, new Set([message.endpoint]));
 			if (kept !== subs) await this.push.save(kept);
 			this.send(ws, { type: "notify", endpoint: message.endpoint, on: false });
 			return;
@@ -473,7 +471,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 					message.annotation,
 				),
 			);
-			await this.pushChat();
+			// off the chat path: a slow push service must not hold the sender's handler
+			this.ctx.waitUntil(this.pushChat());
 		}
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
 			await this.reportPresence();

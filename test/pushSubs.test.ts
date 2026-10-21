@@ -6,8 +6,7 @@ import {
 	PUSH_SUB_LIMIT,
 	type PushSub,
 	rearmUser,
-	removeSub,
-	settle,
+	removeSubs,
 	userCount,
 } from "../worker/pushSubs.js";
 
@@ -46,8 +45,10 @@ describe("push subscription list", () => {
 	it("counts distinct users and keeps the same list when nothing changes", () => {
 		const subs = [sub("1"), sub("2"), sub("3", "b")];
 		expect(userCount(subs)).toBe(2);
-		expect(removeSub(subs, "https://p.test/none")).toBe(subs);
-		expect(removeSub(subs, "https://p.test/1")).toHaveLength(2);
+		expect(removeSubs(subs, new Set(["https://p.test/none"]))).toBe(subs);
+		expect(
+			removeSubs(subs, new Set(["https://p.test/1", "https://p.test/3"])),
+		).toEqual([subs[1]]);
 		expect(rearmUser(subs, "a")).toBe(subs);
 	});
 
@@ -59,22 +60,5 @@ describe("push subscription list", () => {
 		expect(dueSubs(marked, new Set(), now + 1)).toEqual([marked[1]]);
 		expect(dueSubs(marked, new Set(), now + DAY + 1)).toHaveLength(2);
 		expect(rearmUser(marked, "a")[0]?.pingedAt).toBe(0);
-	});
-
-	it("prunes gone subscriptions and rearms failed ones", () => {
-		const subs = [sub("ok", "a", 5), sub("gone", "b", 5), sub("down", "c", 5)];
-		const settled = settle(
-			subs,
-			new Map([
-				["https://p.test/ok", 201],
-				["https://p.test/gone", 410],
-				["https://p.test/down", 0],
-			]),
-		);
-		expect(settled.map((entry) => [entry.endpoint, entry.pingedAt])).toEqual([
-			["https://p.test/ok", 5],
-			["https://p.test/down", 0],
-		]);
-		expect(settle(subs, new Map([["https://p.test/ok", 201]]))).toBe(subs);
 	});
 });

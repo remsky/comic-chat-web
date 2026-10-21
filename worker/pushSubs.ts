@@ -7,7 +7,7 @@ import type { PushTarget } from "./push.js";
 export const PUSH_SUB_LIMIT = 32;
 // one person cannot crowd the room's slots with minted endpoints
 const PUSH_SUBS_PER_USER = 4;
-// a delivered ping stays quiet this long; rejoining rearms it sooner
+// pings stay quiet this long delivered or not; rejoining rearms it sooner
 const PUSH_REARM_MS = 24 * 60 * 60 * 1000;
 const STORAGE_KEY = "push-subs";
 
@@ -36,8 +36,12 @@ export function addSub(subs: PushSub[], sub: PushSub): PushSub[] {
 	].slice(-PUSH_SUB_LIMIT);
 }
 
-export function removeSub(subs: PushSub[], endpoint: string): PushSub[] {
-	const kept = subs.filter((sub) => sub.endpoint !== endpoint);
+// an unsubscribe, or the endpoints a fanout found gone (404/410)
+export function removeSubs(
+	subs: PushSub[],
+	endpoints: ReadonlySet<string>,
+): PushSub[] {
+	const kept = subs.filter((sub) => !endpoints.has(sub.endpoint));
 	return kept.length === subs.length ? subs : kept;
 }
 
@@ -69,26 +73,6 @@ export function rearmUser(subs: PushSub[], userId: string): PushSub[] {
 	return subs.map((sub) =>
 		sub.userId === userId ? { ...sub, pingedAt: 0 } : sub,
 	);
-}
-
-const delivered = (status: number): boolean => status >= 200 && status < 300;
-
-// push service answers by endpoint (0 = unreachable): 404/410 prune, any other failure rearms for a retry
-export function settle(
-	subs: PushSub[],
-	statuses: ReadonlyMap<string, number>,
-): PushSub[] {
-	const next = subs
-		.filter((sub) => ![404, 410].includes(statuses.get(sub.endpoint) ?? 0))
-		.map((sub) => {
-			const status = statuses.get(sub.endpoint);
-			return status === undefined || delivered(status)
-				? sub
-				: { ...sub, pingedAt: 0 };
-		});
-	return next.length === subs.length && next.every((sub, i) => sub === subs[i])
-		? subs
-		: next;
 }
 
 // reject a point the curve rejects now, not on every future chat line

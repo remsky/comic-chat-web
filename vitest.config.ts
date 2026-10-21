@@ -62,6 +62,7 @@ export default defineConfig({
 									"notify",
 									"notify-burst",
 									"notify-cap",
+									"notify-down",
 									"notify-prune",
 									"notify-quiet",
 									"notify-rearm",

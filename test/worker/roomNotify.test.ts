@@ -176,6 +176,27 @@ describe("room push notifications", () => {
 		);
 	});
 
+	it("leaves a failed delivery quiet until the normal rearm", async () => {
+		const sent = stubPushFetch(503);
+		const bea = await join("notify-down", "Bea", 2);
+		const alice = await join("notify-down", "Alice", 1);
+		const sub = await subscription("/sub/down");
+		alice.socket.send(JSON.stringify({ type: "notify", ...sub }));
+		await alice.inbox.next("notify");
+		alice.socket.close();
+		await bea.inbox.next("left");
+		bea.socket.send(chatMessage("one", 2));
+		await bea.inbox.next("entry");
+		await vi.waitFor(() => expect(sent).toHaveLength(1));
+		// the 503 leaves the stamp in place; a rearm would zero it once the 503 lands
+		await vi.waitFor(async () =>
+			expect((await storedSubs("notify-down"))[0]?.pingedAt).toBeTruthy(),
+		);
+		bea.socket.send(chatMessage("two", 2));
+		await bea.inbox.next("entry");
+		expect(sent).toHaveLength(1);
+	});
+
 	it("refuses a key that is not a curve point, and unnotify drops the rest", async () => {
 		const alice = await join("notify-quiet", "Alice", 1);
 		expect(alice.welcome.pushUsers).toBe(0);
