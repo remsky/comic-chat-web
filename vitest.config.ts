@@ -59,6 +59,12 @@ export default defineConfig({
 									"mute-expire",
 									"mute-off",
 									"name-block",
+									"notify",
+									"notify-burst",
+									"notify-cap",
+									"notify-prune",
+									"notify-quiet",
+									"notify-rearm",
 									"profile",
 									"profile-avatar",
 									"profile-block",
@@ -67,6 +73,12 @@ export default defineConfig({
 									"schema-contract",
 									"socket-cap",
 								],
+								// a real throwaway VAPID pair; push tests sign and encrypt for real, only delivery is mocked
+								VAPID_PUBLIC_KEY:
+									"BJvHSA_9TAzSBxLZbXbZ_ol4F2A3dhJLgCmjtx62rJJX7nr0a6g0y9gZZflZU273wcSh2fkHqvvQ0vIogaXmNQk",
+								VAPID_PRIVATE_KEY:
+									"Eym_n-f1sNTckU42-IeAQYKP_uTGg1ID4exJCe94hRQ",
+								VAPID_SUBJECT: "mailto:test@comic.test",
 							},
 						},
 					}),

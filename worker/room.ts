@@ -16,6 +16,18 @@ import {
 import { EventStore } from "./db/events.js";
 import { applyMigrations } from "./db/migrations.js";
 import { isProhibited, screeningEnabled } from "./moderation.js";
+import { sendPush, type VapidConfig } from "./push.js";
+import {
+	addSub,
+	dueSubs,
+	markPinged,
+	PushStore,
+	rearmUser,
+	removeSub,
+	settle,
+	userCount,
+	validKeys,
+} from "./pushSubs.js";
 
 // server policy: bound connections and per-socket send rate
 const SOCKET_LIMIT = 12;
@@ -31,7 +43,6 @@ export const MOD_CLOSE_STRIKES = 5;
 const PRESENCE_REFRESH_MS = 5 * 60 * 1000;
 // a chat composed this long ago is a dead pipe's TCP flush, not a late delivery; measured on the sender's own clock
 const STALE_SEND_MS = 5_000;
-
 interface SocketState {
 	// id is the seat (one per connection); userId is the person, stable across reconnects
 	id?: string;
@@ -52,6 +63,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 	private reportedAt = 0;
 	// mirrors the stored background so tagging each insert costs no storage read
 	private background = DEFAULT_BACKGROUND;
+	private readonly push = new PushStore(this.ctx.storage, (count) =>
+		this.broadcast({ type: "pushUsers", count }),
+	);
 	private readonly events = new EventStore(this.ctx.storage.sql);
 
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -71,6 +85,46 @@ export class ChatRoomDO extends DurableObject<Env> {
 	// read per call, so flipping the flag needs no DO restart
 	private blocked(text: string): boolean {
 		return screeningEnabled(this.env) && isProhibited(text);
+	}
+
+	// push is on only when the full key pair and contact are configured; read per call like the filter flag
+	private vapid(): VapidConfig | null {
+		const publicKey = this.env.VAPID_PUBLIC_KEY;
+		const privateKey = this.env.VAPID_PRIVATE_KEY;
+		const subject = this.env.VAPID_SUBJECT;
+		return publicKey && privateKey && subject
+			? { publicKey, privateKey, subject }
+			: null;
+	}
+
+	// ping absent subscribers once: no message content leaves the room, no repeat until they return or a day passes
+	private async pushChat(): Promise<void> {
+		const vapid = this.vapid();
+		if (!vapid) return;
+		const subs = await this.push.load();
+		const connected = new Set(this.roster().map((seat) => seat.userId));
+		const now = Date.now();
+		const due = dueSubs(subs, connected, now);
+		if (due.length === 0) return;
+		// marked before any network await: a chat interleaved into the fanout must not pick the same targets
+		await this.push.save(markPinged(subs, due, now));
+		this.roomName ??= (await this.ctx.storage.get<string>("room-name")) ?? null;
+		const room = this.roomName ?? "";
+		const payload = JSON.stringify({ room });
+		const statuses = new Map(
+			await Promise.all(
+				due.map(
+					async (sub): Promise<[string, number]> => [
+						sub.endpoint,
+						await sendPush(sub, payload, vapid, { topic: room }).catch(() => 0),
+					],
+				),
+			),
+		);
+		// reload: a notify/unnotify may have landed while the deliveries were in flight
+		const current = await this.push.load();
+		const settled = settle(current, statuses);
+		if (settled !== current) await this.push.save(settled);
 	}
 
 	async fetch(request: Request): Promise<Response> {
@@ -242,6 +296,8 @@ export class ChatRoomDO extends DurableObject<Env> {
 					: {}),
 			});
 			const welcomeHistory = this.events.history(undefined, this.background);
+			const vapid = this.vapid();
+			const subs = vapid ? await this.push.load() : [];
 			this.send(ws, {
 				type: "welcome",
 				id,
@@ -251,6 +307,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 				historyBackground: welcomeHistory.background,
 				roster: this.roster(),
 				history: welcomeHistory.entries,
+				...(vapid ? { push: vapid.publicKey, pushUsers: userCount(subs) } : {}),
 			});
 			this.broadcast({
 				type: "joined",
@@ -266,6 +323,9 @@ export class ChatRoomDO extends DurableObject<Env> {
 						message.from,
 					),
 				);
+			const current = await this.push.load();
+			const rearmed = rearmUser(current, userId);
+			if (rearmed !== current) await this.push.save(rearmed);
 			await this.reportPresence();
 			return;
 		}
@@ -280,6 +340,32 @@ export class ChatRoomDO extends DurableObject<Env> {
 				entries: chunk.entries,
 				background: chunk.background,
 			});
+			return;
+		}
+		if (message.type === "notify") {
+			const ack = (on: boolean): void =>
+				this.send(ws, { type: "notify", endpoint: message.endpoint, on });
+			if (!this.vapid() || !(await validKeys(message.keys))) {
+				ack(false);
+				return;
+			}
+			const { endpoint, keys } = message;
+			await this.push.save(
+				addSub(await this.push.load(), {
+					endpoint,
+					...keys,
+					userId: seat.userId,
+					pingedAt: 0,
+				}),
+			);
+			ack(true);
+			return;
+		}
+		if (message.type === "unnotify") {
+			const subs = await this.push.load();
+			const kept = removeSub(subs, message.endpoint);
+			if (kept !== subs) await this.push.save(kept);
+			this.send(ws, { type: "notify", endpoint: message.endpoint, on: false });
 			return;
 		}
 		// silently drop dead letters: sends that surface long after the sender composed them
@@ -387,6 +473,7 @@ export class ChatRoomDO extends DurableObject<Env> {
 					message.annotation,
 				),
 			);
+			await this.pushChat();
 		}
 		if (Date.now() - this.reportedAt > PRESENCE_REFRESH_MS)
 			await this.reportPresence();

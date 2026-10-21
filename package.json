@@ -16,6 +16,19 @@
 	"engines": {
 		"node": ">=22.13.0"
 	},
+	"cloudflare": {
+		"bindings": {
+			"VAPID_PUBLIC_KEY": {
+				"description": "Optional. Public half of the Web Push key pair from `node scripts/generate-vapid-keys.mjs`. Leave all three VAPID values empty to hide the notification bell."
+			},
+			"VAPID_PRIVATE_KEY": {
+				"description": "Optional. Private half of the same pair."
+			},
+			"VAPID_SUBJECT": {
+				"description": "Optional. A mailto: or https: contact for push services, e.g. mailto:you@example.com."
+			}
+		}
+	},
 	"scripts": {
 		"test": "vitest run",
 		"test:browser": "playwright test",
