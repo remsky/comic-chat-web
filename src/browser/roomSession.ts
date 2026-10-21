@@ -27,6 +27,7 @@ import {
 	hasGesture,
 	parseGesture,
 } from "./gestures.js";
+import type { NotifyBell } from "./notify.js";
 import { avatarIconCanvas, buildRoomOption } from "./pickerTiles.js";
 import { reportTranscript, stashReport } from "./report.js";
 import { fetchRoomListings } from "./roomDirectory.js";
@@ -108,6 +109,7 @@ export interface SessionDeps {
 	avatarDisplayName: (avatarID: number) => string;
 	syncProfileAvatar: (avatarID: number) => void;
 	syncBackground: (name: string) => void;
+	notifyBell?: NotifyBell;
 	onIncomingChat?: (
 		entry: ChatEntry,
 		localUserId: string,
@@ -146,6 +148,12 @@ function renderTranscript(
 		items.push(item);
 	}
 	list.replaceChildren(...items);
+}
+
+function renderNotifyCount(count: number): void {
+	const line = element<HTMLParagraphElement>("notify-count");
+	line.hidden = count === 0;
+	line.textContent = `${count} subscribed to notifications`;
 }
 
 function renderRoster(
@@ -587,6 +595,12 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 			// ahead of the replay so a composition failure cannot cost us the wheel
 			if (!bodycam) mountBodycam();
 			announceFrom = undefined;
+			deps.notifyBell?.onWelcome({
+				room,
+				key: parsed.push,
+				send: (message) => transport.send(message),
+			});
+			renderNotifyCount(parsed.pushUsers ?? 0);
 			profileNameInput.value = currentName;
 			deps.syncProfileAvatar(parsed.avatar);
 			void renderProfileRooms();
@@ -683,6 +697,10 @@ export function joinRoom(deps: SessionDeps, options: JoinOptions): void {
 				if (remember)
 					saveStoredProfile({ name: currentName, avatar: seatAvatar });
 			}
+		} else if (parsed.type === "notify") {
+			deps.notifyBell?.onAck(parsed.on);
+		} else if (parsed.type === "pushUsers") {
+			renderNotifyCount(parsed.count);
 		} else if (parsed.type === "error") {
 			if (parsed.reason === RATE_LIMIT_REASON && hasWelcomed) {
 				notifyRateLimited();

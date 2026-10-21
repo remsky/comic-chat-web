@@ -133,11 +133,29 @@
 	height: 18px;
 }
 
-.titlebar-button:active {
+.titlebar-button:active,
+.titlebar-button[aria-pressed="true"] {
 	border-color: #000 #dfdfdf #dfdfdf #000;
 	box-shadow:
 		inset -1px -1px 0 #fff,
 		inset 1px 1px 0 #808080;
+}
+
+/* subscribed: Win95 system dark green with a thin black outline */
+.titlebar-button[aria-pressed="true"] path {
+	fill: #008000;
+	stroke: #000;
+	stroke-width: 0.75;
+}
+
+/* the bell only means something inside a room */
+.app:not(.joined) #notify-bell {
+	display: none;
+}
+
+/* the display above beats the UA hidden rule */
+.titlebar-button[hidden] {
+	display: none;
 }
 
 .workspace {
@@ -268,6 +286,12 @@
 	margin: 0 0 0.25rem;
 	font-size: 0.8125rem;
 	font-weight: 700;
+}
+
+.notify-count {
+	margin: 0 0 0.25rem;
+	color: #808080;
+	font-size: 0.6875rem;
 }
 
 .roster {
@@ -500,7 +524,8 @@
 	pointer-events: none;
 }
 
-.dialog {
+.dialog,
+.notify-dialog {
 	pointer-events: auto;
 	width: min(20rem, 90vw);
 	/* capped so the dialog can never grow tall enough to cover the fixed footer beneath it; scrolls internally instead */
@@ -526,6 +551,21 @@
 	background: linear-gradient(90deg, #000080, #1084d0);
 	color: #fff;
 	font-weight: 700;
+}
+
+/* a modal <dialog> wearing the join dialog's chrome; its own class keeps `.dialog` selectors one-to-one */
+dialog.notify-dialog {
+	margin: auto;
+	padding: 0;
+}
+
+dialog.notify-dialog::backdrop {
+	background: rgb(0 0 0 / 35%);
+}
+
+.notify-dialog-text {
+	margin: 0;
+	line-height: 1.5;
 }
 
 /* flows below the dialog in the overlay grid, matching its width */
@@ -1008,6 +1048,11 @@ body:not(.modern-tweaks) .background-picker-grid {
 	box-shadow:
 		0 -1px 0 #fff,
 		0 -2px 0 #808080;
+}
+
+/* one Close button; space-between would park it at the left edge */
+.notify-dialog .dialog-buttons {
+	justify-content: flex-end;
 }
 
 .legal-footer {
