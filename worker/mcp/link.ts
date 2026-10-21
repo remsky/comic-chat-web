@@ -1,11 +1,3 @@
-function toBase64Url(data: Uint8Array): string {
-	const binary = Array.from(data, (byte) => String.fromCharCode(byte)).join("");
-	return btoa(binary)
-		.replace(/\+/g, "-")
-		.replace(/\//g, "_")
-		.replace(/=+$/, "");
-}
-
 async function deflateRaw(data: Uint8Array): Promise<Uint8Array> {
 	const stream = new Blob([data])
 		.stream()
@@ -15,7 +7,8 @@ async function deflateRaw(data: Uint8Array): Promise<Uint8Array> {
 
 export async function stripQuery(strip: unknown): Promise<string> {
 	const json = new TextEncoder().encode(JSON.stringify(strip));
-	return `s=${toBase64Url(await deflateRaw(json))}`;
+	const packed = await deflateRaw(json);
+	return `s=${packed.toBase64({ alphabet: "base64url", omitPadding: true })}`;
 }
 
 export interface StripLinks {

@@ -33,10 +33,7 @@ export async function loadBlob(
 		"text/html",
 	);
 	if (!response.ok || html) return null;
-	const bytes = new Uint8Array(await response.arrayBuffer());
-	let binary = "";
-	for (const byte of bytes) binary += String.fromCharCode(byte);
-	const b64 = btoa(binary);
+	const b64 = new Uint8Array(await response.arrayBuffer()).toBase64();
 	blobCache.set(file, b64);
 	return b64;
 }
