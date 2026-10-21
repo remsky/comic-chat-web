@@ -188,8 +188,6 @@ async function vapidHeader(
 }
 
 export interface PushOptions {
-	// push services collapse queued pushes sharing a topic, so an offline device wakes to one notification
-	topic?: string;
 	ttlSeconds?: number;
 }
 
@@ -208,10 +206,6 @@ export async function sendPush(
 			"Content-Encoding": "aes128gcm",
 			"Content-Type": "application/octet-stream",
 			TTL: String(options.ttlSeconds ?? 4 * 60 * 60),
-			// RFC 8030 caps Topic at 32 base64url characters
-			...(options.topic !== undefined
-				? { Topic: options.topic.slice(0, 32) }
-				: {}),
 		},
 		body,
 		// push services never redirect; following one would relay the POST elsewhere (workerd has no "error" mode)

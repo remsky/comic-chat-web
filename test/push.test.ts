@@ -99,13 +99,11 @@ describe("web push delivery", () => {
 			},
 			JSON.stringify({ room: "lobby" }),
 			vapid,
-			{ topic: "lobby" },
 		);
 		expect(status).toBe(201);
 		expect(seen.url).toBe("https://push.example.com/send/abc");
 		const headers = seen.init?.headers as Record<string, string>;
 		expect(headers["Content-Encoding"]).toBe("aes128gcm");
-		expect(headers.Topic).toBe("lobby");
 		expect(Number(headers.TTL)).toBeGreaterThan(0);
 		const auth = /^vapid t=([\w-]+\.[\w-]+\.[\w-]+), k=(.+)$/.exec(
 			headers.Authorization ?? "",

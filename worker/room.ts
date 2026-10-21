@@ -119,12 +119,12 @@ export class ChatRoomDO extends DurableObject<Env> {
 		const gone = new Set<string>();
 		await Promise.all(
 			due.map(async (sub) => {
-				const status = await sendPush(sub, payload, vapid, {
-					topic: room,
-				}).catch((error: unknown) => {
-					console.warn(`push failed: ${String(error)}`);
-					return 0;
-				});
+				const status = await sendPush(sub, payload, vapid).catch(
+					(error: unknown) => {
+						console.warn(`push failed: ${String(error)}`);
+						return 0;
+					},
+				);
 				if (status === 404 || status === 410) gone.add(sub.endpoint);
 			}),
 		);

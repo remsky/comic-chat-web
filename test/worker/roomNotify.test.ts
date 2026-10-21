@@ -90,7 +90,6 @@ describe("room push notifications", () => {
 		const push = sent[0] as SentPush;
 		expect(push.url).toBe(sub.endpoint);
 		expect(push.headers["Content-Encoding"]).toBe("aes128gcm");
-		expect(push.headers.Topic).toBe("notify");
 		expect(push.headers.Authorization).toMatch(/^vapid t=/);
 		// a redirecting endpoint must not turn the room into a request relay
 		expect(push.redirect).toBe("manual");
