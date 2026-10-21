@@ -137,7 +137,9 @@ export type ClientMessage =
 			endpoint: string;
 			keys: { p256dh: string; auth: string };
 	  }
-	| { type: "unnotify"; endpoint: string };
+	| { type: "unnotify"; endpoint: string }
+	// tab hidden or shown; an away seat counts as absent for push
+	| { type: "away"; on: boolean };
 
 export type ServerMessage =
 	| {
@@ -161,6 +163,7 @@ export type ServerMessage =
 	| { type: "profile"; was: RosterEntry; who: RosterEntry }
 	// subscribe/unsubscribe ack; every client message must earn a reply or the liveness watchdog trips
 	| { type: "notify"; endpoint: string; on: boolean }
+	| { type: "away"; on: boolean }
 	// distinct subscribed users; broadcast when the set changes
 	| { type: "pushUsers"; count: number }
 	| { type: "error"; reason: string; retryAfter?: number };
@@ -342,6 +345,10 @@ export function parseClientMessage(raw: unknown): ClientMessage | null {
 		const endpoint = pushEndpoint(message.endpoint);
 		return endpoint === null ? null : { type: "unnotify", endpoint };
 	}
+	if (message.type === "away")
+		return typeof message.on === "boolean"
+			? { type: "away", on: message.on }
+			: null;
 	return null;
 }
 
@@ -538,6 +545,10 @@ export function parseServerMessage(raw: unknown): ServerMessage | null {
 		if (endpoint === null || typeof message.on !== "boolean") return null;
 		return { type: "notify", endpoint, on: message.on };
 	}
+	if (message.type === "away")
+		return typeof message.on === "boolean"
+			? { type: "away", on: message.on }
+			: null;
 	if (message.type === "pushUsers") {
 		const count = uchar(message.count);
 		return count === null ? null : { type: "pushUsers", count };

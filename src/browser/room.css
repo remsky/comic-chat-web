@@ -73,9 +73,19 @@
 	color: #fff;
 }
 
+/* the room name wraps under the title when crowded */
+.titlebar-heading {
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 0.5rem;
+	align-items: baseline;
+	min-width: 0;
+}
+
 .titlebar-title {
 	margin: 0;
 	font: inherit;
+	white-space: nowrap;
 }
 
 .titlebar-text {
@@ -94,6 +104,19 @@
 
 .app.joined .titlebar-text:hover {
 	text-decoration: underline;
+}
+
+/* the buttons would cover the title; joined adds the bell */
+@media (max-width: 19rem) {
+	.titlebar-title {
+		display: none;
+	}
+}
+
+@media (max-width: 22rem) {
+	.app.joined .titlebar-title {
+		display: none;
+	}
 }
 
 .titlebar-room {

@@ -39,3 +39,27 @@ test("landing page boots the app shell with the connect dialog", async ({
 		path: testInfo.outputPath("landing.png"),
 	});
 });
+
+test("a room link joins straight away with a remembered profile", async ({
+	page,
+}) => {
+	const joins: string[] = [];
+	await page.routeWebSocket("**/api/rooms/preview/websocket", (ws) => {
+		ws.onMessage((frame) => joins.push(String(frame)));
+	});
+	await page.addInitScript(() => {
+		localStorage.setItem(
+			"comic-chat.profile",
+			JSON.stringify({ name: "Ada", avatar: 1 }),
+		);
+	});
+	await page.goto("/?room=preview");
+	await expect(page.locator("#status")).toHaveText("Connecting…");
+	await expect(page.locator("#join-form button")).toBeDisabled();
+	await expect.poll(() => joins.length).toBeGreaterThan(0);
+	expect(JSON.parse(joins[0] ?? "{}")).toMatchObject({
+		type: "join",
+		name: "Ada",
+		avatar: 1,
+	});
+});

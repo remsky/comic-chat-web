@@ -197,6 +197,16 @@ describe("room wire protocol", () => {
 			on: true,
 		});
 		expect(server({ type: "notify", endpoint })).toBeNull();
+		// away travels both ways and must be a boolean
+		expect(client({ type: "away", on: true })).toEqual({
+			type: "away",
+			on: true,
+		});
+		expect(server({ type: "away", on: false })).toEqual({
+			type: "away",
+			on: false,
+		});
+		expect(client({ type: "away", on: "yes" })).toBeNull();
 		// the subscriber-count broadcast
 		expect(server({ type: "pushUsers", count: 2 })).toEqual({
 			type: "pushUsers",
