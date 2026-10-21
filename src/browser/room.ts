@@ -393,11 +393,9 @@ async function main(): Promise<void> {
 	});
 
 	// a room switch rejoins on the far side of the reload, announcing where we came from
+	const roomParam = new URLSearchParams(location.search).get("room");
 	const pending = takeRoomSwitch();
-	if (
-		pending &&
-		new URLSearchParams(location.search).get("room") === pending.room
-	) {
+	if (pending && roomParam === pending.room) {
 		setDesiredRoom(pending.room);
 		element<HTMLInputElement>("join-name").value = pending.name;
 		const carried = document.querySelector<HTMLInputElement>(
@@ -411,6 +409,9 @@ async function main(): Promise<void> {
 			from: pending.from,
 			remember: loadStoredProfile() !== null,
 		});
+	} else if (roomParam && storedProfile) {
+		// a notification click lands here; a remembered identity skips the form
+		joinRoom(deps, { room: roomParam, ...storedProfile, remember: true });
 	}
 }
 
