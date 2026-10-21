@@ -50,12 +50,12 @@
 		"fontkit": "^2.0.4",
 		"jsdom": "^29.1.1",
 		"typescript": "^7.0.2",
-		"vite": "^8.1.5",
+		"vite": "^8.3.5",
 		"vitest": "^4.1.11",
 		"wrangler": "^4.114.0"
 	},
 	"dependencies": {
-		"@modelcontextprotocol/server": "^2.0.0",
+		"@modelcontextprotocol/server": "^2.3.0",
 		"gifenc": "^1.0.3",
 		"mp4-muxer": "^5.2.2",
 		"obscenity": "^0.4.6",
