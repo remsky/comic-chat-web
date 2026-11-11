@@ -52,6 +52,7 @@
 		"release:major": "npm version major -m \"chore: v%s\" && git push --follow-tags"
 	},
 	"overrides": {
+		"sharp": "^0.35.5",
 		"undici": "^7.29.0"
 	},
 	"devDependencies": {
@@ -72,6 +73,6 @@
 		"gifenc": "^1.0.3",
 		"mp4-muxer": "^5.2.2",
 		"obscenity": "^0.4.6",
-		"zod": "^4.4.3"
+		"zod": "^4.6.7"
 	}
 }
